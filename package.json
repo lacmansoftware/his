@@ -1,9 +1,9 @@
 {
-  "name": "vue-element-plus-admin",
-  "version": "1.5.0",
+  "name": "his",
+  "version": "2.0.0",
   "description": "一套基于vue3、element-plus、typesScript、vite2的后台集成方案。",
-  "author": "Archer <502431556@qq.com>",
-  "private": false,
+  "author": "Obrad Lacman <lacmansoftware@gmail.com>",
+  "private": true,
   "scripts": {
     "i": "pnpm install",
     "dev": "vite --mode base",
@@ -112,10 +112,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kailong321200875/vue-element-plus-admin.git"
+    "url": "git+https://github.com/lacmansoftware/his.git"
   },
   "bugs": {
-    "url": "https://github.com/kailong321200875/vue-element-plus-admin/issues"
+    "url": "https://github.com/lacmansoftware/his/issues"
   },
-  "homepage": "https://github.com/kailong321200875/vue-element-plus-admin"
+  "homepage": "https://github.com/lacmansoftware/his"
 }
