@@ -14,10 +14,10 @@ const config: {
    */
   base_url: {
     // 开发环境接口前缀
-    base: '',
+    base: 'https://cors-anywhere.herokuapp.com/http://35.194.244.237:9998/',
 
     // 打包开发环境接口前缀
-    dev: 'http://35.194.244.237:9998/',
+    dev: '',
 
     // 打包生产环境接口前缀
     pro: '',
