@@ -124,6 +124,7 @@ const signIn = async () => {
       loading.value = true
       const { getFormData } = methods
       const formData = await getFormData<UserType>()
+      formData.type = 'system'
 
       try {
         const res = await loginApi(formData)
