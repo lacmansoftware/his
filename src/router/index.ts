@@ -89,6 +89,66 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     ]
   },
   {
+    path: '/member',
+    component: Layout,
+    redirect: '/member/member-info',
+    name: 'Member',
+    meta: {
+      title: t('router.example'),
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'member-info',
+        component: () => import('@/views/Member/Info/MemberInfoPage.vue'),
+        name: 'ExamplePage',
+        meta: {
+          title: t('router.examplePage')
+        }
+      },
+      {
+        path: 'member-info-add',
+        component: () => import('@/views/Member/Info/MemberInfoAdd.vue'),
+        name: 'ExampleAdd',
+        meta: {
+          title: t('router.exampleAdd'),
+          noTagsView: true,
+          noCache: true,
+          hidden: true,
+          showMainRoute: true,
+          activeMenu: '/example/member-info-page'
+        }
+      },
+      {
+        path: 'member-info-edit',
+        component: () => import('@/views/Member/Info/MemberInfoEdit.vue'),
+        name: 'ExampleEdit',
+        meta: {
+          title: t('router.exampleEdit'),
+          noTagsView: true,
+          noCache: true,
+          hidden: true,
+          showMainRoute: true,
+          activeMenu: '/example/member-info-page'
+        }
+      },
+      {
+        path: 'member-info-detail',
+        component: () => import('@/views/Member/Info/MemberInfoDetail.vue'),
+        name: 'ExampleDetail',
+        meta: {
+          title: t('router.exampleDetail'),
+          noTagsView: true,
+          noCache: true,
+          hidden: true,
+          showMainRoute: true,
+          activeMenu: '/example/member-info-page'
+        }
+      }
+    ]
+  },
+  {
     path: '/external-link',
     component: Layout,
     meta: {},
