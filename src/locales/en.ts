@@ -143,7 +143,9 @@ export default {
     inputPassword: 'InputPassword',
     sticky: 'Sticky',
     member: 'Member',
-    memberInfoIndex: 'Guest Management'
+    memberInfoIndex: 'Member Management',
+    memberInfoAdd: 'Member - add',
+    memberInfoEdit: 'Member - edit'
   },
   analysis: {
     newUser: 'New user',

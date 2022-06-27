@@ -143,7 +143,9 @@ export default {
     inputPassword: '密码输入框',
     sticky: '黏性',
     member: '會員管理',
-    memberInfoIndex: 'Info Index'
+    memberInfoIndex: '客人管理',
+    memberInfoAdd: '新增客人',
+    memberInfoEdit: '合併客人'
   },
   analysis: {
     newUser: '新增用户',
