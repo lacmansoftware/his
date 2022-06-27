@@ -209,7 +209,7 @@ const action = (row: TableData, type: string) => {
       </ElButton>
     </div>
 
-    <Table v-model:pageSize="tableObject.pageSize" v-model:currentPage="tableObject.currentPage"
+    <!-- <Table v-model:pageSize="tableObject.pageSize" v-model:currentPage="tableObject.currentPage"
       :columns="allSchemas.tableColumns" :data="tableObject.tableList" :loading="tableObject.loading" :pagination="{
         total: tableObject.total
       }" @register="register">
@@ -224,6 +224,6 @@ const action = (row: TableData, type: string) => {
           {{ t('exampleDemo.del') }}
         </ElButton>
       </template>
-    </Table>
+    </Table> -->
   </ContentWrap>
 </template>

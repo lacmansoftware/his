@@ -15,6 +15,8 @@ const request = (option: AxiosConfig) => {
     data,
     responseType: responseType,
     headers: {
+      // 'Access-Control-Allow-Origin': 'http://192.168.108.87:4000',
+      // 'Access-Control-Allow-Credentials': 'true',
       'Content-Type': headersType || default_headers
     }
   })

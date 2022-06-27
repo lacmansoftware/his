@@ -56,6 +56,19 @@ const adminList = [
           title: 'router.memberInfoIndex'
         }
       },
+      {
+        path: 'info-add',
+        component: 'views/Member/Info/MemberInfoAdd',
+        name: 'InfoAdd',
+        meta: {
+          title: 'router.memberInfoAdd',
+          noTagsView: true,
+          noCache: true,
+          hidden: true,
+          showMainRoute: true,
+          activeMenu: '/member/info-index'
+        }
+      },
     ]
   },
   {
