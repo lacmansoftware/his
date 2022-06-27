@@ -101,7 +101,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     children: [
       {
         path: 'guest-index',
-        component: () => import('@/views/Member/Info/MemberInfoPage.vue'),
+        component: () => import('@/views/Member/Info/Index.vue'),
         name: 'Guest Management',
         meta: {
           title: t('router.examplePage')

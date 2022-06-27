@@ -142,7 +142,8 @@ export default {
     document: '文档',
     inputPassword: '密码输入框',
     sticky: '黏性',
-    member: '會員管理'
+    member: '會員管理',
+    memberInfoIndex: 'Info Index'
   },
   analysis: {
     newUser: '新增用户',

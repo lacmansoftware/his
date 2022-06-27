@@ -13,7 +13,7 @@ import { useEmitt } from '@/hooks/web/useEmitt'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 
 defineOptions({
-  name: 'ExamplePage'
+  name: 'MemberInfoIndex'
 })
 
 const { push } = useRouter()
@@ -45,58 +45,130 @@ const { t } = useI18n()
 
 const crudSchemas = reactive<CrudSchema[]>([
   {
+    label: '操作',
+    field: 'action',
+    width: '120px'
+  },
+  {
+    label: '姓名',
+    field: 'memberName',
+    width: '120px',
+    search: {
+      show: true
+    },
+    placeholder: '請填寫'
+  },
+  {
+    label: '手機號碼',
+    field: 'mobile',
+    width: '135px',
+    search: {
+      show: true
+    },
+    placeholder: '請填寫'
+  },
+  {
+    label: '性別',
+    field: 'gender',
+    width: '85px'
+  },
+  {
+    label: '年齡',
+    field: 'birthday',
+    width: '60px'
+  },
+  {
+    label: '生日',
+    field: 'birthday',
+    width: '125px'
+  },
+  {
+    label: '檔案號',
+    field: 'archivesNo',
+    width: '60px',
+    search: {
+      show: true
+    },
+    placeholder: '請填寫'
+  },
+  {
+    label: '檔案存放地',
+    field: 'profileLocationName',
+    width: '125px',
+    search: {
+      show: true
+    },
+    placeholder: '請選擇'
+  },
+  {
+    label: '證件類型',
+    field: 'identityTypeName',
+    width: '60px',
+    search: {
+      show: true
+    },
+    placeholder: '請選擇'
+  },
+  {
+    label: '證件號碼',
+    field: 'identityCode',
+    width: '100px',
+    search: {
+      show: true
+    },
+    placeholder: '請填寫'
+  },
+  {
+    label: '會員級別',
+    field: 'levelName',
+    width: '100px',
+    search: {
+      show: true
+    },
+    placeholder: '請選擇'
+  },
+  {
+    label: '會員卡狀態',
+    field: 'cardStatus',
+    width: '100px',
+    search: {
+      show: true
+    },
+    placeholder: '請選擇'
+  },
+  {
+    label: '會員卡號',
+    field: 'cardNum',
+    width: '100px',
+    search: {
+      show: true
+    },
+    placeholder: '請填寫會員卡號'
+  },
+  {
+    label: '卡內餘額',
+    field: 'balance',
+    width: '100px'
+  },
+  {
+    label: '辦卡時間',
+    field: 'cardCreateTime',
+    width: '100px'
+  },
+  {
+    label: '創建人',
+    field: 'createUser',
+    width: '100px'
+  },
+  {
+    label: '創建門店',
+    field: 'createHospital',
+    width: '100px'
+  },
+  {
     field: 'index',
     label: t('tableDemo.index'),
     type: 'index'
-  },
-  {
-    field: 'title',
-    label: t('tableDemo.title'),
-    search: {
-      show: true
-    }
-  },
-  {
-    field: 'author',
-    label: t('tableDemo.author')
-  },
-  {
-    field: 'display_time',
-    label: t('tableDemo.displayTime')
-  },
-  {
-    field: 'importance',
-    label: t('tableDemo.importance'),
-    formatter: (_: Recordable, __: TableColumn, cellValue: number) => {
-      return h(
-        ElTag,
-        {
-          type: cellValue === 1 ? 'success' : cellValue === 2 ? 'warning' : 'danger'
-        },
-        () =>
-          cellValue === 1
-            ? t('tableDemo.important')
-            : cellValue === 2
-            ? t('tableDemo.good')
-            : t('tableDemo.commonly')
-      )
-    }
-  },
-  {
-    field: 'pageviews',
-    label: t('tableDemo.pageviews')
-  },
-  {
-    field: 'content',
-    label: t('exampleDemo.content'),
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'action',
-    width: '260px',
-    label: t('tableDemo.action')
   }
 ])
 
@@ -137,17 +209,10 @@ const action = (row: TableData, type: string) => {
       </ElButton>
     </div>
 
-    <Table
-      v-model:pageSize="tableObject.pageSize"
-      v-model:currentPage="tableObject.currentPage"
-      :columns="allSchemas.tableColumns"
-      :data="tableObject.tableList"
-      :loading="tableObject.loading"
-      :pagination="{
+    <Table v-model:pageSize="tableObject.pageSize" v-model:currentPage="tableObject.currentPage"
+      :columns="allSchemas.tableColumns" :data="tableObject.tableList" :loading="tableObject.loading" :pagination="{
         total: tableObject.total
-      }"
-      @register="register"
-    >
+      }" @register="register">
       <template #action="{ row }">
         <ElButton type="primary" @click="action(row, 'edit')">
           {{ t('exampleDemo.edit') }}
