@@ -141,7 +141,9 @@ export default {
     role: 'Role management',
     document: 'Document',
     inputPassword: 'InputPassword',
-    sticky: 'Sticky'
+    sticky: 'Sticky',
+    member: 'Member',
+    guestIndex: 'Guest Management'
   },
   analysis: {
     newUser: 'New user',

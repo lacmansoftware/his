@@ -138,10 +138,11 @@ export default {
     errorPage: '错误页面',
     authorization: '权限管理',
     user: '用户管理',
-    role: '角色管理',
+    role: '角d色管理',
     document: '文档',
     inputPassword: '密码输入框',
-    sticky: '黏性'
+    sticky: '黏性',
+    member: '會員管理'
   },
   analysis: {
     newUser: '新增用户',

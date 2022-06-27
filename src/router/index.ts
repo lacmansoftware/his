@@ -91,59 +91,59 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/member',
     component: Layout,
-    redirect: '/member/member-info',
+    redirect: '/member/guest-index',
     name: 'Member',
     meta: {
-      title: t('router.example'),
+      title: t('router.member'),
       icon: 'ep:management',
       alwaysShow: true
     },
     children: [
       {
-        path: 'member-info',
+        path: 'guest-index',
         component: () => import('@/views/Member/Info/MemberInfoPage.vue'),
-        name: 'ExamplePage',
+        name: 'Guest Management',
         meta: {
           title: t('router.examplePage')
         }
       },
       {
-        path: 'member-info-add',
+        path: 'guest-add',
         component: () => import('@/views/Member/Info/MemberInfoAdd.vue'),
-        name: 'ExampleAdd',
+        name: 'Guest Add',
         meta: {
           title: t('router.exampleAdd'),
           noTagsView: true,
           noCache: true,
           hidden: true,
           showMainRoute: true,
-          activeMenu: '/example/member-info-page'
+          activeMenu: '/member/guest-add'
         }
       },
       {
-        path: 'member-info-edit',
+        path: 'guest-edit',
         component: () => import('@/views/Member/Info/MemberInfoEdit.vue'),
-        name: 'ExampleEdit',
+        name: 'Guest Edit',
         meta: {
           title: t('router.exampleEdit'),
           noTagsView: true,
           noCache: true,
           hidden: true,
           showMainRoute: true,
-          activeMenu: '/example/member-info-page'
+          activeMenu: '/member/guest-edit'
         }
       },
       {
-        path: 'member-info-detail',
+        path: 'guest-detail',
         component: () => import('@/views/Member/Info/MemberInfoDetail.vue'),
-        name: 'ExampleDetail',
+        name: 'Member Detail',
         meta: {
           title: t('router.exampleDetail'),
           noTagsView: true,
           noCache: true,
           hidden: true,
           showMainRoute: true,
-          activeMenu: '/example/member-info-page'
+          activeMenu: '/member/guest-detail'
         }
       }
     ]
@@ -563,36 +563,36 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: '/authorization',
+    component: Layout,
+    redirect: '/authorization/user',
+    name: 'Authorization',
+    meta: {
+      title: t('router.authorization'),
+      icon: 'eos-icons:role-binding',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'user',
+        component: () => import('@/views/Authorization/User.vue'),
+        name: 'User',
+        meta: {
+          title: t('router.user')
+        }
+      },
+      {
+        path: 'role',
+        component: () => import('@/views/Authorization/Role.vue'),
+        name: 'Role',
+        meta: {
+          title: t('router.role')
+        }
+      }
+    ]
   }
-  // {
-  //   path: '/authorization',
-  //   component: Layout,
-  //   redirect: '/authorization/user',
-  //   name: 'Authorization',
-  //   meta: {
-  //     title: t('router.authorization'),
-  //     icon: 'eos-icons:role-binding',
-  //     alwaysShow: true
-  //   },
-  //   children: [
-  //     {
-  //       path: 'user',
-  //       component: () => import('@/views/Authorization/User.vue'),
-  //       name: 'User',
-  //       meta: {
-  //         title: t('router.user')
-  //       }
-  //     },
-  //     {
-  //       path: 'role',
-  //       component: () => import('@/views/Authorization/Role.vue'),
-  //       name: 'Role',
-  //       meta: {
-  //         title: t('router.role')
-  //       }
-  //     }
-  //   ]
-  // }
 ]
 
 const router = createRouter({

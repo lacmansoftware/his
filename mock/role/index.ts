@@ -38,6 +38,27 @@ const adminList = [
     ]
   },
   {
+    path: '/member',
+    component: '#',
+    redirect: '/member/guest-index',
+    name: 'Member',
+    meta: {
+      title: 'router.member',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'guest-index',
+        component: 'views/Member/Info/MemberInfoPage',
+        name: 'GuestIndex',
+        meta: {
+          title: 'router.guestIndex'
+        }
+      },
+    ]
+  },
+  {
     path: '/external-link',
     component: '#',
     meta: {},
@@ -503,7 +524,14 @@ const testList: string[] = [
   '/error',
   '/error/404-demo',
   '/error/403-demo',
-  '/error/500-demo'
+  '/error/500-demo',
+
+  // new
+  '/member',
+  '/member/guest-index', 
+  '/member/guest-add',
+  '/member/guest-edit',
+  '/member/guest-detail',
 ]
 
 export default [
