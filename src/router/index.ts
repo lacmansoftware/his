@@ -91,7 +91,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/member',
     component: Layout,
-    redirect: '/member/guest-index',
+    redirect: '/member/info-index',
     name: 'Member',
     meta: {
       title: t('router.member'),
@@ -100,50 +100,11 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     },
     children: [
       {
-        path: 'guest-index',
-        component: () => import('@/views/Member/Info/Index.vue'),
-        name: 'Guest Management',
+        path: 'info-index',
+        component: () => import('@/views/Member/Info/MemberInfoIndex.vue'),
+        name: 'MemberManagement',
         meta: {
-          title: t('router.examplePage')
-        }
-      },
-      {
-        path: 'guest-add',
-        component: () => import('@/views/Member/Info/MemberInfoAdd.vue'),
-        name: 'Guest Add',
-        meta: {
-          title: t('router.exampleAdd'),
-          noTagsView: true,
-          noCache: true,
-          hidden: true,
-          showMainRoute: true,
-          activeMenu: '/member/guest-add'
-        }
-      },
-      {
-        path: 'guest-edit',
-        component: () => import('@/views/Member/Info/MemberInfoEdit.vue'),
-        name: 'Guest Edit',
-        meta: {
-          title: t('router.exampleEdit'),
-          noTagsView: true,
-          noCache: true,
-          hidden: true,
-          showMainRoute: true,
-          activeMenu: '/member/guest-edit'
-        }
-      },
-      {
-        path: 'guest-detail',
-        component: () => import('@/views/Member/Info/MemberInfoDetail.vue'),
-        name: 'Member Detail',
-        meta: {
-          title: t('router.exampleDetail'),
-          noTagsView: true,
-          noCache: true,
-          hidden: true,
-          showMainRoute: true,
-          activeMenu: '/member/guest-detail'
+          title: t('router.memberInfoIndex')
         }
       }
     ]
