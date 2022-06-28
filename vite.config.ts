@@ -120,7 +120,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       proxy: {
         // 选项写法
         '/api': {
-          target: 'http://127.0.0.1:8000',
+          target: 'http://35.194.244.237:9998',
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, '')
         }
