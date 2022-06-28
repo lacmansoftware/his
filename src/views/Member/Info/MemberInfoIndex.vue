@@ -72,11 +72,11 @@ const crudSchemas = reactive<CrudSchema[]>([
     field: 'gender',
     width: '85px'
   },
-  {
-    label: '年齡',
-    field: 'birthday',
-    width: '60px'
-  },
+  // {
+  //   label: '年齡',
+  //   field: 'birthday',
+  //   width: '60px'
+  // },
   {
     label: '生日',
     field: 'birthday',
@@ -209,12 +209,12 @@ const action = (row: TableData, type: string) => {
       </ElButton>
     </div>
 
-    <!-- <Table v-model:pageSize="tableObject.pageSize" v-model:currentPage="tableObject.currentPage"
+    <Table v-model:pageSize="tableObject.pageSize" v-model:currentPage="tableObject.currentPage"
       :columns="allSchemas.tableColumns" :data="tableObject.tableList" :loading="tableObject.loading" :pagination="{
         total: tableObject.total
       }" @register="register">
       <template #action="{ row }">
-        <ElButton type="primary" @click="action(row, 'edit')">
+        <!-- <ElButton type="primary" @click="action(row, 'edit')">
           {{ t('exampleDemo.edit') }}
         </ElButton>
         <ElButton type="success" @click="action(row, 'detail')">
@@ -222,8 +222,8 @@ const action = (row: TableData, type: string) => {
         </ElButton>
         <ElButton type="danger" @click="delData(row, false)">
           {{ t('exampleDemo.del') }}
-        </ElButton>
+        </ElButton> -->
       </template>
-    </Table> -->
+    </Table>
   </ContentWrap>
 </template>
