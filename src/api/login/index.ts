@@ -18,7 +18,7 @@ export const loginApi = async (data: UserLoginType): Promise<IResponse> => {
 }
 
 export const loginOutApi = async (): Promise<IResponse> => {
-  const res = await request.get({ url: '/index/logout' })
+  const res = await request.post({ url: '/index/logout' })
   return res && res.data
 }
 
