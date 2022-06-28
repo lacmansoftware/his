@@ -87,6 +87,27 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: '/member',
+    component: Layout,
+    redirect: '/member/info-index',
+    name: 'Member',
+    meta: {
+      title: '會員管理',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'info-index',
+        component: () => import('@/views/Member/Info/MemberInfoIndex.vue'),
+        name: 'MemberManagement',
+        meta: {
+          title: '客人管理'
+        }
+      }
+    ]
   }
 ]
 
