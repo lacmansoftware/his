@@ -1,5 +1,5 @@
 import { useAxios } from '@/hooks/web/useAxios'
-import type { UserType } from './types'
+import type { UserLoginType, UserType } from './types'
 
 interface RoleParams {
   roleName: string
@@ -7,7 +7,7 @@ interface RoleParams {
 
 const request = useAxios()
 
-export const loginApi = async (data: UserType): Promise<IResponse> => {
+export const loginApi = async (data: UserLoginType): Promise<IResponse> => {
   const res = await request.post({ url: '/index/login/system', data })
   // const res = await request.post({ url: '/user/login', data })
   return res && res.data
@@ -33,11 +33,12 @@ export const getUserListApi = ({ params }: AxiosConfig) => {
 export const getAdminRoleApi = async (
   params: RoleParams
 ): Promise<IResponse<AppCustomRouteRecordRaw[]>> => {
-  const res = await request.get({ url: '/role/list', params })
+  const res = await request.get({ url: '/index/menus', params })
   return res && res.data
 }
 
 export const getTestRoleApi = async (params: RoleParams): Promise<IResponse<string[]>> => {
-  const res = await request.get({ url: '/role/list', params })
+  const res = await request.get({ url: '/index/menus', params })
+  console.log(res)
   return res && res.data
 }

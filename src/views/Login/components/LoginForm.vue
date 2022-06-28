@@ -10,7 +10,7 @@ import { useAppStore } from '@/store/modules/app'
 import { usePermissionStore } from '@/store/modules/permission'
 import { useRouter } from 'vue-router'
 import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router'
-import { UserType } from '@/api/login/types'
+import { UserLoginType, UserType } from '@/api/login/types'
 import { useValidator } from '@/hooks/web/useValidator'
 
 const { required } = useValidator()
@@ -123,7 +123,7 @@ const signIn = async () => {
     if (isValid) {
       loading.value = true
       const { getFormData } = methods
-      const formData = await getFormData<UserType>()
+      const formData = await getFormData<UserLoginType>()
       formData.type = 'system'
 
       try {
@@ -146,7 +146,7 @@ const signIn = async () => {
 // 获取角色信息
 const getRole = async () => {
   const { getFormData } = methods
-  const formData = await getFormData<UserType>()
+  const formData = await getFormData<UserLoginType>()
   const params = {
     roleName: formData.username
   }
