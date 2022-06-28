@@ -1,7 +1,7 @@
 import { reactive } from 'vue'
 import { eachTree, treeMap, filter } from '@/utils/tree'
 import { findIndex } from '@/utils'
-import { useDictStoreWithOut } from '@/store/modules/dict'
+// import { useDictStoreWithOut } from '@/store/modules/dict'
 import { useI18n } from '@/hooks/web/useI18n'
 import type { AxiosPromise } from 'axios'
 
@@ -37,7 +37,7 @@ type CrudDescriptionsParams = {
   show?: boolean
 } & Omit<DescriptionsSchema, 'field'>
 
-const dictStore = useDictStoreWithOut()
+// const dictStore = useDictStoreWithOut()
 
 const { t } = useI18n()
 
@@ -98,11 +98,28 @@ const filterSearchSchema = (crudSchema: CrudSchema[], allSchemas: AllSchemas): F
         label: schemaItem.label
       }
 
-      if (searchSchemaItem.dictName) {
-        // 如果有 dictName 则证明是从字典中获取数据
-        const dictArr = dictStore.getDictObj[searchSchemaItem.dictName]
-        searchSchemaItem.componentProps!.options = filterOptions(dictArr)
-      } else if (searchSchemaItem.api) {
+      // if (searchSchemaItem.dictName) {
+      //   // 如果有 dictName 则证明是从字典中获取数据
+      //   const dictArr = dictStore.getDictObj[searchSchemaItem.dictName]
+      //   searchSchemaItem.componentProps!.options = filterOptions(dictArr)
+      // } else if (searchSchemaItem.api) {
+      //   searchRequestTask.push(async () => {
+      //     const res = await (searchSchemaItem.api as () => AxiosPromise)()
+      //     if (res) {
+      //       const index = findIndex(allSchemas.searchSchema, (v: FormSchema) => {
+      //         return v.field === searchSchemaItem.field
+      //       })
+      //       if (index !== -1) {
+      //         allSchemas.searchSchema[index]!.componentProps!.options = filterOptions(
+      //           res.data,
+      //           searchSchemaItem.componentProps.optionsAlias?.labelField
+      //         )
+      //       }
+      //     }
+      //   })
+      // }
+
+      if (searchSchemaItem.api) {
         searchRequestTask.push(async () => {
           const res = await (searchSchemaItem.api as () => AxiosPromise)()
           if (res) {
