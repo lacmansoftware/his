@@ -8,7 +8,7 @@ import { ref, h } from 'vue'
 import { ElTag, ElButton } from 'element-plus'
 
 interface Params {
-  pageIndex?: number
+  pageNum?: number
   pageSize?: number
 }
 
@@ -67,7 +67,7 @@ let tableDataList = ref<TableData[]>([])
 const getTableList = async (params?: Params) => {
   const res = await getTableListApi(
     params || {
-      pageIndex: 1,
+      pageNum: 1,
       pageSize: 10
     }
   )

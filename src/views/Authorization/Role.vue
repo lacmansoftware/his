@@ -8,7 +8,7 @@ import { ref, h } from 'vue'
 import { ElButton } from 'element-plus'
 
 interface Params {
-  pageIndex?: number
+  pageNum?: number
   pageSize?: number
 }
 
@@ -55,7 +55,7 @@ let tableDataList = ref<UserType[]>([])
 const getTableList = async (params?: Params) => {
   const res = await getUserListApi({
     params: params || {
-      pageIndex: 1,
+      pageNum: 1,
       pageSize: 10
     }
   })

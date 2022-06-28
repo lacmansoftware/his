@@ -13,13 +13,13 @@ export default [
     method: 'get',
     timeout,
     response: ({ query }) => {
-      const { title, pageIndex, pageSize } = query
+      const { title, pageNum, pageSize } = query
       const mockList = List.filter((item) => {
         if (title && item.title.indexOf(title) < 0) return false
         return true
       })
       const pageList = mockList.filter(
-        (_, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1)
+        (_, index) => index < pageSize * pageNum && index >= pageSize * (pageNum - 1)
       )
       return {
         code: result_code,

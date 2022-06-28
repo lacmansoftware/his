@@ -31,14 +31,14 @@ export default [
     url: '/user/list',
     method: 'get',
     response: ({ query }) => {
-      const { username, pageIndex, pageSize } = query
+      const { username, pageNum, pageSize } = query
 
       const mockList = List.filter((item) => {
         if (username && item.username.indexOf(username) < 0) return false
         return true
       })
       const pageList = mockList.filter(
-        (_, index) => index < pageSize * pageIndex && index >= pageSize * (pageIndex - 1)
+        (_, index) => index < pageSize * pageNum && index >= pageSize * (pageNum - 1)
       )
 
       return {
