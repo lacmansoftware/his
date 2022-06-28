@@ -57,7 +57,7 @@ export const useTable = <T = any>(config?: UseTableConfig<T>) => {
     return {
       ...tableObject.params,
       pageSize: tableObject.pageSize,
-      pageIndex: tableObject.currentPage
+      pageNum: tableObject.currentPage
     }
   })
 
@@ -126,8 +126,8 @@ export const useTable = <T = any>(config?: UseTableConfig<T>) => {
         tableObject.loading = false
       })
       if (res) {
-        tableObject.tableList = get(res.data || {}, config?.response.list as string)
-        tableObject.total = get(res.data || {}, config?.response?.total as string) || 0
+        tableObject.tableList = get(res || {}, config?.response.list as string)
+        tableObject.total = get(res || {}, config?.response?.total as string) || 0
       }
     },
     setProps: async (props: TableProps = {}) => {
@@ -147,7 +147,7 @@ export const useTable = <T = any>(config?: UseTableConfig<T>) => {
       tableObject.currentPage = 1
       tableObject.params = Object.assign(tableObject.params, {
         pageSize: tableObject.pageSize,
-        pageIndex: tableObject.currentPage,
+        pageNum: tableObject.currentPage,
         ...data
       })
       methods.getList()
