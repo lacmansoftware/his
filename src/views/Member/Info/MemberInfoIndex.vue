@@ -4,9 +4,9 @@ import { Search } from '@/components/Search'
 import { useI18n } from '@/hooks/web/useI18n'
 import { ElButton, ElTag } from 'element-plus'
 import { Table } from '@/components/Table'
-import { getTableListApi, delTableListApi } from '@/api/table'
+import { getTableListApi, delTableListApi } from '@/api/member'
 import { useTable } from '@/hooks/web/useTable'
-import { TableData } from '@/api/table/types'
+import { MemberInfoTableData } from '@/api/member/types'
 import { h, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useEmitt } from '@/hooks/web/useEmitt'
@@ -18,11 +18,11 @@ defineOptions({
 
 const { push } = useRouter()
 
-const { register, tableObject, methods } = useTable<TableData>({
+const { register, tableObject, methods } = useTable<MemberInfoTableData>({
   getListApi: getTableListApi,
   delListApi: delTableListApi,
   response: {
-    list: 'list',
+    list: 'data',
     total: 'total'
   }
 })
@@ -209,12 +209,19 @@ const action = (row: TableData, type: string) => {
       </ElButton>
     </div>
 
-    <Table v-model:pageSize="tableObject.pageSize" v-model:currentPage="tableObject.currentPage"
-      :columns="allSchemas.tableColumns" :data="tableObject.tableList" :loading="tableObject.loading" :pagination="{
+    <Table
+      v-model:pageSize="tableObject.pageSize"
+      v-model:currentPage="tableObject.currentPage"
+      :columns="allSchemas.tableColumns"
+      :data="tableObject.tableList"
+      :loading="tableObject.loading"
+      :pagination="{
         total: tableObject.total
-      }" @register="register">
+      }"
+      @register="register"
+    >
       <template #action="{ row }">
-        <!-- <ElButton type="primary" @click="action(row, 'edit')">
+        <ElButton type="primary" @click="action(row, 'edit')">
           {{ t('exampleDemo.edit') }}
         </ElButton>
         <ElButton type="success" @click="action(row, 'detail')">
@@ -222,7 +229,7 @@ const action = (row: TableData, type: string) => {
         </ElButton>
         <ElButton type="danger" @click="delData(row, false)">
           {{ t('exampleDemo.del') }}
-        </ElButton> -->
+        </ElButton>
       </template>
     </Table>
   </ContentWrap>

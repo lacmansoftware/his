@@ -6,7 +6,18 @@ import qs from 'qs'
 
 import { config } from '@/config/axios/config'
 
+import { useCache } from '@/hooks/web/useCache'
+import { resetRouter, default as router } from '@/router'
+// import { useRouter } from 'vue-router'
+import { useTagsViewStore } from '@/store/modules/tagsView'
+
 const { result_code, base_url } = config
+
+const tagsViewStore = useTagsViewStore()
+
+const { wsCache } = useCache()
+
+// const { replace } = useRouter()
 
 export const PATH_URL = base_url[import.meta.env.VITE_API_BASEPATH]
 
@@ -54,7 +65,14 @@ service.interceptors.response.use(
     if (response.data.code === result_code) {
       return response
     } else {
-      ElMessage.error(response.data.message)
+      ElMessage.error(response.data.msg)
+
+      if (response.data.code === 401 && response.data.msg === '登陆过期！') {
+        wsCache.clear()
+        tagsViewStore.delAllViews()
+        resetRouter() // 重置静态路由表
+        router.replace('/login')
+      }
     }
   },
   (error: AxiosError) => {

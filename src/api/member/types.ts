@@ -1,9 +1,11 @@
 export type MemberInfoTableData = {
+  id: string
   memberName: string
   mobile: string
   gender: string
   birthday: string
   archivesNo: string
+  profileLocation: string
   profileLocationName: string
   identityTypeName: string
   identityCode: string
@@ -14,5 +16,5 @@ export type MemberInfoTableData = {
   cardCreateTime: string
   createUser: string
   createHospital: string
-  index: string
+  pageviews: number
 }
