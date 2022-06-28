@@ -14,8 +14,10 @@ const config: {
    */
   base_url: {
     // 开发环境接口前缀
+    // base: 'http://192.168.108.87:8080/http://35.194.244.237:9998/',
+    // base: 'http://cors-everywhere.herokuapp.com/http://35.194.244.237:9998/',
     // base: 'http://35.194.244.237:9998/',
-    base: '',
+    base: 'api',
 
     // 打包开发环境接口前缀
     dev: '',
@@ -30,7 +32,7 @@ const config: {
   /**
    * 接口成功返回状态码
    */
-  result_code: '0000',
+  result_code: 0,
 
   /**
    * 接口请求超时时间
