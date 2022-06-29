@@ -5,7 +5,6 @@ const request = useAxios()
 
 export const getTableListApi = async (params: any): Promise<IResponse> => {
   const res = await request.get({ url: '/member/info/list', params })
-  console.log(res.data)
   return res && res.data
 }
 
