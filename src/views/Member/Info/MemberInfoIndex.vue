@@ -7,15 +7,25 @@ import { Table } from '@/components/Table'
 import { getTableListApi, delTableListApi } from '@/api/member'
 import { useTable } from '@/hooks/web/useTable'
 import { MemberInfoTableData } from '@/api/member/types'
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useEmitt } from '@/hooks/web/useEmitt'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { inDict, getAgeByBirthday } from '@/utils/common'
 import { callIcon, msgIcon, plusIcon, mergeIcon } from '@/utils/iconList'
+import { searchConfig, crudConfig } from './index.ts'
+import { getHospitalsApi } from '@/api/member/index.ts'
 
 defineOptions({
   name: 'MemberInfoIndex'
+})
+
+let hospitals: string[]
+
+onMounted(() => {
+  getHospitalsApi().then((res: any) => {
+    hospitals = res?.data
+  })
 })
 
 const { push } = useRouter()
@@ -89,7 +99,10 @@ const searchSchema = reactive<FormSchema[]>([
   {
     field: 'profileLocation',
     label: '門店',
-    component: 'Select'
+    component: 'Select',
+    componentProps: {
+      options: []
+    }
   },
   {
     field: 'firstDisease',
@@ -97,102 +110,7 @@ const searchSchema = reactive<FormSchema[]>([
     component: 'Select'
   }
 ])
-
-const crudSchemas = reactive<CrudSchema[]>([
-  {
-    label: '操作',
-    field: 'action',
-    width: '120px'
-  },
-  {
-    label: '姓名',
-    field: 'memberName',
-    placeholder: '請填寫'
-  },
-  {
-    label: '手機號碼',
-    field: 'mobile',
-    width: '135px',
-    placeholder: '請填寫'
-  },
-  {
-    label: '性別',
-    field: 'gender',
-    width: '60px'
-  },
-  {
-    label: '年齡',
-    field: 'age',
-    width: '60px'
-  },
-  {
-    label: '生日',
-    field: 'birthday',
-    width: '100px'
-  },
-  {
-    label: '檔案號',
-    field: 'archivesNo',
-    width: '100px',
-    placeholder: '請填寫'
-  },
-  {
-    label: '檔案存放地',
-    field: 'profileLocationName',
-    width: '125px',
-    placeholder: '請選擇'
-  },
-  {
-    label: '證件類型',
-    field: 'identityTypeName',
-    width: '60px',
-    placeholder: '請選擇'
-  },
-  {
-    label: '證件號碼',
-    field: 'identityCode',
-    width: '100px',
-    placeholder: '請填寫'
-  },
-  {
-    label: '會員級別',
-    field: 'levelName',
-    width: '100px',
-    placeholder: '請選擇'
-  },
-  {
-    label: '會員卡狀態',
-    field: 'cardStatus',
-    width: '100px',
-    placeholder: '請選擇'
-  },
-  {
-    label: '會員卡號',
-    field: 'cardNum',
-    width: '100px',
-    placeholder: '請填寫會員卡號'
-  },
-  {
-    label: '卡內餘額',
-    field: 'balance',
-    width: '100px'
-  },
-  {
-    label: '辦卡時間',
-    field: 'cardCreateTime',
-    width: '100px'
-  },
-  {
-    label: '創建人',
-    field: 'createUser',
-    width: '100px'
-  },
-  {
-    label: '創建門店',
-    field: 'createHospital',
-    width: '100px'
-  }
-])
+const crudSchemas = reactive<CrudSchema[]>(crudConfig)
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
