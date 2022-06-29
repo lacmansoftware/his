@@ -2,7 +2,7 @@
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElTag } from 'element-plus'
+import { CommonPicker, ElButton, ElTag, ElLink } from 'element-plus'
 import { Table } from '@/components/Table'
 import { getTableListApi, delTableListApi } from '@/api/member'
 import { useTable } from '@/hooks/web/useTable'
@@ -10,7 +10,9 @@ import { MemberInfoTableData } from '@/api/member/types'
 import { h, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useEmitt } from '@/hooks/web/useEmitt'
+import { useIcon } from '@/hooks/web/useIcon'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
+import { inDict, getAgeByBirthday } from '@/utils/common'
 
 defineOptions({
   name: 'MemberInfoIndex'
@@ -26,6 +28,10 @@ const { register, tableObject, methods } = useTable<MemberInfoTableData>({
     total: 'total'
   }
 })
+
+const callIcon = useIcon({ icon: 'ep:phone' })
+const msgIcon = useIcon({ icon: 'ep:chat-dot-round' })
+const alarmClock = useIcon({ icon: 'ep:alarm-clock' })
 
 const { getList, setSearchParams } = methods
 
@@ -43,6 +49,59 @@ useEmitt({
 
 const { t } = useI18n()
 
+const searchSchema = reactive<FormSchema[]>([
+  {
+    field: 'name',
+    label: '姓名',
+    component: 'Input'
+  },
+  {
+    field: 'mobile',
+    label: '手機號',
+    component: 'Input'
+  },
+  {
+    field: 'identityType',
+    label: '證件類型',
+    component: 'Select'
+  },
+  {
+    field: 'identityCode',
+    label: '證件號碼',
+    component: 'Input'
+  },
+  {
+    field: 'archivesNo',
+    label: '檔案號',
+    component: 'Input'
+  },
+  {
+    field: 'memberLevel',
+    label: '會員級別',
+    component: 'Select'
+  },
+  {
+    field: 'cardStatus',
+    label: '會員卡狀態',
+    component: 'Select'
+  },
+  {
+    field: 'memberCardNum',
+    label: '會員卡號',
+    component: 'Input'
+  },
+  {
+    field: 'profileLocation',
+    label: '門店',
+    component: 'Select'
+  },
+  {
+    field: 'firstDisease',
+    label: '病種',
+    component: 'Select'
+  }
+])
+
 const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
@@ -52,97 +111,69 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '姓名',
     field: 'memberName',
-    width: '120px',
-    search: {
-      show: true
-    },
     placeholder: '請填寫'
   },
   {
     label: '手機號碼',
     field: 'mobile',
     width: '135px',
-    search: {
-      show: true
-    },
     placeholder: '請填寫'
   },
   {
     label: '性別',
     field: 'gender',
-    width: '85px'
+    width: '60px'
   },
-  // {
-  //   label: '年齡',
-  //   field: 'birthday',
-  //   width: '60px'
-  // },
+  {
+    label: '年齡',
+    field: 'age',
+    width: '60px'
+  },
   {
     label: '生日',
     field: 'birthday',
-    width: '125px'
+    width: '100px'
   },
   {
     label: '檔案號',
     field: 'archivesNo',
-    width: '60px',
-    search: {
-      show: true
-    },
+    width: '100px',
     placeholder: '請填寫'
   },
   {
     label: '檔案存放地',
     field: 'profileLocationName',
     width: '125px',
-    search: {
-      show: true
-    },
     placeholder: '請選擇'
   },
   {
     label: '證件類型',
     field: 'identityTypeName',
     width: '60px',
-    search: {
-      show: true
-    },
     placeholder: '請選擇'
   },
   {
     label: '證件號碼',
     field: 'identityCode',
     width: '100px',
-    search: {
-      show: true
-    },
     placeholder: '請填寫'
   },
   {
     label: '會員級別',
     field: 'levelName',
     width: '100px',
-    search: {
-      show: true
-    },
     placeholder: '請選擇'
   },
   {
     label: '會員卡狀態',
     field: 'cardStatus',
     width: '100px',
-    search: {
-      show: true
-    },
     placeholder: '請選擇'
   },
   {
     label: '會員卡號',
     field: 'cardNum',
     width: '100px',
-    search: {
-      show: true
-    },
     placeholder: '請填寫會員卡號'
   },
   {
@@ -164,11 +195,6 @@ const crudSchemas = reactive<CrudSchema[]>([
     label: '創建門店',
     field: 'createHospital',
     width: '100px'
-  },
-  {
-    field: 'index',
-    label: t('tableDemo.index'),
-    type: 'index'
   }
 ])
 
@@ -180,7 +206,7 @@ const AddAction = () => {
 
 const delLoading = ref(false)
 
-const delData = async (row: TableData | null, multiple: boolean) => {
+const delData = async (row: MemberInfoTableData | null, multiple: boolean) => {
   tableObject.currentRow = row
   const { delList, getSelections } = methods
   const selections = await getSelections()
@@ -193,14 +219,22 @@ const delData = async (row: TableData | null, multiple: boolean) => {
   })
 }
 
-const action = (row: TableData, type: string) => {
+const action = (row: MemberInfoTableData, type: string) => {
   push(`/example/example-${type}?id=${row.id}`)
+}
+
+const outCall = (mobile: string) => {
+  console.log('out going call: ', mobile)
+}
+
+const sendMsg = (mobile: string) => {
+  console.log('out going call: ', mobile)
 }
 </script>
 
 <template>
   <ContentWrap>
-    <Search :schema="allSchemas.searchSchema" @search="setSearchParams" @reset="setSearchParams" />
+    <Search :schema="searchSchema" @search="setSearchParams" @reset="setSearchParams" />
 
     <div class="mb-10px">
       <ElButton type="primary" @click="AddAction">{{ t('exampleDemo.add') }}</ElButton>
@@ -221,16 +255,31 @@ const action = (row: TableData, type: string) => {
       @register="register"
     >
       <template #action="{ row }">
-        <ElButton type="primary" @click="action(row, 'edit')">
+        <ElLink type="primary" @click="action(row, 'edit')">
           {{ t('exampleDemo.edit') }}
-        </ElButton>
-        <ElButton type="success" @click="action(row, 'detail')">
+        </ElLink>
+        <ElLink type="success" @click="action(row, 'detail')">
           {{ t('exampleDemo.detail') }}
-        </ElButton>
-        <ElButton type="danger" @click="delData(row, false)">
+        </ElLink>
+        <ElLink type="danger" @click="delData(row, false)">
           {{ t('exampleDemo.del') }}
-        </ElButton>
+        </ElLink>
+      </template>
+      <template #gender="{ row }">
+        {{ inDict(row.gender, 'sex') }}
+      </template>
+      <template #age="{ row }">
+        {{ getAgeByBirthday(row.birthday) }}
+      </template>
+      <template #mobile="{ row }">
+        <div class="flex items-center gap-1">
+          <span>{{ row.mobile }}</span>
+          <ElLink type="primary" @click="outCall(row.mobile)" title="打電話" :icon="callIcon" />
+          <ElLink type="primary" @click="sendMsg(row.mobile)" title="發短信" :icon="msgIcon" />
+        </div>
       </template>
     </Table>
   </ContentWrap>
 </template>
+
+<style lang="less" scoped></style>
