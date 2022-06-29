@@ -2,17 +2,17 @@
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { useI18n } from '@/hooks/web/useI18n'
-import { CommonPicker, ElButton, ElTag, ElLink } from 'element-plus'
+import { ElButton, ElTag, ElLink } from 'element-plus'
 import { Table } from '@/components/Table'
 import { getTableListApi, delTableListApi } from '@/api/member'
 import { useTable } from '@/hooks/web/useTable'
 import { MemberInfoTableData } from '@/api/member/types'
-import { h, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useEmitt } from '@/hooks/web/useEmitt'
-import { useIcon } from '@/hooks/web/useIcon'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { inDict, getAgeByBirthday } from '@/utils/common'
+import { callIcon, msgIcon, plusIcon, mergeIcon } from '@/utils/iconList'
 
 defineOptions({
   name: 'MemberInfoIndex'
@@ -28,10 +28,6 @@ const { register, tableObject, methods } = useTable<MemberInfoTableData>({
     total: 'total'
   }
 })
-
-const callIcon = useIcon({ icon: 'ep:phone' })
-const msgIcon = useIcon({ icon: 'ep:chat-dot-round' })
-const alarmClock = useIcon({ icon: 'ep:alarm-clock' })
 
 const { getList, setSearchParams } = methods
 
@@ -201,7 +197,7 @@ const crudSchemas = reactive<CrudSchema[]>([
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
 const AddAction = () => {
-  push('/example/example-add')
+  push('/member/info-add')
 }
 
 const delLoading = ref(false)
@@ -234,13 +230,19 @@ const sendMsg = (mobile: string) => {
 
 <template>
   <ContentWrap>
-    <Search :schema="searchSchema" @search="setSearchParams" @reset="setSearchParams" />
+    <Search
+      :schema="searchSchema"
+      @search="setSearchParams"
+      @reset="setSearchParams"
+      expand
+      expand-field="archivesNo"
+    />
 
     <div class="mb-10px">
-      <ElButton type="primary" @click="AddAction">{{ t('exampleDemo.add') }}</ElButton>
-      <ElButton :loading="delLoading" type="danger" @click="delData(null, true)">
-        {{ t('exampleDemo.del') }}
-      </ElButton>
+      <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增客人</ElButton>
+      <ElButton :loading="delLoading" type="danger" @click="delData(null, true)" :icon="mergeIcon"
+        >合併客人</ElButton
+      >
     </div>
 
     <Table
