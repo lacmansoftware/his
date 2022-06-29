@@ -12,7 +12,10 @@ const searchConfig = [
   {
     field: 'identityType',
     label: '證件類型',
-    component: 'Select'
+    component: 'Select',
+    componentProps: {
+      options: []
+    }
   },
   {
     field: 'identityCode',
@@ -27,12 +30,18 @@ const searchConfig = [
   {
     field: 'memberLevel',
     label: '會員級別',
-    component: 'Select'
+    component: 'Select',
+    componentProps: {
+      options: []
+    }
   },
   {
     field: 'cardStatus',
     label: '會員卡狀態',
-    component: 'Select'
+    component: 'Select',
+    componentProps: {
+      options: []
+    }
   },
   {
     field: 'memberCardNum',
@@ -44,18 +53,16 @@ const searchConfig = [
     label: '門店',
     component: 'Select',
     componentProps: {
-      options: [
-        {
-          label: 'abc',
-          value: '1'
-        }
-      ]
+      options: []
     }
   },
   {
     field: 'firstDisease',
     label: '病種',
-    component: 'Select'
+    component: 'Select',
+    componentProps: {
+      options: []
+    }
   }
 ]
 

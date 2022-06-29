@@ -14,18 +14,35 @@ import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { inDict, getAgeByBirthday } from '@/utils/common'
 import { callIcon, msgIcon, plusIcon, mergeIcon } from '@/utils/iconList'
 import { searchConfig, crudConfig } from './index.ts'
-import { getHospitalsApi } from '@/api/member/index.ts'
+import { getApi } from '@/api/member/index.ts'
 
 defineOptions({
   name: 'MemberInfoIndex'
 })
 
-let hospitals: string[]
+const store = {
+  certificate: ref([]),
+  level: ref([]),
+  cardStatus: ref([]),
+  hospital: ref([]),
+  disease: ref([])
+}
+
+const setStore = (key: string, url: string, valueField: string, labelField: string) => {
+  getApi(url).then((res: any) => {
+    store[key].value = res?.data.map((item) => ({
+      label: item[labelField],
+      value: item[valueField]
+    }))
+  })
+}
 
 onMounted(() => {
-  getHospitalsApi().then((res: any) => {
-    hospitals = res?.data
-  })
+  setStore('certificate', '/sys/dict/type/MEMBER_Certificate', 'code', 'value')
+  setStore('level', '/sys/member/level', 'id', 'levelName')
+  setStore('cardStatus', '/sys/dict/type/MEMBER_CardStatus', 'code', 'value')
+  setStore('hospital', '/sys/hospital', 'id', 'name')
+  setStore('disease', '/sys/diseases', 'id', 'name')
 })
 
 const { push } = useRouter()
@@ -69,7 +86,10 @@ const searchSchema = reactive<FormSchema[]>([
   {
     field: 'identityType',
     label: '證件類型',
-    component: 'Select'
+    component: 'Select',
+    componentProps: {
+      options: store.certificate
+    }
   },
   {
     field: 'identityCode',
@@ -84,12 +104,18 @@ const searchSchema = reactive<FormSchema[]>([
   {
     field: 'memberLevel',
     label: '會員級別',
-    component: 'Select'
+    component: 'Select',
+    componentProps: {
+      options: store.level
+    }
   },
   {
     field: 'cardStatus',
     label: '會員卡狀態',
-    component: 'Select'
+    component: 'Select',
+    componentProps: {
+      options: store.cardStatus
+    }
   },
   {
     field: 'memberCardNum',
@@ -101,15 +127,19 @@ const searchSchema = reactive<FormSchema[]>([
     label: '門店',
     component: 'Select',
     componentProps: {
-      options: []
+      options: store.hospital
     }
   },
   {
     field: 'firstDisease',
     label: '病種',
-    component: 'Select'
+    component: 'Select',
+    componentProps: {
+      options: store.disease
+    }
   }
 ])
+
 const crudSchemas = reactive<CrudSchema[]>(crudConfig)
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
@@ -138,7 +168,7 @@ const action = (row: MemberInfoTableData, type: string) => {
 }
 
 const outCall = (mobile: string) => {
-  console.log('out going call: ', mobile)
+  console.log('out going call: ', searchSchema[8].componentProps.options)
 }
 
 const sendMsg = (mobile: string) => {

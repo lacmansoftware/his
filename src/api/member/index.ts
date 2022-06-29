@@ -23,7 +23,7 @@ export const delTableListApi = async (ids: string[] | number[]): Promise<IRespon
   return res && res.data
 }
 
-export const getHospitalsApi = async (): Promise<IResponse> => {
-  const res = await request.get({ url: '/sys/hospital' })
+export const getApi = async (url: string): Promise<IResponse> => {
+  const res = await request.get({ url: url })
   return res && res.data
 }
