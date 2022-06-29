@@ -64,15 +64,13 @@ service.interceptors.response.use(
   (response: AxiosResponse<Recordable>) => {
     if (response.data.code === result_code) {
       return response
+    } else if (response.data.code === 401 && response.data.msg === '登陆过期！') {
+      wsCache.clear()
+      tagsViewStore.delAllViews()
+      resetRouter() // 重置静态路由表
+      router.replace('/login')
     } else {
       ElMessage.error(response.data.msg)
-
-      if (response.data.code === 401 && response.data.msg === '登陆过期！') {
-        wsCache.clear()
-        tagsViewStore.delAllViews()
-        resetRouter() // 重置静态路由表
-        router.replace('/login')
-      }
     }
   },
   (error: AxiosError) => {
