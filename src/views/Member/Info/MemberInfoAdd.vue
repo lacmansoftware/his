@@ -8,6 +8,7 @@ import { useRouter } from 'vue-router'
 import { saveTableApi } from '@/api/table'
 import { TableData } from '@/api/table/types'
 import { useEmitt } from '@/hooks/web/useEmitt'
+import { saveIcon } from '@/utils/iconList'
 
 const { emitter } = useEmitt()
 
@@ -40,11 +41,11 @@ const save = async () => {
 </script>
 
 <template>
-  <ContentDetailWrap :title="t('exampleDemo.add')" @back="push('/example/example-page')">
+  <ContentDetailWrap title="新增客人" @back="push('/member/info-index')">
     <Write ref="writeRef" />
 
     <template #right>
-      <ElButton type="primary" :loading="loading" @click="save">
+      <ElButton type="primary" :loading="loading" @click="save" :icon="saveIcon">
         {{ t('exampleDemo.save') }}
       </ElButton>
     </template>

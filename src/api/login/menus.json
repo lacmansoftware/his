@@ -115,7 +115,7 @@
       "pageSize": 2147483647,
       "name": "新增客人",
       "seq": 2,
-      "url": null,
+      "url": "/member/info-add",
       "icon": null,
       "resourceType": "b",
       "parentId": "0101",
@@ -5084,6 +5084,98 @@
       "resourceType": "m",
       "parentId": "20",
       "platform": "normal"
+    },
+    {
+      "url": "/components",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/form",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/form/default-form",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/form/use-form",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/form/ref-form",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/table",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/table/default-table",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/table/use-table",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/table/ref-table",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/editor-demo",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/editor-demo/editor",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/search",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/descriptions",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/image-viewer",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/dialog",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/icon",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/echart",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/count-to",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/qrcode",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/highlight",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/components/infotip",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/Components/InputPassword",
+      "isDeleted": "N"
+    },
+    {
+      "url": "/Components/Sticky",
+      "isDeleted": "N"
     }
   ],
   "total": 296,
