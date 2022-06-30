@@ -13,8 +13,8 @@ import { useEmitt } from '@/hooks/web/useEmitt'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { inDict, getAgeByBirthday } from '@/utils/common'
 import { callIcon, msgIcon, plusIcon, mergeIcon } from '@/utils/iconList'
-import { searchConfig, crudConfig } from './index.ts'
-import { getApi } from '@/api/member/index.ts'
+import { searchConfig, crudConfig } from './index'
+import { getApi } from '@/api/member/index'
 
 defineOptions({
   name: 'MemberInfoIndex'
@@ -72,85 +72,214 @@ useEmitt({
 
 const { t } = useI18n()
 
-const searchSchema = reactive<FormSchema[]>([
+const crudSchemas = reactive<CrudSchema[]>([
+  {
+    label: '操作',
+    field: 'action',
+    width: '120px'
+  },
+  {
+    label: '姓名',
+    field: 'memberName',
+    placeholder: '請填寫'
+  },
   {
     field: 'name',
     label: '姓名',
-    component: 'Input'
+    form: {
+      component: 'Input',
+      colProps: {
+        span: 24
+      }
+    },
+    table: {
+      show: false
+    },
+    search: {
+      show: true
+    }
   },
   {
+    label: '手機號碼',
     field: 'mobile',
-    label: '手機號',
-    component: 'Input'
+    width: '135px',
+    placeholder: '請填寫',
+    form: {
+      component: 'Input',
+      show: true
+    },
+    search: {
+      show: true
+    }
+  },
+  {
+    label: '性別',
+    field: 'gender',
+    width: '60px'
+  },
+  {
+    label: '年齡',
+    field: 'age',
+    width: '60px'
+  },
+  {
+    label: '生日',
+    field: 'birthday',
+    width: '100px'
   },
   {
     field: 'identityType',
     label: '證件類型',
-    component: 'Select',
-    componentProps: {
-      options: store.certificate
+    table: {
+      show: false
+    },
+    search: {
+      component: 'Select',
+      componentProps: {
+        options: store.certificate
+      },
+      show: true
     }
   },
   {
-    field: 'identityCode',
-    label: '證件號碼',
-    component: 'Input'
-  },
-  {
-    field: 'archivesNo',
     label: '檔案號',
-    component: 'Input'
-  },
-  {
-    field: 'memberLevel',
-    label: '會員級別',
-    component: 'Select',
-    componentProps: {
-      options: store.level
+    field: 'archivesNo',
+    width: '100px',
+    placeholder: '請填寫',
+    search: {
+      component: 'Input',
+      show: true
     }
   },
   {
-    field: 'cardStatus',
-    label: '會員卡狀態',
-    component: 'Select',
-    componentProps: {
-      options: store.cardStatus
-    }
-  },
-  {
-    field: 'memberCardNum',
-    label: '會員卡號',
-    component: 'Input'
+    label: '檔案存放地',
+    field: 'profileLocationName',
+    width: '125px',
+    placeholder: '請選擇'
   },
   {
     field: 'profileLocation',
     label: '門店',
-    component: 'Select',
-    componentProps: {
-      options: store.hospital
+    table: {
+      show: false
+    },
+    search: {
+      component: 'Select',
+      componentProps: {
+        options: store.hospital
+      },
+      show: true
     }
+  },
+  {
+    label: '證件類型',
+    field: 'identityTypeName',
+    width: '60px',
+    placeholder: '請選擇'
+  },
+  {
+    label: '證件號碼',
+    field: 'identityCode',
+    width: '100px',
+    placeholder: '請填寫',
+    search: {
+      component: 'Input',
+      show: true
+    }
+  },
+  {
+    label: '會員級別',
+    field: 'levelName',
+    width: '100px',
+    placeholder: '請選擇'
+  },
+  {
+    label: '會員級別',
+    field: 'memberLevel',
+
+    table: {
+      show: false
+    },
+    search: {
+      component: 'Select',
+      componentProps: {
+        options: store.level
+      },
+      show: true
+    }
+  },
+  {
+    label: '會員卡狀態',
+    field: 'cardStatus',
+    width: '100px',
+    placeholder: '請選擇',
+
+    table: {
+      show: false
+    },
+    search: {
+      component: 'Select',
+      componentProps: {
+        options: store.cardStatus
+      },
+      show: true
+    }
+  },
+  {
+    label: '會員卡號',
+    field: 'cardNum',
+    width: '100px',
+    placeholder: '請填寫會員卡號'
+  },
+  {
+    field: 'memberCardNum',
+    label: '會員卡號',
+    table: {
+      show: false
+    },
+    search: {
+      component: 'Input',
+      componentProps: {
+        options: store.level
+      },
+      show: true
+    }
+  },
+  {
+    label: '卡內餘額',
+    field: 'balance',
+    width: '100px'
+  },
+  {
+    label: '辦卡時間',
+    field: 'cardCreateTime',
+    width: '100px'
+  },
+  {
+    label: '創建人',
+    field: 'createUser',
+    width: '100px'
+  },
+  {
+    label: '創建門店',
+    field: 'createHospital',
+    width: '100px'
   },
   {
     field: 'firstDisease',
     label: '病種',
-    component: 'Select',
-    componentProps: {
-      // options: store.disease
-      options: []
+    table: {
+      show: false
+    },
+    search: {
+      component: 'Input',
+      componentProps: {
+        options: store.disease
+      },
+      show: true
     }
-    // ,
-    // api: getDiseaseApi()
-    // api: async () => {
-    //   const diseases = await getApi('/sys/diseases')
-    //   return diseases.map((item) => ({
-    //     label: item.name,
-    //     value: item.id
-    //   }))
-    // }
   }
 ])
-
-const crudSchemas = reactive<CrudSchema[]>(crudConfig)
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
@@ -189,7 +318,7 @@ const sendMsg = (mobile: string) => {
 <template>
   <ContentWrap>
     <Search
-      :schema="searchSchema"
+      :schema="allSchemas.searchSchema"
       @search="setSearchParams"
       @reset="setSearchParams"
       expand
