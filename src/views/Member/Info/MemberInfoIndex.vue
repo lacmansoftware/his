@@ -14,7 +14,7 @@ import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { inDict, getAgeByBirthday } from '@/utils/common'
 import { callIcon, msgIcon, plusIcon, mergeIcon } from '@/utils/iconList'
 import { searchConfig, crudConfig } from './index.ts'
-import { getApi } from '@/api/member/index.ts'
+import { getApi, getDiseaseApi } from '@/api/member/index.ts'
 
 defineOptions({
   name: 'MemberInfoIndex'
@@ -135,8 +135,17 @@ const searchSchema = reactive<FormSchema[]>([
     label: '病種',
     component: 'Select',
     componentProps: {
-      options: store.disease
-    }
+      // options: store.disease
+      options: []
+    },
+    api: getDiseaseApi()
+    // api: async () => {
+    //   const diseases = await getApi('/sys/diseases')
+    //   return diseases.map((item) => ({
+    //     label: item.name,
+    //     value: item.id
+    //   }))
+    // }
   }
 ])
 
