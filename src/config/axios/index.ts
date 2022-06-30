@@ -68,7 +68,10 @@ service.interceptors.response.use(
       wsCache.clear()
       tagsViewStore.delAllViews()
       resetRouter() // 重置静态路由表
-      router.push('/login')
+      router.replace({
+        path: '/login'
+      })
+      location.reload()
     } else {
       ElMessage.error(response.data.msg)
     }
