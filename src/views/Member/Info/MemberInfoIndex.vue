@@ -14,18 +14,18 @@ import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { inDict, getAgeByBirthday } from '@/utils/common'
 import { callIcon, msgIcon, plusIcon, mergeIcon } from '@/utils/iconList'
 import { searchConfig, crudConfig } from './index.ts'
-import { getApi, getDiseaseApi } from '@/api/member/index.ts'
+import { getApi } from '@/api/member/index.ts'
 
 defineOptions({
   name: 'MemberInfoIndex'
 })
 
 const store = {
-  certificate: ref([]),
-  level: ref([]),
-  cardStatus: ref([]),
-  hospital: ref([]),
-  disease: ref([])
+  certificate: ref<ComponentOptions[]>([]),
+  level: ref<ComponentOptions[]>([]),
+  cardStatus: ref<ComponentOptions[]>([]),
+  hospital: ref<ComponentOptions[]>([]),
+  disease: ref<ComponentOptions[]>([])
 }
 
 const setStore = (key: string, url: string, valueField: string, labelField: string) => {
@@ -137,8 +137,9 @@ const searchSchema = reactive<FormSchema[]>([
     componentProps: {
       // options: store.disease
       options: []
-    },
-    api: getDiseaseApi()
+    }
+    // ,
+    // api: getDiseaseApi()
     // api: async () => {
     //   const diseases = await getApi('/sys/diseases')
     //   return diseases.map((item) => ({

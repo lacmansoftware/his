@@ -92,7 +92,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     path: '/member',
     component: Layout,
     redirect: '/member/info-index',
-    name: 'Member',
+    name: 'MemberInfoIndex',
     meta: {
       title: '會員管理',
       icon: 'ep:management',
