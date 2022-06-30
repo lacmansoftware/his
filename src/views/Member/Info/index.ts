@@ -1,71 +1,3 @@
-const searchConfig = [
-  {
-    field: 'name',
-    label: '姓名',
-    component: 'Input'
-  },
-  {
-    field: 'mobile',
-    label: '手機號',
-    component: 'Input'
-  },
-  {
-    field: 'identityType',
-    label: '證件類型',
-    component: 'Select',
-    componentProps: {
-      options: []
-    }
-  },
-  {
-    field: 'identityCode',
-    label: '證件號碼',
-    component: 'Input'
-  },
-  {
-    field: 'archivesNo',
-    label: '檔案號',
-    component: 'Input'
-  },
-  {
-    field: 'memberLevel',
-    label: '會員級別',
-    component: 'Select',
-    componentProps: {
-      options: []
-    }
-  },
-  {
-    field: 'cardStatus',
-    label: '會員卡狀態',
-    component: 'Select',
-    componentProps: {
-      options: []
-    }
-  },
-  {
-    field: 'memberCardNum',
-    label: '會員卡號',
-    component: 'Input'
-  },
-  {
-    field: 'profileLocation',
-    label: '門店',
-    component: 'Select',
-    componentProps: {
-      options: []
-    }
-  },
-  {
-    field: 'firstDisease',
-    label: '病種',
-    component: 'Select',
-    componentProps: {
-      options: []
-    }
-  }
-]
-
 const crudConfig = [
   {
     label: '操作',
@@ -353,7 +285,7 @@ const writeConfig = [
   }
 ]
 
-export { searchConfig, crudConfig, writeConfig }
+export { crudConfig, writeConfig }
 
 // {
 //   field: 'birthdayHour',
