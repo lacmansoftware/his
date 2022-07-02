@@ -1,4 +1,5 @@
 import dict from '@/config/dictionary.json'
+import { pinyin } from 'pinyin-pro'
 
 export const inDict = (id, data) => {
   return dict[data].find((item) => item.id === id)?.value
@@ -45,4 +46,9 @@ export const getAgeByBirthday = function (birthday) {
     return months + '月'
   }
   return age + '歲'
+}
+
+export const getPinyinCode = (zhongwen: string) => {
+  const py = pinyin(zhongwen, { pattern: 'initial' })
+  return py.toUpperCase().replace(/\s/g, '')
 }
