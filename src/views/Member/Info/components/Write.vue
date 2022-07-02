@@ -21,7 +21,7 @@ const props = defineProps({
 })
 
 const rules = reactive({
-  memberName: [required()],
+  name: [required()],
   pinyinCode: [required()],
   gender: [required()],
   // mobile: [required(), isMobile()],

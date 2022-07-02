@@ -595,9 +595,6 @@ const crudSchemas = reactive<CrudSchema[]>([
     width: '100px',
     placeholder: '請選擇',
     form: { show: false },
-    table: {
-      show: false
-    },
     search: {
       component: 'Select',
       componentProps: {
@@ -612,8 +609,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     field: 'cardNum',
     width: '100px',
     placeholder: '請填寫會員卡號',
-    form: { show: false },
-    table: { show: false }
+    form: { show: false }
   },
   {
     field: 'memberCardNum',
@@ -898,6 +894,9 @@ const save = async () => {
       </template>
       <template #age="{ row }">
         {{ getAgeByBirthday(row.birthday) }}
+      </template>
+      <template #cardStatus="{ row }">
+        {{ !row.cardStatus ? '無卡' : inDict(row.cardStatus, 'memberCard.status') }}
       </template>
       <template #mobile="{ row }">
         <div class="flex items-center gap-1">
