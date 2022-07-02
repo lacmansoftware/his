@@ -1,8 +1,17 @@
 import dict from '@/config/dictionary.json'
 import { pinyin } from 'pinyin-pro'
 
-export const inDict = (id, data) => {
-  return dict[data].find((item) => item.id === id)?.value
+export const inDict = (val, data: string) => {
+  try {
+    const subOptions: string[] = data.split('.')
+    let obj: any = dict
+    subOptions.forEach((opt: string) => {
+      obj = obj[opt]
+    })
+    return obj.find((item) => item.value === val)?.label
+  } catch (error) {
+    return ''
+  }
 }
 
 export const getAgeByBirthday = function (birthday) {
