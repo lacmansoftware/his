@@ -9,7 +9,11 @@ export const getTableListApi = async (params: any): Promise<IResponse> => {
 }
 
 export const saveTableApi = async (data: Partial<MemberInfoTableData>): Promise<IResponse> => {
-  const res = await request.post({ url: '/example/save', data })
+  const res = await request.post({
+    url: '/member/info/add',
+    headerType: 'multipart/form-data; boundary=----WebKitFormBoundaryrINADu3DAxnEpXfP',
+    data
+  })
   return res && res.data
 }
 
