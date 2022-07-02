@@ -5,6 +5,7 @@ import { useForm } from '@/hooks/web/useForm'
 import { PropType, reactive, watch } from 'vue'
 import { MemberInfoTableData } from '@/api/member/types'
 import { useValidator } from '@/hooks/web/useValidator'
+import dict from '@/config/dictionary.json'
 
 const { required, isMobile } = useValidator()
 
@@ -73,7 +74,7 @@ const setPinyinCode = (item: any) => {
   <Form :rules="rules" @register="register">
     <template #birthdayLunar="form">
       <div class="w-[100%] flex">
-        <ElInput v-model="form['birthdayLunar']" :readonly="true" />
+        <ElInput v-model="form['birthdayLunar']" :disabled="true" />
         <ElSelect v-model="form['birthdayLunar2']">
           <ElOption
             v-for="item in temp"
@@ -86,17 +87,35 @@ const setPinyinCode = (item: any) => {
     </template>
     <template #hasChild="form">
       <div class="w-[100%] flex">
-        <ElSelect v-model="form['hasChild']" class="flex-auto w-[30%]">
+        <ElSelect
+          v-model="form['hasChild']"
+          class="flex-auto w-[30%]"
+          @change="handleHasChildChange"
+        >
           <ElOption
-            v-for="item in temp"
+            v-for="item in dict.hasChild"
             :key="item.value"
             :label="item.label"
             :value="item.value"
           />
         </ElSelect>
-        <ElInput v-model="form['boyNum']" class="flex-1" disabled />
+        <ElSelect v-model="form['boyNum']" class="flex-1" :disabled="form['hasChild'] !== 'Y'">
+          <ElOption
+            v-for="item in dict.numList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </ElSelect>
         <span class="flex-none mx-1">男</span>
-        <ElInput v-model="form['girlNum']" class="flex-1" disabled />
+        <ElSelect v-model="form['girlNum']" class="flex-1" :disabled="form['hasChild'] !== 'Y'">
+          <ElOption
+            v-for="item in dict.numList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </ElSelect>
         <span class="flex-none mx-1">女</span>
       </div>
     </template>

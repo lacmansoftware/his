@@ -37,6 +37,8 @@ const store = {
   nativePlace: ref<ComponentOptions[]>([]),
   nationality: ref<ComponentOptions[]>([]),
   education: ref<ComponentOptions[]>([]),
+  isMarried: ref<ComponentOptions[]>([]),
+  memberSource: ref<ComponentOptions[]>([]),
   disease: ref<ComponentOptions[]>([])
 }
 
@@ -62,6 +64,8 @@ onMounted(() => {
   setStore('nativePlace', '/sys/city/byLevel?level=1', 'id', 'name')
   setStore('nationality', '/sys/dict/childlist?type=MEMBER_Nation', 'code', 'value')
   setStore('education', '/sys/dict/type/MEMBER_Education', 'code', 'value')
+  setStore('isMarried', '/sys/dict/type/MEMBER_Married', 'code', 'value')
+  setStore('memberSource', '/sys/dict/type/MEMBER_Source', 'code', 'value')
 })
 
 const { push } = useRouter()
@@ -284,6 +288,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: {
       component: 'Select',
       componentProps: {
+        style: { width: '100%' },
         options: store.nativePlace
       },
       colProps: {
@@ -301,6 +306,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: {
       component: 'Select',
       componentProps: {
+        style: { width: '100%' },
         options: store.nationality
       },
       colProps: {
@@ -332,6 +338,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: {
       component: 'Select',
       componentProps: {
+        style: { width: '100%' },
         options: store.education
       },
       colProps: {
@@ -349,7 +356,8 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: {
       component: 'Select',
       componentProps: {
-        style: { width: '100%' }
+        style: { width: '100%' },
+        options: store.isMarried
       },
       colProps: {
         span: 8
@@ -411,7 +419,8 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: {
       component: 'Select',
       componentProps: {
-        style: { width: '100%' }
+        style: { width: '100%' },
+        options: store.memberSource
       },
       colProps: {
         span: 8
@@ -492,11 +501,10 @@ const crudSchemas = reactive<CrudSchema[]>([
       component: 'Select',
       componentProps: {
         style: { width: '100%' }
-      },
-      componentProps: {
         options: store.hospital
       },
-      colProps: { span: 16 }
+      colProps: { span: 16 },
+      show: true
     },
     table: { show: false },
     search: {
