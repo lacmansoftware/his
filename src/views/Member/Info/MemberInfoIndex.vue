@@ -158,6 +158,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: {
       component: 'Select',
       componentProps: {
+        style: { width: '100%' },
         options: dict.sex
       },
       colProps: {
@@ -210,6 +211,18 @@ const crudSchemas = reactive<CrudSchema[]>([
       colProps: {
         span: 8
       },
+      show: true
+    },
+    table: {
+      show: false
+    }
+  },
+  {
+    field: 'birthdayHour',
+    label: '',
+    form: {
+      component: 'Hidden',
+      colProps: { span: 0 },
       show: true
     },
     table: {
@@ -378,6 +391,34 @@ const crudSchemas = reactive<CrudSchema[]>([
       },
       colProps: {
         span: 8
+      },
+      show: true
+    },
+    table: {
+      show: false
+    }
+  },
+  {
+    field: 'boyNum',
+    label: '',
+    form: {
+      component: 'Hidden',
+      colProps: {
+        span: 0
+      },
+      show: true
+    },
+    table: {
+      show: false
+    }
+  },
+  {
+    field: 'girlNum',
+    label: '',
+    form: {
+      component: 'Hidden',
+      colProps: {
+        span: 0
       },
       show: true
     },
@@ -759,6 +800,17 @@ const crudSchemas = reactive<CrudSchema[]>([
       },
       colProps: { span: 24 },
       show: true
+    },
+    table: { show: false }
+  },
+  {
+    field: 'md5',
+    label: '',
+    form: {
+      component: 'Hidden',
+      colProps: { span: 0 },
+      show: true,
+      value: '70adeb9506cb8291177d784dc4dc3759'
     },
     table: { show: false }
   },

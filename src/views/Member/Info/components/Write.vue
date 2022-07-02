@@ -75,7 +75,7 @@ const setPinyinCode = (item: any) => {
     <template #birthdayLunar="form">
       <div class="w-[100%] flex">
         <ElInput v-model="form['birthdayLunar']" :disabled="true" />
-        <ElSelect v-model="form['birthdayLunar2']">
+        <ElSelect v-model="form['birthdayHour']">
           <ElOption
             v-for="item in temp"
             :key="item.value"
