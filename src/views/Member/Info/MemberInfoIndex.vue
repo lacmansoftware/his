@@ -455,7 +455,8 @@ const crudSchemas = reactive<CrudSchema[]>([
       },
       colProps: {
         span: 8
-      }
+      },
+      show: true
     },
     table: {
       show: false
@@ -473,7 +474,8 @@ const crudSchemas = reactive<CrudSchema[]>([
       },
       colProps: {
         span: 8
-      }
+      },
+      show: true
     },
     search: {
       colProps: { span: 6 },
@@ -487,7 +489,8 @@ const crudSchemas = reactive<CrudSchema[]>([
       component: 'Input',
       colProps: {
         span: 8
-      }
+      },
+      show: true
     },
     table: {
       show: false
@@ -500,7 +503,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       label: '檔案所在門店',
       component: 'Select',
       componentProps: {
-        style: { width: '100%' }
+        style: { width: '100%' },
         options: store.hospital
       },
       colProps: { span: 16 },
@@ -526,7 +529,8 @@ const crudSchemas = reactive<CrudSchema[]>([
       },
       colProps: {
         span: 8
-      }
+      },
+      show: true
     },
     table: {
       show: false
@@ -563,9 +567,15 @@ const crudSchemas = reactive<CrudSchema[]>([
     label: '會員等級',
     field: 'memberLevel',
     form: {
+      component: 'Select',
+      componentProps: {
+        options: store.level,
+        style: { width: '100%' }
+      },
       colProps: {
         span: 8
-      }
+      },
+      show: true
     },
     table: {
       show: false
@@ -573,8 +583,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: store.level,
-        style: { width: '100%' }
+        options: store.level
       },
       colProps: { span: 6 },
       show: true
@@ -668,7 +677,8 @@ const crudSchemas = reactive<CrudSchema[]>([
     label: '郵箱',
     form: {
       component: 'Input',
-      colProps: { span: 8 }
+      colProps: { span: 8 },
+      show: true
     },
     table: { show: false }
   },
@@ -677,7 +687,8 @@ const crudSchemas = reactive<CrudSchema[]>([
     label: '微博',
     form: {
       component: 'Input',
-      colProps: { span: 8 }
+      colProps: { span: 8 },
+      show: true
     },
     table: { show: false }
   },
@@ -686,7 +697,8 @@ const crudSchemas = reactive<CrudSchema[]>([
     label: '微信',
     form: {
       component: 'Input',
-      colProps: { span: 8 }
+      colProps: { span: 8 },
+      show: true
     },
     table: { show: false }
   },
@@ -695,7 +707,8 @@ const crudSchemas = reactive<CrudSchema[]>([
     label: '緊急聯繫人',
     form: {
       component: 'Input',
-      colProps: { span: 8 }
+      colProps: { span: 8 },
+      show: true
     },
     table: { show: false }
   },
@@ -704,7 +717,8 @@ const crudSchemas = reactive<CrudSchema[]>([
     label: '緊急聯繫人電話',
     form: {
       component: 'Input',
-      colProps: { span: 8 }
+      colProps: { span: 8 },
+      show: true
     },
     table: { show: false }
   },
@@ -713,7 +727,8 @@ const crudSchemas = reactive<CrudSchema[]>([
     label: '緊急聯繫人關係',
     form: {
       component: 'Input',
-      colProps: { span: 8 }
+      colProps: { span: 8 },
+      show: true
     },
     table: { show: false }
   },
@@ -722,7 +737,8 @@ const crudSchemas = reactive<CrudSchema[]>([
     label: '上傳身份證正面照片',
     form: {
       component: 'Input',
-      colProps: { span: 24 }
+      colProps: { span: 24 },
+      show: true
     },
     table: { show: false }
   },
@@ -731,7 +747,8 @@ const crudSchemas = reactive<CrudSchema[]>([
     label: '上傳身份證反面照片',
     form: {
       component: 'Input',
-      colProps: { span: 24 }
+      colProps: { span: 24 },
+      show: true
     },
     table: { show: false }
   },
@@ -744,7 +761,8 @@ const crudSchemas = reactive<CrudSchema[]>([
         type: 'textarea',
         rows: 2
       },
-      colProps: { span: 24 }
+      colProps: { span: 24 },
+      show: true
     },
     table: { show: false }
   },
@@ -757,7 +775,8 @@ const crudSchemas = reactive<CrudSchema[]>([
         type: 'textarea',
         rows: 2
       },
-      colProps: { span: 24 }
+      colProps: { span: 24 },
+      show: true
     },
     table: { show: false }
   }
