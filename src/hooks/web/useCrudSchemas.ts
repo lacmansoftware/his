@@ -169,10 +169,10 @@ const filterFormSchema = (crudSchema: CrudSchema[], allSchemas: AllSchemas): For
 
   eachTree(crudSchema, (schemaItem: CrudSchema) => {
     // 判断是否显示
-    if (schemaItem?.form?.show !== false) {
+    if (schemaItem?.form?.show) {
       const formSchemaItem = {
         // 默认为 input
-        component: schemaItem?.form?.component || 'Input',
+        component: schemaItem.form.component || 'Input',
         componentProps: {},
         ...schemaItem.form,
         field: schemaItem.field,
@@ -211,7 +211,7 @@ const filterFormSchema = (crudSchema: CrudSchema[], allSchemas: AllSchemas): For
   for (const task of formRequestTask) {
     task()
   }
-  console.log(formSchema)
+
   return formSchema
 }
 
