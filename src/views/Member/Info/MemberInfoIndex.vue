@@ -33,6 +33,10 @@ const store = {
   level: ref<ComponentOptions[]>([]),
   cardStatus: ref<ComponentOptions[]>([]),
   hospital: ref<ComponentOptions[]>([]),
+  country: ref<ComponentOptions[]>([]),
+  nativePlace: ref<ComponentOptions[]>([]),
+  nationality: ref<ComponentOptions[]>([]),
+  education: ref<ComponentOptions[]>([]),
   disease: ref<ComponentOptions[]>([])
 }
 
@@ -54,6 +58,10 @@ onMounted(() => {
   setStore('cardStatus', '/sys/dict/type/MEMBER_CardStatus', 'code', 'value')
   setStore('hospital', '/sys/hospital', 'id', 'name')
   setStore('disease', '/sys/diseases', 'id', 'name')
+  setStore('country', '/sys/dict/type/MEMBER_Country', 'code', 'value')
+  setStore('nativePlace', '/sys/city/byLevel?level=1', 'id', 'name')
+  setStore('nationality', '/sys/dict/childlist?type=MEMBER_Nation', 'code', 'value')
+  setStore('education', '/sys/dict/type/MEMBER_Education', 'code', 'value')
 })
 
 const { push } = useRouter()
@@ -111,7 +119,8 @@ const crudSchemas = reactive<CrudSchema[]>([
       componentProps: {
         onKeyup: setPinyinCode,
         placeholder: '請填寫'
-      }
+      },
+      show: true
     },
     table: {
       show: false
@@ -181,8 +190,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       label: '生日（陽曆）',
       component: 'DatePicker',
       componentProps: {
-        style: { width: '100%' },
-        placeholder: ''
+        style: { width: '100%' }
       },
       colProps: {
         span: 8
@@ -208,9 +216,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     label: '年齡',
     field: 'age',
     width: '60px',
-    form: {
-      show: false
-    }
+    form: { show: false }
   },
   {
     field: 'identityType',
@@ -260,7 +266,8 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: {
       component: 'Select',
       componentProps: {
-        style: { width: '100%' }
+        style: { width: '100%' },
+        options: store.country
       },
       colProps: {
         span: 8
@@ -277,7 +284,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: {
       component: 'Select',
       componentProps: {
-        style: { width: '100%' }
+        options: store.nativePlace
       },
       colProps: {
         span: 8
@@ -294,10 +301,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: {
       component: 'Select',
       componentProps: {
-        style: { width: '100%' }
-      },
-      componentProps: {
-        style: { width: '100%' }
+        options: store.nationality
       },
       colProps: {
         span: 8
@@ -328,7 +332,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: {
       component: 'Select',
       componentProps: {
-        style: { width: '100%' }
+        options: store.education
       },
       colProps: {
         span: 8
