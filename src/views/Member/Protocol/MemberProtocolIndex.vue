@@ -3,24 +3,23 @@ import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElTag, ElLink } from 'element-plus'
+import { ElButton, ElTag, ElLink, ElMessage } from 'element-plus'
 import { Table } from '@/components/Table'
-import { getTableListApi, saveTableApi, delTableListApi } from '@/api/member'
+import { getTableListApi, getPrintApi } from '@/api/protocol'
 import { useTable } from '@/hooks/web/useTable'
-import { MemberInfoTableData } from '@/api/member/types'
+import { MemberInfoTableData } from '@/api/protocol/types'
 import { reactive, ref, unref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useEmitt } from '@/hooks/web/useEmitt'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { inDict, getAgeByBirthday } from '@/utils/common'
-import { callIcon, msgIcon, plusIcon, mergeIcon } from '@/utils/iconList'
+import { printerIcon } from '@/utils/iconList'
 import { searchConfig, crudConfig } from './index'
-import { getApi } from '@/api/member/index'
 import Write from './components/Write.vue'
 import Detail from './components/Detail.vue'
 import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
-import { getPinyinCode } from '@/utils/common'
+import { getPinyinCode, getInOptionFormat } from '@/utils/common'
 
 defineOptions({
   name: 'MemberProtocolManagement'
@@ -29,25 +28,7 @@ defineOptions({
 const dictStore = useDictStoreWithOut()
 
 const store = {
-  certificate: ref<ComponentOptions[]>([]),
-  level: ref<ComponentOptions[]>([]),
-  cardStatus: ref<ComponentOptions[]>([]),
-  hospital: ref<ComponentOptions[]>([]),
-  country: ref<ComponentOptions[]>([]),
-  nativePlace: ref<ComponentOptions[]>([]),
-  nationality: ref<ComponentOptions[]>([]),
-  education: ref<ComponentOptions[]>([]),
-  isMarried: ref<ComponentOptions[]>([]),
-  memberSource: ref<ComponentOptions[]>([]),
-  disease: ref<ComponentOptions[]>([])
-}
-
-const getInOptionFormat = async (url: string, valueField: string, labelField: string) => {
-  const res = await getApi(url)
-  return res?.data.map((item) => ({
-    label: item[labelField],
-    value: item[valueField]
-  }))
+  feePayHospitalId: ref<ComponentOptions[]>([])
 }
 
 const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
@@ -56,23 +37,13 @@ const setStore = async (key: string, url: string, valueField: string, labelField
 
 onMounted(() => {
   // setStore('certificate', '/sys/dict/type/MEMBER_Certificate', 'code', 'value')
-  setStore('level', '/sys/member/level', 'id', 'levelName')
-  setStore('cardStatus', '/sys/dict/type/MEMBER_CardStatus', 'code', 'value')
-  setStore('hospital', '/sys/hospital', 'id', 'name')
-  setStore('disease', '/sys/diseases', 'id', 'name')
-  setStore('country', '/sys/dict/type/MEMBER_Country', 'code', 'value')
-  setStore('nativePlace', '/sys/city/byLevel?level=1', 'id', 'name')
-  setStore('nationality', '/sys/dict/childlist?type=MEMBER_Nation', 'code', 'value')
-  setStore('education', '/sys/dict/type/MEMBER_Education', 'code', 'value')
-  setStore('isMarried', '/sys/dict/type/MEMBER_Married', 'code', 'value')
-  setStore('memberSource', '/sys/dict/type/MEMBER_Source', 'code', 'value')
+  setStore('feePayHospitalId', '/sys/hospital', 'id', 'name')
 })
 
 const { push } = useRouter()
 
 const { register, tableObject, methods } = useTable<MemberInfoTableData>({
   getListApi: getTableListApi,
-  delListApi: delTableListApi,
   response: {
     list: 'data',
     total: 'total'
@@ -85,817 +56,169 @@ getList()
 
 const { t } = useI18n()
 
-const setPinyinCode = async (item: any) => {
-  const write = unref(writeRef)
-  const formData = (await write?.getFormData()) as any
-  const py = getPinyinCode(formData.name)
-
-  write?.setValues({
-    pinyinCode: py
-  })
-}
-
 const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
     field: 'action',
     width: '120px',
-    form: {
-      show: false
+    form: { show: false }
+  },
+  {
+    label: '繳費門店',
+    field: 'feePayHospitalName',
+    width: '120px'
+  },
+  {
+    label: '繳費時間',
+    field: 'feePayTime',
+    width: '135px'
+  },
+  {
+    label: '會員卡號',
+    field: 'memberCardNum',
+    width: '85px'
+  },
+  {
+    label: '繳費門店',
+    field: 'feePayHospitalId',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Select',
+      componentProps: {
+        options: store.feePayHospitalId
+      },
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    label: '會員繳費日期',
+    field: 'startTime',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    label: '到',
+    field: 'endTime',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    label: '會員卡號',
+    field: 'memberCardNum',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Input',
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    label: '狀態',
+    field: 'status',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Select',
+      componentProps: {
+        options: dict.memberProtocol.status
+      },
+      colProps: { span: 6 },
+      show: true
     }
   },
   {
     label: '姓名',
     field: 'memberName',
-    form: {
-      show: false
-    }
-  },
-  {
-    field: 'name',
-    label: '姓名',
-    form: {
-      colProps: {
-        span: 8
-      },
-      componentProps: {
-        onKeyup: setPinyinCode,
-        placeholder: '請填寫'
-      },
-      show: true
-    },
-    table: {
-      show: false
-    },
-    search: {
-      component: 'Input',
-      colProps: {
-        span: 6
-      },
-      show: true
-    }
-  },
-  {
-    field: 'pinyinCode',
-    label: '姓名拼音碼',
-    form: {
-      component: 'Input',
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    label: '性別',
-    field: 'gender',
-    width: '60px',
-    form: {
-      component: 'Select',
-      componentProps: {
-        style: { width: '100%' },
-        options: dict.sex
-      },
-      colProps: {
-        span: 8
-      },
-      show: true
-    }
-  },
-  {
-    label: '手機號碼',
-    field: 'mobile',
-    width: '135px',
-    placeholder: '請填寫',
-    form: {
-      component: 'Input',
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    search: {
-      component: 'Input',
-      colProps: {
-        span: 6
-      },
-      show: true
-    }
-  },
-  {
-    label: '生日',
-    field: 'birthday',
-    width: '100px',
-    form: {
-      label: '生日（陽曆）',
-      component: 'DatePicker',
-      componentProps: {
-        style: { width: '100%' }
-      },
-      colProps: {
-        span: 8
-      },
-      show: true
-    }
-  },
-  {
-    field: 'birthdayLunar',
-    label: '生辰（農曆）',
-    form: {
-      component: 'DatePicker',
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'birthdayHour',
-    label: '',
-    form: {
-      component: 'Hidden',
-      colProps: { span: 0 },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    label: '年齡',
-    field: 'age',
-    width: '60px',
-    form: { show: false }
-  },
-  {
-    field: 'identityType',
-    label: '證件類型',
-    form: {
-      component: 'Select',
-      componentProps: {
-        style: { width: '100%' }
-      },
-      api: async () => {
-        const res = await getInOptionFormat('/sys/dict/type/MEMBER_Certificate', 'code', 'value')
-        return res
-      },
-      colProps: { span: 8 },
-      show: true
-    },
-    table: { show: false },
-    search: {
-      component: 'Select',
-      componentProps: {
-        options: store.certificate
-      },
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    label: '證件號碼',
-    field: 'identityCode',
-    width: '100px',
-    placeholder: '請填寫',
-    form: {
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
+    form: { show: false },
     search: {
       component: 'Input',
       colProps: { span: 6 },
       show: true
-    }
-  },
-  {
-    field: 'country',
-    label: '國家',
-    form: {
-      component: 'Select',
-      componentProps: {
-        style: { width: '100%' },
-        options: store.country
-      },
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'nativePlace',
-    label: '籍貫',
-    form: {
-      component: 'Select',
-      componentProps: {
-        style: { width: '100%' },
-        options: store.nativePlace
-      },
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'nationality',
-    label: '民族',
-    form: {
-      component: 'Select',
-      componentProps: {
-        style: { width: '100%' },
-        options: store.nationality
-      },
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'occupation',
-    label: '職業',
-    form: {
-      component: 'Input',
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'education',
-    label: '文化程度',
-    form: {
-      component: 'Select',
-      componentProps: {
-        style: { width: '100%' },
-        options: store.education
-      },
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'isMarried',
-    label: '婚姻狀況',
-    form: {
-      component: 'Select',
-      componentProps: {
-        style: { width: '100%' },
-        options: store.isMarried
-      },
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'hasChild',
-    label: '生育情況',
-    form: {
-      component: 'Select',
-      componentProps: {
-        style: { width: '100%' }
-      },
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'boyNum',
-    label: '',
-    form: {
-      component: 'Hidden',
-      colProps: {
-        span: 0
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'girlNum',
-    label: '',
-    form: {
-      component: 'Hidden',
-      colProps: {
-        span: 0
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'height',
-    label: '身高（厘米）',
-    form: {
-      component: 'Input',
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'weight',
-    label: '體重（公斤）',
-    form: {
-      component: 'Input',
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'memberSource',
-    label: '客戶來源',
-    form: {
-      component: 'Select',
-      componentProps: {
-        style: { width: '100%' },
-        options: store.memberSource
-      },
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'recommender',
-    label: '來源詳情',
-    form: {
-      component: 'Input',
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'createHospitalId',
-    label: '初登門店',
-    form: {
-      component: 'Input',
-      componentProps: {
-        disabled: true
-      },
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
     }
   },
   {
     label: '檔案號',
     field: 'archivesNo',
-    width: '100px',
-    placeholder: '請填寫',
-    form: {
-      component: 'Input',
-      componentProps: {
-        disabled: true
-      },
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    search: {
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    field: 'otherPhone',
-    label: '其他電話',
-    form: {
-      component: 'Input',
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    field: 'profileLocation',
-    label: '門店',
-    form: {
-      label: '檔案所在門店',
-      component: 'Select',
-      componentProps: {
-        style: { width: '100%' },
-        options: store.hospital
-      },
-      colProps: { span: 16 },
-      show: true
-    },
-    table: { show: false },
-    search: {
-      component: 'Select',
-      componentProps: {
-        options: store.hospital
-      },
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    field: 'contactPreference',
-    label: '預約聯繫方式',
-    form: {
-      component: 'Radio',
-      componentProps: {
-        options: dict.member.contactPreference
-      },
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    }
-  },
-  {
-    label: '檔案存放地',
-    field: 'profileLocationName',
-    width: '125px',
-    placeholder: '請選擇',
-    form: {
-      show: false
-    }
-  },
-  {
-    label: '證件類型',
-    field: 'identityTypeName',
-    width: '60px',
-    placeholder: '請選擇',
-    form: {
-      show: false
-    }
-  },
-  {
-    label: '會員級別',
-    field: 'levelName',
-    width: '100px',
-    placeholder: '請選擇',
-    form: {
-      show: false
-    }
-  },
-  {
-    label: '會員等級',
-    field: 'memberLevel',
-    form: {
-      component: 'Select',
-      componentProps: {
-        options: store.level,
-        style: { width: '100%' }
-      },
-      colProps: {
-        span: 8
-      },
-      show: true
-    },
-    table: {
-      show: false
-    },
-    search: {
-      component: 'Select',
-      componentProps: {
-        options: store.level
-      },
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    label: '會員卡狀態',
-    field: 'cardStatus',
-    width: '100px',
-    placeholder: '請選擇',
     form: { show: false },
     search: {
-      component: 'Select',
-      componentProps: {
-        options: store.cardStatus
-      },
+      component: 'Input',
       colProps: { span: 6 },
       show: true
     }
   },
   {
-    label: '會員卡號',
-    field: 'cardNum',
-    width: '100px',
-    placeholder: '請填寫會員卡號',
-    form: { show: false }
-  },
-  {
-    field: 'memberCardNum',
-    label: '會員卡號',
+    label: '手機',
+    field: 'memberMobile',
     form: { show: false },
-    table: { show: false },
     search: {
       component: 'Input',
-      componentProps: {
-        options: store.level
-      },
       colProps: { span: 6 },
       show: true
     }
   },
   {
-    label: '卡內餘額',
-    field: 'balance',
-    width: '100px',
-    form: {
-      colProps: { span: 8 },
-      show: false
-    }
-  },
-  {
-    label: '辦卡時間',
-    field: 'cardCreateTime',
-    width: '100px',
-    form: { show: false }
-  },
-  {
-    label: '創建人',
-    field: 'createUser',
-    width: '100px',
-    form: { show: false }
-  },
-  {
-    label: '創建門店',
-    field: 'createHospital',
-    width: '100px',
-    form: { show: false }
-  },
-  {
-    field: 'firstDisease',
-    label: '病種',
+    label: '協議編號',
+    field: 'protocolCode',
     form: { show: false },
-    table: {
-      show: false
-    },
     search: {
-      component: 'Select',
-      componentProps: {
-        options: store.disease
-      },
+      component: 'Input',
       colProps: { span: 6 },
       show: true
     }
   },
   {
-    field: 'email',
-    label: '郵箱',
-    form: {
-      component: 'Input',
-      colProps: { span: 8 },
-      show: true
-    },
-    table: { show: false }
+    label: '狀態',
+    field: 'status',
+    width: '60px'
   },
   {
-    field: 'weibo',
-    label: '微博',
-    form: {
-      component: 'Input',
-      colProps: { span: 8 },
-      show: true
-    },
-    table: { show: false }
+    label: '簽署途徑',
+    field: 'signType',
+    width: '100px'
   },
   {
-    field: 'wechat',
-    label: '微信',
-    form: {
-      component: 'Input',
-      colProps: { span: 8 },
-      show: true
-    },
-    table: { show: false }
+    label: '協議簽署時間',
+    field: 'signTime',
+    width: '100px'
   },
   {
-    field: 'urgentContact',
-    label: '緊急聯繫人',
-    form: {
-      component: 'Input',
-      colProps: { span: 8 },
-      show: true
-    },
-    table: { show: false }
-  },
-  {
-    field: 'urgentContactTel',
-    label: '緊急聯繫人電話',
-    form: {
-      component: 'Input',
-      colProps: { span: 8 },
-      show: true
-    },
-    table: { show: false }
-  },
-  {
-    field: 'urgentContactRel',
-    label: '緊急聯繫人關係',
-    form: {
-      component: 'Input',
-      colProps: { span: 8 },
-      show: true
-    },
-    table: { show: false }
-  },
-  {
-    field: 'certificatesUrlFace',
-    label: '上傳身份證正面照片',
-    form: {
-      component: 'Input',
-      colProps: { span: 24 },
-      show: true
-    },
-    table: { show: false }
-  },
-  {
-    field: 'certificatesUrlBack',
-    label: '上傳身份證反面照片',
-    form: {
-      component: 'Input',
-      colProps: { span: 24 },
-      show: true
-    },
-    table: { show: false }
-  },
-  {
-    field: 'appointRemark',
-    label: '預約備註',
-    form: {
-      component: 'Input',
-      componentProps: {
-        type: 'textarea',
-        rows: 2
-      },
-      colProps: { span: 24 },
-      show: true
-    },
-    table: { show: false }
-  },
-  {
-    field: 'md5',
-    label: '',
-    form: {
-      component: 'Hidden',
-      colProps: { span: 0 },
-      show: true,
-      value: '70adeb9506cb8291177d784dc4dc3759'
-    },
-    table: { show: false }
-  },
-  {
-    field: 'comment',
-    label: '備註',
-    form: {
-      component: 'Input',
-      componentProps: {
-        type: 'textarea',
-        rows: 2
-      },
-      colProps: { span: 24 },
-      show: true
-    },
-    table: { show: false }
+    label: '協議簽署門店',
+    field: 'protocalHospitalName',
+    width: '100px'
   }
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
-const dialogVisible = ref(false)
-
-const dialogTitle = ref('')
-
-const AddAction = () => {
-  dialogTitle.value = '新增客人'
-  tableObject.currentRow = null
-  dialogVisible.value = true
+const printAction = async (row: TableData) => {
+  const res = await getPrintApi(row.id)
+  if (res.success) {
+    ElMessage.success(res.msg)
+  }
 }
-
-const delLoading = ref(false)
-
-const delData = async (row: MemberInfoTableData | null, multiple: boolean) => {
-  tableObject.currentRow = row
-  const { delList, getSelections } = methods
-  const selections = await getSelections()
-  delLoading.value = true
-  await delList(
-    multiple ? selections.map((v) => v.id) : [tableObject.currentRow?.id as string],
-    multiple
-  ).finally(() => {
-    delLoading.value = false
-  })
-}
-
-const actionType = ref('')
-
-const action = (row: TableData, type: string) => {
-  dialogTitle.value = type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail'
-  actionType.value = type
-  tableObject.currentRow = row
-  dialogVisible.value = true
-}
-
-const writeRef = ref<ComponentRef<typeof Write>>()
 
 const loading = ref(false)
-
-const outCall = (mobile: string) => {
-  console.log('out going call: ', searchSchema[8].componentProps.options)
-}
-
-const sendMsg = (mobile: string) => {
-  console.log('out going call: ', mobile)
-}
-
-const save = async () => {
-  const write = unref(writeRef)
-  await write?.elFormRef?.validate(async (isValid) => {
-    if (isValid) {
-      loading.value = true
-      const data = (await write?.getFormData()) as any
-      console.log(data)
-      const res = await saveTableApi(data)
-        .catch(() => {})
-        .finally(() => {
-          loading.value = false
-        })
-      if (res) {
-        dialogVisible.value = false
-        tableObject.currentPage = 1
-        getList()
-      }
-    }
-  })
-}
 </script>
 
 <template>
@@ -906,16 +229,7 @@ const save = async () => {
       :inline="false"
       @search="setSearchParams"
       @reset="setSearchParams"
-      expand
-      expand-field="archivesNo"
     />
-
-    <div class="mb-10px">
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增客人</ElButton>
-      <ElButton :loading="delLoading" type="danger" @click="delData(null, true)" :icon="mergeIcon"
-        >合併客人</ElButton
-      >
-    </div>
 
     <Table
       v-model:pageSize="tableObject.pageSize"
@@ -929,62 +243,16 @@ const save = async () => {
       @register="register"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="action(row, 'edit')">
-          {{ t('exampleDemo.edit') }}
-        </ElLink>
-        <ElLink type="success" @click="action(row, 'detail')">
-          {{ t('exampleDemo.detail') }}
-        </ElLink>
-        <ElLink type="danger" @click="delData(row, false)">
-          {{ t('exampleDemo.del') }}
-        </ElLink>
+        <ElLink type="primary" @click="printAction(row)" :icon="printerIcon" class="flex gap-1"
+          >打印簽訂</ElLink
+        >
       </template>
-      <template #gender="{ row }">
-        {{ inDict(row.gender, 'sex') }}
-      </template>
-      <template #age="{ row }">
-        {{ getAgeByBirthday(row.birthday) }}
-      </template>
-      <template #cardStatus="{ row }">
-        {{ !row.cardStatus ? '無卡' : inDict(row.cardStatus, 'memberCard.status') }}
-      </template>
-      <template #mobile="{ row }">
-        <div class="flex items-center gap-1">
-          <span>{{ row.mobile }}</span>
-          <ElLink type="primary" @click="outCall(row.mobile)" title="打電話" :icon="callIcon" />
-          <ElLink type="primary" @click="sendMsg(row.mobile)" title="發短信" :icon="msgIcon" />
-        </div>
+
+      <template #status="{ row }">
+        {{ inDict(row.status, 'memberProtocol.status') }}
       </template>
     </Table>
   </ContentWrap>
-
-  <Dialog v-model="dialogVisible" :title="dialogTitle" width="90%">
-    <Write
-      v-if="actionType !== 'detail'"
-      ref="writeRef"
-      :form-schema="allSchemas.formSchema"
-      :current-row="tableObject.currentRow"
-    />
-
-    <Detail
-      v-if="actionType === 'detail'"
-      :detail-schema="allSchemas.detailSchema"
-      :current-row="tableObject.currentRow"
-    />
-
-    <!-- <template #header="{ titleId, titleClass }">
-      <div class="flex justify-between">
-        <h4 :id="titleId" :class="titleClass">This is a custom header!</h4>
-      </div>
-    </template>
- -->
-    <template #footer>
-      <ElButton v-if="actionType !== 'detail'" type="primary" :loading="loading" @click="save">
-        {{ t('exampleDemo.save') }}
-      </ElButton>
-      <ElButton @click="dialogVisible = false">{{ t('dialogDemo.close') }}</ElButton>
-    </template>
-  </Dialog>
 </template>
 
 <style lang="less" scoped>
