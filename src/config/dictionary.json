@@ -10,1074 +10,1074 @@
   "CUSTOMER_DOCTOR_NAME_ID": "bb2cfcb7350041a789e8fdc4ee3561f8",
   "CUSTOMER_DOCTOR_ServiceFeePercentList": [
       {
-          "id": 50,
-          "value": "50%"
+          "value": 50,
+          "label": "50%"
       },
       {
-          "id": 100,
-          "value": "100%"
+          "value": 100,
+          "label": "100%"
       },
       {
-          "id": 150,
-          "value": "150%"
+          "value": 150,
+          "label": "150%"
       },
       {
-          "id": 200,
-          "value": "200%"
+          "value": 200,
+          "label": "200%"
       }
   ],
   "sysDict": {},
   "sex": [
       {
-          "id": "M",
-          "value": "男"
+          "value": "M",
+          "label": "男"
       },
       {
-          "id": "F",
-          "value": "女"
+          "value": "F",
+          "label": "女"
       }
   ],
   "sex2": [
       {
-          "id": "M",
-          "value": "男"
+          "value": "M",
+          "label": "男"
       },
       {
-          "id": "F",
-          "value": "女"
+          "value": "F",
+          "label": "女"
       }
   ],
   "smsStatus": [
       {
-          "id": "SEND",
-          "value": "已發送"
+          "value": "SEND",
+          "label": "已發送"
       },
       {
-          "id": "FAIL",
-          "value": "失敗"
+          "value": "FAIL",
+          "label": "失敗"
       },
       {
-          "id": "SUCC",
-          "value": "成功"
+          "value": "SUCC",
+          "label": "成功"
       }
   ],
   "marriageStatus": [
       {
-          "id": "0",
-          "value": "未婚"
+          "value": "0",
+          "label": "未婚"
       },
       {
-          "id": "1",
-          "value": "已婚"
+          "value": "1",
+          "label": "已婚"
       }
   ],
   "status": [
       {
-          "id": "Y",
-          "value": "正常"
+          "value": "Y",
+          "label": "正常"
       },
       {
-          "id": "N",
-          "value": "禁用"
+          "value": "N",
+          "label": "禁用"
       }
   ],
   "isdebug": [
       {
-          "id": "Y",
-          "value": "是"
+          "value": "Y",
+          "label": "是"
       },
       {
-          "id": "N",
-          "value": "否"
+          "value": "N",
+          "label": "否"
       }
   ],
   "doctorSource": [
       {
-          "id": "bd",
-          "value": "BD"
+          "value": "bd",
+          "label": "BD"
       },
       {
-          "id": "ZA",
-          "value": "翼+"
+          "value": "ZA",
+          "label": "翼+"
       }
   ],
   "doctorStatus": [
       {
-          "id": "REG",
-          "value": "註冊"
+          "value": "REG",
+          "label": "註冊"
       },
       {
-          "id": "PASS",
-          "value": "已認證"
+          "value": "PASS",
+          "label": "已認證"
       },
       {
-          "id": "AP",
-          "value": "待認證"
+          "value": "AP",
+          "label": "待認證"
       },
       {
-          "id": "REJ",
-          "value": "未通過"
+          "value": "REJ",
+          "label": "未通過"
       }
   ],
   "doctorStatus2": [
       {
-          "id": "Y",
-          "value": "啟用"
+          "value": "Y",
+          "label": "啟用"
       },
       {
-          "id": "N",
-          "value": "停用"
+          "value": "N",
+          "label": "停用"
       }
   ],
   "serviceSwitch": [
       {
-          "id": "OFF",
-          "value": "否",
+          "value": "OFF",
+          "label": "否",
           "_checked": true
       },
       {
-          "id": "ON",
-          "value": "是"
+          "value": "ON",
+          "label": "是"
       }
   ],
   "isSchedule": [
       {
-          "id": "ON",
-          "value": "是"
+          "value": "ON",
+          "label": "是"
       },
       {
-          "id": "OFF",
-          "value": "否"
+          "value": "OFF",
+          "label": "否"
       }
   ],
   "drugTypeList": [
       {
-          "id": "ZCNY",
-          "value": "中成藥"
+          "value": "ZCNY",
+          "label": "中成藥"
       },
       {
-          "id": "ZCY",
-          "value": "中草藥"
+          "value": "ZCY",
+          "label": "中草藥"
       },
       {
-          "id": "YNZJ",
-          "value": "自有產品"
+          "value": "YNZJ",
+          "label": "自有產品"
       }
   ],
   "sendStatus": [
       {
-          "id": "WAITING",
-          "value": "代發葯"
+          "value": "WAITING",
+          "label": "代發葯"
       },
       {
-          "id": "SENED",
-          "value": "已發葯"
+          "value": "SENED",
+          "label": "已發葯"
       },
       {
-          "id": "RETURN",
-          "value": "已退"
+          "value": "RETURN",
+          "label": "已退"
       },
       {
-          "id": "P_RETURN",
-          "value": "部分退"
+          "value": "P_RETURN",
+          "label": "部分退"
       }
   ],
   "bilingStatus": [
       {
-          "id": "UNPAY",
-          "value": "未結算"
+          "value": "UNPAY",
+          "label": "未結算"
       },
       {
-          "id": "PAYED",
-          "value": "已結算"
+          "value": "PAYED",
+          "label": "已結算"
       }
   ],
   "orderStatus": [
       {
-          "id": "PAYED",
-          "value": "已付款"
+          "value": "PAYED",
+          "label": "已付款"
       },
       {
-          "id": "REFUND",
-          "value": "已退款"
+          "value": "REFUND",
+          "label": "已退款"
       },
       {
-          "id": "REFUNDING",
-          "value": "退款中"
+          "value": "REFUNDING",
+          "label": "退款中"
       },
       {
-          "id": "END",
-          "value": "結束"
+          "value": "END",
+          "label": "結束"
       },
       {
-          "id": "Q",
-          "value": "欠費"
+          "value": "Q",
+          "label": "欠費"
       }
   ],
   "urlReciveObject": [
       {
-          "id": "self",
-          "value": "客人自己",
+          "value": "self",
+          "label": "客人自己",
           "_checked": true
       },
       {
-          "id": "other",
-          "value": "他人代付"
+          "value": "other",
+          "label": "他人代付"
       }
   ],
   "offlinePaymentStatus": [
       {
-          "id": "PAYED",
-          "value": "已付款"
+          "value": "PAYED",
+          "label": "已付款"
       },
       {
-          "id": "REFUNDING",
-          "value": "退款中"
+          "value": "REFUNDING",
+          "label": "退款中"
       },
       {
-          "id": "REFUND",
-          "value": "已退款"
+          "value": "REFUND",
+          "label": "已退款"
       },
       {
-          "id": "ARRE",
-          "value": "欠費"
+          "value": "ARRE",
+          "label": "欠費"
       }
   ],
   "onlinePaymentStatus": [
       {
-          "id": "PAYED",
-          "value": "已付款"
+          "value": "PAYED",
+          "label": "已付款"
       },
       {
-          "id": "REFUNDING",
-          "value": "退款中"
+          "value": "REFUNDING",
+          "label": "退款中"
       },
       {
-          "id": "REFUND",
-          "value": "已退款"
+          "value": "REFUND",
+          "label": "已退款"
       },
       {
-          "id": "END",
-          "value": "已結束"
+          "value": "END",
+          "label": "已結束"
       }
   ],
   "payType": [
       {
-          "id": "ALIPAY",
-          "value": "支付寶支付"
+          "value": "ALIPAY",
+          "label": "支付寶支付"
       },
       {
-          "id": "WXPAY",
-          "value": "微信支付"
+          "value": "WXPAY",
+          "label": "微信支付"
       }
   ],
   "consumeType": [
       {
-          "id": "graphic",
-          "value": "圖文問診"
+          "value": "graphic",
+          "label": "圖文問診"
       },
       {
-          "id": "phone",
-          "value": "電話問診"
+          "value": "phone",
+          "label": "電話問診"
       },
       {
-          "id": "offline",
-          "value": "線下問診"
+          "value": "offline",
+          "label": "線下問診"
       },
       {
-          "id": "consult",
-          "value": "診后諮詢"
+          "value": "consult",
+          "label": "診后諮詢"
       },
       {
-          "id": "recipel",
-          "value": "處方訂單"
+          "value": "recipel",
+          "label": "處方訂單"
       },
       {
-          "id": "refund",
-          "value": "退款"
+          "value": "refund",
+          "label": "退款"
       }
   ],
   "isFinish": [
       {
-          "id": "PAYED",
-          "value": "未完成"
+          "value": "PAYED",
+          "label": "未完成"
       },
       {
-          "id": "END",
-          "value": "已完成"
+          "value": "END",
+          "label": "已完成"
       }
   ],
   "expressStatus": [
       {
-          "id": "WAITING",
-          "value": "待發貨"
+          "value": "WAITING",
+          "label": "待發貨"
       },
       {
-          "id": "SEND",
-          "value": "已發貨"
+          "value": "SEND",
+          "label": "已發貨"
       },
       {
-          "id": "DELIVERY",
-          "value": "派送中"
+          "value": "DELIVERY",
+          "label": "派送中"
       },
       {
-          "id": "YILANSHOU",
-          "value": "已攬收"
+          "value": "YILANSHOU",
+          "label": "已攬收"
       },
       {
-          "id": "ACCEPT",
-          "value": "已完成"
+          "value": "ACCEPT",
+          "label": "已完成"
       }
   ],
   "insurType": [
       {
-          "id": "內資",
-          "value": "內資"
+          "value": "內資",
+          "label": "內資"
       },
       {
-          "id": "外資",
-          "value": "外資"
+          "value": "外資",
+          "label": "外資"
       },
       {
-          "id": "合資",
-          "value": "合資"
+          "value": "合資",
+          "label": "合資"
       }
   ],
   "recipeType": [
       {
-          "id": "ZCY",
-          "value": "中草藥"
+          "value": "ZCY",
+          "label": "中草藥"
       },
       {
-          "id": "ZCNY",
-          "value": "中成藥"
+          "value": "ZCNY",
+          "label": "中成藥"
       },
       {
-          "id": "treat",
-          "value": "治療方"
+          "value": "treat",
+          "label": "治療方"
       }
   ],
   "orderOrigin": [
       {
-          "id": "0",
-          "value": "網診"
+          "value": "0",
+          "label": "網診"
       },
       {
-          "id": "1",
-          "value": "門診"
+          "value": "1",
+          "label": "門診"
       }
   ],
   "expressType": [
       {
-          "id": "SF",
-          "value": "順豐快遞"
+          "value": "SF",
+          "label": "順豐快遞"
       },
       {
-          "id": "sfdf",
-          "value": "順豐到付"
+          "value": "sfdf",
+          "label": "順豐到付"
       },
       {
-          "id": "ZS",
-          "value": "翼+自送"
+          "value": "ZS",
+          "label": "翼+自送"
       },
       {
-          "id": "SS",
-          "value": "閃送"
+          "value": "SS",
+          "label": "閃送"
       },
       {
-          "id": "ssdf",
-          "value": "閃送到付"
+          "value": "ssdf",
+          "label": "閃送到付"
       },
       {
-          "id": "DADA",
-          "value": "達達·當日達"
+          "value": "DADA",
+          "label": "達達·當日達"
       },
       {
-          "id": "SELF",
-          "value": "自取"
+          "value": "SELF",
+          "label": "自取"
       },
       {
-          "id": "tongcheng",
-          "value": "順豐同城"
+          "value": "tongcheng",
+          "label": "順豐同城"
       },
       {
-          "id": "QT",
-          "value": "其他"
+          "value": "QT",
+          "label": "其他"
       }
   ],
   "noSelfExpressType": [
       {
-          "id": "SF",
-          "value": "順豐快遞"
+          "value": "SF",
+          "label": "順豐快遞"
       },
       {
-          "id": "sfdf",
-          "value": "順豐到付"
+          "value": "sfdf",
+          "label": "順豐到付"
       },
       {
-          "id": "ZS",
-          "value": "翼+自送"
+          "value": "ZS",
+          "label": "翼+自送"
       },
       {
-          "id": "SS",
-          "value": "閃送"
+          "value": "SS",
+          "label": "閃送"
       },
       {
-          "id": "ssdf",
-          "value": "閃送到付"
+          "value": "ssdf",
+          "label": "閃送到付"
       },
       {
-          "id": "DADA",
-          "value": "達達·當日達"
+          "value": "DADA",
+          "label": "達達·當日達"
       },
       {
-          "id": "tongcheng",
-          "value": "順豐同城"
+          "value": "tongcheng",
+          "label": "順豐同城"
       },
       {
-          "id": "QT",
-          "value": "其他"
+          "value": "QT",
+          "label": "其他"
       }
   ],
   "kmOrderStatus": [
       {
-          "id": "5",
-          "value": "審核中"
+          "value": "5",
+          "label": "審核中"
       },
       {
-          "id": "15",
-          "value": "調劑中"
+          "value": "15",
+          "label": "調劑中"
       },
       {
-          "id": "17",
-          "value": "備貨完成"
+          "value": "17",
+          "label": "備貨完成"
       },
       {
-          "id": "98",
-          "value": "審核失敗"
+          "value": "98",
+          "label": "審核失敗"
       },
       {
-          "id": "99",
-          "value": "用戶放棄"
+          "value": "99",
+          "label": "用戶放棄"
       },
       {
-          "id": "199",
-          "value": "已退葯"
+          "value": "199",
+          "label": "已退葯"
       },
       {
-          "id": "20",
-          "value": "物流分揀中"
+          "value": "20",
+          "label": "物流分揀中"
       },
       {
-          "id": "25",
-          "value": "派送完畢"
+          "value": "25",
+          "label": "派送完畢"
       }
   ],
   "adjustStatus": [
       {
-          "id": "Y",
-          "value": "已完成"
+          "value": "Y",
+          "label": "已完成"
       },
       {
-          "id": "N",
-          "value": "未完成"
+          "value": "N",
+          "label": "未完成"
       }
   ],
   "decoNum": [
       {
-          "id": "0",
-          "value": "自煎"
+          "value": "0",
+          "label": "自煎"
       },
       {
-          "id": "1",
-          "value": "代煎"
+          "value": "1",
+          "label": "代煎"
       }
   ],
   "useRoute": [
       {
-          "id": "NF",
-          "value": "內服",
+          "value": "NF",
+          "label": "內服",
           "_checked": true
       },
       {
-          "id": "WY",
-          "value": "外用"
+          "value": "WY",
+          "label": "外用"
       }
   ],
   "dosageform": [
       {
-          "id": "s",
-          "value": "湯劑",
+          "value": "s",
+          "label": "湯劑",
           "_checked": true
       },
       {
-          "id": "p",
-          "value": "散劑"
+          "value": "p",
+          "label": "散劑"
       },
       {
-          "id": "w",
-          "value": "丸劑"
+          "value": "w",
+          "label": "丸劑"
       },
       {
-          "id": "c",
-          "value": "膏劑"
+          "value": "c",
+          "label": "膏劑"
       },
       {
-          "id": "k",
-          "value": "顆粒劑",
+          "value": "k",
+          "label": "顆粒劑",
           "_disabled": true
       },
       {
-          "id": "y",
-          "value": "中成藥"
+          "value": "y",
+          "label": "中成藥"
       }
   ],
   "inventoryStatus": [
       {
-          "id": "REGIST",
-          "value": "已登記"
+          "value": "REGIST",
+          "label": "已登記"
       },
       {
-          "id": "PASS",
-          "value": "已通過"
+          "value": "PASS",
+          "label": "已通過"
       }
   ],
   "isStaff": [
       {
-          "id": "Y",
-          "value": "員工及家屬"
+          "value": "Y",
+          "label": "員工及家屬"
       },
       {
-          "id": "N",
-          "value": "客人",
+          "value": "N",
+          "label": "客人",
           "_checked": true
       }
   ],
   "couponType": [
       {
-          "id": "DK",
-          "value": "代金券"
+          "value": "DK",
+          "label": "代金券"
       },
       {
-          "id": "ZK",
-          "value": "折扣券"
+          "value": "ZK",
+          "label": "折扣券"
       }
   ],
   "commonStatus": [
       {
-          "id": "REGIST",
-          "value": "已登記"
+          "value": "REGIST",
+          "label": "已登記"
       },
       {
-          "id": "PASS",
-          "value": "已通過"
+          "value": "PASS",
+          "label": "已通過"
       },
       {
-          "id": "REJECT",
-          "value": "已駁回"
+          "value": "REJECT",
+          "label": "已駁回"
       }
   ],
   "saveRemark": [
       {
-          "id": "Y",
-          "value": "保存備註"
+          "value": "Y",
+          "label": "保存備註"
       }
   ],
   "kmDosageform": [
       {
-          "id": "s",
-          "value": "湯劑"
+          "value": "s",
+          "label": "湯劑"
       },
       {
-          "id": "c",
-          "value": "膏劑"
+          "value": "c",
+          "label": "膏劑"
       }
   ],
   "drugArea": [
       {
-          "id": "S",
-          "value": "南方藥典"
+          "value": "S",
+          "label": "南方藥典"
       },
       {
-          "id": "N",
-          "value": "北方藥典"
+          "value": "N",
+          "label": "北方藥典"
       }
   ],
   "orderType": [
       {
-          "id": "graphic",
-          "value": "圖文問診"
+          "value": "graphic",
+          "label": "圖文問診"
       },
       {
-          "id": "phone",
-          "value": "電話問診"
+          "value": "phone",
+          "label": "電話問診"
       },
       {
-          "id": "consult",
-          "value": "診后諮詢"
+          "value": "consult",
+          "label": "診后諮詢"
       },
       {
-          "id": "recipel",
-          "value": "購葯"
+          "value": "recipel",
+          "label": "購葯"
       },
       {
-          "id": "life",
-          "value": "國貨產品"
+          "value": "life",
+          "label": "國貨產品"
       },
       {
-          "id": "package",
-          "value": "購買套餐"
+          "value": "package",
+          "label": "購買套餐"
       },
       {
-          "id": "supplement",
-          "value": "補收"
+          "value": "supplement",
+          "label": "補收"
       }
   ],
   "transactionSubType": [
       {
-          "id": "HYF",
-          "value": "會員費"
+          "value": "HYF",
+          "label": "會員費"
       },
       {
-          "id": "ZC",
-          "value": "轉出"
+          "value": "ZC",
+          "label": "轉出"
       },
       {
-          "id": "TF",
-          "value": "退費"
+          "value": "TF",
+          "label": "退費"
       },
       {
-          "id": "TK",
-          "value": "退卡"
+          "value": "TK",
+          "label": "退卡"
       },
       {
-          "id": "ZR",
-          "value": "轉入"
+          "value": "ZR",
+          "label": "轉入"
       },
       {
-          "id": "HYKCZ",
-          "value": "會員卡充值"
+          "value": "HYKCZ",
+          "label": "會員卡充值"
       },
       {
-          "id": "CFZF",
-          "value": "處方作廢"
+          "value": "CFZF",
+          "label": "處方作廢"
       },
       {
-          "id": "WHXXKCSF",
-          "value": "文化線下課程收費"
+          "value": "WHXXKCSF",
+          "label": "文化線下課程收費"
       },
       {
-          "id": "WHXXKCTF",
-          "value": "文化線下課程退費"
+          "value": "WHXXKCTF",
+          "label": "文化線下課程退費"
       },
       {
-          "id": "WHXXHDSF",
-          "value": "文化線下活動收費"
+          "value": "WHXXHDSF",
+          "label": "文化線下活動收費"
       },
       {
-          "id": "WHXXHDTF",
-          "value": "文化線下活動退費"
+          "value": "WHXXHDTF",
+          "label": "文化線下活動退費"
       },
       {
-          "id": "course",
-          "value": "講座報名"
+          "value": "course",
+          "label": "講座報名"
       },
       {
-          "id": "CD",
-          "value": "沖抵"
+          "value": "CD",
+          "label": "沖抵"
       },
       {
-          "id": "ZF",
-          "value": "作廢"
+          "value": "ZF",
+          "label": "作廢"
       },
       {
-          "id": "ZCXF",
-          "value": "正常消費"
+          "value": "ZCXF",
+          "label": "正常消費"
       },
       {
-          "id": "recipel",
-          "value": "正常消費"
+          "value": "recipel",
+          "label": "正常消費"
       },
       {
-          "id": "graphic",
-          "value": "正常消費"
+          "value": "graphic",
+          "label": "正常消費"
       },
       {
-          "id": "offline",
-          "value": "正常消費"
+          "value": "offline",
+          "label": "正常消費"
       },
       {
-          "id": "OLD_YHQ",
-          "value": "遺留優惠券"
+          "value": "OLD_YHQ",
+          "label": "遺留優惠券"
       },
       {
-          "id": "PAY_ARRE",
-          "value": "結算欠費"
+          "value": "PAY_ARRE",
+          "label": "結算欠費"
       },
       {
-          "id": "REFUNDBALANCE",
-          "value": "退餘額"
+          "value": "REFUNDBALANCE",
+          "label": "退餘額"
       }
   ],
   "deco_type1": [
       {
-          "id": "XJ",
-          "value": "先煎"
+          "value": "XJ",
+          "label": "先煎"
       },
       {
-          "id": "HX",
-          "value": "後下"
+          "value": "HX",
+          "label": "後下"
       },
       {
-          "id": "DJ",
-          "value": "單煎"
+          "value": "DJ",
+          "label": "單煎"
       }
   ],
   "deco_type2": [
       {
-          "id": "BJ",
-          "value": "包煎"
+          "value": "BJ",
+          "label": "包煎"
       },
       {
-          "id": "DS",
-          "value": "搗碎"
+          "value": "DS",
+          "label": "搗碎"
       },
       {
-          "id": "SX",
-          "value": "水洗"
+          "value": "SX",
+          "label": "水洗"
       },
       {
-          "id": "DF",
-          "value": "打粉"
+          "value": "DF",
+          "label": "打粉"
       }
   ],
   "deco_type3": [
       {
-          "id": "YH",
-          "value": "烊化"
+          "value": "YH",
+          "label": "烊化"
       },
       {
-          "id": "CF",
-          "value": "沖服"
+          "value": "CF",
+          "label": "沖服"
       },
       {
-          "id": "JF",
-          "value": "焗服"
+          "value": "JF",
+          "label": "焗服"
       },
       {
-          "id": "DF",
-          "value": "兌服"
+          "value": "DF",
+          "label": "兌服"
       },
       {
-          "id": "TF",
-          "value": "吞服"
+          "value": "TF",
+          "label": "吞服"
       }
   ],
   "self": [
       {
-          "id": "Y",
-          "value": "自備"
+          "value": "Y",
+          "label": "自備"
       }
   ],
   "allself": [
       {
-          "id": "Y",
-          "value": "全方外購"
+          "value": "Y",
+          "label": "全方外購"
       }
   ],
   "voucherType": [
       {
-          "id": "ALL",
-          "value": "不限"
+          "value": "ALL",
+          "label": "不限"
       },
       {
-          "id": "XS",
-          "value": "線上看診"
+          "value": "XS",
+          "label": "線上看診"
       },
       {
-          "id": "XX",
-          "value": "線下門診"
+          "value": "XX",
+          "label": "線下門診"
       }
   ],
   "visitType": [
       {
-          "id": "F",
-          "value": "初"
+          "value": "F",
+          "label": "初"
       },
       {
-          "id": "R",
-          "value": "復"
+          "value": "R",
+          "label": "復"
       },
       {
-          "id": "S",
-          "value": "首"
+          "value": "S",
+          "label": "首"
       }
   ],
   "registerStatus": [
       {
-          "id": "Y",
-          "value": "已挂號"
+          "value": "Y",
+          "label": "已挂號"
       },
       {
-          "id": "N",
-          "value": "未挂號"
+          "value": "N",
+          "label": "未挂號"
       }
   ],
   "display": [
       {
-          "id": "Y",
-          "value": "是"
+          "value": "Y",
+          "label": "是"
       },
       {
-          "id": "N",
-          "value": "否"
+          "value": "N",
+          "label": "否"
       }
   ],
   "qyflag": [
       {
-          "id": "DIRECT",
-          "value": "直營"
+          "value": "DIRECT",
+          "label": "直營"
       },
       {
-          "id": "JOIN",
-          "value": "加盟"
+          "value": "JOIN",
+          "label": "加盟"
       }
   ],
   "roleType": [
       {
-          "id": "core",
-          "value": "總部"
+          "value": "core",
+          "label": "總部"
       },
       {
-          "id": "normal",
-          "value": "診所"
+          "value": "normal",
+          "label": "診所"
       }
   ],
   "judge": [
       {
-          "id": "Y",
-          "value": "具備開膏方資格"
+          "value": "Y",
+          "label": "具備開膏方資格"
       }
   ],
   "sendMode": [
       {
-          "id": "1",
-          "value": "電話"
+          "value": "1",
+          "label": "電話"
       },
       {
-          "id": "0",
-          "value": "微信"
+          "value": "0",
+          "label": "微信"
       }
   ],
   "insurance": [
       {
-          "id": "0",
-          "value": "走保險"
+          "value": "0",
+          "label": "走保險"
       },
       {
-          "id": "1",
-          "value": "已接診過的病人走保險，新增首診病人不走保險"
+          "value": "1",
+          "label": "已接診過的病人走保險，新增首診病人不走保險"
       },
       {
-          "id": "2",
-          "value": "無保險"
+          "value": "2",
+          "label": "無保險"
       }
   ],
   "allOrderType": [
       {
-          "id": "graphic",
-          "value": "圖文問診"
+          "value": "graphic",
+          "label": "圖文問診"
       },
       {
-          "id": "graphic_visit",
-          "value": "圖文問診複診"
+          "value": "graphic_visit",
+          "label": "圖文問診複診"
       },
       {
-          "id": "phone",
-          "value": "電話問診"
+          "value": "phone",
+          "label": "電話問診"
       },
       {
-          "id": "phone_visit",
-          "value": "電話問診複診"
+          "value": "phone_visit",
+          "label": "電話問診複診"
       },
       {
-          "id": "offline",
-          "value": "門診診費"
+          "value": "offline",
+          "label": "門診診費"
       },
       {
-          "id": "offline_visit",
-          "value": "線下問診複診"
+          "value": "offline_visit",
+          "label": "線下問診複診"
       },
       {
-          "id": "consult",
-          "value": "診后諮詢"
+          "value": "consult",
+          "label": "診后諮詢"
       },
       {
-          "id": "csjj",
-          "value": "創收獎金"
+          "value": "csjj",
+          "label": "創收獎金"
       },
       {
-          "id": "recipel",
-          "value": "處方訂單"
+          "value": "recipel",
+          "label": "處方訂單"
       },
       {
-          "id": "prescription",
-          "value": "患者上傳處方單"
+          "value": "prescription",
+          "label": "患者上傳處方單"
       },
       {
-          "id": "consulted",
-          "value": "診后諮詢補貼"
+          "value": "consulted",
+          "label": "診后諮詢補貼"
       },
       {
-          "id": "qrcode",
-          "value": "掃碼獎勵"
+          "value": "qrcode",
+          "label": "掃碼獎勵"
       },
       {
-          "id": "tworeward",
-          "value": "兩單120元獎勵"
+          "value": "tworeward",
+          "label": "兩單120元獎勵"
       },
       {
-          "id": "invitation",
-          "value": "邀請醫生獎勵"
+          "value": "invitation",
+          "label": "邀請醫生獎勵"
       },
       {
-          "id": "deco",
-          "value": "補代煎費"
+          "value": "deco",
+          "label": "補代煎費"
       },
       {
-          "id": "package",
-          "value": "購買套餐"
+          "value": "package",
+          "label": "購買套餐"
       },
       {
-          "id": "specialist",
-          "value": "購買專科"
+          "value": "specialist",
+          "label": "購買專科"
       },
       {
-          "id": "voucher",
-          "value": "購買優惠券"
+          "value": "voucher",
+          "label": "購買優惠券"
       },
       {
-          "id": "life",
-          "value": "產品"
+          "value": "life",
+          "label": "產品"
       },
       {
-          "id": "supplement",
-          "value": "補收費用"
+          "value": "supplement",
+          "label": "補收費用"
       },
       {
-          "id": "course",
-          "value": "講座"
+          "value": "course",
+          "label": "講座"
       },
       {
-          "id": "buyCard",
-          "value": "購買會員卡"
+          "value": "buyCard",
+          "label": "購買會員卡"
       },
       {
-          "id": "wx_coupon",
-          "value": "微信抵扣金"
+          "value": "wx_coupon",
+          "label": "微信抵扣金"
       }
   ],
   "logicType": [
       {
-          "id": ">",
-          "value": "大於"
+          "value": ">",
+          "label": "大於"
       },
       {
-          "id": ">=",
-          "value": "大於等於"
+          "value": ">=",
+          "label": "大於等於"
       },
       {
-          "id": "=",
-          "value": "等於"
+          "value": "=",
+          "label": "等於"
       },
       {
-          "id": "<=",
-          "value": "小於等於"
+          "value": "<=",
+          "label": "小於等於"
       },
       {
-          "id": "<",
-          "value": "小於"
+          "value": "<",
+          "label": "小於"
       },
       {
-          "id": "!=",
-          "value": "不等於"
+          "value": "!=",
+          "label": "不等於"
       }
   ],
   "logic": [
       {
-          "id": "and",
-          "value": "且"
+          "value": "and",
+          "label": "且"
       },
       {
-          "id": "or",
-          "value": "或"
+          "value": "or",
+          "label": "或"
       }
   ],
   "templetesex": [
       {
-          "id": "MF",
-          "value": "不限"
+          "value": "MF",
+          "label": "不限"
       },
       {
-          "id": "M",
-          "value": "男"
+          "value": "M",
+          "label": "男"
       },
       {
-          "id": "F",
-          "value": "女"
+          "value": "F",
+          "label": "女"
       }
   ],
   "createFrom": [
       {
-          "id": "offline",
-          "value": "門診"
+          "value": "offline",
+          "label": "門診"
       },
       {
-          "id": "online",
-          "value": "網診"
+          "value": "online",
+          "label": "網診"
       }
   ],
   "showInWx": [
       {
-          "id": "Y",
-          "value": "在微信中显示"
+          "value": "Y",
+          "label": "在微信中显示"
       }
   ],
   "wxAppointment": [
       {
-          "id": "Y",
-          "value": "開放微信預約"
+          "value": "Y",
+          "label": "開放微信預約"
       }
   ],
   "isNeedAppointPic": [
       {
-          "id": "Y",
-          "value": "需要約診截圖"
+          "value": "Y",
+          "label": "需要約診截圖"
       }
   ],
   "skipInquiry": [
       {
-          "id": "Y",
-          "value": "允許患者跳過問診單",
+          "value": "Y",
+          "label": "允許患者跳過問診單",
           "_checked": true
       }
   ],
   "printwzd": [
       {
-          "id": "Y",
-          "value": "打印問診單"
+          "value": "Y",
+          "label": "打印問診單"
       }
   ],
   "printzdjg": [
       {
-          "id": "Y",
-          "value": "打印診斷結果"
+          "value": "Y",
+          "label": "打印診斷結果"
       }
   ],
   "couldBuyConsult": [
       {
-          "id": "Y",
-          "value": "有看診記錄才可以買診后提問"
+          "value": "Y",
+          "label": "有看診記錄才可以買診后提問"
       }
   ],
   "prescibeCol": [
@@ -1122,1589 +1122,1589 @@
   "pharmacy": {
       "orderRequestStatus": [
           {
-              "id": "T",
-              "value": "已登記"
+              "value": "T",
+              "label": "已登記"
           },
           {
-              "id": "W",
-              "value": "請貨中"
+              "value": "W",
+              "label": "請貨中"
           },
           {
-              "id": "P",
-              "value": "採購中"
+              "value": "P",
+              "label": "採購中"
           },
           {
-              "id": "F",
-              "value": "已完成"
+              "value": "F",
+              "label": "已完成"
           }
       ],
       "purchaseStatus": [
           {
-              "id": "P",
-              "value": "審核通過"
+              "value": "P",
+              "label": "審核通過"
           },
           {
-              "id": "L",
-              "value": "部分入庫"
+              "value": "L",
+              "label": "部分入庫"
           },
           {
-              "id": "F",
-              "value": "完全入庫"
+              "value": "F",
+              "label": "完全入庫"
           }
       ],
       "stockinStatus": [
           {
-              "id": "T",
-              "value": "已登記"
+              "value": "T",
+              "label": "已登記"
           },
           {
-              "id": "W",
-              "value": "待審核"
+              "value": "W",
+              "label": "待審核"
           },
           {
-              "id": "P",
-              "value": "審核通過"
+              "value": "P",
+              "label": "審核通過"
           },
           {
-              "id": "A",
-              "value": "中心審核通過"
+              "value": "A",
+              "label": "中心審核通過"
           }
       ],
       "stockoutStatus": [
           {
-              "id": "T",
-              "value": "已登記"
+              "value": "T",
+              "label": "已登記"
           },
           {
-              "id": "W",
-              "value": "待審核"
+              "value": "W",
+              "label": "待審核"
           },
           {
-              "id": "P",
-              "value": "已審核"
+              "value": "P",
+              "label": "已審核"
           },
           {
-              "id": "A",
-              "value": "已接受"
+              "value": "A",
+              "label": "已接受"
           },
           {
-              "id": "L",
-              "value": "待撤銷"
+              "value": "L",
+              "label": "待撤銷"
           },
           {
-              "id": "C",
-              "value": "已撤銷"
+              "value": "C",
+              "label": "已撤銷"
           }
       ],
       "transferStatus": [
           {
-              "id": "P",
-              "value": "中心已審核"
+              "value": "P",
+              "label": "中心已審核"
           },
           {
-              "id": "A",
-              "value": "已接受"
+              "value": "A",
+              "label": "已接受"
           },
           {
-              "id": "L",
-              "value": "待撤銷"
+              "value": "L",
+              "label": "待撤銷"
           },
           {
-              "id": "C",
-              "value": "已撤銷"
+              "value": "C",
+              "label": "已撤銷"
           }
       ],
       "inventoryChangeStatus": [
           {
-              "id": "C",
-              "value": "出庫"
+              "value": "C",
+              "label": "出庫"
           },
           {
-              "id": "R",
-              "value": "入庫"
+              "value": "R",
+              "label": "入庫"
           },
           {
-              "id": "F",
-              "value": "門診發葯"
+              "value": "F",
+              "label": "門診發葯"
           },
           {
-              "id": "T",
-              "value": "門診退葯"
+              "value": "T",
+              "label": "門診退葯"
           },
           {
-              "id": "L",
-              "value": "藥房報損"
+              "value": "L",
+              "label": "藥房報損"
           },
           {
-              "id": "Y",
-              "value": "藥房退葯"
+              "value": "Y",
+              "label": "藥房退葯"
           },
           {
-              "id": "K",
-              "value": "葯庫退葯"
+              "value": "K",
+              "label": "葯庫退葯"
           },
           {
-              "id": "ZT",
-              "value": "轉藥房退葯"
+              "value": "ZT",
+              "label": "轉藥房退葯"
           },
           {
-              "id": "ZF",
-              "value": "轉藥房發葯"
+              "value": "ZF",
+              "label": "轉藥房發葯"
           }
       ],
       "drugType": [
           {
-              "id": "ZCY",
-              "value": "中草藥"
+              "value": "ZCY",
+              "label": "中草藥"
           },
           {
-              "id": "ZCNY",
-              "value": "中成藥"
+              "value": "ZCNY",
+              "label": "中成藥"
           }
       ],
       "returnStatus": [
           {
-              "id": "T",
-              "value": "已登記"
+              "value": "T",
+              "label": "已登記"
           },
           {
-              "id": "W",
-              "value": "藥房待審核"
+              "value": "W",
+              "label": "藥房待審核"
           },
           {
-              "id": "P",
-              "value": "藥房已審核"
+              "value": "P",
+              "label": "藥房已審核"
           },
           {
-              "id": "A",
-              "value": "中心已審核"
+              "value": "A",
+              "label": "中心已審核"
           }
       ],
       "ykReturnStatus": [
           {
-              "id": "T",
-              "value": "中心已登記"
+              "value": "T",
+              "label": "中心已登記"
           },
           {
-              "id": "W",
-              "value": "中心待審核"
+              "value": "W",
+              "label": "中心待審核"
           },
           {
-              "id": "P",
-              "value": "中心已審核"
+              "value": "P",
+              "label": "中心已審核"
           },
           {
-              "id": "A",
-              "value": "中心已審核"
+              "value": "A",
+              "label": "中心已審核"
           }
       ],
       "productMakeStatus": [
           {
-              "id": "T",
-              "value": "已登記"
+              "value": "T",
+              "label": "已登記"
           },
           {
-              "id": "W",
-              "value": "待審核"
+              "value": "W",
+              "label": "待審核"
           },
           {
-              "id": "P",
-              "value": "已審核"
+              "value": "P",
+              "label": "已審核"
           },
           {
-              "id": "M",
-              "value": "製作中"
+              "value": "M",
+              "label": "製作中"
           },
           {
-              "id": "L",
-              "value": "部分入庫"
+              "value": "L",
+              "label": "部分入庫"
           },
           {
-              "id": "A",
-              "value": "全部入庫"
+              "value": "A",
+              "label": "全部入庫"
           }
       ],
       "productMakeStatus1": [
           {
-              "id": "W",
-              "value": "待審核"
+              "value": "W",
+              "label": "待審核"
           },
           {
-              "id": "P",
-              "value": "已審核"
+              "value": "P",
+              "label": "已審核"
           },
           {
-              "id": "M",
-              "value": "製作中"
+              "value": "M",
+              "label": "製作中"
           },
           {
-              "id": "L",
-              "value": "部分入庫"
+              "value": "L",
+              "label": "部分入庫"
           },
           {
-              "id": "A",
-              "value": "全部入庫"
+              "value": "A",
+              "label": "全部入庫"
           }
       ],
       "ynzjStatus": [
           {
-              "id": "T",
-              "value": "已登記"
+              "value": "T",
+              "label": "已登記"
           },
           {
-              "id": "W",
-              "value": "待審核"
+              "value": "W",
+              "label": "待審核"
           },
           {
-              "id": "P",
-              "value": "已審核"
+              "value": "P",
+              "label": "已審核"
           }
       ]
   },
   "memberProtocol": {
       "status": [
           {
-              "id": "Y",
-              "value": "已簽"
+              "value": "Y",
+              "label": "已簽"
           },
           {
-              "id": "N",
-              "value": "未簽"
+              "value": "N",
+              "label": "未簽"
           },
           {
-              "id": "A",
-              "value": "終止"
+              "value": "A",
+              "label": "終止"
           }
       ]
   },
   "memberCard": {
       "status": [
           {
-              "id": "N",
-              "value": "正常"
+              "value": "N",
+              "label": "正常"
           },
           {
-              "id": "F",
-              "value": "凍結"
+              "value": "F",
+              "label": "凍結"
           },
           {
-              "id": "D",
-              "value": "作廢"
+              "value": "D",
+              "label": "作廢"
           },
           {
-              "id": "T",
-              "value": "已退卡"
+              "value": "T",
+              "label": "已退卡"
           }
       ]
   },
   "drug": {
       "status": [
           {
-              "id": "Y",
-              "value": "正常"
+              "value": "Y",
+              "label": "正常"
           },
           {
-              "id": "N",
-              "value": "不正常"
+              "value": "N",
+              "label": "不正常"
           }
       ],
       "type": [
           {
-              "id": "1",
-              "value": "還可以"
+              "value": "1",
+              "label": "還可以"
           },
           {
-              "id": "2",
-              "value": "滿意"
+              "value": "2",
+              "label": "滿意"
           },
           {
-              "id": "3",
-              "value": "很滿意"
+              "value": "3",
+              "label": "很滿意"
           }
       ],
       "score": [
           {
-              "id": "1",
-              "value": "1"
+              "value": "1",
+              "label": "1"
           },
           {
-              "id": "2",
-              "value": "2"
+              "value": "2",
+              "label": "2"
           },
           {
-              "id": "3",
-              "value": "3"
+              "value": "3",
+              "label": "3"
           },
           {
-              "id": "4",
-              "value": "4"
+              "value": "4",
+              "label": "4"
           },
           {
-              "id": "5",
-              "value": "5"
+              "value": "5",
+              "label": "5"
           }
       ],
       "isOn": [
           {
-              "id": "0",
-              "value": "關"
+              "value": "0",
+              "label": "關"
           },
           {
-              "id": "1",
-              "value": "開"
+              "value": "1",
+              "label": "開"
           }
       ],
       "isSpecial": [
           {
-              "id": "0",
-              "value": "否"
+              "value": "0",
+              "label": "否"
           },
           {
-              "id": "1",
-              "value": "是"
+              "value": "1",
+              "label": "是"
           }
       ],
       "gmp": [
           {
-              "id": "0",
-              "value": "無"
+              "value": "0",
+              "label": "無"
           },
           {
-              "id": "1",
-              "value": "有"
+              "value": "1",
+              "label": "有"
           }
       ],
       "isMerge": [
           {
-              "id": "yes",
-              "value": "是"
+              "value": "yes",
+              "label": "是"
           }
       ],
       "recipelStatus": [
           {
-              "id": "Y",
-              "value": "正常"
+              "value": "Y",
+              "label": "正常"
           },
           {
-              "id": "N",
-              "value": "禁用"
+              "value": "N",
+              "label": "禁用"
           }
       ],
       "isAcc": [
           {
-              "id": "Y",
-              "value": "是"
+              "value": "Y",
+              "label": "是"
           },
           {
-              "id": "N",
-              "value": "否"
+              "value": "N",
+              "label": "否"
           }
       ],
       "isGravidaTaboo": [
           {
-              "id": "W",
-              "value": "無"
+              "value": "W",
+              "label": "無"
           },
           {
-              "id": "S",
-              "value": "慎用"
+              "value": "S",
+              "label": "慎用"
           },
           {
-              "id": "J",
-              "value": "禁用"
+              "value": "J",
+              "label": "禁用"
           }
       ],
       "source": [
           {
-              "id": "GC",
-              "value": "國產"
+              "value": "GC",
+              "label": "國產"
           },
           {
-              "id": "JK",
-              "value": "進口"
+              "value": "JK",
+              "label": "進口"
           },
           {
-              "id": "WZ",
-              "value": "未知"
+              "value": "WZ",
+              "label": "未知"
           }
       ],
       "returnStatus": [
           {
-              "id": "-1",
-              "value": "未退葯"
+              "value": "-1",
+              "label": "未退葯"
           },
           {
-              "id": "0",
-              "value": "部分退"
+              "value": "0",
+              "label": "部分退"
           },
           {
-              "id": "1",
-              "value": "全部退"
+              "value": "1",
+              "label": "全部退"
           }
       ],
       "cny": [
           {
-              "id": "ZCY",
-              "value": "中草藥"
+              "value": "ZCY",
+              "label": "中草藥"
           },
           {
-              "id": "KLJ",
-              "value": "免煎中藥"
+              "value": "KLJ",
+              "label": "免煎中藥"
           }
       ],
       "zcny": [
           {
-              "id": "ZCNY",
-              "value": "中成藥"
+              "value": "ZCNY",
+              "label": "中成藥"
           },
           {
-              "id": "YNZJ",
-              "value": "內部製劑"
+              "value": "YNZJ",
+              "label": "內部製劑"
           },
           {
-              "id": "JKSP",
-              "value": "健康食品"
+              "value": "JKSP",
+              "label": "健康食品"
           }
       ],
       "treat": [
           {
-              "id": "treat",
-              "value": "針灸"
+              "value": "treat",
+              "label": "針灸"
           }
       ],
       "subtreat": [
           {
-              "id": "zjz",
-              "value": "針"
+              "value": "zjz",
+              "label": "針"
           },
           {
-              "id": "zjj",
-              "value": "灸"
+              "value": "zjj",
+              "label": "灸"
           },
           {
-              "id": "bg",
-              "value": "拔罐"
+              "value": "bg",
+              "label": "拔罐"
           },
           {
-              "id": "amo",
-              "value": "按摩"
+              "value": "amo",
+              "label": "按摩"
           },
           {
-              "id": "qt",
-              "value": "其它"
+              "value": "qt",
+              "label": "其它"
           }
       ]
   },
   "birthday": {
       "periods": [
           {
-              "id": "1",
-              "value": "子時"
+              "value": "1",
+              "label": "子時"
           },
           {
-              "id": "2",
-              "value": "丑時"
+              "value": "2",
+              "label": "丑時"
           },
           {
-              "id": "3",
-              "value": "寅時"
+              "value": "3",
+              "label": "寅時"
           },
           {
-              "id": "4",
-              "value": "卯時"
+              "value": "4",
+              "label": "卯時"
           },
           {
-              "id": "5",
-              "value": "辰時"
+              "value": "5",
+              "label": "辰時"
           },
           {
-              "id": "6",
-              "value": "巳時"
+              "value": "6",
+              "label": "巳時"
           },
           {
-              "id": "7",
-              "value": "午時"
+              "value": "7",
+              "label": "午時"
           },
           {
-              "id": "8",
-              "value": "未時"
+              "value": "8",
+              "label": "未時"
           },
           {
-              "id": "9",
-              "value": "申時"
+              "value": "9",
+              "label": "申時"
           },
           {
-              "id": "10",
-              "value": "酉時"
+              "value": "10",
+              "label": "酉時"
           },
           {
-              "id": "11",
-              "value": "戌時"
+              "value": "11",
+              "label": "戌時"
           },
           {
-              "id": "12",
-              "value": "亥時"
+              "value": "12",
+              "label": "亥時"
           }
       ]
   },
   "member": {
       "contactPreference": [
           {
-              "id": "0",
-              "value": "沒有偏好"
+              "value": "0",
+              "label": "沒有偏好"
           },
           {
-              "id": "TEL",
-              "value": "電話"
+              "value": "TEL",
+              "label": "電話"
           },
           {
-              "id": "SMS",
-              "value": "短信"
+              "value": "SMS",
+              "label": "短信"
           },
           {
-              "id": "wechat",
-              "value": "微信"
+              "value": "wechat",
+              "label": "微信"
           }
       ],
       "workOrderTransferType": [
           {
-              "id": "person",
-              "value": "個人"
+              "value": "person",
+              "label": "個人"
           },
           {
-              "id": "dept",
-              "value": "部門"
+              "value": "dept",
+              "label": "部門"
           }
       ],
       "workOrderStatus": [
           {
-              "id": "nohand",
-              "value": "無需處理"
+              "value": "nohand",
+              "label": "無需處理"
           },
           {
-              "id": "nothand",
-              "value": "未處理",
+              "value": "nothand",
+              "label": "未處理",
               "_checked": true
           },
           {
-              "id": "handling",
-              "value": "處理中"
+              "value": "handling",
+              "label": "處理中"
           },
           {
-              "id": "handled",
-              "value": "處理完成"
+              "value": "handled",
+              "label": "處理完成"
           }
       ],
       "workOrderRemind": [
           {
-              "id": "1",
-              "value": "創建提醒"
+              "value": "1",
+              "label": "創建提醒"
           }
       ],
       "addressType": [
           {
-              "id": "Home",
-              "value": "家庭"
+              "value": "Home",
+              "label": "家庭"
           },
           {
-              "id": "Company",
-              "value": "單位"
+              "value": "Company",
+              "label": "單位"
           },
           {
-              "id": "Other",
-              "value": "其他"
+              "value": "Other",
+              "label": "其他"
           }
       ],
       "memberAddress": [
           {
-              "id": "Y",
-              "value": "默認地址"
+              "value": "Y",
+              "label": "默認地址"
           }
       ],
       "specialistStatus": [
           {
-              "id": "N",
-              "value": "正常"
+              "value": "N",
+              "label": "正常"
           },
           {
-              "id": "Y",
-              "value": "使用完"
+              "value": "Y",
+              "label": "使用完"
           },
           {
-              "id": "R",
-              "value": "已退"
+              "value": "R",
+              "label": "已退"
           },
           {
-              "id": "G",
-              "value": "已過期"
+              "value": "G",
+              "label": "已過期"
           }
       ],
       "voucherStatus": [
           {
-              "id": "N",
-              "value": "未使用"
+              "value": "N",
+              "label": "未使用"
           },
           {
-              "id": "Y",
-              "value": "已使用"
+              "value": "Y",
+              "label": "已使用"
           }
       ],
       "relationList": [
           {
-              "id": "couple",
-              "value": "夫妻"
+              "value": "couple",
+              "label": "夫妻"
           },
           {
-              "id": "fatherSon",
-              "value": "父子"
+              "value": "fatherSon",
+              "label": "父子"
           },
           {
-              "id": "motherDaughter",
-              "value": "母女"
+              "value": "motherDaughter",
+              "label": "母女"
           },
           {
-              "id": "BrothersSisters",
-              "value": "兄弟姐妹"
+              "value": "BrothersSisters",
+              "label": "兄弟姐妹"
           },
           {
-              "id": "friend",
-              "value": "朋友"
+              "value": "friend",
+              "label": "朋友"
           },
           {
-              "id": "colleague",
-              "value": "同事"
+              "value": "colleague",
+              "label": "同事"
           },
           {
-              "id": "mz",
-              "value": "母子"
+              "value": "mz",
+              "label": "母子"
           },
           {
-              "id": "other",
-              "value": "其他"
+              "value": "other",
+              "label": "其他"
           },
           {
-              "id": "father",
-              "value": "爸爸"
+              "value": "father",
+              "label": "爸爸"
           },
           {
-              "id": "mother",
-              "value": "媽媽"
+              "value": "mother",
+              "label": "媽媽"
           },
           {
-              "id": "husband",
-              "value": "老公"
+              "value": "husband",
+              "label": "老公"
           },
           {
-              "id": "wife",
-              "value": "老婆"
+              "value": "wife",
+              "label": "老婆"
           },
           {
-              "id": "son",
-              "value": "兒子"
+              "value": "son",
+              "label": "兒子"
           },
           {
-              "id": "daughter",
-              "value": "女兒"
+              "value": "daughter",
+              "label": "女兒"
           },
           {
-              "id": "family",
-              "value": "家人"
+              "value": "family",
+              "label": "家人"
           },
           {
-              "id": "friend",
-              "value": "朋友"
+              "value": "friend",
+              "label": "朋友"
           }
       ],
       "relation": [
           {
-              "id": "father",
-              "value": "爸爸"
+              "value": "father",
+              "label": "爸爸"
           },
           {
-              "id": "mother",
-              "value": "媽媽"
+              "value": "mother",
+              "label": "媽媽"
           },
           {
-              "id": "husband",
-              "value": "老公"
+              "value": "husband",
+              "label": "老公"
           },
           {
-              "id": "wife",
-              "value": "老婆"
+              "value": "wife",
+              "label": "老婆"
           },
           {
-              "id": "son",
-              "value": "兒子"
+              "value": "son",
+              "label": "兒子"
           },
           {
-              "id": "daughter",
-              "value": "女兒"
+              "value": "daughter",
+              "label": "女兒"
           },
           {
-              "id": "family",
-              "value": "家人"
+              "value": "family",
+              "label": "家人"
           },
           {
-              "id": "friend",
-              "value": "朋友"
+              "value": "friend",
+              "label": "朋友"
           }
       ],
       "insureCode": [
           {
-              "id": "cons",
-              "value": "診費"
+              "value": "cons",
+              "label": "診費"
           },
           {
-              "id": "drug",
-              "value": "藥費"
+              "value": "drug",
+              "label": "藥費"
           },
           {
-              "id": "make",
-              "value": "藥品處置費"
+              "value": "make",
+              "label": "藥品處置費"
           },
           {
-              "id": "project",
-              "value": "國貨鋪"
+              "value": "project",
+              "label": "國貨鋪"
           },
           {
-              "id": "treat",
-              "value": "治療費"
+              "value": "treat",
+              "label": "治療費"
           },
           {
-              "id": "express",
-              "value": "快遞費"
+              "value": "express",
+              "label": "快遞費"
           },
           {
-              "id": "other",
-              "value": "其他"
+              "value": "other",
+              "label": "其他"
           }
       ],
       "insurStatus": [
           {
-              "id": "N",
-              "value": "無效"
+              "value": "N",
+              "label": "無效"
           },
           {
-              "id": "Y",
-              "value": "有效"
+              "value": "Y",
+              "label": "有效"
           }
       ],
       "order": [
           {
-              "id": "mzrq",
-              "value": "末診時間正序"
+              "value": "mzrq",
+              "label": "末診時間正序"
           },
           {
-              "id": "mzrq desc",
-              "value": "末診時間倒序"
+              "value": "mzrq desc",
+              "label": "末診時間倒序"
           },
           {
-              "id": "szrq",
-              "value": "初診時間正序"
+              "value": "szrq",
+              "label": "初診時間正序"
           },
           {
-              "id": "szrq desc",
-              "value": "初診時間倒序"
+              "value": "szrq desc",
+              "label": "初診時間倒序"
           }
       ]
   },
   "bd": {
       "isCityManager": [
           {
-              "id": "Y",
-              "value": "是"
+              "value": "Y",
+              "label": "是"
           },
           {
-              "id": "N",
-              "value": "否"
+              "value": "N",
+              "label": "否"
           }
       ],
       "isAreaManager": [
           {
-              "id": "D",
-              "value": "是"
+              "value": "D",
+              "label": "是"
           },
           {
-              "id": "N",
-              "value": "否"
+              "value": "N",
+              "label": "否"
           }
       ]
   },
   "appoint": {
       "source": [
           {
-              "id": "TEL",
-              "value": "電話"
+              "value": "TEL",
+              "label": "電話"
           },
           {
-              "id": "SPOT",
-              "value": "現場"
+              "value": "SPOT",
+              "label": "現場"
           },
           {
-              "id": "WX",
-              "value": "微信"
+              "value": "WX",
+              "label": "微信"
           },
           {
-              "id": "SMS",
-              "value": "短信"
+              "value": "SMS",
+              "label": "短信"
           },
           {
-              "id": "EXAMI",
-              "value": "泰康保險"
+              "value": "EXAMI",
+              "label": "泰康保險"
           },
           {
-              "id": "EXAMISX",
-              "value": "中醫體檢私享套餐"
+              "value": "EXAMISX",
+              "label": "中醫體檢私享套餐"
           },
           {
-              "id": "EXAMIZX",
-              "value": "中醫體檢誠意套餐"
+              "value": "EXAMIZX",
+              "label": "中醫體檢誠意套餐"
           },
           {
-              "id": "MINI",
-              "value": "小程序預約"
+              "value": "MINI",
+              "label": "小程序預約"
           }
       ],
       "replyChannel": [
           {
-              "id": "TEL",
-              "value": "電話"
+              "value": "TEL",
+              "label": "電話"
           },
           {
-              "id": "SPOT",
-              "value": "現場"
+              "value": "SPOT",
+              "label": "現場"
           },
           {
-              "id": "WX",
-              "value": "微信"
+              "value": "WX",
+              "label": "微信"
           },
           {
-              "id": "SMS",
-              "value": "短信"
+              "value": "SMS",
+              "label": "短信"
           },
           {
-              "id": "NULL",
-              "value": "未回復"
+              "value": "NULL",
+              "label": "未回復"
           }
       ],
       "pendingFlag": [
           {
-              "id": "N",
-              "value": "否"
+              "value": "N",
+              "label": "否"
           },
           {
-              "id": "Y",
-              "value": "是"
+              "value": "Y",
+              "label": "是"
           }
       ],
       "status": [
           {
-              "id": "QRJZ",
-              "value": "確認就診"
+              "value": "QRJZ",
+              "label": "確認就診"
           },
           {
-              "id": "YYY",
-              "value": "已預約"
+              "value": "YYY",
+              "label": "已預約"
           },
           {
-              "id": "YQX",
-              "value": "已取消"
+              "value": "YQX",
+              "label": "已取消"
           },
           {
-              "id": "HFQX",
-              "value": "回復取消"
+              "value": "HFQX",
+              "label": "回復取消"
           },
           {
-              "id": "YGH",
-              "value": "已挂號"
+              "value": "YGH",
+              "label": "已挂號"
           },
           {
-              "id": "YTH",
-              "value": "已退號"
+              "value": "YTH",
+              "label": "已退號"
           },
           {
-              "id": "DQX",
-              "value": "待取消"
+              "value": "DQX",
+              "label": "待取消"
           },
           {
-              "id": "TIMEOUT",
-              "value": "超時關閉"
+              "value": "TIMEOUT",
+              "label": "超時關閉"
           }
       ],
       "showCancel": [
           {
-              "id": "1",
-              "value": "显示取消預約"
+              "value": "1",
+              "label": "显示取消預約"
           }
       ],
       "paymentStatus": [
           {
-              "id": "UNPAY",
-              "value": "未支付"
+              "value": "UNPAY",
+              "label": "未支付"
           },
           {
-              "id": "PAYED",
-              "value": "已支付"
+              "value": "PAYED",
+              "label": "已支付"
           }
       ],
       "usePrCard": [
           {
-              "id": "0",
-              "value": "否"
+              "value": "0",
+              "label": "否"
           },
           {
-              "id": "1",
-              "value": "是"
+              "value": "1",
+              "label": "是"
           }
       ],
       "hasHighMedicalInsurance": [
           {
-              "id": "0",
-              "value": "否"
+              "value": "0",
+              "label": "否"
           },
           {
-              "id": "1",
-              "value": "是"
+              "value": "1",
+              "label": "是"
           }
       ],
       "payType": [
           {
-              "id": "1",
-              "value": "先支付",
+              "value": "1",
+              "label": "先支付",
               "_checked": true
           },
           {
-              "id": "0",
-              "value": "先不支付"
+              "value": "0",
+              "label": "先不支付"
           }
       ],
       "registerType": [
           {
-              "id": "R",
-              "value": "現場挂號"
+              "value": "R",
+              "label": "現場挂號"
           },
           {
-              "id": "N",
-              "value": "預約挂號"
+              "value": "N",
+              "label": "預約挂號"
           },
           {
-              "id": "J",
-              "value": "加診"
+              "value": "J",
+              "label": "加診"
           }
       ],
       "payState": [
           {
-              "id": "YYZ",
-              "value": "等待支付"
+              "value": "YYZ",
+              "label": "等待支付"
           },
           {
-              "id": "TIMEOUT",
-              "value": "已失效"
+              "value": "TIMEOUT",
+              "label": "已失效"
           },
           {
-              "id": "PAYED",
-              "value": "已支付"
+              "value": "PAYED",
+              "label": "已支付"
           }
       ]
   },
   "recipelInputStatus": [
       {
-          "id": "N",
-          "value": "未錄入"
+          "value": "N",
+          "label": "未錄入"
       },
       {
-          "id": "Y",
-          "value": "已錄入"
+          "value": "Y",
+          "label": "已錄入"
       }
   ],
   "recipelAuditStatus": [
       {
-          "id": "TJ",
-          "value": "未審核"
+          "value": "TJ",
+          "label": "未審核"
       },
       {
-          "id": "YSH",
-          "value": "已審核"
+          "value": "YSH",
+          "label": "已審核"
       }
   ],
   "recipelHiddenCons": [
       {
-          "id": "Y",
-          "value": "隱藏"
+          "value": "Y",
+          "label": "隱藏"
       }
   ],
   "offlineRecipelType": [
       {
-          "id": "normal",
-          "value": "普通門診"
+          "value": "normal",
+          "label": "普通門診"
       },
       {
-          "id": "special",
-          "value": "專科"
+          "value": "special",
+          "label": "專科"
       },
       {
-          "id": "package",
-          "value": "套餐"
+          "value": "package",
+          "label": "套餐"
       },
       {
-          "id": "accordingparty",
-          "value": "照方抓藥"
+          "value": "accordingparty",
+          "label": "照方抓藥"
       },
       {
-          "id": "goods",
-          "value": "直購國貨"
+          "value": "goods",
+          "label": "直購國貨"
       }
   ],
   "offlineRecipelType2": [
       {
-          "id": "normal",
-          "value": "普通門診"
+          "value": "normal",
+          "label": "普通門診"
       },
       {
-          "id": "special",
-          "value": "專科門診"
+          "value": "special",
+          "label": "專科門診"
       },
       {
-          "id": "specialist",
-          "value": "專科門診"
+          "value": "specialist",
+          "label": "專科門診"
       },
       {
-          "id": "package",
-          "value": "套餐門診"
+          "value": "package",
+          "label": "套餐門診"
       },
       {
-          "id": "accordingparty",
-          "value": "照方抓藥"
+          "value": "accordingparty",
+          "label": "照方抓藥"
       }
   ],
   "visitStatus": [
       {
-          "id": "C",
-          "value": "未提交"
+          "value": "C",
+          "label": "未提交"
       },
       {
-          "id": "W",
-          "value": "待審核"
+          "value": "W",
+          "label": "待審核"
       },
       {
-          "id": "F",
-          "value": "已提交"
+          "value": "F",
+          "label": "已提交"
       },
       {
-          "id": "A",
-          "value": "已購買"
+          "value": "A",
+          "label": "已購買"
       }
   ],
   "appointmentType": [
       {
-          "id": "normal",
-          "value": "普通門診"
+          "value": "normal",
+          "label": "普通門診"
       },
       {
-          "id": "specialist",
-          "value": "專科門診"
+          "value": "specialist",
+          "label": "專科門診"
       },
       {
-          "id": "package",
-          "value": "套餐"
+          "value": "package",
+          "label": "套餐"
       }
   ],
   "isInsur": [
       {
-          "id": "Y",
-          "value": "保險客人"
+          "value": "Y",
+          "label": "保險客人"
       }
   ],
   "seeStatus": [
       {
-          "id": "Y",
-          "value": "已結束"
+          "value": "Y",
+          "label": "已結束"
       },
       {
-          "id": "N",
-          "value": "未結束"
+          "value": "N",
+          "label": "未結束"
       }
   ],
   "onlineRecipelType": [
       {
-          "id": "app",
-          "value": "APP開方"
+          "value": "app",
+          "label": "APP開方"
       },
       {
-          "id": "photo",
-          "value": "醫生拍方"
+          "value": "photo",
+          "label": "醫生拍方"
       },
       {
-          "id": "trans",
-          "value": "人際傳方"
+          "value": "trans",
+          "label": "人際傳方"
       }
   ],
   "onlineRecipelOrigin": [
       {
-          "id": "APP",
-          "value": "APP開方"
+          "value": "APP",
+          "label": "APP開方"
       },
       {
-          "id": "PC",
-          "value": "手寫方"
+          "value": "PC",
+          "label": "手寫方"
       },
       {
-          "id": "DOCTOR",
-          "value": "电子方"
+          "value": "DOCTOR",
+          "label": "电子方"
       },
       {
-          "id": "photo",
-          "value": "醫生拍方"
+          "value": "photo",
+          "label": "醫生拍方"
       },
       {
-          "id": "trans",
-          "value": "人際傳方"
+          "value": "trans",
+          "label": "人際傳方"
       }
   ],
   "isDebug": [
       {
-          "id": "1",
-          "value": "显示測試醫生"
+          "value": "1",
+          "label": "显示測試醫生"
       }
   ],
   "isdebugY": [
       {
-          "id": "Y",
-          "value": "是測試醫生"
+          "value": "Y",
+          "label": "是測試醫生"
       }
   ],
   "isdebugYN": [
       {
-          "id": "Y",
-          "value": "是"
+          "value": "Y",
+          "label": "是"
       },
       {
-          "id": "N",
-          "value": "否"
+          "value": "N",
+          "label": "否"
       }
   ],
   "useCard": [
       {
-          "id": "Y",
-          "value": "使用會員卡結算"
+          "value": "Y",
+          "label": "使用會員卡結算"
       }
   ],
   "allowAppoint": [
       {
-          "id": "Y",
-          "value": "未購買套餐不允許預約"
+          "value": "Y",
+          "label": "未購買套餐不允許預約"
       }
   ],
   "insurActive": [
       {
-          "id": "Y",
-          "value": "正常"
+          "value": "Y",
+          "label": "正常"
       },
       {
-          "id": "N",
-          "value": "停用"
+          "value": "N",
+          "label": "停用"
       }
   ],
   "hasChild": [
       {
-          "id": "N",
-          "value": "未生育"
+          "value": "N",
+          "label": "未生育"
       },
       {
-          "id": "Y",
-          "value": "已生育"
+          "value": "Y",
+          "label": "已生育"
       }
   ],
   "numList": [
       {
-          "id": "1",
-          "value": "1"
+          "value": "1",
+          "label": "1"
       },
       {
-          "id": "2",
-          "value": "2"
+          "value": "2",
+          "label": "2"
       },
       {
-          "id": "3",
-          "value": "3"
+          "value": "3",
+          "label": "3"
       },
       {
-          "id": "4",
-          "value": "4"
+          "value": "4",
+          "label": "4"
       },
       {
-          "id": "5",
-          "value": "5"
+          "value": "5",
+          "label": "5"
       },
       {
-          "id": "6",
-          "value": "6"
+          "value": "6",
+          "label": "6"
       },
       {
-          "id": "7",
-          "value": "7"
+          "value": "7",
+          "label": "7"
       }
   ],
   "getDrugType": [
       {
-          "id": "SELF",
-          "value": "自取"
+          "value": "SELF",
+          "label": "自取"
       },
       {
-          "id": "EXPRESS",
-          "value": "快遞"
+          "value": "EXPRESS",
+          "label": "快遞"
       }
   ],
   "isMakeProduct": [
       {
-          "id": "yes",
-          "value": "是"
+          "value": "yes",
+          "label": "是"
       },
       {
-          "id": "",
-          "value": "否",
+          "value": "",
+          "label": "否",
           "_checked": true
       }
   ],
   "week": [
       {
-          "id": "1",
-          "value": "星期一"
+          "value": "1",
+          "label": "星期一"
       },
       {
-          "id": "2",
-          "value": "星期二"
+          "value": "2",
+          "label": "星期二"
       },
       {
-          "id": "3",
-          "value": "星期三"
+          "value": "3",
+          "label": "星期三"
       },
       {
-          "id": "4",
-          "value": "星期四"
+          "value": "4",
+          "label": "星期四"
       },
       {
-          "id": "5",
-          "value": "星期五"
+          "value": "5",
+          "label": "星期五"
       },
       {
-          "id": "6",
-          "value": "星期六"
+          "value": "6",
+          "label": "星期六"
       },
       {
-          "id": "7",
-          "value": "星期天"
+          "value": "7",
+          "label": "星期天"
       }
   ],
   "isSpecialist": [
       {
-          "id": "normal",
-          "value": "普通門診"
+          "value": "normal",
+          "label": "普通門診"
       },
       {
-          "id": "specialist",
-          "value": "專科門診"
+          "value": "specialist",
+          "label": "專科門診"
       },
       {
-          "id": "package",
-          "value": "套餐門診"
+          "value": "package",
+          "label": "套餐門診"
       }
   ],
   "returnType": [
       {
-          "id": "original",
-          "value": "原支付方式",
+          "value": "original",
+          "label": "原支付方式",
           "_checked": true
       },
       {
-          "id": "ZBTK",
-          "value": "總部退款"
+          "value": "ZBTK",
+          "label": "總部退款"
       },
       {
-          "id": "HYK",
-          "value": "會員卡"
+          "value": "HYK",
+          "label": "會員卡"
       }
   ],
   "chargeType": [
       {
-          "id": "ZZBX",
-          "value": "保險"
+          "value": "ZZBX",
+          "label": "保險"
       },
       {
-          "id": "HYK",
-          "value": "會員卡"
+          "value": "HYK",
+          "label": "會員卡"
       },
       {
-          "id": "TRDF",
-          "value": "他人會員卡"
+          "value": "TRDF",
+          "label": "他人會員卡"
       },
       {
-          "id": "POS",
-          "value": "POS"
+          "value": "POS",
+          "label": "POS"
       },
       {
-          "id": "XJ",
-          "value": "現金"
+          "value": "XJ",
+          "label": "現金"
       },
       {
-          "id": "GGK",
-          "value": "公關卡"
+          "value": "GGK",
+          "label": "公關卡"
       },
       {
-          "id": "YHZZ",
-          "value": "銀行轉賬"
+          "value": "YHZZ",
+          "label": "銀行轉賬"
       },
       {
-          "id": "ZBTK",
-          "value": "總部退款"
+          "value": "ZBTK",
+          "label": "總部退款"
       },
       {
-          "id": "ZP",
-          "value": "支票"
+          "value": "ZP",
+          "label": "支票"
       },
       {
-          "id": "WEIDIAN",
-          "value": "微店"
+          "value": "WEIDIAN",
+          "label": "微店"
       },
       {
-          "id": "PEACE_CARD",
-          "value": "安心卡"
+          "value": "PEACE_CARD",
+          "label": "安心卡"
       },
       {
-          "id": "WXPAY",
-          "value": "微信"
+          "value": "WXPAY",
+          "label": "微信"
       },
       {
-          "id": "ALIPAY",
-          "value": "支付寶"
+          "value": "ALIPAY",
+          "label": "支付寶"
       },
       {
-          "id": "ARRE",
-          "value": "欠費"
+          "value": "ARRE",
+          "label": "欠費"
       },
       {
-          "id": "YHQ",
-          "value": "優惠券"
+          "value": "YHQ",
+          "label": "優惠券"
       },
       {
-          "id": "GIFT_CARD",
-          "value": "充值卡"
+          "value": "GIFT_CARD",
+          "label": "充值卡"
       }
   ],
   "chargeTypeList": [
       {
-          "id": "ZZBX",
-          "value": "保險"
+          "value": "ZZBX",
+          "label": "保險"
       },
       {
-          "id": "HYK",
-          "value": "會員卡"
+          "value": "HYK",
+          "label": "會員卡"
       },
       {
-          "id": "TRDF",
-          "value": "他人會員卡"
+          "value": "TRDF",
+          "label": "他人會員卡"
       },
       {
-          "id": "POS",
-          "value": "POS"
+          "value": "POS",
+          "label": "POS"
       },
       {
-          "id": "XJ",
-          "value": "現金"
+          "value": "XJ",
+          "label": "現金"
       },
       {
-          "id": "GGK",
-          "value": "公關卡"
+          "value": "GGK",
+          "label": "公關卡"
       },
       {
-          "id": "YHZZ",
-          "value": "銀行轉賬"
+          "value": "YHZZ",
+          "label": "銀行轉賬"
       },
       {
-          "id": "ZBTK",
-          "value": "總部退款"
+          "value": "ZBTK",
+          "label": "總部退款"
       },
       {
-          "id": "ZP",
-          "value": "支票"
+          "value": "ZP",
+          "label": "支票"
       },
       {
-          "id": "WEIDIAN",
-          "value": "微店"
+          "value": "WEIDIAN",
+          "label": "微店"
       },
       {
-          "id": "PEACE_CARD",
-          "value": "安心卡"
+          "value": "PEACE_CARD",
+          "label": "安心卡"
       },
       {
-          "id": "WXPAY",
-          "value": "微信"
+          "value": "WXPAY",
+          "label": "微信"
       },
       {
-          "id": "ALIPAY",
-          "value": "支付寶"
+          "value": "ALIPAY",
+          "label": "支付寶"
       },
       {
-          "id": "ARRE",
-          "value": "欠費"
+          "value": "ARRE",
+          "label": "欠費"
       },
       {
-          "id": "YHQ",
-          "value": "優惠券"
+          "value": "YHQ",
+          "label": "優惠券"
       },
       {
-          "id": "GIFT_CARD",
-          "value": "充值卡"
+          "value": "GIFT_CARD",
+          "label": "充值卡"
       },
       {
-          "id": "USE_PACKAGE",
-          "value": "套餐"
+          "value": "USE_PACKAGE",
+          "label": "套餐"
       },
       {
-          "id": "USE_SPECIALIST",
-          "value": "專科"
+          "value": "USE_SPECIALIST",
+          "label": "專科"
       },
       {
-          "id": "OLD_YHQ",
-          "value": "遺留優惠券"
+          "value": "OLD_YHQ",
+          "label": "遺留優惠券"
       }
   ],
   "dataType": [
       {
-          "id": "drug",
-          "value": "藥費"
+          "value": "drug",
+          "label": "藥費"
       },
       {
-          "id": "package",
-          "value": "套餐"
+          "value": "package",
+          "label": "套餐"
       },
       {
-          "id": "life",
-          "value": "國貨產品"
+          "value": "life",
+          "label": "國貨產品"
       },
       {
-          "id": "addClinic",
-          "value": "診費"
+          "value": "addClinic",
+          "label": "診費"
       },
       {
-          "id": "clinic",
-          "value": "診費"
+          "value": "clinic",
+          "label": "診費"
       },
       {
-          "id": "deco",
-          "value": "代煎費"
+          "value": "deco",
+          "label": "代煎費"
       },
       {
-          "id": "make",
-          "value": "代煎費"
+          "value": "make",
+          "label": "代煎費"
       },
       {
-          "id": "treat",
-          "value": "治療方"
+          "value": "treat",
+          "label": "治療方"
       },
       {
-          "id": "use_package",
-          "value": "套餐"
+          "value": "use_package",
+          "label": "套餐"
       },
       {
-          "id": "express",
-          "value": "快遞費"
+          "value": "express",
+          "label": "快遞費"
       },
       {
-          "id": "course",
-          "value": "講座"
+          "value": "course",
+          "label": "講座"
       },
       {
-          "id": "other",
-          "value": "其他費用"
+          "value": "other",
+          "label": "其他費用"
       }
   ],
   "retundType": [
       {
-          "id": "ZZBX",
-          "value": "保險"
+          "value": "ZZBX",
+          "label": "保險"
       },
       {
-          "id": "HYK",
-          "value": "會員卡"
+          "value": "HYK",
+          "label": "會員卡"
       },
       {
-          "id": "TRDF",
-          "value": "他人會員卡"
+          "value": "TRDF",
+          "label": "他人會員卡"
       },
       {
-          "id": "POS",
-          "value": "POS"
+          "value": "POS",
+          "label": "POS"
       },
       {
-          "id": "XJ",
-          "value": "現金"
+          "value": "XJ",
+          "label": "現金"
       },
       {
-          "id": "GGK",
-          "value": "公關卡"
+          "value": "GGK",
+          "label": "公關卡"
       },
       {
-          "id": "YHZZ",
-          "value": "銀行轉賬"
+          "value": "YHZZ",
+          "label": "銀行轉賬"
       },
       {
-          "id": "ZP",
-          "value": "支票"
+          "value": "ZP",
+          "label": "支票"
       },
       {
-          "id": "YHQ",
-          "value": "優惠券"
+          "value": "YHQ",
+          "label": "優惠券"
       },
       {
-          "id": "PEACE_CARD",
-          "value": "安心卡"
+          "value": "PEACE_CARD",
+          "label": "安心卡"
       },
       {
-          "id": "ARRE",
-          "value": "欠費"
+          "value": "ARRE",
+          "label": "欠費"
       },
       {
-          "id": "USE_PACKAGE",
-          "value": "套餐"
+          "value": "USE_PACKAGE",
+          "label": "套餐"
       },
       {
-          "id": "USE_SPECIALIST",
-          "value": "專科"
+          "value": "USE_SPECIALIST",
+          "label": "專科"
       },
       {
-          "id": "OLD_YHQ",
-          "value": "優惠券"
+          "value": "OLD_YHQ",
+          "label": "優惠券"
       },
       {
-          "id": "WEIDIAN",
-          "value": "微店"
+          "value": "WEIDIAN",
+          "label": "微店"
       },
       {
-          "id": "WXPAY",
-          "value": "微店"
+          "value": "WXPAY",
+          "label": "微店"
       },
       {
-          "id": "ALIPAY",
-          "value": "微店"
+          "value": "ALIPAY",
+          "label": "微店"
       },
       {
-          "id": "WX_COUPON",
-          "value": "膏方抵扣碼"
+          "value": "WX_COUPON",
+          "label": "膏方抵扣碼"
       }
   ],
   "arrearType": [
       {
-          "id": "ZJQF",
-          "value": "就診欠費"
+          "value": "ZJQF",
+          "label": "就診欠費"
       },
       {
-          "id": "BXQF",
-          "value": "保險拒賠欠費"
+          "value": "BXQF",
+          "label": "保險拒賠欠費"
       },
       {
-          "id": "SY",
-          "value": "爽約欠費"
+          "value": "SY",
+          "label": "爽約欠費"
       }
   ],
   "makeMap": {
@@ -2715,284 +2715,284 @@
   "market": {
       "voucherMethod": [
           {
-              "id": "DJQ",
-              "value": "代金券"
+              "value": "DJQ",
+              "label": "代金券"
           },
           {
-              "id": "MJQ",
-              "value": "滿減券"
+              "value": "MJQ",
+              "label": "滿減券"
           },
           {
-              "id": "ZKQ",
-              "value": "折扣券"
+              "value": "ZKQ",
+              "label": "折扣券"
           }
       ],
       "voucherIsTerminate": [
           {
-              "id": "N",
-              "value": "正常"
+              "value": "N",
+              "label": "正常"
           },
           {
-              "id": "Y",
-              "value": "已失效"
+              "value": "Y",
+              "label": "已失效"
           }
       ],
       "voucherType": [
           {
-              "id": "XX",
-              "value": "門診"
+              "value": "XX",
+              "label": "門診"
           },
           {
-              "id": "XS",
-              "value": "網診"
+              "value": "XS",
+              "label": "網診"
           }
       ],
       "voucherRange": [
           {
-              "id": "ZF",
-              "value": "診費"
+              "value": "ZF",
+              "label": "診費"
           },
           {
-              "id": "YF",
-              "value": "藥費"
+              "value": "YF",
+              "label": "藥費"
           },
           {
-              "id": "YF&GHCP",
-              "value": "藥費+產品"
+              "value": "YF&GHCP",
+              "label": "藥費+產品"
           },
           {
-              "id": "ZLF",
-              "value": "治療費"
+              "value": "ZLF",
+              "label": "治療費"
           },
           {
-              "id": "YPCZF",
-              "value": "藥品處置費"
+              "value": "YPCZF",
+              "label": "藥品處置費"
           },
           {
-              "id": "KDF",
-              "value": "快遞費"
+              "value": "KDF",
+              "label": "快遞費"
           },
           {
-              "id": "GHCP",
-              "value": "產品"
+              "value": "GHCP",
+              "label": "產品"
           },
           {
-              "id": "PACKAGE",
-              "value": "套餐"
+              "value": "PACKAGE",
+              "label": "套餐"
           },
           {
-              "id": "SPECIALIST",
-              "value": "專科"
+              "value": "SPECIALIST",
+              "label": "專科"
           }
       ],
       "cardIsUse": [
           {
-              "id": "N",
-              "value": "未使用"
+              "value": "N",
+              "label": "未使用"
           },
           {
-              "id": "Y",
-              "value": "已使用"
+              "value": "Y",
+              "label": "已使用"
           }
       ],
       "ypczfType": [
           {
-              "id": "DJF",
-              "value": "代煎費"
+              "value": "DJF",
+              "label": "代煎費"
           },
           {
-              "id": "DFF",
-              "value": "打粉費"
+              "value": "DFF",
+              "label": "打粉費"
           },
           {
-              "id": "ZWF",
-              "value": "制丸費"
+              "value": "ZWF",
+              "label": "制丸費"
           },
           {
-              "id": "ZGF",
-              "value": "制膏費"
+              "value": "ZGF",
+              "label": "制膏費"
           }
       ],
       "packageType": [
           {
-              "id": "offline",
-              "value": "門診套餐"
+              "value": "offline",
+              "label": "門診套餐"
           },
           {
-              "id": "online",
-              "value": "網診套餐"
+              "value": "online",
+              "label": "網診套餐"
           },
           {
-              "id": "combo",
-              "value": "組合套餐"
+              "value": "combo",
+              "label": "組合套餐"
           }
       ],
       "messageType": [
           {
-              "id": "ACTIVITY",
-              "value": "活動推送"
+              "value": "ACTIVITY",
+              "label": "活動推送"
           }
       ],
       "reciverType": [
           {
-              "id": "all",
-              "value": "全網推送"
+              "value": "all",
+              "label": "全網推送"
           },
           {
-              "id": "single",
-              "value": "指定醫生"
+              "value": "single",
+              "label": "指定醫生"
           }
       ],
       "sendType": [
           {
-              "id": "SYSTEM",
-              "value": "系統發放"
+              "value": "SYSTEM",
+              "label": "系統發放"
           },
           {
-              "id": "WX",
-              "value": "微信領取"
+              "value": "WX",
+              "label": "微信領取"
           },
           {
-              "id": "MAN",
-              "value": "人工發放"
+              "value": "MAN",
+              "label": "人工發放"
           }
       ]
   },
   "commentType": [
       {
-          "id": "1",
-          "value": "1"
+          "value": "1",
+          "label": "1"
       },
       {
-          "id": "2",
-          "value": "2"
+          "value": "2",
+          "label": "2"
       },
       {
-          "id": "3",
-          "value": "3"
+          "value": "3",
+          "label": "3"
       },
       {
-          "id": "4",
-          "value": "4"
+          "value": "4",
+          "label": "4"
       },
       {
-          "id": "5",
-          "value": "5"
+          "value": "5",
+          "label": "5"
       }
   ],
   "serviceType": [
       {
-          "id": "1",
-          "value": "1"
+          "value": "1",
+          "label": "1"
       },
       {
-          "id": "2",
-          "value": "2"
+          "value": "2",
+          "label": "2"
       },
       {
-          "id": "3",
-          "value": "3"
+          "value": "3",
+          "label": "3"
       },
       {
-          "id": "4",
-          "value": "4"
+          "value": "4",
+          "label": "4"
       },
       {
-          "id": "5",
-          "value": "5"
+          "value": "5",
+          "label": "5"
       }
   ],
   "scheType": [
       {
-          "id": "ZDY",
-          "value": "自定義"
+          "value": "ZDY",
+          "label": "自定義"
       },
       {
-          "id": "MB",
-          "value": "模板"
+          "value": "MB",
+          "label": "模板"
       }
   ],
   "quickReplyType": [
       {
-          "id": "quick_reply_zzwt",
-          "value": "診中問題"
+          "value": "quick_reply_zzwt",
+          "label": "診中問題"
       },
       {
-          "id": "quick_reply_tljy,dljy",
-          "value": "調理建議"
+          "value": "quick_reply_tljy,dljy",
+          "label": "調理建議"
       },
       {
-          "id": "quick_reply_changyonghuifu",
-          "value": "常用回復"
+          "value": "quick_reply_changyonghuifu",
+          "label": "常用回復"
       },
       {
-          "id": "quick_reply_ycykd",
-          "value": "藥材與快遞"
+          "value": "quick_reply_ycykd",
+          "label": "藥材與快遞"
       }
   ],
   "RXDispenseStatus": [
       {
-          "id": "SEND",
-          "value": "已發葯"
+          "value": "SEND",
+          "label": "已發葯"
       },
       {
-          "id": "WAITING",
-          "value": "未發葯"
+          "value": "WAITING",
+          "label": "未發葯"
       }
   ],
   "decoMake": [
       {
-          "id": "N",
-          "value": "自煎"
+          "value": "N",
+          "label": "自煎"
       },
       {
-          "id": "Y",
-          "value": "代煎"
+          "value": "Y",
+          "label": "代煎"
       }
   ],
   "weixin_prefix": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxda6e1b2c1b561518&redirect_uri=https://mp.zanchina.com/weixin/door/",
   "unVisitStatus": [
       {
-          "id": "Y",
-          "value": "已回訪"
+          "value": "Y",
+          "label": "已回訪"
       },
       {
-          "id": "W",
-          "value": "未回訪"
+          "value": "W",
+          "label": "未回訪"
       },
       {
-          "id": "G",
-          "value": "已過期"
+          "value": "G",
+          "label": "已過期"
       }
   ],
   "tmPrize": [
       {
-          "id": "JZC",
-          "value": "姜棗茶1小包"
+          "value": "JZC",
+          "label": "姜棗茶1小包"
       },
       {
-          "id": "MMTYZ",
-          "value": "面膜體驗裝1張"
+          "value": "MMTYZ",
+          "label": "面膜體驗裝1張"
       },
       {
-          "id": "HT",
-          "value": "紅糖1包"
+          "value": "HT",
+          "label": "紅糖1包"
       },
       {
-          "id": "XYCYMC",
-          "value": "足浴粉（薰衣草+益母草）共2包"
+          "value": "XYCYMC",
+          "label": "足浴粉（薰衣草+益母草）共2包"
       },
       {
-          "id": "NMP",
-          "value": "檸檬片1袋"
+          "value": "NMP",
+          "label": "檸檬片1袋"
       },
       {
-          "id": "ZT",
-          "value": "足貼"
+          "value": "ZT",
+          "label": "足貼"
       },
       {
-          "id": "FYT",
-          "value": "扶陽貼1片"
+          "value": "FYT",
+          "label": "扶陽貼1片"
       }
   ],
   "tmColumns": [
@@ -3010,263 +3010,263 @@
   "product": {
       "type": [
           {
-              "id": "YNZJ",
-              "value": "自有產品"
+              "value": "YNZJ",
+              "label": "自有產品"
           },
           {
-              "id": "PRODUCT",
-              "value": "商品"
+              "value": "PRODUCT",
+              "label": "商品"
           }
       ],
       "subType": [
           {
-              "id": "GHSP",
-              "value": "國貨"
+              "value": "GHSP",
+              "label": "國貨"
           },
           {
-              "id": "YNZJ",
-              "value": "自有產品"
+              "value": "YNZJ",
+              "label": "自有產品"
           },
           {
-              "id": "DLDX",
-              "value": "代理代銷"
+              "value": "DLDX",
+              "label": "代理代銷"
           },
           {
-              "id": "SERVICE",
-              "value": "服務類產品"
+              "value": "SERVICE",
+              "label": "服務類產品"
           }
       ],
       "kind": [
           {
-              "id": "FOOD",
-              "value": "食品"
+              "value": "FOOD",
+              "label": "食品"
           },
           {
-              "id": "HCARE",
-              "value": "保健"
+              "value": "HCARE",
+              "label": "保健"
           },
           {
-              "id": "BOOK",
-              "value": "圖書"
+              "value": "BOOK",
+              "label": "圖書"
           },
           {
-              "id": "LIFE",
-              "value": "生活用品"
+              "value": "LIFE",
+              "label": "生活用品"
           }
       ],
       "approveStatus": [
           {
-              "id": "DTJ",
-              "value": "待提交"
+              "value": "DTJ",
+              "label": "待提交"
           },
           {
-              "id": "YTJ",
-              "value": "已提交"
+              "value": "YTJ",
+              "label": "已提交"
           },
           {
-              "id": "YSH",
-              "value": "已審核"
+              "value": "YSH",
+              "label": "已審核"
           },
           {
-              "id": "YBH",
-              "value": "被駁回"
+              "value": "YBH",
+              "label": "被駁回"
           }
       ],
       "status": [
           {
-              "id": "Y",
-              "value": "正常"
+              "value": "Y",
+              "label": "正常"
           },
           {
-              "id": "N",
-              "value": "停用"
+              "value": "N",
+              "label": "停用"
           }
       ],
       "sendStatus": [
           {
-              "id": "WAITING",
-              "value": "未備貨"
+              "value": "WAITING",
+              "label": "未備貨"
           },
           {
-              "id": "SEND",
-              "value": "已備貨"
+              "value": "SEND",
+              "label": "已備貨"
           }
       ],
       "isReqProduct": [
           {
-              "id": "0",
-              "value": "無"
+              "value": "0",
+              "label": "無"
           },
           {
-              "id": "1",
-              "value": "有"
+              "value": "1",
+              "label": "有"
           }
       ],
       "epType": [
           {
-              "id": "A",
-              "value": "A"
+              "value": "A",
+              "label": "A"
           },
           {
-              "id": "B",
-              "value": "B"
+              "value": "B",
+              "label": "B"
           },
           {
-              "id": "C",
-              "value": "C"
+              "value": "C",
+              "label": "C"
           }
       ],
       "isShowInBanner": [
           {
-              "id": "1",
-              "value": "显示"
+              "value": "1",
+              "label": "显示"
           },
           {
-              "id": "0",
-              "value": "不显示"
+              "value": "0",
+              "label": "不显示"
           }
       ],
       "activityType": [
           {
-              "id": "MZK",
-              "value": "滿折"
+              "value": "MZK",
+              "label": "滿折"
           },
           {
-              "id": "MZ",
-              "value": "滿贈"
+              "value": "MZ",
+              "label": "滿贈"
           },
           {
-              "id": "MM",
-              "value": "滿免"
+              "value": "MM",
+              "label": "滿免"
           },
           {
-              "id": "MJP",
-              "value": "滿減-金額"
+              "value": "MJP",
+              "label": "滿減-金額"
           },
           {
-              "id": "MJA",
-              "value": "滿減-數量"
+              "value": "MJA",
+              "label": "滿減-數量"
           }
       ],
       "activityProduct": [
           {
-              "id": "ALL",
-              "value": "全部產品參与活動",
+              "value": "ALL",
+              "label": "全部產品參与活動",
               "_checked": true
           },
           {
-              "id": "PART",
-              "value": "部分產品參与活動"
+              "value": "PART",
+              "label": "部分產品參与活動"
           },
           {
-              "id": "NOPART",
-              "value": "部分產品不參与活動"
+              "value": "NOPART",
+              "label": "部分產品不參与活動"
           }
       ],
       "activityStatus": [
           {
-              "id": "WKS",
-              "value": "未開始"
+              "value": "WKS",
+              "label": "未開始"
           },
           {
-              "id": "ING",
-              "value": "進行中"
+              "value": "ING",
+              "label": "進行中"
           },
           {
-              "id": "END",
-              "value": "已結束"
+              "value": "END",
+              "label": "已結束"
           }
       ],
       "order": [
           {
-              "id": "asc",
-              "value": "從小到大"
+              "value": "asc",
+              "label": "從小到大"
           },
           {
-              "id": "desc",
-              "value": "從大到小"
+              "value": "desc",
+              "label": "從大到小"
           }
       ],
       "mzkType": [
           {
-              "id": "MZKMJ",
-              "value": "滿金額",
+              "value": "MZKMJ",
+              "label": "滿金額",
               "_checked": true
           },
           {
-              "id": "MZKMS",
-              "value": "滿數量"
+              "value": "MZKMS",
+              "label": "滿數量"
           }
       ],
       "mzType": [
           {
-              "id": "MZMJ",
-              "value": "滿金額",
+              "value": "MZMJ",
+              "label": "滿金額",
               "_checked": true
           },
           {
-              "id": "MZMS",
-              "value": "滿數量"
+              "value": "MZMS",
+              "label": "滿數量"
           }
       ],
       "mmType": [
           {
-              "id": "MMMJ",
-              "value": "滿金額",
+              "value": "MMMJ",
+              "label": "滿金額",
               "_checked": true
           },
           {
-              "id": "MMMS",
-              "value": "滿數量"
+              "value": "MMMS",
+              "label": "滿數量"
           }
       ],
       "returnType": [
           {
-              "id": "Y",
-              "value": "已退"
+              "value": "Y",
+              "label": "已退"
           },
           {
-              "id": "N",
-              "value": "未退"
+              "value": "N",
+              "label": "未退"
           },
           {
-              "id": "H",
-              "value": "部分退"
+              "value": "H",
+              "label": "部分退"
           }
       ],
       "mmFree": [
           {
-              "id": "MIN",
-              "value": "最小金額",
+              "value": "MIN",
+              "label": "最小金額",
               "_checked": true
           },
           {
-              "id": "MAX",
-              "value": "最大金額"
+              "value": "MAX",
+              "label": "最大金額"
           }
       ],
       "promotionWay": [
           {
-              "id": "offline",
-              "value": "線下（門店）"
+              "value": "offline",
+              "label": "線下（門店）"
           },
           {
-              "id": "online",
-              "value": "線上（微信）"
+              "value": "online",
+              "label": "線上（微信）"
           }
       ],
       "returnStatus": [
           {
-              "id": "-1",
-              "value": "未退貨"
+              "value": "-1",
+              "label": "未退貨"
           },
           {
-              "id": "0",
-              "value": "部分退"
+              "value": "0",
+              "label": "部分退"
           },
           {
-              "id": "1",
-              "value": "全部退"
+              "value": "1",
+              "label": "全部退"
           }
       ]
   },
@@ -3274,196 +3274,196 @@
       "cash": {
           "applyStatus": [
               {
-                  "id": "A",
-                  "value": "申請中"
+                  "value": "A",
+                  "label": "申請中"
               },
               {
-                  "id": "Y",
-                  "value": "已發放"
+                  "value": "Y",
+                  "label": "已發放"
               },
               {
-                  "id": "N",
-                  "value": "已駁回"
+                  "value": "N",
+                  "label": "已駁回"
               },
               {
-                  "id": "W",
-                  "value": "等待回調處理"
+                  "value": "W",
+                  "label": "等待回調處理"
               }
           ]
       },
       "enterprise": {
           "paymentStatus": [
               {
-                  "id": "SUCCESS",
-                  "value": "轉賬成功"
+                  "value": "SUCCESS",
+                  "label": "轉賬成功"
               },
               {
-                  "id": "FAILED",
-                  "value": "轉賬失敗"
+                  "value": "FAILED",
+                  "label": "轉賬失敗"
               },
               {
-                  "id": "PROCESSING",
-                  "value": "處理中"
+                  "value": "PROCESSING",
+                  "label": "處理中"
               }
           ]
       },
       "walletDetail": {
           "type": [
               {
-                  "id": "reward",
-                  "value": "獎勵"
+                  "value": "reward",
+                  "label": "獎勵"
               },
               {
-                  "id": "DTX",
-                  "value": "自助提現"
+                  "value": "DTX",
+                  "label": "自助提現"
               },
               {
-                  "id": "ZCY",
-                  "value": "草藥"
+                  "value": "ZCY",
+                  "label": "草藥"
               },
               {
-                  "id": "clinic",
-                  "value": "診費"
+                  "value": "clinic",
+                  "label": "診費"
               },
               {
-                  "id": "addClinic",
-                  "value": "附加診費"
+                  "value": "addClinic",
+                  "label": "附加診費"
               },
               {
-                  "id": "YNZJ",
-                  "value": "自有產品"
+                  "value": "YNZJ",
+                  "label": "自有產品"
               },
               {
-                  "id": "service",
-                  "value": "服務費"
+                  "value": "service",
+                  "label": "服務費"
               },
               {
-                  "id": "tworeward",
-                  "value": "兩單獎勵"
+                  "value": "tworeward",
+                  "label": "兩單獎勵"
               },
               {
-                  "id": "treat",
-                  "value": "治療項"
+                  "value": "treat",
+                  "label": "治療項"
               }
           ]
       },
       "protocal": [
           {
-              "id": "Y",
-              "value": "同意"
+              "value": "Y",
+              "label": "同意"
           },
           {
-              "id": "N",
-              "value": "不同意"
+              "value": "N",
+              "label": "不同意"
           }
       ]
   },
   "achieve": [],
   "introFlag": [
       {
-          "id": "introFlag",
-          "value": "給客人發《100元門診診費代金券》",
+          "value": "introFlag",
+          "label": "給客人發《100元門診診費代金券》",
           "_checked": true
       }
   ],
   "courseStatus": [
       {
-          "id": "doing",
-          "value": "進行中"
+          "value": "doing",
+          "label": "進行中"
       },
       {
-          "id": "end",
-          "value": "已結束"
+          "value": "end",
+          "label": "已結束"
       },
       {
-          "id": "ready",
-          "value": "未開始"
+          "value": "ready",
+          "label": "未開始"
       }
   ],
   "memberCourseStatus": [
       {
-          "id": "N",
-          "value": "已報名"
+          "value": "N",
+          "label": "已報名"
       },
       {
-          "id": "Y",
-          "value": "已簽到"
+          "value": "Y",
+          "label": "已簽到"
       },
       {
-          "id": "Q",
-          "value": "已取消"
+          "value": "Q",
+          "label": "已取消"
       }
   ],
   "course": {
       "channel": [
           {
-              "id": "電話",
-              "value": "電話"
+              "value": "電話",
+              "label": "電話"
           },
           {
-              "id": "現場",
-              "value": "現場"
+              "value": "現場",
+              "label": "現場"
           }
       ]
   },
   "settle": [
       {
-          "id": "N",
-          "value": "醫館承擔成本"
+          "value": "N",
+          "label": "醫館承擔成本"
       }
   ],
   "hospitalConst": [
       {
-          "id": "Y",
-          "value": "醫館承擔成本"
+          "value": "Y",
+          "label": "醫館承擔成本"
       }
   ],
   "yesOrNo": [
       {
-          "id": "N",
-          "value": "無"
+          "value": "N",
+          "label": "無"
       },
       {
-          "id": "Y",
-          "value": "有"
+          "value": "Y",
+          "label": "有"
       }
   ],
   "canOrCant": [
       {
-          "id": "Y",
-          "value": "能"
+          "value": "Y",
+          "label": "能"
       },
       {
-          "id": "N",
-          "value": "否"
+          "value": "N",
+          "label": "否"
       }
   ],
   "doctorRecipeType": [
       {
-          "id": "ZCY",
-          "value": "中草藥",
+          "value": "ZCY",
+          "label": "中草藥",
           "_checked": true
       },
       {
-          "id": "ZCNY",
-          "value": "中成藥",
+          "value": "ZCNY",
+          "label": "中成藥",
           "_checked": true
       },
       {
-          "id": "treat",
-          "value": "治療方",
+          "value": "treat",
+          "label": "治療方",
           "_checked": true
       }
   ],
   "inputWay": [
       {
-          "id": "yfyl",
-          "value": "一方一量",
+          "value": "yfyl",
+          "label": "一方一量",
           "_checked": true
       },
       {
-          "id": "xfhl",
-          "value": "先方后量"
+          "value": "xfhl",
+          "label": "先方后量"
       }
   ],
   "daijianMap": {
@@ -3502,175 +3502,175 @@
   },
   "isDeco": [
       {
-          "id": "Y",
-          "value": "能代煎"
+          "value": "Y",
+          "label": "能代煎"
       },
       {
-          "id": "N",
-          "value": "不能代煎"
+          "value": "N",
+          "label": "不能代煎"
       }
   ],
   "offlineOrderType": [
       {
-          "id": "buyCard",
-          "value": "購買會員卡"
+          "value": "buyCard",
+          "label": "購買會員卡"
       },
       {
-          "id": "offline",
-          "value": "門診診費"
+          "value": "offline",
+          "label": "門診診費"
       },
       {
-          "id": "recipel",
-          "value": "處方訂單"
+          "value": "recipel",
+          "label": "處方訂單"
       },
       {
-          "id": "course",
-          "value": "講座"
+          "value": "course",
+          "label": "講座"
       },
       {
-          "id": "life",
-          "value": "產品"
+          "value": "life",
+          "label": "產品"
       },
       {
-          "id": "package",
-          "value": "購買套餐"
+          "value": "package",
+          "label": "購買套餐"
       },
       {
-          "id": "specialist",
-          "value": "購買專科"
+          "value": "specialist",
+          "label": "購買專科"
       },
       {
-          "id": "supplement",
-          "value": "補收費用"
+          "value": "supplement",
+          "label": "補收費用"
       }
   ],
   "onlineOrderType": [
       {
-          "id": "buyCard",
-          "value": "購買會員卡"
+          "value": "buyCard",
+          "label": "購買會員卡"
       },
       {
-          "id": "recipel",
-          "value": "處方訂單"
+          "value": "recipel",
+          "label": "處方訂單"
       },
       {
-          "id": "graphic",
-          "value": "圖文問診"
+          "value": "graphic",
+          "label": "圖文問診"
       },
       {
-          "id": "phone",
-          "value": "電話問診"
+          "value": "phone",
+          "label": "電話問診"
       },
       {
-          "id": "consult",
-          "value": "診后諮詢"
+          "value": "consult",
+          "label": "診后諮詢"
       },
       {
-          "id": "life",
-          "value": "產品"
+          "value": "life",
+          "label": "產品"
       },
       {
-          "id": "course",
-          "value": "講座"
+          "value": "course",
+          "label": "講座"
       },
       {
-          "id": "package",
-          "value": "購買套餐"
+          "value": "package",
+          "label": "購買套餐"
       },
       {
-          "id": "specialist",
-          "value": "購買專科"
+          "value": "specialist",
+          "label": "購買專科"
       },
       {
-          "id": "supplement",
-          "value": "補收費用"
+          "value": "supplement",
+          "label": "補收費用"
       },
       {
-          "id": "wx_coupon",
-          "value": "微信抵扣金"
+          "value": "wx_coupon",
+          "label": "微信抵扣金"
       }
   ],
   "comboOrderStatus": [
       {
-          "id": "tjz",
-          "value": "調劑中"
+          "value": "tjz",
+          "label": "調劑中"
       },
       {
-          "id": "tjwc",
-          "value": "調劑完成"
+          "value": "tjwc",
+          "label": "調劑完成"
       },
       {
-          "id": "SEND",
-          "value": "已發貨"
+          "value": "SEND",
+          "label": "已發貨"
       },
       {
-          "id": "YILANSHOU",
-          "value": "已攬收"
+          "value": "YILANSHOU",
+          "label": "已攬收"
       },
       {
-          "id": "DELIVERY",
-          "value": "派件中"
+          "value": "DELIVERY",
+          "label": "派件中"
       },
       {
-          "id": "ACCEPT",
-          "value": "已簽收"
+          "value": "ACCEPT",
+          "label": "已簽收"
       },
       {
-          "id": "ywc",
-          "value": "已完成"
+          "value": "ywc",
+          "label": "已完成"
       }
   ],
   "isFurtherTime": [
       {
-          "id": "Y",
-          "value": "建議複診時間",
+          "value": "Y",
+          "label": "建議複診時間",
           "_checked": true
       }
   ],
   "isHide": [
       {
-          "id": "Y",
-          "value": "購買前隱藏藥品克數"
+          "value": "Y",
+          "label": "購買前隱藏藥品克數"
       }
   ],
   "reciHide": [
       {
-          "id": "Y",
-          "value": "隱藏處方詳情"
+          "value": "Y",
+          "label": "隱藏處方詳情"
       }
   ],
   "serviceFeePercent": [
       {
-          "id": "10",
-          "value": "10%"
+          "value": "10",
+          "label": "10%"
       },
       {
-          "id": "20",
-          "value": "20%"
+          "value": "20",
+          "label": "20%"
       },
       {
-          "id": "30",
-          "value": "30%"
+          "value": "30",
+          "label": "30%"
       },
       {
-          "id": "40",
-          "value": "40%"
+          "value": "40",
+          "label": "40%"
       },
       {
-          "id": "50",
-          "value": "50%"
+          "value": "50",
+          "label": "50%"
       },
       {
-          "id": "60",
-          "value": "60%"
+          "value": "60",
+          "label": "60%"
       },
       {
-          "id": "70",
-          "value": "70%"
+          "value": "70",
+          "label": "70%"
       },
       {
-          "id": "80",
-          "value": "80%"
+          "value": "80",
+          "label": "80%"
       }
   ],
   "recommendProductCol": [
@@ -3691,164 +3691,164 @@
   ],
   "onlyCard": [
       {
-          "id": "HYK",
-          "value": "會員卡"
+          "value": "HYK",
+          "label": "會員卡"
       },
       {
-          "id": "TRDF",
-          "value": "他人會員卡"
+          "value": "TRDF",
+          "label": "他人會員卡"
       },
       {
-          "id": "WEIDIAN",
-          "value": "微店"
+          "value": "WEIDIAN",
+          "label": "微店"
       },
       {
-          "id": "SENDURL",
-          "value": "推送支付鏈接"
+          "value": "SENDURL",
+          "label": "推送支付鏈接"
       }
   ],
   "appPushRange": [
       {
-          "id": "all",
-          "value": "全部"
+          "value": "all",
+          "label": "全部"
       },
       {
-          "id": "ZA",
-          "value": "系內"
+          "value": "ZA",
+          "label": "系內"
       },
       {
-          "id": "bd",
-          "value": "系外"
+          "value": "bd",
+          "label": "系外"
       },
       {
-          "id": "specify",
-          "value": "部分大夫"
+          "value": "specify",
+          "label": "部分大夫"
       }
   ],
   "appPushType": [
       {
-          "id": "2",
-          "value": "文字",
+          "value": "2",
+          "label": "文字",
           "_checked": true
       },
       {
-          "id": "3",
-          "value": "圖片"
+          "value": "3",
+          "label": "圖片"
       },
       {
-          "id": "1",
-          "value": "鏈接"
+          "value": "1",
+          "label": "鏈接"
       }
   ],
   "urgent": [
       {
-          "id": "Y",
-          "value": "加急處理"
+          "value": "Y",
+          "label": "加急處理"
       }
   ],
   "member_level": [
       {
-          "id": "9cac8d0c99994324b8efc2e6204b0667",
-          "value": "員工"
+          "value": "9cac8d0c99994324b8efc2e6204b0667",
+          "label": "員工"
       },
       {
-          "id": "VIP1",
-          "value": "VIP1"
+          "value": "VIP1",
+          "label": "VIP1"
       },
       {
-          "id": "VIP2",
-          "value": "VIP2"
+          "value": "VIP2",
+          "label": "VIP2"
       },
       {
-          "id": "VIP3",
-          "value": "VIP3"
+          "value": "VIP3",
+          "label": "VIP3"
       },
       {
-          "id": "BLACK_CARD",
-          "value": "喜悅鑽卡"
+          "value": "BLACK_CARD",
+          "label": "喜悅鑽卡"
       },
       {
-          "id": "VIP4",
-          "value": "VIP4"
+          "value": "VIP4",
+          "label": "VIP4"
       },
       {
-          "id": "VIP5",
-          "value": "VIP5"
+          "value": "VIP5",
+          "label": "VIP5"
       },
       {
-          "id": "PTHY",
-          "value": "歡喜金卡"
+          "value": "PTHY",
+          "label": "歡喜金卡"
       },
       {
-          "id": "HJK",
-          "value": "會籍卡"
+          "value": "HJK",
+          "label": "會籍卡"
       },
       {
-          "id": "PTKR",
-          "value": "普通客人"
+          "value": "PTKR",
+          "label": "普通客人"
       }
   ],
   "appointment_plus_type": [
       {
-          "id": "I",
-          "value": "保險加號"
+          "value": "I",
+          "label": "保險加號"
       }
   ],
   "drugSub": [
       {
-          "id": "ZCY",
-          "value": "中草藥"
+          "value": "ZCY",
+          "label": "中草藥"
       },
       {
-          "id": "KLJ",
-          "value": "免煎中藥"
+          "value": "KLJ",
+          "label": "免煎中藥"
       }
   ],
   "printsize": [
       {
-          "id": "297mm",
-          "value": "A4"
+          "value": "297mm",
+          "label": "A4"
       },
       {
-          "id": "148mm",
-          "value": "A5"
+          "value": "148mm",
+          "label": "A5"
       }
   ],
   "printtype": [
       {
-          "id": "zhengming",
-          "value": "應診證明書",
+          "value": "zhengming",
+          "label": "應診證明書",
           "_checked": true
       },
       {
-          "id": "jiatiao",
-          "value": "病假證明書"
+          "value": "jiatiao",
+          "label": "病假證明書"
       }
   ],
   "printinfo": [
       {
-          "id": "y",
-          "value": "允許",
+          "value": "y",
+          "label": "允許",
           "_checked": true
       },
       {
-          "id": "n",
-          "value": "不允許"
+          "value": "n",
+          "label": "不允許"
       }
   ],
   "printtime": [
       {
-          "id": "day",
-          "value": "按天",
+          "value": "day",
+          "label": "按天",
           "_checked": true
       },
       {
-          "id": "time",
-          "value": "按小時和分鐘"
+          "value": "time",
+          "label": "按小時和分鐘"
       },
       {
-          "id": "custom",
-          "value": "自定義"
+          "value": "custom",
+          "label": "自定義"
       }
   ]
 }

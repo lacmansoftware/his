@@ -44,6 +44,7 @@
     "nprogress": "^0.2.0",
     "pinia": "^2.0.14",
     "pinia-plugin-persist": "^1.0.0",
+    "pinyin-pro": "^3.10.2",
     "qrcode": "^1.5.0",
     "qs": "^6.10.5",
     "url": "^0.11.0",
