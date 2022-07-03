@@ -1,5 +1,6 @@
 import dict from '@/config/dictionary.json'
 import { pinyin } from 'pinyin-pro'
+import { getApi } from '@/api/common'
 
 export const inDict = (val, data: string) => {
   try {
@@ -60,4 +61,12 @@ export const getAgeByBirthday = function (birthday) {
 export const getPinyinCode = (zhongwen: string) => {
   const py = pinyin(zhongwen, { pattern: 'initial' })
   return py.toUpperCase().replace(/\s/g, '')
+}
+
+export const getInOptionFormat = async (url: string, valueField: string, labelField: string) => {
+  const res = await getApi(url)
+  return res?.data.map((item) => ({
+    label: item[labelField],
+    value: item[valueField]
+  }))
 }

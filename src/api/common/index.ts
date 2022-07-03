@@ -13,3 +13,8 @@ export const getDictOneApi = async (): Promise<IResponse> => {
   const res = await request.get({ url: '/dict/one' })
   return res && res.data
 }
+
+export const getApi = async (url: string): Promise<IResponse> => {
+  const res = await request.get({ url: url })
+  return res && res.data
+}

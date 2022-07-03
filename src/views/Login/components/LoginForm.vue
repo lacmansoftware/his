@@ -10,7 +10,7 @@ import { useAppStore } from '@/store/modules/app'
 import { usePermissionStore } from '@/store/modules/permission'
 import { useRouter } from 'vue-router'
 import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router'
-import { UserLoginType, UserType } from '@/api/login/types'
+import { UserLoginType } from '@/api/login/types'
 import { useValidator } from '@/hooks/web/useValidator'
 
 const { required } = useValidator()

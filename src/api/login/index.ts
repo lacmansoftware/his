@@ -42,6 +42,7 @@ export const getAdminRoleApi = async (
 }
 
 export const getTestRoleApi = (params: RoleParams): IResponse => {
+  console.log(params)
   const res = menus.data.filter((menu) => menu.isDeleted === 'N').map((menu) => menu.url)
   return {
     code: '0',
