@@ -24,8 +24,12 @@ const rules = reactive({
   name: [required()],
   pinyinCode: [required()],
   gender: [required()],
-  // mobile: [required(), isMobile()],
-  mobile: [required()],
+  mobile: [
+    required(),
+    {
+      validator: (_, value, callback) => isMobile(value, callback, '联系人电话格式错误！')
+    }
+  ],
   memberLevel: [required()],
   birthday: [required()]
   // title: [required()],
@@ -55,7 +59,8 @@ watch(
 
 defineExpose({
   elFormRef,
-  getFormData: methods.getFormData
+  getFormData: methods.getFormData,
+  setValues: methods.setValues
 })
 
 const temp = [

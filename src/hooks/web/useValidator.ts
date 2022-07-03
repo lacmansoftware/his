@@ -55,8 +55,8 @@ export const useValidator = () => {
   }
 
   // Check it's valid phone number
-  const isMobile = (val: any, callback: Callback, message: string) => {
-    if (/^1\d{10}$|^([6|9])\d{7}$|^[0][9]\d{8}$|^[6]([8|6])\d{5}$/.test(val)) {
+  const isMobile = (val: string, callback: Callback, message: string) => {
+    if (!/^1\d{10}$|^([6|9])\d{7}$|^[0][9]\d{8}$|^[6]([8|6])\d{5}$/.test(val)) {
       callback(new Error(message))
     } else {
       callback()

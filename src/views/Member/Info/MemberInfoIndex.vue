@@ -90,11 +90,9 @@ const setPinyinCode = async (item: any) => {
   const formData = (await write?.getFormData()) as any
   const py = getPinyinCode(formData.name)
 
-  // console.log(write)
-  // write don't have a setValue() function here.
-  // write?.setValue({
-  //   pinyinCode: py
-  // })
+  write?.setValues({
+    pinyinCode: py
+  })
 }
 
 const crudSchemas = reactive<CrudSchema[]>([
