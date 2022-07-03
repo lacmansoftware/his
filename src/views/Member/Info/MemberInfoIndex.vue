@@ -3,9 +3,9 @@ import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElLink } from 'element-plus'
+import { ElButton, ElLink, ElMessage } from 'element-plus'
 import { Table } from '@/components/Table'
-import { getTableListApi, saveTableApi, delTableListApi } from '@/api/member'
+import { getTableListApi, saveTableApi, delTableListApi, saveMergeApi } from '@/api/member'
 import { useTable } from '@/hooks/web/useTable'
 import { MemberInfoTableData } from '@/api/member/types'
 import { reactive, ref, unref, onMounted } from 'vue'
@@ -825,6 +825,7 @@ const { allSchemas } = useCrudSchemas(crudSchemas)
 const dialogVisible = ref(false)
 
 const dialogTitle = ref('')
+const dialogWidth = ref('')
 
 const delLoading = ref(false)
 
@@ -845,24 +846,29 @@ const actionType = ref('')
 
 const AddAction = () => {
   dialogTitle.value = '新增客人'
+  actionType.value = 'add'
+  dialogWidth.value = '90%'
   tableObject.currentRow = null
   dialogVisible.value = true
 }
 
 const MergeAction = () => {
   dialogTitle.value = '合併客人'
+  dialogWidth.value = ''
   actionType.value = 'merge'
   dialogVisible.value = true
 }
 
 const action = (row: TableData, type: string) => {
   dialogTitle.value = type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail'
+  dialogWidth.value = '90%'
   actionType.value = type
   tableObject.currentRow = row
   dialogVisible.value = true
 }
 
 const writeRef = ref<ComponentRef<typeof Write>>()
+const mergeRef = ref<ComponentRef<typeof Merge>>()
 
 const loading = ref(false)
 
@@ -875,24 +881,46 @@ const sendMsg = (mobile: string) => {
 }
 
 const save = async () => {
-  const write = unref(writeRef)
-  await write?.elFormRef?.validate(async (isValid) => {
-    if (isValid) {
-      loading.value = true
-      const data = (await write?.getFormData()) as any
-      console.log(data)
-      const res = await saveTableApi(data)
-        .catch(() => {})
-        .finally(() => {
-          loading.value = false
-        })
-      if (res) {
-        dialogVisible.value = false
-        tableObject.currentPage = 1
-        getList()
+  if (actionType.value === 'add') {
+    const write = unref(writeRef)
+    await write?.elFormRef?.validate(async (isValid) => {
+      if (isValid) {
+        loading.value = true
+        const data = (await write?.getFormData()) as any
+        const res = await saveTableApi(data)
+          .catch(() => {})
+          .finally(() => {
+            loading.value = false
+          })
+        if (res) {
+          dialogVisible.value = false
+          ElMessage.success(res.msg)
+          tableObject.currentPage = 1
+          getList()
+        }
       }
-    }
-  })
+    })
+  } else if (actionType.value === 'merge') {
+    const merge = unref(mergeRef)
+    const { sMember } = merge
+    await merge?.elFormRef?.validate(async (isValid) => {
+      if (isValid) {
+        loading.value = true
+        const res = await saveMergeApi({
+          mainId: sMember[0],
+          lessId: sMember[1]
+        })
+          .catch(() => {})
+          .finally(() => {
+            loading.value = false
+          })
+        if (res) {
+          dialogVisible.value = false
+          ElMessage.success(res.msg)
+        }
+      }
+    })
+  }
 }
 </script>
 
@@ -956,7 +984,7 @@ const save = async () => {
     </Table>
   </ContentWrap>
 
-  <Dialog v-model="dialogVisible" :title="dialogTitle" width="90%">
+  <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
     <Write
       v-if="actionType !== 'detail' && actionType !== 'merge'"
       ref="writeRef"
@@ -970,7 +998,7 @@ const save = async () => {
       :current-row="tableObject.currentRow"
     />
 
-    <Merge v-if="actionType === 'merge'" />
+    <Merge v-if="actionType === 'merge'" ref="mergeRef" />
 
     <!-- <template #header="{ titleId, titleClass }">
       <div class="flex justify-between">

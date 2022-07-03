@@ -98,6 +98,13 @@ const schema = reactive<FormSchema[]>([
 const { register, methods, elFormRef } = useForm({
   schema
 })
+
+defineExpose({
+  elFormRef,
+  getFormData: methods.getFormData,
+  setValues: methods.setValues,
+  sMember: sMember
+})
 </script>
 
 <template>
