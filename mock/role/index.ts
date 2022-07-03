@@ -40,7 +40,7 @@ const adminList = [
   {
     path: '/member',
     component: '#',
-    redirect: '/member/info-index',
+    redirect: '/member/info/index',
     name: 'Member',
     meta: {
       title: 'router.member',
@@ -49,7 +49,7 @@ const adminList = [
     },
     children: [
       {
-        path: 'info-index',
+        path: 'info/index',
         component: 'views/Member/Info/MemberInfoIndex',
         name: 'MemberInfoIndex',
         meta: {
@@ -57,7 +57,7 @@ const adminList = [
         }
       },
       {
-        path: 'info-add',
+        path: 'info/add',
         component: 'views/Member/Info/MemberInfoAdd',
         name: 'InfoAdd',
         meta: {

@@ -91,7 +91,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/member',
     component: Layout,
-    redirect: '/member/info-index',
+    redirect: '/member/info/index',
     name: 'MemberInfoIndex',
     meta: {
       title: '會員管理',
@@ -100,7 +100,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     },
     children: [
       {
-        path: 'info-index',
+        path: 'info/index',
         component: () => import('@/views/Member/Info/MemberInfoIndex.vue'),
         name: 'MemberManagement',
         meta: {
@@ -108,7 +108,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       },
       {
-        path: 'info-add',
+        path: 'info/add',
         component: () => import('@/views/Member/Info/MemberInfoAdd.vue'),
         name: 'MemberInfoAdd',
         meta: {
@@ -118,6 +118,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           hidden: true,
           showMainRoute: true,
           activeMenu: '/member/info-index'
+        }
+      },
+      {
+        path: 'protocol/index',
+        component: () => import('@/views/Member/Protocol/MemberProtocolIndex.vue'),
+        name: 'MemberProtocolManagement',
+        meta: {
+          title: '會員協議'
         }
       }
     ]
