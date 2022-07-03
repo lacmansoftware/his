@@ -3,7 +3,7 @@ import { Form } from '@/components/Form'
 import { ContentWrap } from '@/components/ContentWrap'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useForm } from '@/hooks/web/useForm'
-import { reactive, unref, ref } from 'vue'
+import { reactive, unref, ref, onMounted } from 'vue'
 import { ElButton } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
 
@@ -11,13 +11,46 @@ const { required } = useValidator()
 
 const { t } = useI18n()
 
+const restaurants = ref<Recordable[]>([])
+const memberNameSearch = (queryString: string, cb: Fn) => {
+  const results = queryString
+    ? restaurants.value.filter(createFilter(queryString))
+    : restaurants.value
+  // call callback function to return suggestions
+  cb(results)
+}
+
+const loadAll = () => {
+  return [
+    { value: 'vue', link: 'https://github.com/vuejs/vue' },
+    { value: 'element', link: 'https://github.com/ElemeFE/element' },
+    { value: 'cooking', link: 'https://github.com/ElemeFE/cooking' },
+    { value: 'mint-ui', link: 'https://github.com/ElemeFE/mint-ui' },
+    { value: 'vuex', link: 'https://github.com/vuejs/vuex' },
+    { value: 'vue-router', link: 'https://github.com/vuejs/vue-router' },
+    { value: 'babel', link: 'https://github.com/babel/babel' }
+  ]
+}
+
+onMounted(() => {
+  restaurants.value = loadAll()
+})
+
+const handleSelect = (item: Recordable) => {
+  console.log(item)
+}
+
 const schema = reactive<FormSchema[]>([
   {
-    field: 'field1',
-    label: t('formDemo.input'),
-    component: 'Input',
-    formItemProps: {
-      rules: [required()]
+    field: 'mainMemberName',
+    label: '主賬號客人姓名/電話',
+    component: 'Autocomplete',
+    componentProps: {
+      fetchSuggestions: memberNameSearch,
+      onSelect: handleSelect,
+      slots: {
+        default: true
+      }
     }
   },
   {
@@ -225,36 +258,10 @@ const verifyReset = () => {
 </script>
 
 <template>
-  <ContentWrap :title="`UseForm ${t('formDemo.operate')}`">
-    <ElButton @click="changeLabelWidth(150)">{{ t('formDemo.change') }} labelWidth</ElButton>
-    <ElButton @click="changeLabelWidth('auto')">{{ t('formDemo.restore') }} labelWidth</ElButton>
-
-    <ElButton @click="changeSize('large')">{{ t('formDemo.change') }} size</ElButton>
-    <ElButton @click="changeSize('default')">{{ t('formDemo.restore') }} size</ElButton>
-
-    <ElButton @click="changeDisabled(true)">{{ t('formDemo.disabled') }}</ElButton>
-    <ElButton @click="changeDisabled(false)">{{ t('formDemo.disablement') }}</ElButton>
-
-    <ElButton @click="changeSchema(true)">
-      {{ t('formDemo.delete') }} {{ t('formDemo.select') }}
-    </ElButton>
-    <ElButton @click="changeSchema(false)">
-      {{ t('formDemo.add') }} {{ t('formDemo.select') }}
-    </ElButton>
-
-    <ElButton @click="setValue(false)">{{ t('formDemo.setValue') }}</ElButton>
-    <ElButton @click="setValue(true)">{{ t('formDemo.resetValue') }}</ElButton>
-
-    <ElButton @click="setLabel">
-      {{ t('formDemo.set') }} {{ t('formDemo.select') }} label
-    </ElButton>
-
-    <ElButton @click="addItem"> {{ t('formDemo.add') }} {{ t('formDemo.subitem') }} </ElButton>
-
-    <ElButton @click="formValidation"> {{ t('formDemo.formValidation') }} </ElButton>
-    <ElButton @click="verifyReset"> {{ t('formDemo.verifyReset') }} </ElButton>
-  </ContentWrap>
-  <ContentWrap :title="`UseForm ${t('formDemo.example')}`">
-    <Form @register="register" />
-  </ContentWrap>
+  <Form :schema="schema" @register="register">
+    <template #mainMemberName-default="{ item }">
+      <div class="value">{{ item.value }}</div>
+      <span class="link">{{ item.link }}</span>
+    </template>
+  </Form>
 </template>
