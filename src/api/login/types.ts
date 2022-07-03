@@ -26,4 +26,5 @@ export type UserType = {
   password: string
   pharmacyList: string[]
   deptIds: null
+  username: string
 }
