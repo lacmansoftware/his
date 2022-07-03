@@ -73,7 +73,6 @@ service.interceptors.response.use(
       router.replace({
         path: '/login'
       })
-      location.reload()
     } else {
       ElMessage.error(response.data.msg)
     }

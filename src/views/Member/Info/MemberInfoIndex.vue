@@ -17,12 +17,13 @@ import { callIcon, msgIcon, plusIcon, mergeIcon } from '@/utils/iconList'
 import { searchConfig, crudConfig } from './index'
 import Write from './components/Write.vue'
 import Detail from './components/Detail.vue'
+import Merge from './components/Merge.vue'
 import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
 import { getPinyinCode, getInOptionFormat } from '@/utils/common'
 
 defineOptions({
-  name: 'MemberProtocolManagement'
+  name: 'MemberInfoManagement'
 })
 
 const dictStore = useDictStoreWithOut()
@@ -825,12 +826,6 @@ const dialogVisible = ref(false)
 
 const dialogTitle = ref('')
 
-const AddAction = () => {
-  dialogTitle.value = '新增客人'
-  tableObject.currentRow = null
-  dialogVisible.value = true
-}
-
 const delLoading = ref(false)
 
 const delData = async (row: MemberInfoTableData | null, multiple: boolean) => {
@@ -847,6 +842,18 @@ const delData = async (row: MemberInfoTableData | null, multiple: boolean) => {
 }
 
 const actionType = ref('')
+
+const AddAction = () => {
+  dialogTitle.value = '新增客人'
+  tableObject.currentRow = null
+  dialogVisible.value = true
+}
+
+const MergeAction = () => {
+  dialogTitle.value = '合併客人'
+  actionType.value = 'merge'
+  dialogVisible.value = true
+}
 
 const action = (row: TableData, type: string) => {
   dialogTitle.value = type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail'
@@ -903,7 +910,7 @@ const save = async () => {
 
     <div class="mb-10px">
       <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增客人</ElButton>
-      <ElButton :loading="delLoading" type="danger" @click="delData(null, true)" :icon="mergeIcon"
+      <ElButton :loading="delLoading" type="danger" @click="MergeAction" :icon="mergeIcon"
         >合併客人</ElButton
       >
     </div>
@@ -951,7 +958,7 @@ const save = async () => {
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" width="90%">
     <Write
-      v-if="actionType !== 'detail'"
+      v-if="actionType !== 'detail' && actionType !== 'merge'"
       ref="writeRef"
       :form-schema="allSchemas.formSchema"
       :current-row="tableObject.currentRow"
@@ -962,6 +969,8 @@ const save = async () => {
       :detail-schema="allSchemas.detailSchema"
       :current-row="tableObject.currentRow"
     />
+
+    <Merge v-if="actionType === 'merge'" />
 
     <!-- <template #header="{ titleId, titleClass }">
       <div class="flex justify-between">
