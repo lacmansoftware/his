@@ -3,7 +3,7 @@ import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElTag, ElLink } from 'element-plus'
+import { ElButton, ElLink } from 'element-plus'
 import { Table } from '@/components/Table'
 import { getTableListApi, saveTableApi, delTableListApi } from '@/api/member'
 import { useTable } from '@/hooks/web/useTable'
@@ -15,12 +15,11 @@ import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { inDict, getAgeByBirthday } from '@/utils/common'
 import { callIcon, msgIcon, plusIcon, mergeIcon } from '@/utils/iconList'
 import { searchConfig, crudConfig } from './index'
-import { getApi } from '@/api/member/index'
 import Write from './components/Write.vue'
 import Detail from './components/Detail.vue'
 import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
-import { getPinyinCode } from '@/utils/common'
+import { getPinyinCode, getInOptionFormat } from '@/utils/common'
 
 defineOptions({
   name: 'MemberProtocolManagement'
@@ -40,14 +39,6 @@ const store = {
   isMarried: ref<ComponentOptions[]>([]),
   memberSource: ref<ComponentOptions[]>([]),
   disease: ref<ComponentOptions[]>([])
-}
-
-const getInOptionFormat = async (url: string, valueField: string, labelField: string) => {
-  const res = await getApi(url)
-  return res?.data.map((item) => ({
-    label: item[labelField],
-    value: item[valueField]
-  }))
 }
 
 const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
