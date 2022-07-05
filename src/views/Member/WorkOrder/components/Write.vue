@@ -7,7 +7,8 @@ import { useI18n } from '@/hooks/web/useI18n'
 import { useValidator } from '@/hooks/web/useValidator'
 import { IDomEditor } from '@wangeditor/editor'
 import { getApi } from '@/api/common'
-import { getInOptionFormat } from '@/utils/common'
+import { getInOptionFormat, returnDateString } from '@/utils/common'
+import dict from '@/config/dictionary.json'
 
 const { required, isMobile } = useValidator()
 
@@ -20,9 +21,13 @@ const props = defineProps({
 
 const { t } = useI18n()
 
+const contactUserId = ref('')
+
 const store = {
   orderTypes: ref<ComponentOptions[]>([]),
-  contactUserid: ref<ComponentOptions[]>([])
+  sysUser: ref<ComponentOptions[]>([]),
+  sysDeptList: ref<ComponentOptions[]>([]),
+  contactUserId: ref<ComponentOptions[]>([])
 }
 
 const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
@@ -31,12 +36,20 @@ const setStore = async (key: string, url: string, valueField: string, labelField
 
 onMounted(() => {
   setStore('orderTypes', '/sys/dict/type/WORKORDER_Type', 'code', 'value')
-  setStore('contactUserid', `/member/relation/list`, 'linkedMemberId', 'name')
+  setStore(
+    'contactUserId',
+    `/member/relation/list?memberId=${contactUserId.value}`,
+    'linkedMemberId',
+    'name'
+  )
+  setStore('sysUser', `/sys/user`, 'name', 'id')
+  setStore('sysDeptList', `/sys/dept/list`, 'id', 'hospitalName+deptName')
 })
 
 const querySearch = async (queryString: string, cb: Fn) => {
   const res = await getApi(`/member/info/get4workorder?keyWords=${queryString}`)
   const result = res?.data.map((item) => ({
+    id: item.id,
     name: item.name,
     mobile: item.mobile,
     gender: item.gender,
@@ -48,12 +61,36 @@ const querySearch = async (queryString: string, cb: Fn) => {
 }
 
 const handleQuerySelect = (item: Recordable) => {
-  // sMember.value[0] = item.id
-  // const { setValues } = methods
-  // setValues({
-  //   mainMemberMobile: item.label // mobile
-  // })
+  const { setValues } = methods
+
+  setValues({
+    memberId: item.id,
+    name: item.name,
+    mobile: item.mobile,
+    latestHandleTime: returnDateString(60),
+    nextContactTime: returnDateString(15)
+  })
+  contactUserId.value = item.id
 }
+
+const handleTypeChange = (item: Recordable) => {
+  getApi(`/member/workorder/getId?type=${item}`).then((res) => {
+    const { setValues } = methods
+
+    setValues({
+      id: res.data
+    })
+  })
+}
+
+watch(contactUserId, () => {
+  setStore(
+    'contactUserId',
+    `/member/relation/list?memberId=${contactUserId.value}`,
+    'linkedMemberId',
+    'name'
+  )
+})
 
 const schema = reactive<FormSchema[]>([
   {
@@ -96,7 +133,8 @@ const schema = reactive<FormSchema[]>([
     componentProps: {
       style: 'width: 100%',
       placeholder: '工單類型',
-      options: store.orderTypes
+      options: store.orderTypes,
+      onChange: handleTypeChange
     },
     colProps: { span: 12 },
     formItemProps: {
@@ -104,7 +142,6 @@ const schema = reactive<FormSchema[]>([
     },
     api: async () => {
       const res = await getApi(`/sys/dict/type/WORKORDER_Type`)
-      console.log(res)
       return res.data
     }
   },
@@ -140,76 +177,77 @@ const schema = reactive<FormSchema[]>([
     }
   },
   {
-    field: 'contactName',
+    field: 'memberId',
     component: 'Hidden',
-    componentProps: {
-      style: 'width: 100%'
-    },
-    colProps: { span: 0 },
-    formItemProps: {
-      rules: [required()]
-    }
+    colProps: { span: 0 }
   },
   {
-    field: 'contactUserid',
+    field: 'visitId',
+    component: 'Hidden',
+    colProps: { span: 0 }
+  },
+  {
+    field: 'contactName',
+    component: 'Hidden',
+    colProps: { span: 0 }
+  },
+  {
+    field: 'contactUserId',
     label: '聯繫人姓名',
     component: 'Select',
     componentProps: {
       style: 'width: 100%',
       placeholder: '聯繫人姓名',
-      options: store.contactUserid
+      options: store.contactUserId
     },
-    colProps: { span: 12 },
-    formItemProps: {
-      rules: [required()]
-    }
+    colProps: { span: 12 }
   },
   {
     field: 'contactMobile',
     label: '聯繫人電話',
-    component: '',
+    component: 'Input',
     componentProps: {
       style: 'width: 100%',
       placeholder: '聯繫人電話'
     },
-    colProps: { span: 12 },
-    formItemProps: {
-      rules: [required()]
-    }
+    colProps: { span: 12 }
   },
   {
     field: 'transferType',
-    label: '',
-    component: '',
+    label: '轉交類型',
+    component: 'Radio',
     componentProps: {
       style: 'width: 100%',
-      placeholder: ''
+      placeholder: '',
+      options: dict.member.workOrderTransferType
     },
     colProps: { span: 12 },
     formItemProps: {
       rules: [required()]
-    }
+    },
+    value: 'person'
   },
   {
     field: 'transferId',
-    label: 'style',
-    component: '',
+    label: '轉交编号',
+    component: 'Select',
     componentProps: {
       style: 'width: 100%',
-      placeholder: 'style'
+      placeholder: '轉交编号',
+      options: store.sysDeptList
     },
-    colProps: { span: 12 },
-    formItemProps: {
-      rules: [required()]
-    }
+    colProps: { span: 12 }
   },
   {
     field: 'latestHandleTime',
     label: '最晚處理時效',
-    component: '',
+    component: 'DatePicker',
     componentProps: {
       style: 'width: 100%',
-      placeholder: '最晚處理時效'
+      placeholder: '最晚處理時效',
+      type: 'datetime',
+      format: 'YYYY/MM/DD HH:mm',
+      valueFormat: 'YYYY-MM-DD HH:mm'
     },
     colProps: { span: 12 },
     formItemProps: {
@@ -219,10 +257,13 @@ const schema = reactive<FormSchema[]>([
   {
     field: 'nextContactTime',
     label: '下次聯繫時間',
-    component: '',
+    component: 'DatePicker',
     componentProps: {
       style: 'width: 100%',
-      placeholder: '下次聯繫時間'
+      placeholder: '下次聯繫時間',
+      type: 'datetime',
+      format: 'YYYY/MM/DD HH:mm',
+      valueFormat: 'YYYY-MM-DD HH:mm'
     },
     colProps: { span: 12 },
     formItemProps: {
@@ -232,41 +273,45 @@ const schema = reactive<FormSchema[]>([
   {
     field: 'isRemind',
     label: '是否創建提醒',
-    component: '',
+    component: 'Checkbox',
+    value: [],
     componentProps: {
       style: 'width: 100%',
-      placeholder: '是否創建提醒'
+      placeholder: '是否創建提醒',
+      options: dict.member.workOrderRemind
     },
-    colProps: { span: 12 },
-    formItemProps: {
-      rules: [required()]
-    }
+    colProps: { span: 8 }
   },
   {
     field: 'status',
     label: '狀態',
-    component: '',
+    component: 'Radio',
     componentProps: {
       style: 'width: 100%',
-      placeholder: '狀態'
+      placeholder: '狀態',
+      options: dict.member.workOrderStatus
     },
-    colProps: { span: 12 },
+    colProps: { span: 16 },
     formItemProps: {
       rules: [required()]
-    }
+    },
+    value: 'nothand'
   },
   {
     field: 'comment',
     label: '溝通記錄',
-    component: '',
+    component: 'Input',
     componentProps: {
       style: 'width: 100%',
-      placeholder: '溝通記錄'
+      placeholder: '溝通記錄',
+      type: 'textarea',
+      rows: 2
     },
-    colProps: { span: 12 },
+    colProps: { span: 24 },
     formItemProps: {
       rules: [required()]
-    }
+    },
+    value: '無'
   }
 ])
 

@@ -26,6 +26,9 @@ const save = async () => {
     if (isValid) {
       loading.value = true
       const data = (await write?.getFormData()) as TableData
+      // data.abc = 'qwegqw'
+      // console.log(data)
+
       const res = await saveTableApi(data)
         .catch(() => {})
         .finally(() => {
@@ -33,6 +36,7 @@ const save = async () => {
         })
       if (res) {
         ElMessage.success('Successfully done!')
+        write?.elFormRef?.resetFields()
       }
     }
   })
@@ -40,7 +44,7 @@ const save = async () => {
 </script>
 
 <template>
-  <ContentDetailWrap :title="t('exampleDemo.add')" @back="push('/example/example-page')">
+  <ContentDetailWrap title="新建工單" @back="push('/')">
     <Write ref="writeRef" />
 
     <template #right>

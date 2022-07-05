@@ -66,8 +66,8 @@ export const getPinyinCode = (zhongwen: string) => {
 export const getInOptionFormat = async (url: string, valueField: string, labelField: string) => {
   const res = await getApi(url)
   return res?.data.map((item) => ({
-    label: item[labelField],
-    value: item[valueField]
+    label: labelField.split('+').reduce((ret, labelFieldItem) => ret + item[labelFieldItem], ''),
+    value: valueField.split('+').reduce((ret, valueFieldItem) => ret + item[valueFieldItem], '')
   }))
 }
 
@@ -97,4 +97,24 @@ export const getWeekSEDate = (curDate = '') => {
     endDate: getDateInFormat(endDate),
     range: range
   }
+}
+
+export const returnDateString = (minutue: number) => {
+  minutue = minutue || 0
+  const _lastDateTime = new Date(new Date().getTime() + minutue * 60 * 1000)
+  return (
+    _lastDateTime.getFullYear() +
+    '-' +
+    (_lastDateTime.getMonth() < 9
+      ? '0' + (_lastDateTime.getMonth() + 1)
+      : _lastDateTime.getMonth() + 1) +
+    '-' +
+    (_lastDateTime.getDate() < 10 ? '0' + _lastDateTime.getDate() : _lastDateTime.getDate()) +
+    ' ' +
+    (_lastDateTime.getHours() < 10 ? '0' + _lastDateTime.getHours() : _lastDateTime.getHours()) +
+    ':' +
+    (_lastDateTime.getMinutes() < 10
+      ? '0' + _lastDateTime.getMinutes()
+      : _lastDateTime.getMinutes())
+  )
 }

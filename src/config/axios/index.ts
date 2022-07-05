@@ -64,6 +64,7 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   (response: AxiosResponse<Recordable>) => {
+    console.log(response.data)
     if (response.data.code === result_code) {
       return response
     } else if (response.data.code === 401 && response.data.msg === '登陆过期！') {
