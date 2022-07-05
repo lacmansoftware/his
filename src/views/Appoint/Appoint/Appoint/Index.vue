@@ -8,7 +8,7 @@ import { Table } from '@/components/Table'
 import { getTableListApi, getPrintApi } from '@/api/appoint/appoint'
 import { useTable } from '@/hooks/web/useTable'
 import { MemberInfoTableData } from '@/api/appoint/appoint/types'
-import { reactive, ref, unref, onMounted, watch } from 'vue'
+import { reactive, ref, unref, onMounted, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useEmitt } from '@/hooks/web/useEmitt'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
@@ -19,7 +19,7 @@ import Write from './components/Write.vue'
 import Detail from './components/Detail.vue'
 import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
-import { getPinyinCode, getInOptionFormat, getWeekSEDate } from '@/utils/common'
+import { getPinyinCode, getInOptionFormat, formatObject, getWeekSEDate } from '@/utils/common'
 import { getApi } from '@/api/common'
 
 defineOptions({
@@ -35,17 +35,42 @@ const store = {
   feePayHospitalId: ref<ComponentOptions[]>([])
 }
 
-// const getAllSelectData = async () => {
-//   await getApi(`/member/appointment/init/allSelect?startTime=${}&endTime=${}}`)
-// }
+const sysCities = computed(() => formatObject(store.allSelectData.value?.sysCities, 'id', 'name'))
+
+const sysHospitals = computed(() =>
+  formatObject(store.allSelectData.value?.sysHospitals, 'id', 'name')
+)
+
+const doctorInfos = computed(() =>
+  formatObject(store.allSelectData.value?.doctorInfos, 'id', 'name')
+)
+
+const sysDiseases = computed(() =>
+  formatObject(store.allSelectData.value?.sysDiseases, 'id', 'name')
+)
+
+const getAllSelectData = async () => {
+  const res = await getApi(`/member/appointment/init/allSelect`)
+
+  if (res?.success === true) {
+    store.allSelectData.value = res.data
+  }
+}
 
 const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
   store[key].value = await getInOptionFormat(url, valueField, labelField)
 }
 
-onMounted(() => {
+onMounted(async () => {
   // setStore('certificate', '/sys/dict/type/MEMBER_Certificate', 'code', 'value')
   setStore('feePayHospitalId', '/sys/hospital', 'id', 'name')
+  getAllSelectData()
+  await setValues({
+    viewType: 'basicWeek',
+    startDate: curWeek.value.startDate,
+    endDate: curWeek.value.endDate
+  })
+  search()
 })
 
 const { push } = useRouter()
@@ -71,8 +96,10 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: { show: false },
     table: { show: false },
     search: {
-      component: 'Input',
-      componentProps: {},
+      component: 'Select',
+      componentProps: {
+        options: sysCities
+      },
       colProps: { span: 6 },
       show: true
     }
@@ -83,8 +110,10 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: { show: false },
     table: { show: false },
     search: {
-      component: 'Input',
-      componentProps: {},
+      component: 'Select',
+      componentProps: {
+        options: sysHospitals
+      },
       colProps: { span: 6 },
       show: true
     }
@@ -95,8 +124,10 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: { show: false },
     table: { show: false },
     search: {
-      component: 'Input',
-      componentProps: {},
+      component: 'Select',
+      componentProps: {
+        options: doctorInfos
+      },
       colProps: { span: 6 },
       show: true
     }
@@ -107,8 +138,10 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: { show: false },
     table: { show: false },
     search: {
-      component: 'Input',
-      componentProps: {},
+      component: 'Select',
+      componentProps: {
+        options: sysDiseases
+      },
       colProps: { span: 6 },
       show: true
     }
@@ -235,15 +268,6 @@ const search = () => {
   search.search()
 }
 
-onMounted(async () => {
-  await setValues({
-    viewType: 'basicWeek',
-    startDate: curWeek.value.startDate,
-    endDate: curWeek.value.endDate
-  })
-  search()
-})
-
 watch(curWeekDate, async () => {
   curWeek.value = getWeekSEDate(curWeekDate.value)
   await setValues({
@@ -290,10 +314,11 @@ const HandleColumn = (props: any) => {
       ref="searchRef"
     />
 
-    <div class="mb-10px ml-10px">
+    <div class="mb-10px text-right mt-[-50px]">
       <ElDatePicker
         v-model="curWeekDate"
         type="week"
+        size="large"
         format="[Week] ww - YYYY/MM/DD"
         placeholder="Pick a week"
         value-format="YYYY/MM/DD"

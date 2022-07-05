@@ -71,6 +71,13 @@ export const getInOptionFormat = async (url: string, valueField: string, labelFi
   }))
 }
 
+export const formatObject = (data: object[], valueField: string, labelField: string) => {
+  return data?.map((item) => ({
+    label: item[labelField],
+    value: item[valueField]
+  }))
+}
+
 export const getDateInFormat = (date: Date, style = '/') => {
   return date.toJSON().slice(0, 10).replace(/-/g, style)
 }
