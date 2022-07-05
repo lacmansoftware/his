@@ -90,6 +90,11 @@ const setVisible = () => {
   unref(elFormRef)?.resetFields()
   visible.value = !unref(visible)
 }
+
+defineExpose({
+  setValues: methods.setValues,
+  search: search
+})
 </script>
 
 <template>

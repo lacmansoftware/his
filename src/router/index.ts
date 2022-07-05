@@ -131,6 +131,113 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     ]
   },
   {
+    path: '/workorder',
+    component: Layout,
+    redirect: '/workorder/workorder/add',
+    name: 'WorkOrder',
+    meta: {
+      title: '工單管理',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'workorder',
+        component: getParentLayout(),
+        name: 'WorkOrderSub',
+        meta: {
+          title: '會員管理',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'add',
+            component: () => import('@/views/Member/WorkOrder/Add.vue'),
+            name: 'WordOrderAdd',
+            meta: {
+              title: '新建工單'
+            }
+          },
+          {
+            path: 'index',
+            component: () => import('@/views/Member/WorkOrder/Index.vue'),
+            name: 'WordOrderIndex',
+            meta: {
+              title: '工單列表'
+            }
+          }
+        ]
+      },
+      {
+        path: 'sms',
+        component: getParentLayout(),
+        name: 'SMS',
+        meta: {
+          title: '短信管理',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'send',
+            component: () => import('@/views/Member/SMS/Send/Index.vue'),
+            name: 'SMSSendIndex',
+            meta: {
+              title: '發送列表'
+            }
+          },
+          {
+            path: 'reply',
+            component: () => import('@/views/Member/SMS/Reply/Index.vue'),
+            name: 'SMSReplyIndex',
+            meta: {
+              title: '回復列表'
+            }
+          },
+          {
+            path: 'template',
+            component: () => import('@/views/Member/SMS/Template/Index.vue'),
+            name: 'SMSTemplateIndex',
+            meta: {
+              title: '模板管理'
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/appoint',
+    component: Layout,
+    redirect: '/workorder/workorder/add',
+    name: 'Appoint',
+    meta: {
+      title: '預約掛號',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'appoint',
+        component: getParentLayout(),
+        name: 'AppointManage',
+        meta: {
+          title: '預約管理',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'appoint/index',
+            component: () => import('@/views/Appoint/Appoint/Appoint/Index.vue'),
+            name: 'AppointManageYiguanIndex',
+            meta: {
+              title: '新建預約(醫生)'
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
     path: '/components',
     component: Layout,
     redirect: '/components/icon',

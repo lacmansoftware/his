@@ -70,3 +70,31 @@ export const getInOptionFormat = async (url: string, valueField: string, labelFi
     value: item[valueField]
   }))
 }
+
+export const formatObject = (data: object[], valueField: string, labelField: string) => {
+  return data?.map((item) => ({
+    label: item[labelField],
+    value: item[valueField]
+  }))
+}
+
+export const getDateInFormat = (date: Date, style = '/') => {
+  return date.toJSON().slice(0, 10).replace(/-/g, style)
+}
+
+export const getWeekSEDate = (curDate = '') => {
+  const curr = curDate === '' ? new Date() : new Date(curDate)
+  const startDate = new Date(curr.setDate(curr.getDate() - curr.getDay()))
+  const endDate = new Date(curr.setDate(curr.getDate() - curr.getDay() + 7))
+  const range: string[] = []
+  curr.setDate(curr.getDate() - curr.getDay() - 7)
+  for (let i = 1; i <= 7; i++) {
+    curr.setDate(curr.getDate() - curr.getDay() + i)
+    range.push(getDateInFormat(curr, '-'))
+  }
+  return {
+    startDate: getDateInFormat(startDate),
+    endDate: getDateInFormat(endDate),
+    range: range
+  }
+}

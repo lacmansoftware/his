@@ -31,3 +31,8 @@ export const getApi = async (url: string): Promise<IResponse> => {
   const res = await request.get({ url: url })
   return res && res.data
 }
+
+export const saveMergeApi = async (params: any): Promise<IResponse> => {
+  const res = await request.get({ url: '/member/info/infoMerge', params })
+  return res && res.data
+}
