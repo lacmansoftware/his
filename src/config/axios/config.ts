@@ -17,16 +17,16 @@ const config: {
     // base: 'http://192.168.108.87:8080/http://35.194.244.237:9998/',
     // base: 'http://cors-everywhere.herokuapp.com/http://35.194.244.237:9998/',
     // base: 'http://35.194.244.237:9998/',
-    base: 'api',
+    base: '/api',
 
     // 打包开发环境接口前缀
-    dev: 'api',
+    dev: '/api',
 
     // 打包生产环境接口前缀
-    pro: 'api',
+    pro: '/api',
 
     // 打包测试环境接口前缀
-    test: 'api'
+    test: '/api'
   },
 
   /**
