@@ -146,7 +146,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         component: getParentLayout(),
         name: 'WorkOrderSub',
         meta: {
-          title: '會員管理',
+          title: '工單管理',
           alwaysShow: true
         },
         children: [
