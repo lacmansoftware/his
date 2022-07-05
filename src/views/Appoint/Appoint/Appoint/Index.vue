@@ -1,0 +1,366 @@
+<script setup lang="tsx">
+import { ContentWrap } from '@/components/ContentWrap'
+import { Search } from '@/components/Search'
+import { Dialog } from '@/components/Dialog'
+import { useI18n } from '@/hooks/web/useI18n'
+import { ElButton, ElTag, ElLink, ElMessage, ElDatePicker } from 'element-plus'
+import { Table } from '@/components/Table'
+import { getTableListApi, getPrintApi } from '@/api/appoint/appoint'
+import { useTable } from '@/hooks/web/useTable'
+import { MemberInfoTableData } from '@/api/appoint/appoint/types'
+import { reactive, ref, unref, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { useEmitt } from '@/hooks/web/useEmitt'
+import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
+import { inDict, getAgeByBirthday } from '@/utils/common'
+import { printerIcon } from '@/utils/iconList'
+import { searchConfig, crudConfig } from './index'
+import Write from './components/Write.vue'
+import Detail from './components/Detail.vue'
+import dict from '@/config/dictionary.json'
+import { useDictStoreWithOut } from '@/store/modules/dict'
+import { getPinyinCode, getInOptionFormat, getWeekSEDate } from '@/utils/common'
+import { getApi } from '@/api/common'
+
+defineOptions({
+  name: 'WorkOrderIndex'
+})
+
+const dictStore = useDictStoreWithOut()
+const curWeek = ref(getWeekSEDate())
+const curWeekDate = ref(curWeek.value.startDate)
+
+const store = {
+  allSelectData: ref<ComponentOptions[]>([]),
+  feePayHospitalId: ref<ComponentOptions[]>([])
+}
+
+// const getAllSelectData = async () => {
+//   await getApi(`/member/appointment/init/allSelect?startTime=${}&endTime=${}}`)
+// }
+
+const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
+  store[key].value = await getInOptionFormat(url, valueField, labelField)
+}
+
+onMounted(() => {
+  // setStore('certificate', '/sys/dict/type/MEMBER_Certificate', 'code', 'value')
+  setStore('feePayHospitalId', '/sys/hospital', 'id', 'name')
+})
+
+const { push } = useRouter()
+
+const { register, tableObject, methods } = useTable<MemberInfoTableData>({
+  getListApi: getTableListApi,
+  response: {
+    list: 'data',
+    total: 'total'
+  }
+})
+
+const { getList, setSearchParams } = methods
+
+getList()
+
+const { t } = useI18n()
+
+const crudSchemas = reactive<CrudSchema[]>([
+  {
+    field: 'city',
+    label: '城市',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Input',
+      componentProps: {},
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'hospitalId',
+    label: '門店',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Input',
+      componentProps: {},
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'doctorId',
+    label: '醫生',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Input',
+      componentProps: {},
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'diseaseseId',
+    label: '病情/醫生技能',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Input',
+      componentProps: {},
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'type',
+    label: '',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Hidden',
+      colProps: { span: 0 }
+    }
+  },
+  {
+    field: 'id',
+    label: '',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Hidden',
+      colProps: { span: 0 }
+    }
+  },
+  {
+    field: 'cityId',
+    label: '',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Hidden',
+      colProps: { span: 0 }
+    }
+  },
+  {
+    field: 'viewType',
+    label: '',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Hidden',
+      colProps: { span: 0 }
+    }
+  },
+  {
+    field: 'startDate',
+    label: '',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Hidden',
+      colProps: { span: 0 }
+    }
+  },
+  {
+    field: 'endDate',
+    label: '',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Hidden',
+      colProps: { span: 0 }
+    }
+  },
+  {
+    field: 'hospital',
+    label: '门店'
+  },
+  {
+    field: 'col0',
+    label: '周日'
+  },
+  {
+    field: 'col1',
+    label: '周一'
+  },
+  {
+    field: 'col2',
+    label: '周二'
+  },
+  {
+    field: 'col3',
+    label: '周三'
+  },
+  {
+    field: 'col4',
+    label: '周四'
+  },
+  {
+    field: 'col5',
+    label: '周五'
+  },
+  {
+    field: 'col6',
+    label: '周六'
+  }
+])
+
+const { allSchemas } = useCrudSchemas(crudSchemas)
+
+const printAction = async (row: TableData) => {
+  const res = await getPrintApi(row.id)
+  if (res.success) {
+    ElMessage.success(res.msg)
+  }
+}
+
+const loading = ref(false)
+const searchRef = ref<ComponentRef<typeof Search>>()
+
+const setValues = (value) => {
+  const search = unref(searchRef)
+  search?.setValues(value)
+}
+
+const search = () => {
+  const search = unref(searchRef)
+  search.search()
+}
+
+onMounted(async () => {
+  await setValues({
+    viewType: 'basicWeek',
+    startDate: curWeek.value.startDate,
+    endDate: curWeek.value.endDate
+  })
+  search()
+})
+
+watch(curWeekDate, async () => {
+  curWeek.value = getWeekSEDate(curWeekDate.value)
+  await setValues({
+    startDate: curWeek.value.startDate,
+    endDate: curWeek.value.endDate
+  })
+  search()
+})
+
+const HandleColumn = (props: any) => {
+  const { row, colId } = props
+  const data = row?.children.find((item) => {
+    if (item.start === curWeek.value.range[colId]) return true
+  })
+
+  return typeof data !== 'undefined' ? (
+    <div class="flex flex-col align-top">
+      <p>{row?.name}</p>
+      <p>{`已约/上限: ${data?.totalMeet}/${data?.totalLimit}`}</p>
+      <h4>医生列表</h4>
+      {data?.children.map((doctor) => (
+        <>
+          <div key={doctor.id}>
+            <p>{doctor.name}</p>
+            <p>{`已约/上限: ${doctor.meet}/${doctor.limit}`}</p>
+          </div>
+        </>
+      ))}
+    </div>
+  ) : (
+    <div></div>
+  )
+}
+</script>
+
+<template>
+  <ContentWrap>
+    <Search
+      :schema="allSchemas.searchSchema"
+      :is-col="true"
+      :inline="false"
+      @search="setSearchParams"
+      @reset="setSearchParams"
+      ref="searchRef"
+    />
+
+    <div class="mb-10px ml-10px">
+      <ElDatePicker
+        v-model="curWeekDate"
+        type="week"
+        format="[Week] ww - YYYY/MM/DD"
+        placeholder="Pick a week"
+        value-format="YYYY/MM/DD"
+        @change="test"
+      />
+    </div>
+
+    <Table
+      v-model:pageSize="tableObject.pageSize"
+      v-model:currentPage="tableObject.currentPage"
+      :columns="allSchemas.tableColumns"
+      :data="tableObject.tableList"
+      :loading="tableObject.loading"
+      :selection="false"
+      :pagination="{
+        total: tableObject.total
+      }"
+      @register="register"
+    >
+      <template #hospital="{ row }">
+        <div class="flex flex-col align-middle">
+          <p>{{ row?.name }}</p>
+          <p>{{ `上限 ${row?.totalLimit} 人` }}</p>
+          <p>{{ `已约 ${row?.totalMeet} 人` }}</p>
+        </div>
+      </template>
+      <template #col0="{ row }">
+        <div>
+          <HandleColumn :row="row" :colId="0" />
+        </div>
+      </template>
+      <template #col1="{ row }">
+        <div>
+          <HandleColumn :row="row" :colId="1" />
+        </div>
+      </template>
+      <template #col2="{ row }">
+        <div>
+          <HandleColumn :row="row" :colId="2" />
+        </div>
+      </template>
+      <template #col3="{ row }">
+        <div>
+          <HandleColumn :row="row" :colId="3" />
+        </div>
+      </template>
+      <template #col4="{ row }">
+        <div>
+          <HandleColumn :row="row" :colId="4" />
+        </div>
+      </template>
+      <template #col5="{ row }">
+        <div>
+          <HandleColumn :row="row" :colId="5" />
+        </div>
+      </template>
+      <template #col6="{ row }">
+        <div>
+          <HandleColumn :row="row" :colId="6" />
+        </div>
+      </template>
+    </Table>
+  </ContentWrap>
+</template>
+
+<style lang="less" scoped>
+.el-input__wrapper {
+  width: 100%;
+}
+</style>
