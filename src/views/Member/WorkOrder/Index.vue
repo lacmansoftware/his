@@ -19,7 +19,7 @@ import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
 import { getApi } from '@/api/common'
 
-import { getTableListApi, delTableListApi } from '@/api/workorder/workorder'
+import { getTableListApi, delTableListApi, updateTableApi } from '@/api/workorder/workorder'
 import { MemberInfoTableData } from '@/api/workorder/workorder/types'
 
 defineOptions({
@@ -29,6 +29,7 @@ defineOptions({
 const dictStore = useDictStoreWithOut()
 const my = ref(false)
 const notComplate = ref(false)
+const writeRef = ref<ComponentRef<typeof Write>>()
 
 const store = {
   feePayHospitalId: ref<ComponentOptions[]>([]),
@@ -296,6 +297,19 @@ const delData = async (row: TableData | null) => {
   })
 }
 
+const dialogVisible = ref(false)
+const dialogTitle = ref('')
+const actionType = ref('')
+
+const action = (row: TableData, type: string) => {
+  console.log(row)
+
+  dialogTitle.value = t(type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail')
+  actionType.value = type
+  tableObject.currentRow = row
+  dialogVisible.value = true
+}
+
 const loading = ref(false)
 const searchRef = ref<ComponentRef<typeof Search>>()
 
@@ -319,6 +333,34 @@ const myOrder = () => {
 const notComplateOrder = () => {
   notComplate.value = !notComplate.value
   search()
+}
+
+const save = async () => {
+  const write = unref(writeRef)
+  await write?.elFormRef?.validate(async (isValid) => {
+    if (isValid) {
+      loading.value = true
+      const data = (await write?.getFormData()) as TableData
+      const res = await updateTableApi({
+        workOrderId: data?.id,
+        status: data?.status,
+        transferType: data?.transferType,
+        transferId: data?.transferId,
+        transferName: data?.transferName,
+        note: data?.comment,
+        type: data?.type
+      })
+        .catch(() => {})
+        .finally(() => {
+          loading.value = false
+        })
+      if (res) {
+        dialogVisible.value = false
+        tableObject.currentPage = 1
+        getList()
+      }
+    }
+  })
 }
 </script>
 
@@ -355,7 +397,7 @@ const notComplateOrder = () => {
       :selection="false"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="editAction(row)">受理</ElLink>
+        <ElLink type="primary" @click="action(row, 'edit')">受理</ElLink>
         <ElLink :loading="delLoading" type="danger" @click="delData(row)">刪除</ElLink>
       </template>
 
@@ -364,6 +406,23 @@ const notComplateOrder = () => {
       </template>
     </Table>
   </ContentWrap>
+
+  <Dialog v-model="dialogVisible" :title="dialogTitle" width="90%">
+    <Write
+      v-if="actionType !== 'detail'"
+      ref="writeRef"
+      :form-schema="allSchemas.formSchema"
+      :current-row="tableObject.currentRow"
+      :is-edit="true"
+    />
+
+    <template #footer>
+      <ElButton v-if="actionType !== 'detail'" type="primary" :loading="loading" @click="save">
+        {{ t('exampleDemo.save') }}
+      </ElButton>
+      <ElButton @click="dialogVisible = false">{{ t('dialogDemo.close') }}</ElButton>
+    </template>
+  </Dialog>
 </template>
 
 <style lang="less" scoped>

@@ -9,6 +9,7 @@ import { IDomEditor } from '@wangeditor/editor'
 import { getApi } from '@/api/common'
 import { getInOptionFormat, returnDateString } from '@/utils/common'
 import dict from '@/config/dictionary.json'
+import Comment from './Comment.vue'
 
 const { required, isMobile } = useValidator()
 
@@ -16,6 +17,10 @@ const props = defineProps({
   currentRow: {
     type: Object as PropType<Nullable<TableData>>,
     default: () => null
+  },
+  isEdit: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -28,11 +33,23 @@ const store = {
   sysUser: ref<ComponentOptions[]>([]),
   sysDeptList: ref<ComponentOptions[]>([]),
   transferId: ref<ComponentOptions[]>([]),
+  comments: ref<TableData[]>([]),
   contactUserId: ref<ComponentOptions[]>([])
 }
 
 const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
   store[key].value = await getInOptionFormat(url, valueField, labelField)
+}
+
+const setComments = () => {
+  getApi(`member/workorder/detail/list?id=${props.currentRow?.id}`).then((res) => {
+    store.comments.value = res.data.map((item) => ({
+      handlerName: item?.handlerName,
+      createTime: item?.createTime,
+      comment: item?.note
+    }))
+    console.log('when loaded: ', store.comments.value)
+  })
 }
 
 onMounted(() => {
@@ -45,7 +62,9 @@ onMounted(() => {
   )
   setStore('sysUser', `/sys/user`, 'id', 'name')
   setStore('sysDeptList', `/sys/dept/list`, 'id', 'hospitalName+deptName')
+  props.isEdit && setComments()
   store.transferId.value = store.sysUser.value
+  console.log('on mounted: ', store.comments.value)
 })
 
 const querySearch = async (queryString: string, cb: Fn) => {
@@ -109,9 +128,9 @@ const schema = reactive<FormSchema[]>([
       placeholder: '檢索姓名/檔案號/拼音/手機號'
     },
     formItemProps: {
-      rules: [required()]
+      rules: props.isEdit ? [] : [required()]
     },
-    colProps: { span: 24 }
+    colProps: { span: props.isEdit ? 0 : 24 }
   },
   {
     field: 'id',
@@ -120,7 +139,7 @@ const schema = reactive<FormSchema[]>([
     componentProps: {
       style: 'width: 100%',
       placeholder: '工單號',
-      readonly: true
+      disabled: true
     },
     colProps: { span: 12 },
     formItemProps: {
@@ -152,7 +171,8 @@ const schema = reactive<FormSchema[]>([
     component: 'Input',
     componentProps: {
       style: 'width: 100%',
-      placeholder: '客戶姓名'
+      placeholder: '客戶姓名',
+      disabled: props.isEdit
     },
     colProps: { span: 12 },
     formItemProps: {
@@ -165,7 +185,8 @@ const schema = reactive<FormSchema[]>([
     component: 'Input',
     componentProps: {
       style: 'width: 100%',
-      placeholder: '客戶電話'
+      placeholder: '客戶電話',
+      disabled: props.isEdit
     },
     colProps: { span: 12 },
     formItemProps: {
@@ -199,7 +220,8 @@ const schema = reactive<FormSchema[]>([
     componentProps: {
       style: 'width: 100%',
       placeholder: '聯繫人姓名',
-      options: store.contactUserId
+      options: store.contactUserId,
+      disabled: props.isEdit
     },
     colProps: { span: 12 }
   },
@@ -209,7 +231,8 @@ const schema = reactive<FormSchema[]>([
     component: 'Input',
     componentProps: {
       style: 'width: 100%',
-      placeholder: '聯繫人電話'
+      placeholder: '聯繫人電話',
+      disabled: props.isEdit
     },
     colProps: { span: 12 }
   },
@@ -249,7 +272,8 @@ const schema = reactive<FormSchema[]>([
       placeholder: '最晚處理時效',
       type: 'datetime',
       format: 'YYYY/MM/DD HH:mm',
-      valueFormat: 'YYYY-MM-DD HH:mm'
+      valueFormat: 'YYYY-MM-DD HH:mm',
+      disabled: props.isEdit
     },
     colProps: { span: 12 },
     formItemProps: {
@@ -265,7 +289,8 @@ const schema = reactive<FormSchema[]>([
       placeholder: '下次聯繫時間',
       type: 'datetime',
       format: 'YYYY/MM/DD HH:mm',
-      valueFormat: 'YYYY-MM-DD HH:mm'
+      valueFormat: 'YYYY-MM-DD HH:mm',
+      disabled: props.isEdit
     },
     colProps: { span: 12 },
     formItemProps: {
@@ -282,7 +307,7 @@ const schema = reactive<FormSchema[]>([
       placeholder: '是否創建提醒',
       options: dict.member.workOrderRemind
     },
-    colProps: { span: 8 }
+    colProps: { span: props.isEdit ? 0 : 8 }
   },
   {
     field: 'status',
@@ -379,4 +404,14 @@ defineExpose({
       </div>
     </template>
   </Form>
+
+  <Comment
+    :current-row="{
+      handlerName: props.currentRow?.handlerName,
+      createTime: props.currentRow?.createTime,
+      comment: props.currentRow?.comment
+    }"
+  />
+
+  <Comment v-for="comment in store.comments" :key="comment?.createTime" :current-row="comment" />
 </template>
