@@ -3,7 +3,7 @@ import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElTag, ElLink, ElMessage } from 'element-plus'
+import { ElButton, ElTag, ElLink, ElMessage, ElMessageBox } from 'element-plus'
 import { Table } from '@/components/Table'
 import { useTable } from '@/hooks/web/useTable'
 import { reactive, ref, unref, onMounted } from 'vue'
@@ -19,7 +19,7 @@ import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
 import { getApi } from '@/api/common'
 
-import { getTableListApi } from '@/api/workorder/workorder'
+import { getTableListApi, delTableListApi } from '@/api/workorder/workorder'
 import { MemberInfoTableData } from '@/api/workorder/workorder/types'
 
 defineOptions({
@@ -51,6 +51,7 @@ const { push } = useRouter()
 
 const { register, tableObject, methods } = useTable<MemberInfoTableData>({
   getListApi: getTableListApi,
+  delListApi: delTableListApi,
   response: {
     list: 'data',
     total: 'total'
@@ -283,11 +284,16 @@ const crudSchemas = reactive<CrudSchema[]>([
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
-const printAction = async (row: TableData) => {
-  // const res = await getPrintApi(row.id)
-  // if (res.success) {
-  //   ElMessage.success(res.msg)
-  // }
+const delLoading = ref(false)
+
+const delData = async (row: TableData | null) => {
+  tableObject.currentRow = row
+  const { delList, getSelections } = methods
+  const selections = await getSelections()
+  delLoading.value = true
+  await delList(row.id, false).finally(() => {
+    delLoading.value = false
+  })
 }
 
 const loading = ref(false)
@@ -346,10 +352,11 @@ const notComplateOrder = () => {
         total: tableObject.total
       }"
       @register="register"
+      :selection="false"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="printAction(row)">受理</ElLink>
-        <ElLink type="danger" @click="printAction(row)">刪除</ElLink>
+        <ElLink type="primary" @click="editAction(row)">受理</ElLink>
+        <ElLink :loading="delLoading" type="danger" @click="delData(row)">刪除</ElLink>
       </template>
 
       <template #status="{ row }">

@@ -22,13 +22,8 @@ export const getTableDetApi = async (id: string): Promise<IResponse<MemberInfoTa
   return res && res.data
 }
 
-export const delTableListApi = async (ids: string[] | number[]): Promise<IResponse> => {
-  const res = await request.post({ url: '/example/delete', data: { ids } })
-  return res && res.data
-}
-
-export const getApi = async (url: string): Promise<IResponse> => {
-  const res = await request.get({ url: url })
+export const delTableListApi = async (id: string): Promise<IResponse> => {
+  const res = await request.delete({ url: `/member/workorder/${id}` })
   return res && res.data
 }
 
