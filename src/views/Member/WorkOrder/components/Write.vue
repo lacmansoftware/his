@@ -63,7 +63,7 @@ onMounted(async () => {
   )
   await setStore('sysUser', `/sys/user`, 'id', 'name')
   setStore('sysDeptList', `/sys/dept/list`, 'id', 'hospitalName+deptName')
-  
+
   props.isEdit && setComments()
 })
 

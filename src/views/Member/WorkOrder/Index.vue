@@ -302,8 +302,6 @@ const dialogTitle = ref('')
 const actionType = ref('')
 
 const action = (row: TableData, type: string) => {
-  console.log(row)
-
   dialogTitle.value = t(type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail')
   actionType.value = type
   tableObject.currentRow = row
