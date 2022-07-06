@@ -4,7 +4,7 @@ import type { MemberInfoTableData } from './types'
 const request = useAxios()
 
 export const getTableListApi = async (params: any): Promise<IResponse> => {
-  const res = await request.get({ url: '/member/info/list', params })
+  const res = await request.get({ url: '/member/workorder/orderList', params })
   return res && res.data
 }
 
