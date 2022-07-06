@@ -6,7 +6,7 @@ import { useI18n } from '@/hooks/web/useI18n'
 import { ElButton, ElLink, ElMessage } from 'element-plus'
 import { Table } from '@/components/Table'
 import { useTable } from '@/hooks/web/useTable'
-import { reactive, ref, unref, onMounted } from 'vue'
+import { reactive, ref, unref, onMounted, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useEmitt } from '@/hooks/web/useEmitt'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
@@ -18,6 +18,8 @@ import Detail from './components/Detail.vue'
 import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
 import { getPinyinCode, getInOptionFormat } from '@/utils/common'
+import { getApi } from '@/api/common'
+import { useValidator } from '@/hooks/web/useValidator'
 
 import { getTableListApi, delTableListApi, saveTableApi, getPrintApi } from '@/api/workorder/sms'
 import { SMSSendData } from '@/api/workorder/sms/types'
@@ -25,38 +27,34 @@ import { SMSSendData } from '@/api/workorder/sms/types'
 defineOptions({
   name: 'SMSSendIndex'
 })
+const { required, isMobile } = useValidator()
 const dictStore = useDictStoreWithOut()
 
+const typeRef = ref('')
+
 const store = {
-  certificate: ref<ComponentOptions[]>([]),
   level: ref<ComponentOptions[]>([]),
-  cardStatus: ref<ComponentOptions[]>([]),
-  hospital: ref<ComponentOptions[]>([]),
-  country: ref<ComponentOptions[]>([]),
-  nativePlace: ref<ComponentOptions[]>([]),
-  nationality: ref<ComponentOptions[]>([]),
-  education: ref<ComponentOptions[]>([]),
-  isMarried: ref<ComponentOptions[]>([]),
-  memberSource: ref<ComponentOptions[]>([]),
-  disease: ref<ComponentOptions[]>([])
+  templet: ref<ComponentOptions[]>([])
 }
 
 const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
   store[key].value = await getInOptionFormat(url, valueField, labelField)
 }
 
+const getTemplateOptions = () => {
+  getApi(`/sms/templet${typeRef.value !== '' ? `/type/${typeRef.value}` : ''}`).then((res) => {
+    store.templet.value = res?.data.map((item) => ({
+      value: item.id,
+      label: item.title,
+      content: item.content
+    }))
+  })
+}
+
 onMounted(() => {
   // setStore('certificate', '/sys/dict/type/MEMBER_Certificate', 'code', 'value')
   setStore('level', '/sys/member/level', 'id', 'levelName')
-  setStore('cardStatus', '/sys/dict/type/MEMBER_CardStatus', 'code', 'value')
-  setStore('hospital', '/sys/hospital', 'id', 'name')
-  setStore('disease', '/sys/diseases', 'id', 'name')
-  setStore('country', '/sys/dict/type/MEMBER_Country', 'code', 'value')
-  setStore('nativePlace', '/sys/city/byLevel?level=1', 'id', 'name')
-  setStore('nationality', '/sys/dict/childlist?type=MEMBER_Nation', 'code', 'value')
-  setStore('education', '/sys/dict/type/MEMBER_Education', 'code', 'value')
-  setStore('isMarried', '/sys/dict/type/MEMBER_Married', 'code', 'value')
-  setStore('memberSource', '/sys/dict/type/MEMBER_Source', 'code', 'value')
+  getTemplateOptions()
 })
 
 const { push } = useRouter()
@@ -86,11 +84,24 @@ const setPinyinCode = async (item: any) => {
   })
 }
 
+const handleTypeChange = (item: Recordable) => {
+  typeRef.value = item
+}
+
+const handleTempletChange = (item: Recordable) => {
+  const curTemplet = store.templet.value.find((tmp) => tmp.value === item)
+
+  const write = unref(writeRef)
+  write?.setValues({
+    content: curTemplet?.content
+  })
+}
+
 const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
     field: 'action',
-    width: '120px',
+    width: '80px',
     form: { show: false }
   },
   {
@@ -160,6 +171,84 @@ const crudSchemas = reactive<CrudSchema[]>([
       colProps: { span: 6 },
       show: true
     }
+  },
+  {
+    field: 'file',
+    label: '文件',
+    form: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        placeholder: '文件'
+      },
+      colProps: { span: 12 }
+    },
+    table: { show: false }
+  },
+  {
+    field: 'moblist',
+    label: '號碼列表',
+    form: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        type: 'textarea',
+        rows: 2,
+        placeholder: '號碼列表'
+      },
+      colProps: { span: 24 },
+      formItemProps: {
+        rules: [required()]
+      }
+    },
+    table: { show: false }
+  },
+  {
+    field: 'type',
+    label: '短信分類',
+    form: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        placeholder: '短信分類',
+        onChange: handleTypeChange
+      },
+      colProps: { span: 12 },
+      api: async () => {
+        return await getInOptionFormat('/sys/dict/type/sms_tmp_type', 'code', 'value')
+      }
+    },
+    table: { show: false }
+  },
+  {
+    field: 'templet',
+    label: '短信模板',
+    form: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        placeholder: '短信模板',
+        options: store.templet,
+        onChange: handleTempletChange
+      },
+      colProps: { span: 12 }
+    },
+    table: { show: false }
+  },
+  {
+    field: 'content',
+    label: '短信內容',
+    form: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        placeholder: '短信內容',
+        type: 'textarea',
+        rows: 2
+      },
+      colProps: { span: 24 }
+    },
+    table: { show: false }
   }
 ])
 
@@ -193,9 +282,9 @@ const delData = async (row: MemberInfoTableData | null, multiple: boolean) => {
 const actionType = ref('')
 
 const AddAction = () => {
-  dialogTitle.value = '新增客人'
+  dialogTitle.value = '發送短信'
   actionType.value = 'add'
-  dialogWidth.value = '90%'
+  dialogWidth.value = '70%'
   tableObject.currentRow = null
   dialogVisible.value = true
 }
@@ -240,6 +329,11 @@ const save = async () => {
     }
   })
 }
+
+watch(typeRef, () => {
+  console.log('ref: ', typeRef)
+  getTemplateOptions()
+})
 </script>
 
 <template>
@@ -248,12 +342,14 @@ const save = async () => {
       :schema="allSchemas.searchSchema"
       :is-col="true"
       :inline="false"
+      :layout="'bottom'"
+      :buttom-position="'right'"
       @search="setSearchParams"
       @reset="setSearchParams"
     />
 
-    <div class="mb-10px">
-      <ElButton type="primary" @click="AddAction" :icon="msgIcon">發送短信</ElButton>
+    <div class="mb-10px ml-10px mt-[-32px]">
+      <ElButton type="success" @click="AddAction" :icon="msgIcon">發送短信</ElButton>
       <ElButton :loading="delLoading" type="danger" @click="delData(null, true)" :icon="deleteIcon"
         >批量刪除</ElButton
       >
@@ -271,14 +367,9 @@ const save = async () => {
       @register="register"
     >
       <template #action="{ row }">
-        <div class="flex gap-1">
-          <ElLink type="primary" @click="action(row, 'edit')">
-            {{ t('exampleDemo.edit') }}
-          </ElLink>
-          <ElLink type="danger" @click="delData(row, false)">
-            {{ t('exampleDemo.del') }}
-          </ElLink>
-        </div>
+        <ElLink type="danger" @click="delData(row, false)">
+          {{ t('exampleDemo.del') }}
+        </ElLink>
       </template>
       <template #status="{ row }">
         {{ inDict(row.status, 'smsStatus') }}
