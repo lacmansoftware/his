@@ -27,6 +27,7 @@ const store = {
   orderTypes: ref<ComponentOptions[]>([]),
   sysUser: ref<ComponentOptions[]>([]),
   sysDeptList: ref<ComponentOptions[]>([]),
+  transferId: ref<ComponentOptions[]>([]),
   contactUserId: ref<ComponentOptions[]>([])
 }
 
@@ -42,8 +43,9 @@ onMounted(() => {
     'linkedMemberId',
     'name'
   )
-  setStore('sysUser', `/sys/user`, 'name', 'id')
+  setStore('sysUser', `/sys/user`, 'id', 'name')
   setStore('sysDeptList', `/sys/dept/list`, 'id', 'hospitalName+deptName')
+  store.transferId.value = store.sysUser.value
 })
 
 const querySearch = async (queryString: string, cb: Fn) => {
@@ -83,14 +85,13 @@ const handleTypeChange = (item: Recordable) => {
   })
 }
 
-watch(contactUserId, () => {
-  setStore(
-    'contactUserId',
-    `/member/relation/list?memberId=${contactUserId.value}`,
-    'linkedMemberId',
-    'name'
-  )
-})
+const handleStatusChange = (item: Recordable) => {
+  console.log(item)
+}
+
+const handleTransferTypeChange = (item: Recordable) => {
+  store.transferId.value = item === 'person' ? store.sysUser.value : store.sysDeptList.value
+}
 
 const schema = reactive<FormSchema[]>([
   {
@@ -219,7 +220,8 @@ const schema = reactive<FormSchema[]>([
     componentProps: {
       style: 'width: 100%',
       placeholder: '',
-      options: dict.member.workOrderTransferType
+      options: dict.member.workOrderTransferType,
+      onChange: handleTransferTypeChange
     },
     colProps: { span: 12 },
     formItemProps: {
@@ -234,7 +236,7 @@ const schema = reactive<FormSchema[]>([
     componentProps: {
       style: 'width: 100%',
       placeholder: '轉交编号',
-      options: store.sysDeptList
+      options: store.transferId
     },
     colProps: { span: 12 }
   },
@@ -289,7 +291,8 @@ const schema = reactive<FormSchema[]>([
     componentProps: {
       style: 'width: 100%',
       placeholder: '狀態',
-      options: dict.member.workOrderStatus
+      options: dict.member.workOrderStatus,
+      change: handleStatusChange
     },
     colProps: { span: 16 },
     formItemProps: {
@@ -347,6 +350,15 @@ watch(
     immediate: true
   }
 )
+
+watch(contactUserId, () => {
+  setStore(
+    'contactUserId',
+    `/member/relation/list?memberId=${contactUserId.value}`,
+    'linkedMemberId',
+    'name'
+  )
+})
 
 defineExpose({
   elFormRef,
