@@ -5,9 +5,7 @@ import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
 import { ElButton, ElTag, ElLink, ElMessage } from 'element-plus'
 import { Table } from '@/components/Table'
-import { getTableListApi, getPrintApi } from '@/api/protocol'
 import { useTable } from '@/hooks/web/useTable'
-import { MemberInfoTableData } from '@/api/protocol/types'
 import { reactive, ref, unref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useEmitt } from '@/hooks/web/useEmitt'
@@ -21,8 +19,11 @@ import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
 import { getPinyinCode, getInOptionFormat } from '@/utils/common'
 
+import { getTableListApi, getPrintApi } from '@/api/workorder/sms'
+import { SMSSendData } from '@/api/workorder/sms/types'
+
 defineOptions({
-  name: 'WorkOrderIndex'
+  name: 'SMSSendIndex'
 })
 
 const dictStore = useDictStoreWithOut()
@@ -42,7 +43,7 @@ onMounted(() => {
 
 const { push } = useRouter()
 
-const { register, tableObject, methods } = useTable<MemberInfoTableData>({
+const { register, tableObject, methods } = useTable<SMSSendData>({
   getListApi: getTableListApi,
   response: {
     list: 'data',
@@ -60,162 +61,41 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
     field: 'action',
-    width: '120px',
     form: { show: false }
   },
   {
-    label: '繳費門店',
-    field: 'feePayHospitalName',
-    width: '120px'
+    label: '發信人',
+    field: 'name'
   },
   {
-    label: '繳費時間',
-    field: 'feePayTime',
-    width: '135px'
+    label: '接收號碼',
+    field: 'mobile'
   },
   {
-    label: '會員卡號',
-    field: 'memberCardNum',
-    width: '85px'
+    label: '發送時間',
+    field: 'sendDate'
   },
   {
-    label: '繳費門店',
-    field: 'feePayHospitalId',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'Select',
-      componentProps: {
-        options: store.feePayHospitalId
-      },
-      colProps: { span: 6 },
-      show: true
-    }
+    label: '發送結果',
+    field: 'status'
   },
   {
-    label: '會員繳費日期',
-    field: 'startTime',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 },
-      show: true
-    }
+    label: '失敗原因',
+    field: 'comment'
   },
   {
-    label: '到',
-    field: 'endTime',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    label: '會員卡號',
-    field: 'memberCardNum',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'Input',
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    label: '狀態',
-    field: 'status',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'Select',
-      componentProps: {
-        options: dict.memberProtocol.status
-      },
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    label: '姓名',
-    field: 'memberName',
-    form: { show: false },
-    search: {
-      component: 'Input',
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    label: '檔案號',
-    field: 'archivesNo',
-    form: { show: false },
-    search: {
-      component: 'Input',
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    label: '手機',
-    field: 'memberMobile',
-    form: { show: false },
-    search: {
-      component: 'Input',
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    label: '協議編號',
-    field: 'protocolCode',
-    form: { show: false },
-    search: {
-      component: 'Input',
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    label: '狀態',
-    field: 'status',
-    width: '60px'
-  },
-  {
-    label: '簽署途徑',
-    field: 'signType',
-    width: '100px'
-  },
-  {
-    label: '協議簽署時間',
-    field: 'signTime',
-    width: '100px'
-  },
-  {
-    label: '協議簽署門店',
-    field: 'protocalHospitalName',
-    width: '100px'
+    label: '信息內容',
+    field: 'content'
   }
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
 const printAction = async (row: TableData) => {
-  const res = await getPrintApi(row.id)
-  if (res.success) {
-    ElMessage.success(res.msg)
-  }
+  // const res = await getPrintApi(row.id)
+  // if (res.success) {
+  //   ElMessage.success(res.msg)
+  // }
 }
 
 const loading = ref(false)
