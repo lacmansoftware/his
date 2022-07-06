@@ -69,11 +69,27 @@ const crudSchemas = reactive<CrudSchema[]>([
   },
   {
     label: '接收號碼',
-    field: 'mobile'
+    field: 'mobile',
+    form: { show: false },
+    search: {
+      component: 'Input',
+      colProps: { span: 6 },
+      show: true
+    }
   },
   {
     label: '發送時間',
-    field: 'sendDate'
+    field: 'sendDate',
+    form: { show: false },
+    search: {
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
+      colProps: { span: 6 },
+      show: true
+    }
   },
   {
     label: '發送結果',
@@ -85,7 +101,28 @@ const crudSchemas = reactive<CrudSchema[]>([
   },
   {
     label: '信息內容',
-    field: 'content'
+    field: 'content',
+    form: { show: false },
+    search: {
+      component: 'Input',
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    label: '至',
+    field: 'endSendDate',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
+      colProps: { span: 6 },
+      show: true
+    }
   }
 ])
 
