@@ -10,6 +10,7 @@ import { getApi } from '@/api/common'
 import { getInOptionFormat, returnDateString } from '@/utils/common'
 import dict from '@/config/dictionary.json'
 import Comment from './Comment.vue'
+import { CommentType } from '@/api/workorder/workorder/types'
 
 const { required, isMobile } = useValidator()
 
@@ -33,7 +34,7 @@ const store = {
   sysUser: ref<ComponentOptions[]>([]),
   sysDeptList: ref<ComponentOptions[]>([]),
   transferId: ref<ComponentOptions[]>([]),
-  comments: ref<TableData[]>([]),
+  comments: ref<CommentType[]>([]),
   contactUserId: ref<ComponentOptions[]>([])
 }
 
@@ -52,7 +53,7 @@ const setComments = () => {
   })
 }
 
-onMounted(() => {
+onMounted(async () => {
   setStore('orderTypes', '/sys/dict/type/WORKORDER_Type', 'code', 'value')
   setStore(
     'contactUserId',
@@ -60,11 +61,10 @@ onMounted(() => {
     'linkedMemberId',
     'name'
   )
-  setStore('sysUser', `/sys/user`, 'id', 'name')
+  await setStore('sysUser', `/sys/user`, 'id', 'name')
   setStore('sysDeptList', `/sys/dept/list`, 'id', 'hospitalName+deptName')
+  
   props.isEdit && setComments()
-  store.transferId.value = store.sysUser.value
-  console.log('on mounted: ', store.comments.value)
 })
 
 const querySearch = async (queryString: string, cb: Fn) => {
@@ -405,13 +405,20 @@ defineExpose({
     </template>
   </Form>
 
-  <Comment
-    :current-row="{
-      handlerName: props.currentRow?.handlerName,
-      createTime: props.currentRow?.createTime,
-      comment: props.currentRow?.comment
-    }"
-  />
+  <div v-if="props.isEdit">
+    <Comment
+      v-if="props.currentRow?.handlerName"
+      :current-row="{
+        handlerName: props.currentRow?.handlerName,
+        createTime: props.currentRow?.createTime,
+        comment: props.currentRow?.comment
+      }"
+    />
 
-  <Comment v-for="comment in store.comments" :key="comment?.createTime" :current-row="comment" />
+    <Comment
+      v-for="comment in store.comments.value"
+      :key="comment?.createTime"
+      :current-row="comment"
+    />
+  </div>
 </template>

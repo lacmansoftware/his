@@ -18,3 +18,9 @@ export type MemberInfoTableData = {
   createHospital: string
   pageviews: number
 }
+
+export type CommentType = {
+  handlerName: string | null
+  createTime: string | null
+  comment: string | null
+}

@@ -6,17 +6,22 @@ import { TableData } from '@/api/table/types'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useValidator } from '@/hooks/web/useValidator'
 import { IDomEditor } from '@wangeditor/editor'
+import { CommentType } from '@/api/workorder/workorder/types'
 
 const { required, isMobile } = useValidator()
 
 const props = defineProps({
   currentRow: {
-    type: Object as PropType<Nullable<TableData>>,
+    type: Object as CommentType,
     default: () => null
   }
 })
 
 const { t } = useI18n()
+
+onMounted(() => {
+  console.log(props.currentRow)
+})
 
 const schema = reactive<FormSchema[]>([
   {
