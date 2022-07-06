@@ -23,7 +23,7 @@ export const getTableDetApi = async (id: string): Promise<IResponse<SMSSendData>
 }
 
 export const delTableListApi = async (id: string): Promise<IResponse> => {
-  const res = await request.delete({ url: `/member/workorder/${id}` })
+  const res = await request.delete({ url: `/sms/send/${id}` })
   return res && res.data
 }
 
