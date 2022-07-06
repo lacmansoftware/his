@@ -17,8 +17,8 @@ import Write from './components/Write.vue'
 import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
 
-import { getTableListApi, delTableListApi, saveTableApi, getPrintApi } from '@/api/workorder/sms'
-import { SMSSendData } from '@/api/workorder/sms/types'
+import { getTableListApi, delTableListApi, saveTableApi, getPrintApi } from '@/api/workorder/sms/send'
+import { SMSSendData } from '@/api/workorder/sms/send/types'
 import { getApi } from '@/api/common'
 
 defineOptions({
