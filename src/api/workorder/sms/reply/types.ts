@@ -1,4 +1,4 @@
-export type SMSSendData = {
+export type SMSReplyData = {
   businessId: string
   comment: string
   content: string
