@@ -1,28 +1,25 @@
 <script setup lang="ts">
+import { reactive, ref, unref, onMounted, watch, computed } from 'vue'
+import { ElButton, ElLink, ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
-import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElLink, ElMessage } from 'element-plus'
 import { Table } from '@/components/Table'
-import { useTable } from '@/hooks/web/useTable'
-import { reactive, ref, unref, onMounted, watch, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useI18n } from '@/hooks/web/useI18n'
 import { useEmitt } from '@/hooks/web/useEmitt'
+import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import { inDict, getAgeByBirthday } from '@/utils/common'
-import { callIcon, msgIcon, plusIcon, deleteIcon } from '@/utils/iconList'
-import { searchConfig, crudConfig } from './index'
+import { useValidator } from '@/hooks/web/useValidator'
+import { inDict, getAgeByBirthday, getInOptionFormat } from '@/utils/common'
+import { msgIcon, deleteIcon } from '@/utils/iconList'
 import Write from './components/Write.vue'
-import Detail from './components/Detail.vue'
 import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
-import { getPinyinCode, getInOptionFormat } from '@/utils/common'
-import { getApi } from '@/api/common'
-import { useValidator } from '@/hooks/web/useValidator'
 
 import { getTableListApi, delTableListApi, saveTableApi, getPrintApi } from '@/api/workorder/sms'
 import { SMSSendData } from '@/api/workorder/sms/types'
+import { getApi } from '@/api/common'
 
 defineOptions({
   name: 'SMSSendIndex'
@@ -73,16 +70,6 @@ const { getList, setSearchParams } = methods
 getList()
 
 const { t } = useI18n()
-
-const setPinyinCode = async (item: any) => {
-  const write = unref(writeRef)
-  const formData = (await write?.getFormData()) as any
-  const py = getPinyinCode(formData.name)
-
-  write?.setValues({
-    pinyinCode: py
-  })
-}
 
 const handleTypeChange = (item: Recordable) => {
   typeRef.value = item
@@ -289,25 +276,9 @@ const AddAction = () => {
   dialogVisible.value = true
 }
 
-const action = (row: TableData, type: string) => {
-  dialogTitle.value = type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail'
-  dialogWidth.value = '90%'
-  actionType.value = type
-  tableObject.currentRow = row
-  dialogVisible.value = true
-}
-
 const writeRef = ref<ComponentRef<typeof Write>>()
 
 const loading = ref(false)
-
-const outCall = (mobile: string) => {
-  console.log('out going call: ', searchSchema[8].componentProps.options)
-}
-
-const sendMsg = (mobile: string) => {
-  console.log('out going call: ', mobile)
-}
 
 const save = async () => {
   const write = unref(writeRef)
@@ -331,7 +302,6 @@ const save = async () => {
 }
 
 watch(typeRef, () => {
-  console.log('ref: ', typeRef)
   getTemplateOptions()
 })
 </script>
