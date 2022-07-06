@@ -1,14 +1,13 @@
 export type SMSReplyData = {
   businessId: string
-  comment: string
   content: string
   createTime: string
   createUser: string
-  createUserid: string
-  feedback: string
   hospitalId: string
   id: string
+  isConfirm: string
   isDeleted: string
+  isLast: string
   memberId: string
   mobile: string
   modifyTime: string
@@ -17,9 +16,7 @@ export type SMSReplyData = {
   msgSeq: string
   msgTime: string
   msgType: string
-  name: string
   pageNum: number
   pageSize: number
-  sendDate: string
   status: string
 }
