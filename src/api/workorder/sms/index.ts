@@ -22,9 +22,22 @@ export const getTableDetApi = async (id: string): Promise<IResponse<SMSSendData>
   return res && res.data
 }
 
-export const delTableListApi = async (id: string): Promise<IResponse> => {
-  const res = await request.delete({ url: `/sms/send/${id}` })
-  return res && res.data
+export const delTableListApi = async (req: any): Promise<IResponse> => {
+  // sms/send/batchdel
+  // deldata: 0673867d3e1a4c108c4f6cf0523b2eb9,02669c75df454772b035ae773aeebd0f
+  if (req?.multiple) {
+    const res = await request.post({
+      url: '/sms/send/batchdel',
+      headersType: 'application/x-www-form-urlencoded',
+      data: {
+        deldata: req.data
+      }
+    })
+    return res && res.data
+  } else {
+    const res = await request.delete({ url: `/sms/send/${req.data}` })
+    return res && res.data
+  }
 }
 
 export const saveMergeApi = async (params: any): Promise<IResponse> => {

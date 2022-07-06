@@ -178,7 +178,12 @@ const delData = async (row: MemberInfoTableData | null, multiple: boolean) => {
   const selections = await getSelections()
   delLoading.value = true
   await delList(
-    multiple ? selections.map((v) => v.id) : (tableObject.currentRow?.id as string),
+    multiple
+      ? {
+          multiple: multiple,
+          data: selections.reduce((sum, v) => sum + (sum === '' ? '' : ',') + v.id, '') as string
+        }
+      : { multiple: multiple, data: tableObject.currentRow?.id as string },
     multiple
   ).finally(() => {
     delLoading.value = false
