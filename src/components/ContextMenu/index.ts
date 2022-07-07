@@ -1,4 +1,5 @@
 import ContextMenu from './src/ContextMenu.vue'
+import CustomDropdown from './src/CustomDropdown.vue'
 import { ElDropdown } from 'element-plus'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 
@@ -7,4 +8,4 @@ export interface ContextMenuExpose {
   tagItem: RouteLocationNormalizedLoaded
 }
 
-export { ContextMenu }
+export { ContextMenu, CustomDropdown }

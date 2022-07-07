@@ -15,12 +15,12 @@ import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { inDict, getAgeByBirthday } from '@/utils/common'
 import { printerIcon } from '@/utils/iconList'
 import { searchConfig, crudConfig } from './index'
-import Write from './components/Write.vue'
-import Detail from './components/Detail.vue'
 import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
 import { getPinyinCode, getInOptionFormat, formatObject, getWeekSEDate } from '@/utils/common'
 import { getApi } from '@/api/common'
+
+import ColumnView from './ColumnView.vue'
 
 defineOptions({
   name: 'WorkOrderIndex'
@@ -274,31 +274,6 @@ watch(curWeekDate, async () => {
   })
   search()
 })
-
-const HandleColumn = (props: any) => {
-  const { row, colId } = props
-  const data = row?.children.find((item) => {
-    if (item.start === curWeek.value.range[colId]) return true
-  })
-
-  return typeof data !== 'undefined' ? (
-    <div class="flex flex-col align-top">
-      <p>{row?.name}</p>
-      <p>{`已约/上限: ${data?.totalMeet}/${data?.totalLimit}`}</p>
-      <h4>医生列表</h4>
-      {data?.children.map((doctor) => (
-        <>
-          <div key={doctor.id}>
-            <p>{doctor.name}</p>
-            <p>{`已约/上限: ${doctor.meet}/${doctor.limit}`}</p>
-          </div>
-        </>
-      ))}
-    </div>
-  ) : (
-    <div></div>
-  )
-}
 </script>
 
 <template>
@@ -345,37 +320,38 @@ const HandleColumn = (props: any) => {
       </template>
       <template #col0="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="0" />
+          <!-- <HandleColumn :row="row" :colId="0" /> -->
+          <ColumnView :row="row" :col-id="0" :cur-week="curWeek" />
         </div>
       </template>
       <template #col1="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="1" />
+          <ColumnView :row="row" :colId="1" :cur-week="curWeek" />
         </div>
       </template>
       <template #col2="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="2" />
+          <ColumnView :row="row" :colId="2" :cur-week="curWeek" />
         </div>
       </template>
       <template #col3="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="3" />
+          <ColumnView :row="row" :colId="3" :cur-week="curWeek" />
         </div>
       </template>
       <template #col4="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="4" />
+          <ColumnView :row="row" :colId="4" :cur-week="curWeek" />
         </div>
       </template>
       <template #col5="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="5" />
+          <ColumnView :row="row" :colId="5" :cur-week="curWeek" />
         </div>
       </template>
       <template #col6="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="6" />
+          <ColumnView :row="row" :colId="6" :cur-week="curWeek" />
         </div>
       </template>
     </Table>

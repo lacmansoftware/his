@@ -9,7 +9,7 @@ import { useI18n } from '@/hooks/web/useI18n'
 import { useEmitt } from '@/hooks/web/useEmitt'
 import { useRouter, useRoute } from 'vue-router'
 import { saveUpdateStatusApi } from '@/api/appoint/appoint'
-import { updateStatusType } from '@/api/appoint/appoint/types'
+import { UpdateStatusType } from '@/api/appoint/appoint/types'
 import { IDomEditor } from '@wangeditor/editor'
 
 import dict from '@/config/dictionary.json'
@@ -47,7 +47,7 @@ const save = async () => {
   await unref(elFormRef)?.validate(async (isValid) => {
     if (isValid) {
       loading.value = true
-      const data = (await unref(methods)?.getFormData()) as updateStatusType
+      const data = (await unref(methods)?.getFormData()) as UpdateStatusType
       console.log(data)
       const res = await saveUpdateStatusApi({
         id: query.id,

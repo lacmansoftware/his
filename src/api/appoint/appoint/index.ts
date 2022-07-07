@@ -1,5 +1,5 @@
 import { useAxios } from '@/hooks/web/useAxios'
-import { updateStatusType } from './types'
+import { UpdateStatusType } from './types'
 
 const request = useAxios()
 
@@ -27,7 +27,7 @@ export const getPrintApi = async (id: string): Promise<IResponse> => {
   return res && res.data
 }
 
-export const saveUpdateStatusApi = async (data: updateStatusType): Promise<IResponse> => {
+export const saveUpdateStatusApi = async (data: UpdateStatusType): Promise<IResponse> => {
   const res = await request.post({
     url: '/member/appointment/update/status',
     headersType: 'application/x-www-form-urlencoded',
