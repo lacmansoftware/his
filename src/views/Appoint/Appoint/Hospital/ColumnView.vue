@@ -37,7 +37,7 @@ const data = props.row?.children.find((item) => {
 
 const schema = data?.children.map((doctor) => ({
   icon: '',
-  label: `<div class="flex items-center justify-between"><p>${doctor.name}</p><p>已约/上限: ${doctor.meet}/${doctor.limit}</p></div>`,
+  label: `<div class="flex items-center justify-between gap-4"><p>${doctor.name}</p><p>已约/上限: ${doctor.meet}/${doctor.limit}</p></div>`,
   command: () => {}
 }))
 </script>
