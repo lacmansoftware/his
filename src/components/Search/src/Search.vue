@@ -92,6 +92,8 @@ const setVisible = () => {
 }
 
 defineExpose({
+  elFormRef,
+  getFormData: methods.getFormData,
   setValues: methods.setValues,
   search: search
 })

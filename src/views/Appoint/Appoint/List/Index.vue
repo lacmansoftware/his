@@ -26,9 +26,16 @@ import Write from './components/Write.vue'
 import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
 
-import { getTableListApi, delTableListApi, saveGroupMsgApi } from '@/api/appoint/appoint/list'
+import {
+  getTableListApi,
+  delTableListApi,
+  saveGroupMsgApi,
+  getExportExcelApi
+} from '@/api/appoint/appoint/list'
 import { AppointListData } from '@/api/appoint/appoint/list/types'
 import { getApi } from '@/api/common'
+
+import { PATH_URL } from '@/config/axios'
 
 defineOptions({
   name: 'SMSSendIndex'
@@ -617,6 +624,7 @@ const AddAction = () => {
 }
 
 const writeRef = ref<ComponentRef<typeof Write>>()
+const searchRef = ref<ComponentRef<typeof Search>>()
 
 const action = (row: TableData, type: string) => {
   dialogTitle.value = type === 'edit' ? '修改短信模板' : 'exampleDemo.detail'
@@ -699,7 +707,15 @@ const groupMsg = () => {
   tableObject.currentRow = null
   dialogVisible.value = true
 }
-const exportExcel = () => {}
+
+const exportExcel = async () => {
+  const search = unref(searchRef)
+  const data = (await search?.getFormData()) as any
+  const queryParams = new URLSearchParams(data)
+
+  const path = `${PATH_URL}/member/appointment/exportAppointmentList?${queryParams.toString()}`
+  window.open(path, '_blank')
+}
 
 const outCall = (mobile: string) => {
   console.log('out going call: ', searchSchema[8].componentProps.options)
@@ -724,6 +740,7 @@ watch(typeRef, () => {
       :buttom-position="'right'"
       @search="setSearchParams"
       @reset="setSearchParams"
+      ref="searchRef"
     />
 
     <div class="mb-10px ml-10px mt-[-32px]">

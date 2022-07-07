@@ -44,3 +44,8 @@ export const delTableListApi = async (req: any): Promise<IResponse> => {
     return res && res.data
   }
 }
+
+export const getExportExcelApi = async (params: any): Promise<IResponse> => {
+  const res = await request.get({ url: '/member/appointment/exportAppointmentList', params })
+  return res && res.data
+}
