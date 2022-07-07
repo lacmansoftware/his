@@ -11,7 +11,7 @@ import { useEmitt } from '@/hooks/web/useEmitt'
 import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { useValidator } from '@/hooks/web/useValidator'
-import { inDict, getAgeByBirthday, getInOptionFormat } from '@/utils/common'
+import { inDict, getAgeByBirthday, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import {
   topIcon,
   downloadIcon,
@@ -64,13 +64,20 @@ const getTemplateOptions = () => {
   })
 }
 
-onMounted(() => {
+onMounted(async () => {
   setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
+
+  const today = getDateInFormat(new Date(), '-')
+  await setValues({
+    dateStart: today,
+    dateEnd: today
+  })
+  search()
 })
 
 const { push } = useRouter()
 
-const { register, tableObject, methods } = useTable<MemberInfoTableData>({
+const { register, tableObject, methods } = useTable<AppointListData>({
   getListApi: getTableListApi,
   delListApi: delTableListApi,
   response: {
@@ -80,8 +87,6 @@ const { register, tableObject, methods } = useTable<MemberInfoTableData>({
 })
 
 const { getList, setSearchParams } = methods
-
-getList()
 
 const { t } = useI18n()
 
@@ -335,8 +340,11 @@ const crudSchemas = reactive<CrudSchema[]>([
     table: { show: false },
     search: {
       show: true,
-      component: 'Input',
-      componentProps: {},
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
       colProps: { span: 6 }
     }
   },
@@ -347,8 +355,11 @@ const crudSchemas = reactive<CrudSchema[]>([
     table: { show: false },
     search: {
       show: true,
-      component: 'Input',
-      componentProps: {},
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
       colProps: { span: 6 }
     }
   },
@@ -625,6 +636,16 @@ const AddAction = () => {
 
 const writeRef = ref<ComponentRef<typeof Write>>()
 const searchRef = ref<ComponentRef<typeof Search>>()
+
+const setValues = (value: object) => {
+  const search = unref(searchRef)
+  search?.setValues(value)
+}
+
+const search = () => {
+  const search = unref(searchRef)
+  search.search()
+}
 
 const action = (row: TableData, type: string) => {
   dialogTitle.value = type === 'edit' ? '修改短信模板' : 'exampleDemo.detail'

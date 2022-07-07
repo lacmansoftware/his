@@ -72,8 +72,6 @@ const { register, tableObject, methods } = useTable<MemberInfoTableData>({
 
 const { getList, setSearchParams } = methods
 
-getList()
-
 const { t } = useI18n()
 
 const handleStatusChange = (item: Recordable) => {
@@ -201,7 +199,6 @@ const crudSchemas = reactive<CrudSchema[]>([
         type: 'date',
         valueFormat: 'YYYY-MM-DD'
       },
-      value: '2022-07-06',
       colProps: { span: 6 },
       show: true
     }
@@ -217,7 +214,6 @@ const crudSchemas = reactive<CrudSchema[]>([
         type: 'date',
         valueFormat: 'YYYY-MM-DD'
       },
-      value: '2022-07-06',
       colProps: { span: 6 },
       show: true
     }
