@@ -89,7 +89,7 @@ export const getWeekSEDate = (curDate = '') => {
   const endDate = new Date(curr.setDate(curr.getDate() - curr.getDay() + 7))
   const range: string[] = []
   curr.setDate(curr.getDate() - curr.getDay() - 7)
-  for (let i = 1; i <= 7; i++) {
+  for (let i = 0; i < 7; i++) {
     curr.setDate(curr.getDate() - curr.getDay() + i)
     range.push(getDateInFormat(curr, '-'))
   }
