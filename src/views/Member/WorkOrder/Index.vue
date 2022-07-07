@@ -10,7 +10,13 @@ import { reactive, ref, unref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useEmitt } from '@/hooks/web/useEmitt'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import { inDict, getAgeByBirthday, getPinyinCode, getInOptionFormat } from '@/utils/common'
+import {
+  inDict,
+  getAgeByBirthday,
+  getPinyinCode,
+  getInOptionFormat,
+  getDateInFormat
+} from '@/utils/common'
 import { printerIcon } from '@/utils/iconList'
 import { searchConfig, crudConfig } from './index'
 import Write from './components/Write.vue'
@@ -40,11 +46,16 @@ const setStore = async (key: string, url: string, valueField: string, labelField
   store[key].value = await getInOptionFormat(url, valueField, labelField)
 }
 
-onMounted(() => {
+onMounted(async () => {
   // setStore('certificate', '/sys/dict/type/MEMBER_Certificate', 'code', 'value')
   setStore('feePayHospitalId', '/sys/hospital', 'id', 'name')
   setStore('type', '/sys/dict/query/WORKORDER_Type', 'code', 'value')
 
+  const today = getDateInFormat(new Date(), '-')
+  setValues({
+    startTime: today,
+    endTime: today
+  })
   search()
 })
 
