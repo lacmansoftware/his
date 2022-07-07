@@ -5086,96 +5086,21 @@
       "platform": "normal"
     },
     {
-      "url": "/components",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/form",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/form/default-form",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/form/use-form",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/form/ref-form",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/table",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/table/default-table",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/table/use-table",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/table/ref-table",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/editor-demo",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/editor-demo/editor",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/search",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/descriptions",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/image-viewer",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/dialog",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/icon",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/echart",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/count-to",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/qrcode",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/highlight",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/infotip",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/Components/InputPassword",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/Components/Sticky",
-      "isDeleted": "N"
+      "id": "2005",
+      "createTime": "2019-05-25 16:16:34",
+      "modifyTime": "2019-05-25 16:16:34",
+      "createUser": "",
+      "modifyUser": "",
+      "isDeleted": "N",
+      "pageNum": 1,
+      "pageSize": 2147483647,
+      "name": "收費項目",
+      "seq": 5,
+      "url": "/appoint/appoint/appoint/confirm",
+      "icon": null,
+      "resourceType": "m",
+      "parentId": "20",
+      "platform": "normal"
     }
   ],
   "total": 296,

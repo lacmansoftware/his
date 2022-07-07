@@ -88,6 +88,15 @@ const { register, tableObject, methods } = useTable<AppointListData>({
 
 const { getList, setSearchParams } = methods
 
+useEmitt({
+  name: 'getList',
+  callback: (type: string) => {
+    if (type === 'confirm') {
+    }
+    getList()
+  }
+})
+
 const { t } = useI18n()
 
 const handleTypeChange = (item: Recordable) => {
@@ -690,7 +699,9 @@ const save = async () => {
   })
 }
 
-const confirm = (id: string) => {}
+const confirm = (id: string) => {
+  push(`/appoint/appoint/appoint/confirm?id=${id}`)
+}
 const update = (id: string) => {}
 const cancel = (id: string) => {}
 const check = (id: string) => {}
@@ -699,7 +710,7 @@ const log = (id: string) => {}
 
 const pushMsg = () => {
   getApi(`member/appointment/unconfirm/total`).then((res) => {
-    if (res.data) {
+    if (res?.data) {
       ElMessageBox.confirm(
         `第二天共有${res.data}位客人未確認就診, 需要發${res.data}條短信, 是否確認發送?`,
         t('common.reminder'),
@@ -859,7 +870,7 @@ watch(typeRef, () => {
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
     <Write
-      v-if="actionType !== 'detail'"
+      v-if="actionType === 'add' || actionType === 'edit'"
       ref="writeRef"
       :form-schema="allSchemas.formSchema"
       :current-row="tableObject.currentRow"
