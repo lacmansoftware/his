@@ -295,7 +295,6 @@ watch(curWeekDate, async () => {
         format="[Week] ww - YYYY/MM/DD"
         placeholder="Pick a week"
         value-format="YYYY/MM/DD"
-        @change="test"
       />
     </div>
 
