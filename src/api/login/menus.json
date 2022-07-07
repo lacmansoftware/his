@@ -1526,7 +1526,7 @@
       "pageSize": 2147483647,
       "name": "預約列表",
       "seq": 3,
-      "url": "/html/appoint/appoint_manage/appoint_list/main.html",
+      "url": "/appoint/appoint/list/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "0301",

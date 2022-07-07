@@ -232,6 +232,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '新建預約(醫生)'
             }
+          },
+          {
+            path: 'list/index',
+            component: () => import('@/views/Appoint/Appoint/List/Index.vue'),
+            name: 'AppointManageListIndex',
+            meta: {
+              title: '預約列表'
+            }
           }
         ]
       }
