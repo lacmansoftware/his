@@ -79,7 +79,8 @@ export const formatObject = (data: object[], valueField: string, labelField: str
 }
 
 export const getDateInFormat = (date: Date, style = '/') => {
-  return date.toJSON().slice(0, 10).replace(/-/g, style)
+  const nDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+  return nDate.toISOString().slice(0, 10).replace(/-/g, style)
 }
 
 export const getWeekSEDate = (curDate = '') => {
