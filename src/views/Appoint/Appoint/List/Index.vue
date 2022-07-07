@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref, unref, onMounted, watch, computed, h } from 'vue'
-import { ElButton, ElTag, ElLink, ElMessage } from 'element-plus'
+import { ElButton, ElTag, ElLink, ElMessage, ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
@@ -12,12 +12,21 @@ import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { useValidator } from '@/hooks/web/useValidator'
 import { inDict, getAgeByBirthday, getInOptionFormat } from '@/utils/common'
-import { plusIcon, deleteIcon } from '@/utils/iconList'
+import {
+  topIcon,
+  downloadIcon,
+  uploadIcon,
+  groupIcon,
+  callIcon,
+  msgIcon,
+  plusIcon,
+  deleteIcon
+} from '@/utils/iconList'
 import Write from './components/Write.vue'
 import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
 
-import { getTableListApi, delTableListApi, saveTableApi } from '@/api/appoint/appoint/list'
+import { getTableListApi, delTableListApi, saveGroupMsgApi } from '@/api/appoint/appoint/list'
 import { AppointListData } from '@/api/appoint/appoint/list/types'
 import { getApi } from '@/api/common'
 
@@ -30,11 +39,22 @@ const dictStore = useDictStoreWithOut()
 const typeRef = ref('')
 
 const store = {
-  type: ref<ComponentOptions[]>([])
+  type: ref<ComponentOptions[]>([]),
+  templet: ref<ComponentOptions[]>([])
 }
 
 const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
   store[key].value = await getInOptionFormat(url, valueField, labelField)
+}
+
+const getTemplateOptions = () => {
+  getApi(`/sms/templet${typeRef.value !== '' ? `/type/${typeRef.value}` : ''}`).then((res) => {
+    store.templet.value = res?.data.map((item) => ({
+      value: item.id,
+      label: item.title,
+      content: item.content
+    }))
+  })
 }
 
 onMounted(() => {
@@ -239,6 +259,323 @@ const crudSchemas = reactive<CrudSchema[]>([
     label: '確認人',
     field: 'confirmUser',
     width: '80px'
+  },
+  // Search Schema
+  {
+    field: 'hospitalId',
+    label: '門店',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        filterable: true
+      },
+      colProps: { span: 6 },
+      api: async () => {
+        return await getInOptionFormat('/member/appointment/hospitals', 'id', 'name')
+      }
+    }
+  },
+  {
+    field: 'doctorId',
+    label: '醫生',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        filterable: true
+      },
+      colProps: { span: 6 },
+      api: async () => {
+        return await getInOptionFormat('/doctor/getAuthPass', 'id', 'name')
+      }
+    }
+  },
+  {
+    field: 'memberName',
+    label: '客人姓名',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Input',
+      componentProps: {},
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'week',
+    label: '星期',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        options: dict.week
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'dateStart',
+    label: '約診時間',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Input',
+      componentProps: {},
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'dateEnd',
+    label: '到',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Input',
+      componentProps: {},
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'memberMobile',
+    label: '手機號碼',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Input',
+      componentProps: {},
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'visitType',
+    label: '初複診',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        options: dict.visitType
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'appointmentType',
+    label: '約診類型',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        options: dict.isSpecialist
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'specialistId',
+    label: '專科',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {},
+      colProps: { span: 6 },
+      api: async () => {
+        return await getInOptionFormat('/market/specialist/list?pageSize=0', 'id', 'specialistName')
+      }
+    }
+  },
+  {
+    field: 'source',
+    label: '預約渠道',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        options: dict.appoint.source
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'replyChannel',
+    label: '回復渠道',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        options: dict.appoint.replyChannel
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'pendingFlag',
+    label: '是否加診',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        options: dict.appoint.pendingFlag
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'status',
+    label: '狀態',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        options: dict.appoint.status
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'marketActivity',
+    label: '活動篩選',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: { options: dict.activityList },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'subType',
+    label: '項目',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: { options: dict.subTypeList },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'paymentStatus',
+    label: '支付診費',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: { options: dict.appoint.paymentStatus },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'noCancel',
+    label: '不显示取消的預約',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Checkbox',
+      componentProps: {
+        options: dict.appoint.showCancel
+      },
+      colProps: { span: 6 },
+      value: [],
+      formItemProps: {
+        labelWidth: '175px'
+      }
+    }
+  },
+
+  // push msge form
+  {
+    field: 'moblist',
+    label: '號碼列表',
+    form: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        type: 'textarea',
+        rows: 2,
+        placeholder: '號碼列表'
+      },
+      colProps: { span: 24 },
+      formItemProps: {
+        rules: [required()]
+      }
+    },
+    table: { show: false }
+  },
+  {
+    field: 'type',
+    label: '短信分類',
+    form: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        placeholder: '短信分類',
+        onChange: handleTypeChange
+      },
+      colProps: { span: 12 },
+      api: async () => {
+        return await getInOptionFormat('/sys/dict/type/sms_tmp_type', 'code', 'value')
+      }
+    },
+    table: { show: false }
+  },
+  {
+    field: 'templet',
+    label: '短信模板',
+    form: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        placeholder: '短信模板',
+        options: store.templet,
+        onChange: handleTempletChange
+      },
+      colProps: { span: 12 }
+    },
+    table: { show: false }
+  },
+  {
+    field: 'content',
+    label: '短信內容',
+    form: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        placeholder: '短信內容',
+        type: 'textarea',
+        rows: 2
+      },
+      colProps: { span: 24 }
+    },
+    table: { show: false }
   }
 ])
 
@@ -296,9 +633,13 @@ const save = async () => {
     if (isValid) {
       loading.value = true
       const data = (await write?.getFormData()) as any
-      const res = await saveTableApi(
+
+      const res = await saveGroupMsgApi(
         actionType.value === 'add'
-          ? data
+          ? {
+              mobiles: data.moblist,
+              content: data.content
+            }
           : {
               id: data.id,
               label: data.title,
@@ -327,6 +668,47 @@ const check = (id: string) => {}
 const packagePay = (id: string) => {}
 const log = (id: string) => {}
 
+const pushMsg = () => {
+  getApi(`member/appointment/unconfirm/total`).then((res) => {
+    if (res.data) {
+      ElMessageBox.confirm(
+        `第二天共有${res.data}位客人未確認就診, 需要發${res.data}條短信, 是否確認發送?`,
+        t('common.reminder'),
+        {
+          confirmButtonText: t('common.ok'),
+          cancelButtonText: t('common.cancel'),
+          type: 'warning'
+        }
+      )
+        .then(() => {
+          getApi(`member/appointment/unconfirm/pushMsg`).then((pushRes) => {
+            ElMessage.success(pushRes.msg)
+          })
+        })
+        .catch(() => {})
+    } else {
+      ElMessage.error(res.msg)
+    }
+  })
+}
+
+const groupMsg = () => {
+  dialogTitle.value = '發送短信'
+  actionType.value = 'add'
+  dialogWidth.value = '70%'
+  tableObject.currentRow = null
+  dialogVisible.value = true
+}
+const exportExcel = () => {}
+
+const outCall = (mobile: string) => {
+  console.log('out going call: ', searchSchema[8].componentProps.options)
+}
+
+const sendMsg = (mobile: string) => {
+  console.log('out going call: ', mobile)
+}
+
 watch(typeRef, () => {
   getTemplateOptions()
 })
@@ -345,10 +727,9 @@ watch(typeRef, () => {
     />
 
     <div class="mb-10px ml-10px mt-[-32px]">
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增</ElButton>
-      <ElButton :loading="delLoading" type="danger" @click="delData(null, true)" :icon="deleteIcon"
-        >批量刪除</ElButton
-      >
+      <ElButton type="primary" @click="pushMsg" :icon="topIcon">推送消息</ElButton>
+      <ElButton type="success" @click="groupMsg" :icon="groupIcon">短信群發</ElButton>
+      <ElButton type="warning" @click="exportExcel" :icon="downloadIcon">導出</ElButton>
     </div>
 
     <Table
@@ -418,8 +799,22 @@ watch(typeRef, () => {
           <ElLink type="primary" @click="log(row.id)">日誌</ElLink>
         </div>
       </template>
-      <template #value="{ row }">
-        {{ row.sysDict.value }}
+      <template #memberMobile="{ row }">
+        <div class="flex items-center gap-1">
+          <span>{{ row.memberMobile }}</span>
+          <ElLink
+            type="primary"
+            @click="outCall(row.memberMobile)"
+            title="打電話"
+            :icon="callIcon"
+          />
+          <ElLink
+            type="primary"
+            @click="sendMsg(row.memberMobile)"
+            title="發短信"
+            :icon="msgIcon"
+          />
+        </div>
       </template>
     </Table>
   </ContentWrap>

@@ -8,6 +8,11 @@ export const getTableListApi = async (params: any): Promise<IResponse> => {
   return res && res.data
 }
 
+export const saveGroupMsgApi = async (params: any): Promise<IResponse> => {
+  const res = await request.get({ url: '/member/appointment/groupmsg/groupmsg', params })
+  return res && res.data
+}
+
 export const saveTableApi = async (data: Partial<AppointListData>): Promise<IResponse> => {
   const res = await request.post({
     url: '/sms/templet',
@@ -38,18 +43,4 @@ export const delTableListApi = async (req: any): Promise<IResponse> => {
     const res = await request.delete({ url: `/sms/templet/${req.data}` })
     return res && res.data
   }
-}
-
-export const saveMergeApi = async (params: any): Promise<IResponse> => {
-  const res = await request.get({ url: '/member/info/infoMerge', params })
-  return res && res.data
-}
-
-export const updateTableApi = async (data: any): Promise<IResponse> => {
-  const res = await request.post({
-    url: '/member/workorder/update',
-    headersType: 'application/x-www-form-urlencoded',
-    data
-  })
-  return res && res.data
 }
