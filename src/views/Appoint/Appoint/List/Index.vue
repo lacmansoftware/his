@@ -702,7 +702,9 @@ const save = async () => {
 const confirm = (id: string) => {
   push(`/appoint/appoint/appoint/confirm?id=${id}`)
 }
-const update = (id: string) => {}
+const update = (row: AppointListData) => {
+  // push(`/appoint/appoint/appoint/confirm?id=${id}`)
+}
 const cancel = (id: string) => {}
 const check = (id: string) => {}
 const packagePay = (id: string) => {}
@@ -800,16 +802,7 @@ watch(typeRef, () => {
           <ElLink
             v-if="row.status === 'YYY' || row.status == 'QRJZ'"
             type="primary"
-            @click="
-              update(
-                row.id,
-                row.hospitalId,
-                row.doctorId,
-                row.appointmentTimeStart,
-                row.appointmentTimeEnd,
-                row.memberId
-              )
-            "
+            @click="update(row)"
             class="mr-5px"
             >修改</ElLink
           >

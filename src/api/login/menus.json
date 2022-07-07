@@ -1509,7 +1509,7 @@
       "pageSize": 2147483647,
       "name": "新建預約(醫生)",
       "seq": 2,
-      "url": "/appoint/appoint/appoint/index",
+      "url": "/appoint/appoint/hospital/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "0301",

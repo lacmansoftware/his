@@ -85,8 +85,6 @@ const { register, tableObject, methods } = useTable<MemberInfoTableData>({
 
 const { getList, setSearchParams } = methods
 
-getList()
-
 const { t } = useI18n()
 
 const crudSchemas = reactive<CrudSchema[]>([

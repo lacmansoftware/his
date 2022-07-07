@@ -226,8 +226,8 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         },
         children: [
           {
-            path: 'appoint/index',
-            component: () => import('@/views/Appoint/Appoint/Appoint/Index.vue'),
+            path: 'hospital/index',
+            component: () => import('@/views/Appoint/Appoint/Hospital/Index.vue'),
             name: 'AppointManageYiguanIndex',
             meta: {
               title: '新建預約(醫生)'
