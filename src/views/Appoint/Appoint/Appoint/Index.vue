@@ -1,29 +1,23 @@
 <script setup lang="tsx">
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
-import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElTag, ElLink, ElMessage, ElDatePicker } from 'element-plus'
 import { Table } from '@/components/Table'
-import { getTableListApi, getPrintApi } from '@/api/appoint/appoint/hospital'
 import { useTable } from '@/hooks/web/useTable'
-import { MemberInfoTableData } from '@/api/appoint/appoint/hospital/types'
 import { reactive, ref, unref, onMounted, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { useEmitt } from '@/hooks/web/useEmitt'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import { inDict, getAgeByBirthday } from '@/utils/common'
-import { printerIcon } from '@/utils/iconList'
-import { searchConfig, crudConfig } from './index'
-import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
-import { getPinyinCode, getInOptionFormat, formatObject, getWeekSEDate } from '@/utils/common'
+import { getInOptionFormat, formatObject, getWeekSEDate } from '@/utils/common'
 import { getApi } from '@/api/common'
+
+import { getTableListApi } from '@/api/appoint/appoint/appoint'
+import { AppointDoctorTableData } from '@/api/appoint/appoint/appoint/types'
 
 import ColumnView from './ColumnView.vue'
 
 defineOptions({
-  name: 'AppointManageHospitalIndex'
+  name: 'AppointManageAppointIndex'
 })
 
 const dictStore = useDictStoreWithOut()
@@ -75,7 +69,7 @@ onMounted(async () => {
 
 const { push } = useRouter()
 
-const { register, tableObject, methods } = useTable<MemberInfoTableData>({
+const { register, tableObject, methods } = useTable<AppointDoctorTableData>({
   getListApi: getTableListApi,
   response: {
     list: 'data',
@@ -247,10 +241,10 @@ const crudSchemas = reactive<CrudSchema[]>([
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
 const printAction = async (row: TableData) => {
-  const res = await getPrintApi(row.id)
-  if (res.success) {
-    ElMessage.success(res.msg)
-  }
+  // const res = await getPrintApi(row.id)
+  // if (res.success) {
+  //   ElMessage.success(res.msg)
+  // }
 }
 
 const loading = ref(false)
@@ -313,8 +307,7 @@ watch(curWeekDate, async () => {
       <template #hospital="{ row }">
         <div class="flex flex-col align-middle">
           <p>{{ row?.name }}</p>
-          <p>{{ `上限 ${row?.totalLimit} 人` }}</p>
-          <p>{{ `已约 ${row?.totalMeet} 人` }}</p>
+          <p>查看醫生信息</p>
         </div>
       </template>
       <template #col0="{ row }">
