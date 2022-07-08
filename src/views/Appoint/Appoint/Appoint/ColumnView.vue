@@ -16,6 +16,7 @@ import { AppointDoctorTableData, AppointDoctorType } from '@/api/appoint/appoint
 import { timelineLabels, isValidTime } from '@/utils/common'
 
 const { t } = useI18n()
+const { push } = useRouter()
 
 const props = defineProps({
   row: {
@@ -49,7 +50,9 @@ const schema = computed(() => {
     icon: '',
     disabled: !isValidTime(data.value.start, time),
     label: `<div class="flex items-center justify-between gap-4"><p>${time}</p><p>添加預約</p></div>`,
-    command: () => {}
+    command: () => {
+      push('/appoint/appoint/appoint/add?id=wegwe')
+    }
   }))
 })
 
