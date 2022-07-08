@@ -276,6 +276,41 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             }
           }
         ]
+      },
+      {
+        path: 'regist',
+        component: getParentLayout(),
+        name: 'AppointRegist',
+        meta: {
+          title: '掛號管理',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'add',
+            component: () => import('@/views/Appoint/Regist/Add.vue'),
+            name: 'AppointRegistAdd',
+            meta: {
+              title: '新建掛號'
+            }
+          },
+          {
+            path: 'registered/index',
+            component: () => import('@/views/Appoint/Regist/Registered/Index.vue'),
+            name: 'AppointRegistRegisteredIndex',
+            meta: {
+              title: '已掛號'
+            }
+          },
+          {
+            path: 'unregistered/index',
+            component: () => import('@/views/Appoint/Regist/Unregistered/Index.vue'),
+            name: 'AppointRegistUnregisteredIndex',
+            meta: {
+              title: '未掛號'
+            }
+          }
+        ]
       }
     ]
   }
