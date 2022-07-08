@@ -134,3 +134,8 @@ export const timelineLabels = (desiredStartTime, desiredEndTime, interval, perio
 
   return timeLabels
 }
+
+export const isValidTime = (dateString: string, timeString: string) => {
+  if (moment() <= moment(`${dateString} ${timeString}`, 'YYYY-MM-DD HH:mm')) return true
+  return false
+}

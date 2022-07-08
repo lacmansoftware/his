@@ -13,7 +13,7 @@ import { useTemplateRefsList } from '@vueuse/core'
 import { ElScrollbar } from 'element-plus'
 import { useScrollTo } from '@/hooks/event/useScrollTo'
 import { AppointDoctorTableData, AppointDoctorType } from '@/api/appoint/appoint/types'
-import { timelineLabels } from '@/utils/common'
+import { timelineLabels, isValidTime } from '@/utils/common'
 
 const { t } = useI18n()
 
@@ -47,7 +47,8 @@ const schema = computed(() => {
   )
   return timeLabels.map((time) => ({
     icon: '',
-    label: `<div class="flex items-center justify-between gap-4"><p>${time}</p></div>`,
+    disabled: !isValidTime(data.value.start, time),
+    label: `<div class="flex items-center justify-between gap-4"><p>${time}</p><p>添加預約</p></div>`,
     command: () => {}
   }))
 })
