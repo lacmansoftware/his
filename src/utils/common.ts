@@ -1,6 +1,7 @@
 import dict from '@/config/dictionary.json'
 import { pinyin } from 'pinyin-pro'
 import { getApi } from '@/api/common'
+import moment from 'moment'
 
 export const inDict = (val, data: string) => {
   try {
@@ -118,4 +119,18 @@ export const returnDateString = (minutue: number) => {
       ? '0' + _lastDateTime.getMinutes()
       : _lastDateTime.getMinutes())
   )
+}
+
+export const timelineLabels = (desiredStartTime, desiredEndTime, interval, period) => {
+  const startTimeMoment = moment(desiredStartTime, 'HH:mm')
+  const endTimeMoment = moment(desiredEndTime, 'HH:mm')
+  const totalPeriod = moment.duration(endTimeMoment.diff(startTimeMoment)).as(period)
+
+  const timeLabels = []
+  for (let i = 0; i <= totalPeriod; i += Number(interval)) {
+    startTimeMoment.add(i === 0 ? 0 : interval, period)
+    timeLabels.push(startTimeMoment.format('HH:mm') as never)
+  }
+
+  return timeLabels
 }

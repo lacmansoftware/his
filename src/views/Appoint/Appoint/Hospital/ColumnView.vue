@@ -12,7 +12,7 @@ import { useDesign } from '@/hooks/web/useDesign'
 import { useTemplateRefsList } from '@vueuse/core'
 import { ElScrollbar } from 'element-plus'
 import { useScrollTo } from '@/hooks/event/useScrollTo'
-import { AppointHospitalTableData } from '@/api/appoint/appoint/types'
+import { AppointHospitalTableData, AppointHospitalType } from '@/api/appoint/appoint/types'
 
 const { t } = useI18n()
 
@@ -31,15 +31,19 @@ const props = defineProps({
   }
 })
 
-const data = props.row?.children.find((item) => {
-  if (item.start === props.curWeek.range[props.colId]) return true
-})
+const data = ref<AppointHospitalType>(
+  props.row?.children.find((item) => {
+    if (item.start === props.curWeek.range[props.colId]) return true
+  })
+)
 
-const schema = data?.children.map((doctor) => ({
-  icon: '',
-  label: `<div class="flex items-center justify-between gap-4"><p>${doctor.name}</p><p>已约/上限: ${doctor.meet}/${doctor.limit}</p></div>`,
-  command: () => {}
-}))
+const schema = computed(() => {
+  return data?.value.children.map((doctor) => ({
+    icon: '',
+    label: `<div class="flex items-center justify-between gap-4"><p>${doctor.name}</p><p>已约/上限: ${doctor.meet}/${doctor.limit}</p></div>`,
+    command: () => {}
+  }))
+})
 </script>
 
 <template>
