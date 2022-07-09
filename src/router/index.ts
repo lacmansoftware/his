@@ -313,6 +313,115 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         ]
       }
     ]
+  },
+  {
+    path: '/recipel',
+    component: Layout,
+    redirect: '/recipel/offline/input/index',
+    name: 'Recipel',
+    meta: {
+      title: '錄方審方',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'offline',
+        component: getParentLayout(),
+        name: 'RecipelOffline',
+        meta: {
+          title: '門診處方',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'input/index',
+            component: () => import('@/views/Recipel/Offline/Input/Index.vue'),
+            name: 'RecipelOfflineInputIndex ',
+            meta: {
+              title: '處方錄入'
+            }
+          },
+          {
+            path: 'audit/index',
+            component: () => import('@/views/Recipel/Offline/Audit/Index.vue'),
+            name: 'RecipelOfflineAuditIndex',
+            meta: {
+              title: '處方審核'
+            }
+          },
+          {
+            path: 'appoint/confirm',
+            component: () => import('@/views/Appoint/Appoint/Appoint/Confirm.vue'),
+            name: 'AppointManageAppointConfirm',
+            meta: {
+              title: '新建預約(醫館)',
+              noTagsView: false,
+              noCache: true,
+              hidden: true,
+              showMainRoute: true,
+              activeMenu: '/appoint/appoint/appoint/index'
+            }
+          },
+          {
+            path: 'appoint/add',
+            component: () => import('@/views/Appoint/Appoint/Appoint/Add.vue'),
+            name: 'AppointManageAppointAdd',
+            meta: {
+              title: '新建預約',
+              noTagsView: false,
+              noCache: true,
+              hidden: true,
+              showMainRoute: true,
+              activeMenu: '/appoint/appoint/appoint/index'
+            }
+          },
+          {
+            path: 'list/index',
+            component: () => import('@/views/Appoint/Appoint/List/Index.vue'),
+            name: 'AppointManageListIndex',
+            meta: {
+              title: '預約列表'
+            }
+          }
+        ]
+      },
+      {
+        path: 'regist',
+        component: getParentLayout(),
+        name: 'AppointRegist',
+        meta: {
+          title: '掛號管理',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'add',
+            component: () => import('@/views/Appoint/Regist/Add.vue'),
+            name: 'AppointRegistAdd',
+            meta: {
+              title: '新建掛號'
+            }
+          },
+          {
+            path: 'registered/index',
+            component: () => import('@/views/Appoint/Regist/Registered/Index.vue'),
+            name: 'AppointRegistRegisteredIndex',
+            meta: {
+              title: '已掛號'
+            }
+          },
+          {
+            path: 'unregistered/index',
+            component: () => import('@/views/Appoint/Regist/Unregistered/Index.vue'),
+            name: 'AppointRegistUnregisteredIndex',
+            meta: {
+              title: '未掛號'
+            }
+          }
+        ]
+      }
+    ]
   }
 ]
 
