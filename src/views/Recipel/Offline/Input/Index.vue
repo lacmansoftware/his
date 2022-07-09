@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, unref, onMounted, watch, computed } from 'vue'
+import { reactive, ref, unref, onMounted, watch, computed, nextTick } from 'vue'
 import { ElButton, ElLink, ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { ContentWrap } from '@/components/ContentWrap'
@@ -28,6 +28,7 @@ const { required, isMobile } = useValidator()
 const dictStore = useDictStoreWithOut()
 
 const typeRef = ref('')
+const abcRef = ref('')
 
 const store = {
   type: ref<ComponentOptions[]>([])
@@ -37,8 +38,10 @@ const setStore = async (key: string, url: string, valueField: string, labelField
   store[key].value = await getInOptionFormat(url, valueField, labelField)
 }
 
-onMounted(() => {
+onMounted(async () => {
   setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
+  abcRef.value.focus()
+  abcRef.value.value = 'wjeogjwio'
 })
 
 const { push } = useRouter()
@@ -501,24 +504,69 @@ const crudSchemas = reactive<CrudSchema[]>([
       show: true,
       component: 'Divider'
     }
+  },
+  {
+    field: 'pharmacyId',
+    label: '',
+    form: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        // onChange: handleTypeChange
+      },
+      colProps: { span: 6 },
+      api: async () => {
+        return await getInOptionFormat('/recipel/pharmacy', 'pharmacyId', 'pharmacyName')
+      }
+    },
+    table: { show: false }
+  },
+  {
+    field: 'tempType',
+    label: '',
+    form: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        options: dict.recipeType
+        // onChange: handleTypeChange
+      },
+      colProps: { span: 6 }
+    },
+    table: { show: false }
+  },
+  {
+    field: 'drugSearch',
+    label: '醫生：',
+    form: {
+      component: 'Autocomplete',
+      componentProps: {
+        style: 'width: 100%',
+        triggerOnFocus: false,
+        fetchSuggestions: async (queryString: string, cb: Fn) => {
+          // formModel.value.
+
+          const res = await getApi(
+            `recipel/drug?keyWords=${queryString}&pharmacyId=YFgsyf&drugType=ZCY&doctorId=undefined&md5=8568c4b5e086f47d08e8ef6a6a34761c&_=1657384543588`
+          )
+          const result = res?.data.map((item) => ({
+            ...item,
+            value: item.doctorName,
+            label: item.doctorMobile
+          }))
+          cb(result)
+        },
+        onSelect: (item: Recordable) => {},
+        slots: {
+          default: true
+        },
+        placeholder: '藥品名稱/拼音'
+      },
+      colProps: { span: 12 },
+      show: true
+    }
   }
-  // {
-  //   field: 'type',
-  //   label: '短信分類',
-  //   form: {
-  //     show: true,
-  //     component: 'Select',
-  //     componentProps: {
-  //       placeholder: '短信分類',
-  //       onChange: handleTypeChange
-  //     },
-  //     colProps: { span: 12 },
-  //     api: async () => {
-  //       return await getInOptionFormat('/sys/dict/type/sms_tmp_type', 'code', 'value')
-  //     }
-  //   },
-  //   table: { show: false }
-  // },
+
   // {
   //   field: 'templet',
   //   label: '短信模板',

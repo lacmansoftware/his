@@ -86,6 +86,7 @@ export const useForm = (props?: FormProps) => {
   return {
     register,
     elFormRef,
-    methods
+    methods,
+    formRef
   }
 }
