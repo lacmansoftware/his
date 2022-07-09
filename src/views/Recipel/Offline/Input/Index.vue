@@ -17,8 +17,8 @@ import Write from './components/Write.vue'
 import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
 
-import { getTableListApi, delTableListApi, saveTableApi } from '@/api/workorder/sms/templet'
-import { SMSTemplateData } from '@/api/workorder/sms/templet/types'
+import { getTableListApi, delTableListApi, saveTableApi } from '@/api/recipel/offline/input'
+import { SMSTemplateData } from '@/api/recipel/offline/input/types'
 import { getApi } from '@/api/common'
 
 defineOptions({
@@ -71,6 +71,18 @@ const handleTempletChange = (item: Recordable) => {
   })
 }
 
+const handleMemberSelected = (item: Recordable) => {
+  const write = unref(writeRef)
+  write?.setValues({
+    memberName: item.memberName,
+    memberId: item.memberId,
+    memberSex: item.memberSex,
+    memberMobile: item.memberMobile,
+    memberBirthday: item.memberBirthday,
+    memberAge: item.memberAge
+  })
+}
+
 const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
@@ -79,82 +91,464 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: { show: false }
   },
   {
-    label: '主題',
-    field: 'title',
-    width: '150px',
-    form: {
-      label: '模板主題',
+    label: '處方數量',
+    field: 'recipelAmount'
+  },
+  {
+    label: '客人姓名',
+    field: 'memberName'
+  },
+  {
+    label: '客人手機',
+    field: 'memberMobile',
+    width: '100px'
+  },
+  {
+    label: '性別',
+    field: 'memberSex',
+    formatter: function (row) {
+      return inDict(row.memberSex, 'sex')
+    }
+  },
+  {
+    label: '年齡',
+    field: 'memberAge',
+    width: '70px'
+  },
+  {
+    label: '大夫姓名',
+    field: 'doctorName'
+  },
+  {
+    label: '初複診',
+    field: 'visitStatus',
+    formatter: function (row) {
+      return inDict(row.visitStatus, 'visitType')
+    }
+  },
+  {
+    label: '錄方狀態',
+    field: 'recipelStatus',
+    formatter: function (row) {
+      return inDict(row.recipelStatus, 'recipelInputStatus')
+    }
+  },
+  {
+    label: '門診分類',
+    field: 'type',
+    formatter: function (row) {
+      return inDict(row.type, 'offlineRecipelType')
+    }
+  },
+  {
+    label: '開方方式',
+    field: 'origin',
+    formatter: function (row) {
+      return inDict(row.origin, 'onlineRecipelOrigin')
+    }
+  },
+  {
+    label: '錄方人',
+    field: 'recipelUser'
+  },
+  {
+    label: '是否保險',
+    field: 'memberInsurName',
+    formatter: function (row) {
+      if (row.recipelBhAmount > 0) {
+        return h(ElTag, { type: 'success' }, () =>
+          inDict(row.paymentStatus, 'appoint.paymentStatus')
+        )
+      }
+      return row.recipelBhAmount
+    }
+  },
+  {
+    label: '挂號編號',
+    field: 'registerNum'
+  },
+  {
+    label: '挂號時間',
+    field: 'registerDate',
+    width: '140px'
+  },
+
+  // Search Schema
+
+  {
+    field: 'memberName',
+    label: '客人姓名',
+    form: { show: false },
+    table: { show: false },
+    search: {
       show: true,
       component: 'Input',
-      colProps: { span: 24 }
-    },
+      componentProps: {},
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'memberMobile',
+    label: '客人手機',
+    form: { show: false },
+    table: { show: false },
     search: {
+      show: true,
       component: 'Input',
-      colProps: { span: 8 },
+      componentProps: {},
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'doctorName',
+    label: '大夫姓名',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Input',
+      componentProps: {},
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'recipelStatus',
+    label: '錄方狀態',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        options: dict.recipelInputStatus
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'offlineType',
+    label: '門診類型',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        options: dict.offlineRecipelType
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'registerTimeStart',
+    label: '挂號日期',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'registerTimeEnd',
+    label: '到',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'createTimeStart',
+    label: '創建日期',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'createTimeEnd',
+    label: '到',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'insurStatus',
+    label: '保險客人',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Checkbox',
+      componentProps: {
+        options: dict.isInsur
+      },
+      colProps: { span: 6 },
+      value: []
+    }
+  },
+
+  // Form schema
+  // auto complete
+  {
+    field: 'doctorSearch',
+    label: '醫生：',
+    form: {
+      component: 'Autocomplete',
+      componentProps: {
+        style: 'width: 100%',
+        triggerOnFocus: false,
+        fetchSuggestions: async (queryString: string, cb: Fn) => {
+          const res = await getApi(`/doctor/query?keyWords=${queryString}`)
+          const result = res?.data.map((item) => ({
+            ...item,
+            value: item.doctorName,
+            label: item.doctorMobile
+          }))
+          cb(result)
+        },
+        onSelect: (item: Recordable) => {},
+        slots: {
+          default: true
+        },
+        placeholder: '姓名/手機'
+      },
+      colProps: { span: 12 },
       show: true
     }
   },
   {
-    label: '分類',
-    field: 'value',
-    width: '200px'
-  },
-  {
-    label: '內容',
-    field: 'content'
-  },
-  {
-    label: '創建時間',
-    field: 'createTime',
-    width: '200px'
-  },
-  {
-    field: 'type',
-    label: '分類',
-    search: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        placeholder: '分類',
-        options: store.type
-      },
-      colProps: { span: 12 }
-    },
+    field: 'memberSearch',
+    label: '患者：',
     form: {
-      label: '模板分類',
-      show: true,
-      component: 'Select',
+      component: 'Autocomplete',
       componentProps: {
-        style: { width: '100%' },
-        placeholder: '分類',
-        options: store.type
+        style: 'width: 100%',
+        triggerOnFocus: false,
+        fetchSuggestions: async (queryString: string, cb: Fn) => {
+          const res = await getApi(`/member/info/query?keyWords=${queryString}`)
+          const result = res?.data.map((item) => ({
+            ...item,
+            value: item.memberName
+          }))
+          cb(result)
+        },
+        onSelect: handleMemberSelected,
+        slots: {
+          default: true
+        },
+        placeholder: '姓名/手機'
       },
-      formItemProps: {
-        rules: [required()]
-      },
-      colProps: { span: 24 }
-    },
-    table: { show: false }
+      colProps: { span: 12 },
+      show: true
+    }
   },
+
+  // member info
   {
-    field: 'content',
-    label: '內容',
+    field: 'memberName',
+    label: '姓名：',
+    table: { show: false },
     form: {
       show: true,
       component: 'Input',
       componentProps: {
-        style: 'width: 100%',
-        placeholder: '溝通記錄',
-        type: 'textarea',
-        rows: 3
+        readonly: true
       },
-      colProps: { span: 24 },
+      colProps: { span: 4 }
+    }
+  },
+  {
+    field: 'memberId',
+    label: '100px',
+    table: { show: false },
+    form: {
+      show: true,
+      component: 'Hidden',
+      componentProps: {
+        readonly: true
+      },
+      colProps: { span: 0 }
+    }
+  },
+  {
+    field: 'memberSex',
+    label: '性別：',
+    table: { show: false },
+    form: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        readonly: true
+      },
+      colProps: { span: 4 }
+    }
+  },
+  {
+    field: 'memberMobile',
+    label: '手機：',
+    table: { show: false },
+    form: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        readonly: true
+      },
+      colProps: { span: 4 }
+    }
+  },
+  {
+    field: 'memberBirthday',
+    label: '生日：',
+    table: { show: false },
+    form: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        readonly: true
+      },
+      colProps: { span: 4 }
+    }
+  },
+  {
+    field: 'memberAge',
+    label: '年齡：',
+    table: { show: false },
+    form: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        readonly: true
+      },
+      colProps: { span: 4 }
+    }
+  },
+  {
+    field: 'recordDivider',
+    label: '書寫病案',
+    table: { show: false },
+    form: {
+      show: true,
+      component: 'Divider'
+    }
+  },
+  {
+    field: 'slaveSymptom',
+    label: '診斷',
+    form: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        type: 'textarea',
+        rows: 2,
+        placeholder: '請輸入內容'
+      },
+      colProps: { span: 12 },
       formItemProps: {
         rules: [required()]
       }
     },
     table: { show: false }
+  },
+  {
+    field: 'medicalHistory',
+    label: '主訴及現病史',
+    form: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        type: 'textarea',
+        rows: 2,
+        placeholder: '請輸入內容'
+      },
+      colProps: { span: 12 }
+    },
+    table: { show: false }
+  },
+
+  {
+    field: 'prescriptionDivider',
+    label: '書寫處方',
+    table: { show: false },
+    form: {
+      show: true,
+      component: 'Divider'
+    }
   }
+  // {
+  //   field: 'type',
+  //   label: '短信分類',
+  //   form: {
+  //     show: true,
+  //     component: 'Select',
+  //     componentProps: {
+  //       placeholder: '短信分類',
+  //       onChange: handleTypeChange
+  //     },
+  //     colProps: { span: 12 },
+  //     api: async () => {
+  //       return await getInOptionFormat('/sys/dict/type/sms_tmp_type', 'code', 'value')
+  //     }
+  //   },
+  //   table: { show: false }
+  // },
+  // {
+  //   field: 'templet',
+  //   label: '短信模板',
+  //   form: {
+  //     show: true,
+  //     component: 'Select',
+  //     componentProps: {
+  //       placeholder: '短信模板',
+  //       options: store.templet,
+  //       onChange: handleTempletChange
+  //     },
+  //     colProps: { span: 12 }
+  //   },
+  //   table: { show: false }
+  // },
+  // {
+  //   field: 'content',
+  //   label: '短信內容',
+  //   form: {
+  //     show: true,
+  //     component: 'Input',
+  //     componentProps: {
+  //       placeholder: '短信內容',
+  //       type: 'textarea',
+  //       rows: 2
+  //     },
+  //     colProps: { span: 24 }
+  //   },
+  //   table: { show: false }
+  // }
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
@@ -187,9 +581,9 @@ const delData = async (row: MemberInfoTableData | null, multiple: boolean) => {
 const actionType = ref('')
 
 const AddAction = () => {
-  dialogTitle.value = '新增短信模板'
+  dialogTitle.value = '門診處方錄入'
   actionType.value = 'add'
-  dialogWidth.value = ''
+  dialogWidth.value = '90%'
   tableObject.currentRow = null
   dialogVisible.value = true
 }
@@ -216,7 +610,7 @@ const save = async () => {
           ? data
           : {
               id: data.id,
-              title: data.title,
+              label: data.title,
               type: data.type,
               content: data.content
             }
@@ -254,9 +648,6 @@ watch(typeRef, () => {
 
     <div class="mb-10px ml-10px mt-[-32px]">
       <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增</ElButton>
-      <ElButton :loading="delLoading" type="danger" @click="delData(null, true)" :icon="deleteIcon"
-        >批量刪除</ElButton
-      >
     </div>
 
     <Table
@@ -276,9 +667,9 @@ watch(typeRef, () => {
           {{ t('exampleDemo.del') }}
         </ElLink>
       </template>
-      <template #value="{ row }">
+      <!-- <template #value="{ row }">
         {{ row.sysDict.value }}
-      </template>
+      </template> -->
     </Table>
   </ContentWrap>
 
@@ -288,6 +679,9 @@ watch(typeRef, () => {
       ref="writeRef"
       :form-schema="allSchemas.formSchema"
       :current-row="tableObject.currentRow"
+      :params="{
+        type: null
+      }"
     />
 
     <template #footer>

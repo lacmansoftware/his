@@ -15,16 +15,22 @@ const props = defineProps({
   formSchema: {
     type: Array as PropType<FormSchema[]>,
     default: () => []
+  },
+  params: {
+    type: Object,
+    default: () => {
+      type: null
+    }
   }
 })
 
 const rules = reactive({
-  title: [required()],
-  author: [required()],
-  importance: [required()],
-  pageviews: [required()],
-  display_time: [required()],
-  content: [required()]
+  // title: [required()],
+  // author: [required()],
+  // importance: [required()],
+  // pageviews: [required()],
+  // display_time: [required()],
+  // content: [required()]
 })
 
 const { register, methods, elFormRef } = useForm({
@@ -52,5 +58,18 @@ defineExpose({
 </script>
 
 <template>
-  <Form :rules="rules" @register="register" />
+  <Form :rules="rules" @register="register">
+    <template #doctorSearch-default="{ item }">
+      <div class="flex w-full justify-between">
+        <span class="flex-1">{{ item.doctorName }}</span>
+        <span class="flex-1">{{ item.doctorMobile }}</span>
+      </div>
+    </template>
+    <template #memberSearch-default="{ item }">
+      <div class="flex w-full justify-between">
+        <span class="flex-1">{{ item.memberName }}</span>
+        <span class="flex-1">{{ item.memberMobile }}</span>
+      </div>
+    </template>
+  </Form>
 </template>
