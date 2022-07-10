@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { reactive, ref, unref, onMounted, watch, computed, nextTick } from 'vue'
-import { ElButton, ElLink, ElMessage } from 'element-plus'
+import { reactive, ref, unref, onMounted, watch, computed, nextTick, h } from 'vue'
+import { ElButton, ElLink, ElMessage, ElTag } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
@@ -28,8 +28,7 @@ const { required, isMobile } = useValidator()
 const dictStore = useDictStoreWithOut()
 
 const store = {
-  type: ref<ComponentOptions[]>([]),
-  pharmacyId: ref<ComponentOptions[]>([])
+  type: ref<ComponentOptions[]>([])
 }
 
 const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
@@ -38,7 +37,6 @@ const setStore = async (key: string, url: string, valueField: string, labelField
 
 onMounted(async () => {
   setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
-  setStore('pharmacyId', '/recipel/pharmacy', 'pharmacyId', 'pharmacyName')
 })
 
 const { push } = useRouter()
@@ -698,7 +696,6 @@ const save = async () => {
       :params="{
         type: null
       }"
-      :store="store"
     />
 
     <template #footer>
