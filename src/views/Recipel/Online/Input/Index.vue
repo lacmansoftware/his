@@ -71,13 +71,11 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '進度狀態',
     field: 'status',
-    width: '55px',
+    width: '80px',
     formatter: function (row) {
-      const photoStatus = row.photoStatus.toLowerCase()
-      if (photoStatus === 'reject') {
-        return '已駁回'
-      }
-      return inDict(row.photoStatus, 'visitStatus')
+      return row.photoStatus.toLowerCase() === 'reject'
+        ? '已駁回'
+        : inDict(row.status, 'visitStatus')
     }
   },
   {
@@ -123,7 +121,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     field: 'recipelStatus',
     width: '55px',
     formatter: function (row) {
-      return inDIct(row.recipelStatus, 'recipelInputStatus')
+      return inDict(row.recipelStatus, 'recipelInputStatus')
     }
   },
   {
@@ -148,7 +146,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     field: 'type',
     width: '60px',
     formatter: function (row) {
-      return inDIct(row.type, 'onlineRecipelType')
+      return inDict(row.type, 'onlineRecipelType')
     }
   },
   {
@@ -223,59 +221,19 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    field: 'recipelStatus',
-    label: '錄方狀態',
+    field: 'type',
+    label: '錄方方式',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Select',
       componentProps: {
-        options: dict.recipelInputStatus
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'offlineType',
-    label: '門診類型',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        options: dict.offlineRecipelType
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'registerTimeStart',
-    label: '挂號日期',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'registerTimeEnd',
-    label: '到',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
+        options: [
+          { value: 'photo', label: '醫生拍方' },
+          { value: 'trans', label: '人際傳方' },
+          { value: 'app', label: 'APP開方' }
+        ]
       },
       colProps: { span: 6 }
     }
@@ -311,15 +269,34 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    field: 'insurStatus',
-    label: '保險客人',
+    field: 'progressStatus',
+    label: '進度狀態',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        options: [
+          { value: 'not_submit', label: '未提交' },
+          { value: 'wait_audit', label: '待審核' },
+          { value: 'submit', label: '已提交' },
+          { value: 'reject', label: '駁回' }
+        ]
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'debug',
+    label: '測試醫生',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Checkbox',
       componentProps: {
-        options: dict.isInsur
+        options: dict.isDebug
       },
       colProps: { span: 6 },
       value: []
