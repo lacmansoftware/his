@@ -17,8 +17,8 @@ import Write from './components/Write.vue'
 import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
 
-import { getTableListApi, delTableListApi, saveTableApi } from '@/api/recipel/offline/audit'
-import { SMSTemplateData } from '@/api/recipel/offline/audit/types'
+import { getTableListApi, delTableListApi, saveTableApi } from '@/api/recipel/online/unpay'
+import { SMSTemplateData } from '@/api/recipel/online/unpay/types'
 import { getApi } from '@/api/common'
 
 defineOptions({
@@ -41,7 +41,7 @@ onMounted(async () => {
 
 const { push } = useRouter()
 
-const { register, tableObject, methods } = useTable({
+const { register, tableObject, methods } = useTable<MemberInfoTableData>({
   getListApi: getTableListApi,
   delListApi: delTableListApi,
   response: {
@@ -64,89 +64,125 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: { show: false }
   },
   {
-    label: '未審核數',
-    field: 'recipelAuditAmount'
+    label: '附加診費',
+    field: 'consFee',
+    width: '55px',
+    formatter: function (row) {
+      return row.consFee + '元'
+    }
   },
   {
-    label: '處方數量',
-    field: 'recipelAmount'
+    label: '進度狀態',
+    field: 'status',
+    width: '80px',
+    formatter: function (row) {
+      return row.photoStatus.toLowerCase() === 'reject'
+        ? '已駁回'
+        : inDict(row.status, 'visitStatus')
+    }
   },
   {
-    label: '客人姓名',
-    field: 'memberName'
+    label: '客戶姓名',
+    field: 'memberName',
+    width: '55px'
   },
   {
     label: '客人手機',
     field: 'memberMobile',
-    width: '100px'
+    width: '78px'
+  },
+  {
+    label: '微信昵稱',
+    field: 'nickName',
+    width: '60px'
   },
   {
     label: '性別',
     field: 'memberSex',
+    width: '40px',
     formatter: function (row) {
       return inDict(row.memberSex, 'sex')
     }
   },
   {
     label: '年齡',
-    field: 'birthday',
-    width: '70px',
-    formatter: function (row) {
-      return getAgeByBirthday(row.birthday)
-    }
+    field: 'memberAge',
+    width: '30px'
   },
   {
     label: '大夫姓名',
-    field: 'doctorName'
+    field: 'doctorName',
+    width: '55px'
   },
   {
-    label: '初複診',
-    field: 'visitStatus',
+    label: '大夫手機',
+    field: 'doctorMobile',
+    width: '78px'
+  },
+  {
+    label: '錄方狀態',
+    field: 'recipelStatus',
+    width: '55px',
     formatter: function (row) {
-      return inDict(row.visitStatus, 'visitType')
+      return inDict(row.recipelStatus, 'recipelInputStatus')
     }
   },
   {
-    label: '門診分類',
+    label: '照片數量',
+    field: 'files',
+    width: '40px',
+    formatter: function (row) {
+      if (row.files && row.files !== '--' && row.files !== 'null') {
+        return row.files.split(',').length
+      } else {
+        return '0'
+      }
+    }
+  },
+  {
+    label: '處方數量',
+    field: 'recipelAmount',
+    width: '40px'
+  },
+  {
+    label: '錄方方式',
     field: 'type',
+    width: '60px',
     formatter: function (row) {
-      return inDict(row.type, 'offlineRecipelType')
+      return inDict(row.type, 'onlineRecipelType')
     }
   },
   {
-    label: '開方方式',
-    field: 'origin',
+    label: '錄方人',
+    field: 'recipelUser',
+    width: '40px'
+  },
+  {
+    label: '審核時間',
+    field: 'auditTime',
+    width: '90px'
+  },
+  {
+    label: '提交時間',
+    field: 'pullTime',
+    width: '90px'
+  },
+  {
+    label: '創建時間',
+    field: 'createTime',
+    width: '90px'
+  },
+  {
+    label: '付款狀態',
+    field: 'status',
+    width: '55px',
     formatter: function (row) {
-      if (row.origin === 'DOCTOR') {
-        return h(ElTag, { type: 'success' }, () => inDict(row.origin, 'onlineRecipelOrigin'))
+      if (row.status == 'A') {
+        return '已付款'
+      } else {
+        return '未付款'
       }
-      return inDict(row.origin, 'onlineRecipelOrigin')
     }
-  },
-  {
-    label: '審核人',
-    field: 'approvalUser'
-  },
-  {
-    label: '是否保險',
-    field: 'memberInsurName',
-    formatter: function (row) {
-      if (row.recipelBhAmount > 0) {
-        return h(ElTag, { type: 'success' }, () =>
-          inDict(row.paymentStatus, 'appoint.paymentStatus')
-        )
-      }
-      return row.recipelBhAmount
-    }
-  },
-  {
-    label: '挂號編號',
-    field: 'registerNum'
-  },
-  {
-    label: '挂號時間',
-    field: 'registerDate',
-    width: '140px'
   },
 
   // Search Schema
@@ -188,59 +224,19 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    field: 'recipelStatus',
-    label: '錄方狀態',
+    field: 'type',
+    label: '錄方方式',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Select',
       componentProps: {
-        options: dict.recipelInputStatus
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'offlineType',
-    label: '門診類型',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        options: dict.offlineRecipelType
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'registerTimeStart',
-    label: '挂號日期',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'registerTimeEnd',
-    label: '到',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
+        options: [
+          { value: 'photo', label: '醫生拍方' },
+          { value: 'trans', label: '人際傳方' },
+          { value: 'app', label: 'APP開方' }
+        ]
       },
       colProps: { span: 6 }
     }
@@ -276,29 +272,34 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    field: 'origin',
-    label: '開方方式',
+    field: 'progressStatus',
+    label: '進度狀態',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Select',
       componentProps: {
-        options: dict.onlineRecipelOrigin
+        options: [
+          { value: 'not_submit', label: '未提交' },
+          { value: 'wait_audit', label: '待審核' },
+          { value: 'submit', label: '已提交' },
+          { value: 'reject', label: '駁回' }
+        ]
       },
       colProps: { span: 6 }
     }
   },
   {
-    field: 'insurStatus',
-    label: '保險客人',
+    field: 'debug',
+    label: '測試醫生',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Checkbox',
       componentProps: {
-        options: dict.isInsur
+        options: dict.isDebug
       },
       colProps: { span: 6 },
       value: []
@@ -315,7 +316,7 @@ const dialogWidth = ref('')
 
 const delLoading = ref(false)
 
-const delData = async (row: Object | null, multiple: boolean) => {
+const delData = async (row: MemberInfoTableData | null, multiple: boolean) => {
   tableObject.currentRow = row
   const { delList, getSelections } = methods
   const selections = await getSelections()
@@ -383,15 +384,6 @@ const save = async () => {
     }
   })
 }
-
-const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) => {
-  if (rowIndex === 1) {
-    return 'warning-row'
-  } else if (rowIndex === 3) {
-    return 'success-row'
-  }
-  return ''
-}
 </script>
 
 <template>
@@ -420,7 +412,6 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
         total: tableObject.total
       }"
       @register="register"
-      :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
         <ElLink type="primary" @click="action(row, 'edit')" class="mr-5px">編輯</ElLink>
@@ -455,10 +446,7 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
 </template>
 
 <style lang="less" scoped>
-.el-table .warning-row {
-  --el-table-tr-bg-color: var(--el-color-warning-light-9);
-}
-.el-table .success-row {
-  --el-table-tr-bg-color: var(--el-color-success-light-9);
+.el-input__wrapper {
+  width: 100%;
 }
 </style>
