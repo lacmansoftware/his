@@ -337,7 +337,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           {
             path: 'input/index',
             component: () => import('@/views/Recipel/Offline/Input/Index.vue'),
-            name: 'RecipelOfflineInputIndex ',
+            name: 'RecipelOfflineInputIndex',
             meta: {
               title: '處方錄入'
             }
@@ -349,74 +349,32 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '處方審核'
             }
-          },
-          {
-            path: 'appoint/confirm',
-            component: () => import('@/views/Appoint/Appoint/Appoint/Confirm.vue'),
-            name: 'AppointManageAppointConfirm',
-            meta: {
-              title: '新建預約(醫館)',
-              noTagsView: false,
-              noCache: true,
-              hidden: true,
-              showMainRoute: true,
-              activeMenu: '/appoint/appoint/appoint/index'
-            }
-          },
-          {
-            path: 'appoint/add',
-            component: () => import('@/views/Appoint/Appoint/Appoint/Add.vue'),
-            name: 'AppointManageAppointAdd',
-            meta: {
-              title: '新建預約',
-              noTagsView: false,
-              noCache: true,
-              hidden: true,
-              showMainRoute: true,
-              activeMenu: '/appoint/appoint/appoint/index'
-            }
-          },
-          {
-            path: 'list/index',
-            component: () => import('@/views/Appoint/Appoint/List/Index.vue'),
-            name: 'AppointManageListIndex',
-            meta: {
-              title: '預約列表'
-            }
           }
         ]
       },
       {
-        path: 'regist',
+        path: 'online',
         component: getParentLayout(),
-        name: 'AppointRegist',
+        name: 'RecipelOnline',
         meta: {
-          title: '掛號管理',
+          title: '網診處方',
           alwaysShow: true
         },
         children: [
           {
-            path: 'add',
-            component: () => import('@/views/Appoint/Regist/Add.vue'),
-            name: 'AppointRegistAdd',
+            path: 'input/index',
+            component: () => import('@/views/Recipel/Online/Input/Index.vue'),
+            name: 'RecipelOnlineInputIndex',
             meta: {
-              title: '新建掛號'
+              title: '處方錄入'
             }
           },
           {
-            path: 'registered/index',
-            component: () => import('@/views/Appoint/Regist/Registered/Index.vue'),
-            name: 'AppointRegistRegisteredIndex',
+            path: 'unpay/index',
+            component: () => import('@/views/Recipel/Online/Unpay/Index.vue'),
+            name: 'RecipelOnlineUnpayIndex',
             meta: {
-              title: '已掛號'
-            }
-          },
-          {
-            path: 'unregistered/index',
-            component: () => import('@/views/Appoint/Regist/Unregistered/Index.vue'),
-            name: 'AppointRegistUnregisteredIndex',
-            meta: {
-              title: '未掛號'
+              title: '未付款處方'
             }
           }
         ]

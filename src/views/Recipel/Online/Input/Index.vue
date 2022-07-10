@@ -17,8 +17,8 @@ import Write from './components/Write.vue'
 import dict from '@/config/dictionary.json'
 import { useDictStoreWithOut } from '@/store/modules/dict'
 
-import { getTableListApi, delTableListApi, saveTableApi } from '@/api/recipel/offline/input'
-import { SMSTemplateData } from '@/api/recipel/offline/input/types'
+import { getTableListApi, delTableListApi, saveTableApi } from '@/api/recipel/online/input'
+import { SMSTemplateData } from '@/api/recipel/online/input/types'
 import { getApi } from '@/api/common'
 
 defineOptions({
@@ -64,21 +64,39 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: { show: false }
   },
   {
-    label: '處方數量',
-    field: 'recipelAmount'
+    label: '附加診費',
+    field: 'consFee',
+    width: '55px'
   },
   {
-    label: '客人姓名',
-    field: 'memberName'
+    label: '進度狀態',
+    field: 'status',
+    width: '80px',
+    formatter: function (row) {
+      return row.photoStatus.toLowerCase() === 'reject'
+        ? '已駁回'
+        : inDict(row.status, 'visitStatus')
+    }
+  },
+  {
+    label: '客戶姓名',
+    field: 'memberName',
+    width: '55px'
   },
   {
     label: '客人手機',
     field: 'memberMobile',
-    width: '100px'
+    width: '78px'
+  },
+  {
+    label: '微信昵稱',
+    field: 'nickName',
+    width: '60px'
   },
   {
     label: '性別',
     field: 'memberSex',
+    width: '40px',
     formatter: function (row) {
       return inDict(row.memberSex, 'sex')
     }
@@ -86,64 +104,82 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '年齡',
     field: 'memberAge',
-    width: '70px'
+    width: '30px'
   },
   {
     label: '大夫姓名',
-    field: 'doctorName'
+    field: 'doctorName',
+    width: '55px'
   },
   {
-    label: '初複診',
-    field: 'visitStatus',
-    formatter: function (row) {
-      return inDict(row.visitStatus, 'visitType')
-    }
+    label: '大夫手機',
+    field: 'doctorMobile',
+    width: '78px'
   },
   {
     label: '錄方狀態',
     field: 'recipelStatus',
+    width: '55px',
     formatter: function (row) {
       return inDict(row.recipelStatus, 'recipelInputStatus')
     }
   },
   {
-    label: '門診分類',
-    field: 'type',
+    label: '照片數量',
+    field: 'files',
+    width: '40px',
     formatter: function (row) {
-      return inDict(row.type, 'offlineRecipelType')
+      if (row.files && row.files !== '--' && row.files !== 'null') {
+        return row.files.split(',').length
+      } else {
+        return '0'
+      }
     }
   },
   {
-    label: '開方方式',
-    field: 'origin',
+    label: '處方數量',
+    field: 'recipelAmount',
+    width: '40px'
+  },
+  {
+    label: '錄方方式',
+    field: 'type',
+    width: '60px',
     formatter: function (row) {
-      return inDict(row.origin, 'onlineRecipelOrigin')
+      return inDict(row.type, 'onlineRecipelType')
     }
   },
   {
     label: '錄方人',
-    field: 'recipelUser'
+    field: 'recipelUser',
+    width: '40px'
   },
   {
-    label: '是否保險',
-    field: 'memberInsurName',
+    label: '審核時間',
+    field: 'auditTime',
+    width: '90px'
+  },
+  {
+    label: '提交時間',
+    field: 'pullTime',
+    width: '90px'
+  },
+  {
+    label: '創建時間',
+    field: 'createTime',
+    width: '90px'
+  },
+  {
+    label: '付款狀態',
+    field: 'status',
+    width: '55px',
     formatter: function (row) {
-      if (row.recipelBhAmount > 0) {
-        return h(ElTag, { type: 'success' }, () =>
-          inDict(row.paymentStatus, 'appoint.paymentStatus')
-        )
+      if (row.status == 'A') {
+        return '已付款'
+      } else {
+        return '未付款'
       }
-      return row.recipelBhAmount
     }
-  },
-  {
-    label: '挂號編號',
-    field: 'registerNum'
-  },
-  {
-    label: '挂號時間',
-    field: 'registerDate',
-    width: '140px'
   },
 
   // Search Schema
@@ -185,59 +221,19 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    field: 'recipelStatus',
-    label: '錄方狀態',
+    field: 'type',
+    label: '錄方方式',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Select',
       componentProps: {
-        options: dict.recipelInputStatus
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'offlineType',
-    label: '門診類型',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        options: dict.offlineRecipelType
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'registerTimeStart',
-    label: '挂號日期',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'registerTimeEnd',
-    label: '到',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
+        options: [
+          { value: 'photo', label: '醫生拍方' },
+          { value: 'trans', label: '人際傳方' },
+          { value: 'app', label: 'APP開方' }
+        ]
       },
       colProps: { span: 6 }
     }
@@ -273,15 +269,34 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    field: 'insurStatus',
-    label: '保險客人',
+    field: 'progressStatus',
+    label: '進度狀態',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        options: [
+          { value: 'not_submit', label: '未提交' },
+          { value: 'wait_audit', label: '待審核' },
+          { value: 'submit', label: '已提交' },
+          { value: 'reject', label: '駁回' }
+        ]
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'debug',
+    label: '測試醫生',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Checkbox',
       componentProps: {
-        options: dict.isInsur
+        options: dict.isDebug
       },
       colProps: { span: 6 },
       value: []
