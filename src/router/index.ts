@@ -365,6 +365,9 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             path: 'input/index',
             component: () => import('@/views/Recipel/Online/Input/Index.vue'),
             name: 'RecipelOnlineInputIndex',
+            props: {
+              pageType: 'online-input-index'
+            },
             meta: {
               title: '處方錄入'
             }
@@ -390,8 +393,11 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         children: [
           {
             path: 'index',
-            component: () => import('@/views/Recipel/Customer/Index.vue'),
+            component: () => import('@/views/Recipel/Online/Input/Index.vue'),
             name: 'RecipelCustomerIndex',
+            props: {
+              pageType: 'customer-index'
+            },
             meta: {
               title: '慈祿門診',
               noCache: true
@@ -406,6 +412,56 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             }
           }
         ]
+      }
+    ]
+  },
+  {
+    path: '/cash',
+    component: Layout,
+    redirect: '/cash/notcharged/index',
+    name: 'Cash',
+    meta: {
+      title: '收銀管理',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'notcharged/index',
+        component: () => import('@/views/Cash/NotCharged/Index.vue'),
+        name: 'CashNotChargedIndex',
+        meta: {
+          title: '待收費'
+        }
+      },
+      {
+        path: 'notcharged/add',
+        component: () => import('@/views/Cash/NotCharged/Add.vue'),
+        name: 'CashNotChargedAdd',
+        meta: {
+          title: '收銀結算',
+          noTagsView: true,
+          noCache: true,
+          hidden: true,
+          showMainRoute: true,
+          activeMenu: '/cash/notcharged/index'
+        }
+      },
+      {
+        path: 'charged/index',
+        component: () => import('@/views/Cash/Charged/Index.vue'),
+        name: 'CashChargedIndex',
+        meta: {
+          title: '已收費'
+        }
+      },
+      {
+        path: 'pending/index',
+        component: () => import('@/views/Cash/Pending/Index.vue'),
+        name: 'CashPendingIndex',
+        meta: {
+          title: '欠費'
+        }
       }
     ]
   }
