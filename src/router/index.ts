@@ -208,7 +208,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/appoint',
     component: Layout,
-    redirect: '/workorder/workorder/add',
+    redirect: '/appoint/appoint/hospital/index',
     name: 'Appoint',
     meta: {
       title: '預約掛號',
@@ -375,6 +375,34 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             name: 'RecipelOnlineUnpayIndex',
             meta: {
               title: '未付款處方'
+            }
+          }
+        ]
+      },
+      {
+        path: 'customer',
+        component: getParentLayout(),
+        name: 'RecipelCustomer',
+        meta: {
+          title: '醫生專屬',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'index',
+            component: () => import('@/views/Recipel/Customer/Index.vue'),
+            name: 'RecipelCustomerIndex',
+            meta: {
+              title: '慈祿門診',
+              noCache: true
+            }
+          },
+          {
+            path: 'payed',
+            component: () => import('@/views/Recipel/Customer/Payed.vue'),
+            name: 'RecipelCustomerPayed',
+            meta: {
+              title: '已收費'
             }
           }
         ]
