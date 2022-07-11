@@ -27,6 +27,13 @@ defineOptions({
 const { required, isMobile } = useValidator()
 const dictStore = useDictStoreWithOut()
 
+const props = defineProps({
+  pageType: {
+    type: String,
+    default: ''
+  }
+})
+
 const store = {
   type: ref<ComponentOptions[]>([])
 }
@@ -37,6 +44,7 @@ const setStore = async (key: string, url: string, valueField: string, labelField
 
 onMounted(async () => {
   setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
+  props.pageType === 'customer-index' && search()
 })
 
 const { push } = useRouter()
@@ -52,7 +60,7 @@ const { register, tableObject, methods } = useTable<MemberInfoTableData>({
 
 const { getList, setSearchParams } = methods
 
-getList()
+props.pageType !== 'customer-index' && getList()
 
 const { t } = useI18n()
 
@@ -208,18 +216,32 @@ const crudSchemas = reactive<CrudSchema[]>([
       colProps: { span: 6 }
     }
   },
-  {
-    field: 'doctorName',
-    label: '大夫姓名',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Input',
-      componentProps: {},
-      colProps: { span: 6 }
-    }
-  },
+  props.pageType === 'online-input-index'
+    ? {
+        field: 'doctorName',
+        label: '大夫姓名',
+        form: { show: false },
+        table: { show: false },
+        search: {
+          show: true,
+          component: 'Input',
+          componentProps: {},
+          colProps: { span: 6 }
+        }
+      }
+    : {
+        field: 'doctorName',
+        label: '大夫姓名',
+        form: { show: false },
+        table: { show: false },
+        search: {
+          show: true,
+          component: 'Hidden',
+          componentProps: {},
+          colProps: { span: 0 },
+          value: '慈祿門診'
+        }
+      },
   {
     field: 'type',
     label: '錄方方式',
@@ -287,21 +309,23 @@ const crudSchemas = reactive<CrudSchema[]>([
       colProps: { span: 6 }
     }
   },
-  {
-    field: 'debug',
-    label: '測試醫生',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Checkbox',
-      componentProps: {
-        options: dict.isDebug
-      },
-      colProps: { span: 6 },
-      value: []
-    }
-  }
+  props.pageType === 'online-input-index'
+    ? {
+        field: 'debug',
+        label: '測試醫生',
+        form: { show: false },
+        table: { show: false },
+        search: {
+          show: true,
+          component: 'Checkbox',
+          componentProps: {
+            options: dict.isDebug
+          },
+          colProps: { span: 6 },
+          value: []
+        }
+      }
+    : {}
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
@@ -351,6 +375,17 @@ const action = (row: TableData, type: string) => {
 }
 
 const loading = ref(false)
+const searchRef = ref<ComponentRef<typeof Search>>()
+
+const setValues = (value) => {
+  const search = unref(searchRef)
+  search?.setValues(value)
+}
+
+const search = () => {
+  const search = unref(searchRef)
+  search.search()
+}
 
 const save = async () => {
   const write = unref(writeRef)
@@ -393,6 +428,7 @@ const save = async () => {
       :buttom-position="'right'"
       @search="setSearchParams"
       @reset="setSearchParams"
+      ref="searchRef"
     />
 
     <div class="mb-10px ml-10px mt-[-32px]">
