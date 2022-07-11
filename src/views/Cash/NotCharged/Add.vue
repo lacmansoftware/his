@@ -16,7 +16,7 @@ import { getApi } from '@/api/common'
 
 import dict from '@/config/dictionary.json'
 import PatientSelect from './components/PatientSelect.vue'
-import ProductTable from './components/ProductTable.vue'
+import ChargeItemTable from './components/ChargeItemTable.vue'
 
 const { required } = useValidator()
 const { emitter } = useEmitt()
@@ -304,7 +304,7 @@ onMounted(() => {
     <ElDivider content-position="left" class="mt-0">患者信息</ElDivider>
     <PatientSelect ref="patientRef" />
 
-    <ProductTable />
+    <ChargeItemTable />
 
     <Form :rules="rules" @register="register" />
 
