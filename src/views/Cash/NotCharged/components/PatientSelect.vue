@@ -77,6 +77,9 @@ const schema = reactive<FormSchema[]>([
     field: 'memberName',
     component: 'Input',
     colProps: { span: 6 },
+    componentProps: {
+      readonly: true
+    },
     formItemProps: {
       rules: [required()]
     }
@@ -86,6 +89,9 @@ const schema = reactive<FormSchema[]>([
     field: 'memberMobile',
     component: 'Input',
     colProps: { span: 6 },
+    componentProps: {
+      readonly: true
+    },
     formItemProps: {
       rules: [required()]
     }
@@ -96,7 +102,8 @@ const schema = reactive<FormSchema[]>([
     component: 'Select',
     componentProps: {
       style: 'width: 100%',
-      options: dict.sex
+      options: dict.sex,
+      readonly: true
     },
     colProps: { span: 6 },
     formItemProps: {
@@ -109,7 +116,8 @@ const schema = reactive<FormSchema[]>([
     component: 'DatePicker',
     componentProps: {
       type: 'date',
-      valueFormat: 'YYYY-MM-DD'
+      valueFormat: 'YYYY-MM-DD',
+      readonly: true
     },
     colProps: { span: 6 },
     formItemProps: {
@@ -143,5 +151,13 @@ defineExpose({
 </script>
 
 <template>
-  <Form :rules="rules" @register="register" />
+  <Form :rules="rules" @register="register">
+    <template #memberFilter-default="{ item }">
+      <div class="flex w-full" justify="evenly">
+        <span class="flex-1">{{ item.memberName }}</span>
+        <span class="flex-1">{{ item.memberMobile }}</span>
+        <span class="flex-1">{{ item?.memberId }}</span>
+      </div>
+    </template>
+  </Form>
 </template>
