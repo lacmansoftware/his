@@ -22,7 +22,7 @@ import { SMSTemplateData } from '@/api/recipel/online/input/types'
 import { getApi } from '@/api/common'
 
 defineOptions({
-  name: 'SMSSendIndex'
+  name: 'RecipelOnlineInputIndex'
 })
 const { required, isMobile } = useValidator()
 const dictStore = useDictStoreWithOut()

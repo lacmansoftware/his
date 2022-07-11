@@ -22,7 +22,7 @@ import { SMSTemplateData } from '@/api/recipel/online/unpay/types'
 import { getApi } from '@/api/common'
 
 defineOptions({
-  name: 'SMSSendIndex'
+  name: 'RecipelOnlineUnpayIndex'
 })
 const { required, isMobile } = useValidator()
 const dictStore = useDictStoreWithOut()
