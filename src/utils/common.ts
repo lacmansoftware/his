@@ -64,12 +64,28 @@ export const getPinyinCode = (zhongwen: string) => {
   return py.toUpperCase().replace(/\s/g, '')
 }
 
-export const getInOptionFormat = async (url: string, valueField: string, labelField: string) => {
+export const getInOptionFormat = async (
+  url: string,
+  valueField: string,
+  labelField: string,
+  type = 'default'
+): Promise<any> => {
   const res = await getApi(url)
-  return res?.data.map((item) => ({
-    label: labelField.split('+').reduce((ret, labelFieldItem) => ret + item[labelFieldItem], ''),
-    value: valueField.split('+').reduce((ret, valueFieldItem) => ret + item[valueFieldItem], '')
-  }))
+  return res?.data.map((item) => {
+    const ret =
+      type === 'filter'
+        ? {
+            ...item
+          }
+        : {}
+    ret.label = labelField
+      .split('+')
+      .reduce((ret, labelFieldItem) => ret + item[labelFieldItem], '')
+    ret.value = valueField
+      .split('+')
+      .reduce((ret, valueFieldItem) => ret + item[valueFieldItem], '')
+    return ret
+  })
 }
 
 export const formatObject = (data: object[], valueField: string, labelField: string) => {
