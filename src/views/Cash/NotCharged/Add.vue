@@ -303,8 +303,7 @@ onMounted(() => {
   <ContentDetailWrap title="收銀結算" @back="push('/cash/notcharged/index')">
     <ElDivider content-position="left" class="mt-0">患者信息</ElDivider>
     <PatientSelect ref="patientRef" />
-
-    <ChargeItemTable />
+    <ChargeItemTable :member-id="unref(patientRef)?.memberId" />
 
     <Form :rules="rules" @register="register" />
 

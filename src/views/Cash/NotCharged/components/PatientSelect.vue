@@ -26,7 +26,7 @@ const store = {
   // doctorId: ref<ComponentOptions[]>([]),
   // feePayHospitalId: ref<ComponentOptions[]>([])
 }
-const memberId = ref<string | null>(null)
+const memberId = ref(null)
 
 const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
   store[key].value = await getInOptionFormat(url, valueField, labelField)
@@ -63,7 +63,7 @@ const schema = reactive<FormSchema[]>([
           memberBirthday: item.memberBirthday,
           memberAge: item.memberAge
         })
-        memberId.value = item.id
+        memberId.value = item.memberId
       },
       slots: {
         default: true

@@ -3,7 +3,18 @@ import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElTag, ElDivider, ElRow, ElCol } from 'element-plus'
+import {
+  ElForm,
+  ElSelect,
+  ElOption,
+  ElButton,
+  ElTag,
+  ElDivider,
+  ElRow,
+  ElCol,
+  ElDialog,
+  ElMessage
+} from 'element-plus'
 import { Table } from '@/components/Table'
 import { getTableListApi, saveTableApi, delTableListApi } from '@/api/table'
 import { useTable } from '@/hooks/web/useTable'
@@ -22,11 +33,24 @@ const { register, tableObject, methods } = useTable<TableData>({
   }
 })
 
+const props = defineProps({
+  memberId: {
+    type: Object as PropType<ref>,
+    default: ref(null)
+  }
+})
+
 const { getList, setSearchParams } = methods
 
 // getList()
 
 const { t } = useI18n()
+const itemKind = ref<string | null>(null)
+const itemKindData = [
+  { id: 'life', text: '產品' },
+  { id: 'express', text: '快遞費' },
+  { id: 'other', text: '其他' }
+]
 
 const crudSchemas = reactive<CrudSchema[]>([
   {
@@ -120,14 +144,28 @@ const crudSchemas = reactive<CrudSchema[]>([
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
+const itemKindDialogVisible = ref(false)
 const dialogVisible = ref(false)
-
 const dialogTitle = ref('')
+const itemDetailDialogVisible = ref(false)
+const itemDetailDialogTitle = ref('')
+const itemDetailDialogWidth = ref('')
 
-const AddAction = () => {
-  dialogTitle.value = t('exampleDemo.add')
+const SelectItemKind = () => {
+  if (!props.memberId) {
+    ElMessage.error(
+      '請先輸入客人信息，再添加產品！注：錄入信息后，添加產品時才能核算是否走員工價。'
+    )
+    return
+  }
   tableObject.currentRow = null
-  dialogVisible.value = true
+  itemKindDialogVisible.value = true
+}
+
+const AddItem = () => {
+  itemKindDialogVisible.value = false
+  itemDetailDialogVisible.value = true
+  itemDetailDialogTitle.value = itemKindData.find((item) => item.id === itemKind.value)?.text
 }
 
 const delLoading = ref(false)
@@ -187,7 +225,7 @@ const save = async () => {
     <ElCol :span="12">
       <ElDivider content-position="right">
         <div class="flex-0 ml-10px text-right">
-          <ElButton type="primary" @click="AddAction">{{ t('exampleDemo.add') }}</ElButton>
+          <ElButton type="primary" @click="SelectItemKind">{{ t('exampleDemo.add') }}</ElButton>
           <ElButton :loading="delLoading" type="danger" @click="delData(null, true)">
             {{ t('exampleDemo.del') }}
           </ElButton>
@@ -241,4 +279,28 @@ const save = async () => {
       <ElButton @click="dialogVisible = false">{{ t('dialogDemo.close') }}</ElButton>
     </template>
   </Dialog>
+
+  <ElDialog v-model="itemKindDialogVisible" title="添加收費項目" width="30%" center>
+    <ElSelect v-model="itemKind" placeholder="选择项目" class="w-[100%]">
+      <ElOption v-for="item in itemKindData" :key="item.id" :label="item.text" :value="item.id" />
+    </ElSelect>
+    <template #footer>
+      <span class="dialog-footer">
+        <ElButton @click="itemKindDialogVisible = false">
+          {{ t('dialogDemo.close') }}
+        </ElButton>
+        <ElButton type="primary" @click="AddItem" :disabled="itemKind === null">
+          {{ t('exampleDemo.save') }}
+        </ElButton>
+      </span>
+    </template>
+  </ElDialog>
+
+  <ElDialog
+    v-model="itemDetailDialogVisible"
+    :title="itemDetailDialogTitle"
+    :width="itemDetailDialogWidth"
+  >
+    Hello
+  </ElDialog>
 </template>
