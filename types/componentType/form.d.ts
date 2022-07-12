@@ -23,6 +23,7 @@ declare global {
     | 'SelectV2'
     | 'InputPassword'
     | 'Editor'
+    | 'Hidden'
 
   declare type ColProps = {
     span?: number
@@ -32,6 +33,7 @@ declare global {
     lg?: number
     xl?: number
     tag?: string
+    offset?: number
   }
 
   declare type FormValueType = string | number | string[] | number[] | boolean | undefined | null

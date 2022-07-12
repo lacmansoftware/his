@@ -5,12 +5,8 @@ import { ref, unref } from 'vue'
 import { ElButton, ElMessage } from 'element-plus'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useRouter } from 'vue-router'
-import { useEmitt } from '@/hooks/web/useEmitt'
 
 import { saveTableApi } from '@/api/workorder/workorder'
-import { TableData } from '@/api/workorder/workorder/types'
-
-const { emitter } = useEmitt()
 
 const { push } = useRouter()
 
@@ -25,7 +21,7 @@ const save = async () => {
   await write?.elFormRef?.validate(async (isValid) => {
     if (isValid) {
       loading.value = true
-      const data = (await write?.getFormData()) as TableData
+      const data = (await write?.getFormData()) as any
       // data.abc = 'qwegqw'
       // console.log(data)
 

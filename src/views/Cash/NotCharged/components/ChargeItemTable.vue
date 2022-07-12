@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import { ContentWrap } from '@/components/ContentWrap'
-import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
 import {
-  ElForm,
   ElSelect,
   ElOption,
   ElButton,
-  ElTag,
   ElDivider,
   ElRow,
   ElCol,
@@ -19,11 +15,12 @@ import { Table } from '@/components/Table'
 import { getTableListApi, saveTableApi, delTableListApi } from '@/api/table'
 import { useTable } from '@/hooks/web/useTable'
 import { TableData } from '@/api/table/types'
-import { h, ref, unref, reactive } from 'vue'
+import { ref, unref, reactive } from 'vue'
 import Write from './Write.vue'
 import Detail from './Detail.vue'
 import ProductItem from './ProductItem.vue'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
+import { propTypes } from '@/utils/propTypes'
 
 const { register, tableObject, methods } = useTable<TableData>({
   getListApi: getTableListApi,
@@ -35,18 +32,15 @@ const { register, tableObject, methods } = useTable<TableData>({
 })
 
 const props = defineProps({
-  memberId: {
-    type: Object as PropType<ref>,
-    default: ref(null)
-  }
+  memberId: propTypes.string.def('')
 })
 
-const { getList, setSearchParams } = methods
+const { getList } = methods
 
 // getList()
 
 const { t } = useI18n()
-const itemKind = ref<string | null>(null)
+const itemKind = ref<any>(null)
 const itemKindData = [
   { id: 'life', text: '產品' },
   { id: 'express', text: '快遞費' },
@@ -149,7 +143,7 @@ const itemKindDialogVisible = ref(false)
 const dialogVisible = ref(false)
 const dialogTitle = ref('')
 const itemDetailDialogVisible = ref(false)
-const itemDetailDialogTitle = ref('')
+const itemDetailDialogTitle = ref<string | undefined>('')
 const itemDetailDialogWidth = ref('')
 
 const SelectItemKind = () => {
@@ -166,7 +160,7 @@ const SelectItemKind = () => {
 const AddItem = () => {
   itemKindDialogVisible.value = false
   itemDetailDialogVisible.value = true
-  itemDetailDialogTitle.value = itemKindData.find((item) => item.id === itemKind.value)?.text
+  itemDetailDialogTitle.value = itemKindData.find((item) => item.id === itemKind.value)!.text
   itemDetailDialogWidth.value = '80%'
 }
 

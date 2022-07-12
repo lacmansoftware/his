@@ -1,33 +1,26 @@
 <script setup lang="ts">
-import { reactive, ref, unref, onMounted, watch, computed } from 'vue'
+import { reactive, ref, unref, onMounted } from 'vue'
 import { ElButton, ElLink, ElMessage } from 'element-plus'
-import { useRouter } from 'vue-router'
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { Table } from '@/components/Table'
 import { useI18n } from '@/hooks/web/useI18n'
-import { useEmitt } from '@/hooks/web/useEmitt'
 import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { useValidator } from '@/hooks/web/useValidator'
-import { inDict, getAgeByBirthday, getInOptionFormat } from '@/utils/common'
+import { getInOptionFormat } from '@/utils/common'
 import { plusIcon, deleteIcon } from '@/utils/iconList'
 import Write from './components/Write.vue'
-import dict from '@/config/dictionary.json'
-import { useDictStoreWithOut } from '@/store/modules/dict'
 
 import { getTableListApi, delTableListApi, saveTableApi } from '@/api/workorder/sms/templet'
-import { SMSTemplateData } from '@/api/workorder/sms/templet/types'
-import { getApi } from '@/api/common'
 
 defineOptions({
   name: 'SMSSendIndex'
 })
-const { required, isMobile } = useValidator()
-const dictStore = useDictStoreWithOut()
+const { required } = useValidator()
 
-const typeRef = ref('')
+// const typeRef = ref('')
 
 const store = {
   type: ref<ComponentOptions[]>([])
@@ -41,9 +34,7 @@ onMounted(() => {
   setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
 })
 
-const { push } = useRouter()
-
-const { register, tableObject, methods } = useTable<MemberInfoTableData>({
+const { register, tableObject, methods } = useTable<any>({
   getListApi: getTableListApi,
   delListApi: delTableListApi,
   response: {
@@ -57,19 +48,6 @@ const { getList, setSearchParams } = methods
 getList()
 
 const { t } = useI18n()
-
-const handleTypeChange = (item: Recordable) => {
-  typeRef.value = item
-}
-
-const handleTempletChange = (item: Recordable) => {
-  const curTemplet = store.templet.value.find((tmp) => tmp.value === item)
-
-  const write = unref(writeRef)
-  write?.setValues({
-    content: curTemplet?.content
-  })
-}
 
 const crudSchemas = reactive<CrudSchema[]>([
   {
@@ -116,7 +94,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       component: 'Select',
       componentProps: {
         placeholder: '分類',
-        options: store.type
+        options: store.type as any
       },
       colProps: { span: 12 }
     },
@@ -127,7 +105,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       componentProps: {
         style: { width: '100%' },
         placeholder: '分類',
-        options: store.type
+        options: store.type as any
       },
       formItemProps: {
         rules: [required()]
@@ -166,7 +144,7 @@ const dialogWidth = ref('')
 
 const delLoading = ref(false)
 
-const delData = async (row: MemberInfoTableData | null, multiple: boolean) => {
+const delData = async (row: any | null, multiple: boolean) => {
   tableObject.currentRow = row
   const { delList, getSelections } = methods
   const selections = await getSelections()
@@ -196,7 +174,7 @@ const AddAction = () => {
 
 const writeRef = ref<ComponentRef<typeof Write>>()
 
-const action = (row: TableData, type: string) => {
+const action = (row: any, type: string) => {
   dialogTitle.value = type === 'edit' ? '修改短信模板' : 'exampleDemo.detail'
   actionType.value = type
   tableObject.currentRow = row
@@ -227,17 +205,13 @@ const save = async () => {
         })
       if (res) {
         dialogVisible.value = false
-        ElMessage.success(res.msg)
+        ElMessage.success(res.msg as string)
         tableObject.currentPage = 1
         getList()
       }
     }
   })
 }
-
-watch(typeRef, () => {
-  getTemplateOptions()
-})
 </script>
 
 <template>

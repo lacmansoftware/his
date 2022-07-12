@@ -30,7 +30,7 @@ export type AppointListData = {
   doctorId: string
   doctorName: string
   end: string
-  hasHighMedicalInsurance: string
+  hasHighMedicalInsurance: string | boolean
   hospitalId: string
   hospitalName: string
   id: string

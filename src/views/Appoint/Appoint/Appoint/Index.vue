@@ -1,21 +1,14 @@
 <script setup lang="tsx">
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
-import { Dialog } from '@/components/Dialog'
-import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElTag, ElLink, ElMessage, ElDatePicker } from 'element-plus'
+// import { useI18n } from '@/hooks/web/useI18n'
+import { ElDatePicker } from 'element-plus'
 import { Table } from '@/components/Table'
 import { useTable } from '@/hooks/web/useTable'
 import { reactive, ref, unref, onMounted, watch, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { useEmitt } from '@/hooks/web/useEmitt'
+// import { useRouter } from 'vue-router'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import { inDict, getAgeByBirthday } from '@/utils/common'
-import { printerIcon } from '@/utils/iconList'
-import { searchConfig, crudConfig } from './index'
-import dict from '@/config/dictionary.json'
-import { useDictStoreWithOut } from '@/store/modules/dict'
-import { getPinyinCode, getInOptionFormat, formatObject, getWeekSEDate } from '@/utils/common'
+import { getInOptionFormat, formatObject, getWeekSEDate } from '@/utils/common'
 import { getApi } from '@/api/common'
 
 import { getTableListApi } from '@/api/appoint/appoint/appoint'
@@ -27,12 +20,11 @@ defineOptions({
   name: 'AppointManageAppointIndex'
 })
 
-const dictStore = useDictStoreWithOut()
 const curWeek = ref(getWeekSEDate())
 const curWeekDate = ref(curWeek.value.startDate)
 
 const store = {
-  allSelectData: ref<ComponentOptions[]>([]),
+  allSelectData: ref<any>([]),
   feePayHospitalId: ref<ComponentOptions[]>([])
 }
 
@@ -74,8 +66,6 @@ onMounted(async () => {
   search()
 })
 
-const { push } = useRouter()
-
 const { register, tableObject, methods } = useTable<AppointDoctorTableData>({
   getListApi: getTableListApi,
   response: {
@@ -84,9 +74,10 @@ const { register, tableObject, methods } = useTable<AppointDoctorTableData>({
   }
 })
 
-const { getList, setSearchParams } = methods
+// const { getList, setSearchParams } = methods
+const { setSearchParams } = methods
 
-const { t } = useI18n()
+// const { t } = useI18n()
 
 const crudSchemas = reactive<CrudSchema[]>([
   {
@@ -97,7 +88,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: sysCities
+        options: sysCities as any
       },
       colProps: { span: 6 },
       show: true
@@ -111,7 +102,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: sysHospitals
+        options: sysHospitals as any
       },
       colProps: { span: 6 },
       show: true
@@ -125,7 +116,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: doctorInfos
+        options: doctorInfos as any
       },
       colProps: { span: 6 },
       show: true
@@ -139,7 +130,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: sysDiseases
+        options: sysDiseases as any
       },
       colProps: { span: 6 },
       show: true
@@ -247,14 +238,7 @@ const crudSchemas = reactive<CrudSchema[]>([
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
-const printAction = async (row: TableData) => {
-  // const res = await getPrintApi(row.id)
-  // if (res.success) {
-  //   ElMessage.success(res.msg)
-  // }
-}
-
-const loading = ref(false)
+// const loading = ref(false)
 const searchRef = ref<ComponentRef<typeof Search>>()
 
 const setValues = (value) => {
@@ -264,7 +248,7 @@ const setValues = (value) => {
 
 const search = () => {
   const search = unref(searchRef)
-  search.search()
+  search!.search()
 }
 
 watch(curWeekDate, async () => {

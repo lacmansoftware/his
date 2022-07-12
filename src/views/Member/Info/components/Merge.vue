@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import { Form } from '@/components/Form'
-import { ContentWrap } from '@/components/ContentWrap'
-import { useI18n } from '@/hooks/web/useI18n'
+// import { useI18n } from '@/hooks/web/useI18n'
 import { useForm } from '@/hooks/web/useForm'
-import { reactive, unref, ref, onMounted } from 'vue'
-import { ElButton } from 'element-plus'
+import { reactive, ref } from 'vue'
 import { useValidator } from '@/hooks/web/useValidator'
 import { getApi } from '@/api/common'
 
 const { required } = useValidator()
 
-const { t } = useI18n()
+// const { t } = useI18n()
 
 const sMember = ref<string[]>(['', ''])
 
@@ -103,7 +101,7 @@ defineExpose({
   elFormRef,
   getFormData: methods.getFormData,
   setValues: methods.setValues,
-  sMember: sMember
+  sMember: sMember.value
 })
 </script>
 

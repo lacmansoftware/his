@@ -2,10 +2,8 @@
 import { Form } from '@/components/Form'
 import { useForm } from '@/hooks/web/useForm'
 import { PropType, reactive, watch, ref, onMounted } from 'vue'
-import { TableData } from '@/api/table/types'
-import { useI18n } from '@/hooks/web/useI18n'
+// import { useI18n } from '@/hooks/web/useI18n'
 import { useValidator } from '@/hooks/web/useValidator'
-import { IDomEditor } from '@wangeditor/editor'
 import { getApi } from '@/api/common'
 import { getInOptionFormat, returnDateString } from '@/utils/common'
 import dict from '@/config/dictionary.json'
@@ -16,7 +14,7 @@ const { required, isMobile } = useValidator()
 
 const props = defineProps({
   currentRow: {
-    type: Object as PropType<Nullable<TableData>>,
+    type: Object as PropType<Nullable<CommentType>>,
     default: () => null
   },
   isEdit: {
@@ -25,7 +23,7 @@ const props = defineProps({
   }
 })
 
-const { t } = useI18n()
+// const { t } = useI18n()
 
 const contactUserId = ref('')
 
@@ -108,7 +106,7 @@ const handleStatusChange = (item: Recordable) => {
   console.log(item)
 }
 
-const handleTransferTypeChange = (item: Recordable) => {
+const handleTransferTypeChange = (item: string) => {
   store.transferId.value = item === 'person' ? store.sysUser.value : store.sysDeptList.value
 }
 
@@ -153,7 +151,7 @@ const schema = reactive<FormSchema[]>([
     componentProps: {
       style: 'width: 100%',
       placeholder: '工單類型',
-      options: store.orderTypes,
+      options: store.orderTypes as any,
       onChange: handleTypeChange
     },
     colProps: { span: 12 },
@@ -220,7 +218,7 @@ const schema = reactive<FormSchema[]>([
     componentProps: {
       style: 'width: 100%',
       placeholder: '聯繫人姓名',
-      options: store.contactUserId,
+      options: store.contactUserId as any,
       disabled: props.isEdit
     },
     colProps: { span: 12 }
@@ -259,7 +257,7 @@ const schema = reactive<FormSchema[]>([
     componentProps: {
       style: 'width: 100%',
       placeholder: '轉交编号',
-      options: store.transferId
+      options: store.transferId as any
     },
     colProps: { span: 12 }
   },
@@ -417,7 +415,7 @@ defineExpose({
 
     <Comment
       v-for="comment in store.comments.value"
-      :key="comment?.createTime"
+      :key="comment!.createTime"
       :current-row="comment"
     />
   </div>

@@ -1,21 +1,12 @@
 <script setup lang="ts">
-import { onMounted, watch, computed, unref, ref, nextTick } from 'vue'
+import { onMounted, computed, ref, PropType } from 'vue'
 import { useRouter } from 'vue-router'
-import type { RouteLocationNormalizedLoaded, RouterLinkProps } from 'vue-router'
-import { usePermissionStore } from '@/store/modules/permission'
-import { useTagsViewStore } from '@/store/modules/tagsView'
-import { useAppStore } from '@/store/modules/app'
-import { useI18n } from '@/hooks/web/useI18n'
-import { filterAffixTags } from './helper'
+// import { useI18n } from '@/hooks/web/useI18n'
 import { CustomDropdown } from '@/components/ContextMenu'
-import { useDesign } from '@/hooks/web/useDesign'
-import { useTemplateRefsList } from '@vueuse/core'
-import { ElScrollbar } from 'element-plus'
-import { useScrollTo } from '@/hooks/event/useScrollTo'
-import { AppointDoctorTableData, AppointDoctorType } from '@/api/appoint/appoint/types'
+import { AppointDoctorTableData, AppointDoctorType } from '@/api/appoint/appoint/appoint/types'
 import { timelineLabels, isValidTime } from '@/utils/common'
 
-const { t } = useI18n()
+// const { t } = useI18n()
 const { push } = useRouter()
 
 const props = defineProps({
@@ -36,7 +27,7 @@ const props = defineProps({
 const data = ref<AppointDoctorType>(
   props.row?.children.find((item) => {
     if (item.start === props.curWeek.range[props.colId]) return true
-  })
+  }) as AppointDoctorType
 )
 
 const schema = computed(() => {

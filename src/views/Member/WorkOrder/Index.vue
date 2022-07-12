@@ -3,36 +3,23 @@ import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElTag, ElLink, ElMessage, ElMessageBox } from 'element-plus'
+import { ElButton, ElLink } from 'element-plus'
 import { Table } from '@/components/Table'
 import { useTable } from '@/hooks/web/useTable'
 import { reactive, ref, unref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { useEmitt } from '@/hooks/web/useEmitt'
+// import { useRouter } from 'vue-router'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import {
-  inDict,
-  getAgeByBirthday,
-  getPinyinCode,
-  getInOptionFormat,
-  getDateInFormat
-} from '@/utils/common'
-import { printerIcon } from '@/utils/iconList'
-import { searchConfig, crudConfig } from './index'
+import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import Write from './components/Write.vue'
-import Detail from './components/Detail.vue'
 import dict from '@/config/dictionary.json'
-import { useDictStoreWithOut } from '@/store/modules/dict'
 import { getApi } from '@/api/common'
 
 import { getTableListApi, delTableListApi, updateTableApi } from '@/api/workorder/workorder'
-import { MemberInfoTableData } from '@/api/workorder/workorder/types'
 
 defineOptions({
   name: 'WorkOrderIndex'
 })
 
-const dictStore = useDictStoreWithOut()
 const my = ref(false)
 const notComplate = ref(false)
 const writeRef = ref<ComponentRef<typeof Write>>()
@@ -59,9 +46,7 @@ onMounted(async () => {
   search()
 })
 
-const { push } = useRouter()
-
-const { register, tableObject, methods } = useTable<MemberInfoTableData>({
+const { register, tableObject, methods } = useTable<any>({
   getListApi: getTableListApi,
   delListApi: delTableListApi,
   response: {
@@ -226,7 +211,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: store.type
+        options: store.type as any
       },
       colProps: { span: 6 },
       show: true
@@ -273,7 +258,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       show: true,
       component: 'Hidden',
       colProps: { span: 0 },
-      value: my
+      value: my as any
     }
   },
   {
@@ -285,7 +270,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       show: true,
       component: 'Hidden',
       colProps: { span: 0 },
-      value: notComplate
+      value: notComplate as any
     }
   }
 ])
@@ -294,10 +279,10 @@ const { allSchemas } = useCrudSchemas(crudSchemas)
 
 const delLoading = ref(false)
 
-const delData = async (row: TableData | null) => {
+const delData = async (row: any | null) => {
   tableObject.currentRow = row
-  const { delList, getSelections } = methods
-  const selections = await getSelections()
+  const { delList } = methods
+  // const selections = await getSelections()
   delLoading.value = true
   await delList(row.id, false).finally(() => {
     delLoading.value = false
@@ -308,7 +293,7 @@ const dialogVisible = ref(false)
 const dialogTitle = ref('')
 const actionType = ref('')
 
-const action = (row: TableData, type: string) => {
+const action = (row: any, type: string) => {
   dialogTitle.value = t(type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail')
   actionType.value = type
   tableObject.currentRow = row
@@ -325,7 +310,7 @@ const setValues = (value: object) => {
 
 const search = () => {
   const search = unref(searchRef)
-  search.search()
+  search!.search()
 }
 
 const myOrder = () => {
@@ -345,7 +330,7 @@ const save = async () => {
   await write?.elFormRef?.validate(async (isValid) => {
     if (isValid) {
       loading.value = true
-      const data = (await write?.getFormData()) as TableData
+      const data = (await write?.getFormData()) as any
       const res = await updateTableApi({
         workOrderId: data?.id,
         status: data?.status,

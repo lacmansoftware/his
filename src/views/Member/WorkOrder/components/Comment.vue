@@ -1,23 +1,21 @@
 <script setup lang="ts">
 import { Form } from '@/components/Form'
 import { useForm } from '@/hooks/web/useForm'
-import { PropType, reactive, watch, ref, onMounted } from 'vue'
-import { TableData } from '@/api/table/types'
-import { useI18n } from '@/hooks/web/useI18n'
+import { reactive, onMounted, PropType } from 'vue'
+// import { useI18n } from '@/hooks/web/useI18n'
 import { useValidator } from '@/hooks/web/useValidator'
-import { IDomEditor } from '@wangeditor/editor'
 import { CommentType } from '@/api/workorder/workorder/types'
 
-const { required, isMobile } = useValidator()
+const { required } = useValidator()
 
 const props = defineProps({
   currentRow: {
-    type: Object as CommentType,
+    type: Object as PropType<CommentType>,
     default: () => null
   }
 })
 
-const { t } = useI18n()
+// const { t } = useI18n()
 
 onMounted(() => {
   console.log(props.currentRow)
@@ -79,6 +77,8 @@ defineExpose({
   elFormRef,
   getFormData: methods.getFormData
 })
+
+const rules = []
 </script>
 
 <template>

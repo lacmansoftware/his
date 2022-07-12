@@ -3,7 +3,6 @@ import { Form } from '@/components/Form'
 import { useForm } from '@/hooks/web/useForm'
 import { PropType, reactive, watch, onMounted } from 'vue'
 import { TableData } from '@/api/table/types'
-import { useValidator } from '@/hooks/web/useValidator'
 import { getApi } from '@/api/common'
 import dict from '@/config/dictionary.json'
 import {
@@ -18,25 +17,23 @@ import {
   ElOption
 } from 'element-plus'
 
-const { required } = useValidator()
-
 const writeForm = reactive<{
+  doctorId: any
   doctorFilter: any
   memberFilter: any
-  memberName: String
-  memberId: String
-  memberSex: String
-  memberMobile: String
-  memberBirthday: String
-  memberAge: String
-  slaveSymptom: String
-  medicalHistory: String
-  slaveSymptom: String
-  medicalHistory: String
-  pharmacyId: String
-  drugType: String
-  doctorFilter: any
+  memberName: string
+  memberId: string
+  memberSex: string
+  memberMobile: string
+  memberBirthday: string
+  memberAge: string
+  slaveSymptom: string
+  medicalHistory: string
+  pharmacyId: string
+  drugType: string
+  drugFilter: string
 }>({
+  doctorId: null,
   doctorFilter: null,
   memberFilter: null,
   memberName: '',
@@ -47,11 +44,9 @@ const writeForm = reactive<{
   memberAge: '',
   slaveSymptom: '',
   medicalHistory: '',
-  slaveSymptom: '',
-  medicalHistory: '',
   pharmacyId: '',
-  drugType: '',
-  drugFilter: null
+  drugFilter: '',
+  drugType: ''
 })
 
 const props = defineProps({
@@ -113,7 +108,7 @@ onMounted(() => {
   // console.log(formRef)
 })
 
-const doctorFilterSearch = async (queryString: string, cb: Fn) => {
+const doctorFilterSearch = async (queryString: string, cb: Fn): Promise<any> => {
   const res = await getApi(`/doctor/query?keyWords=${queryString}`)
   const result = res?.data.map((item) => ({
     ...item,
@@ -123,7 +118,7 @@ const doctorFilterSearch = async (queryString: string, cb: Fn) => {
   cb(result)
 }
 
-const memberFilterSearch = async (queryString: string, cb: Fn) => {
+const memberFilterSearch = async (queryString: string, cb: Fn): Promise<any> => {
   const res = await getApi(`/member/info/query?keyWords=${queryString}`)
   const result = res?.data.map((item) => ({
     ...item,
@@ -133,7 +128,7 @@ const memberFilterSearch = async (queryString: string, cb: Fn) => {
   cb(result)
 }
 
-const drugFilterSearch = async (queryString: string, cb: Fn) => {
+const drugFilterSearch = async (queryString: string, cb: Fn): Promise<any> => {
   const res = await getApi(
     `/recipel/drug?keyWords=${queryString}&pharmacyId=${writeForm.pharmacyId}&drugType=${writeForm.drugType}&doctorId=${writeForm.doctorId}`
   )
@@ -176,6 +171,8 @@ const handleDrugFilterSelect = (item: Recordable) => {
 onMounted(() => {
   console.log(props.store)
 })
+
+const handleDoctorFilterSelect = () => {}
 </script>
 
 <template>
@@ -208,7 +205,7 @@ onMounted(() => {
             :fetch-suggestions="memberFilterSearch"
             @select="handleMemberFilterSelect"
             class="w-[100%]"
-            trigger-on-focus="false"
+            :trigger-on-focus="false"
           >
             <template #default="{ item }">
               <div class="flex w-full" justify="evenly">

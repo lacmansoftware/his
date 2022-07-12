@@ -1,6 +1,8 @@
 export type UpdateStatusType = {
   id: string
   replyChannel: string
+  source: string
+  datareplyChannel: string
 }
 
 export type AppointDoctorType = {
@@ -15,6 +17,8 @@ export type AppointHospitalType = {
   title: string
   start: string
   children: AppointDoctorType[]
+  totalMeet: number
+  totalLimit: number
 }
 
 export type AppointHospitalTableData = {

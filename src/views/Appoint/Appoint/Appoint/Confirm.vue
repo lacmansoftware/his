@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Form } from '@/components/Form'
 import { ContentDetailWrap } from '@/components/ContentDetailWrap'
-import { onMounted, PropType, reactive, watch, ref, unref } from 'vue'
+import { onMounted, reactive, ref, unref } from 'vue'
 import { ElButton, ElMessage } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
 import { useForm } from '@/hooks/web/useForm'
@@ -10,7 +10,6 @@ import { useEmitt } from '@/hooks/web/useEmitt'
 import { useRouter, useRoute } from 'vue-router'
 import { saveUpdateStatusApi } from '@/api/appoint/appoint/hospital'
 import { UpdateStatusType } from '@/api/appoint/appoint/hospital/types'
-import { IDomEditor } from '@wangeditor/editor'
 
 import dict from '@/config/dictionary.json'
 
@@ -52,13 +51,13 @@ const save = async () => {
       const res = await saveUpdateStatusApi({
         id: query.id,
         datareplyChannel: data.source
-      })
+      } as UpdateStatusType)
         .catch(() => {})
         .finally(() => {
           loading.value = false
         })
       if (res) {
-        ElMessage.success(res.msg)
+        ElMessage.success(res.msg as string)
         emitter.emit('getList', 'confirm')
         // push('/appoint/example-page')
         go(-1)
@@ -73,6 +72,8 @@ onMounted(() => {
     go(-1)
   }
 })
+
+const rules = []
 </script>
 
 <template>

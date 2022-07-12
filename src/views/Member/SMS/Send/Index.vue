@@ -1,22 +1,17 @@
 <script setup lang="ts">
-import { reactive, ref, unref, onMounted, watch, computed } from 'vue'
+import { reactive, ref, unref, onMounted, watch } from 'vue'
 import { ElButton, ElLink, ElMessage } from 'element-plus'
-import { useRouter } from 'vue-router'
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { Table } from '@/components/Table'
 import { useI18n } from '@/hooks/web/useI18n'
-import { useEmitt } from '@/hooks/web/useEmitt'
 import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { useValidator } from '@/hooks/web/useValidator'
-import { inDict, getAgeByBirthday, getInOptionFormat } from '@/utils/common'
+import { inDict, getInOptionFormat } from '@/utils/common'
 import { msgIcon, deleteIcon } from '@/utils/iconList'
 import Write from './components/Write.vue'
-import dict from '@/config/dictionary.json'
-import { useDictStoreWithOut } from '@/store/modules/dict'
-
 import { getTableListApi, delTableListApi, saveTableApi } from '@/api/workorder/sms/send'
 import { SMSSendData } from '@/api/workorder/sms/send/types'
 import { getApi } from '@/api/common'
@@ -24,8 +19,7 @@ import { getApi } from '@/api/common'
 defineOptions({
   name: 'SMSSendIndex'
 })
-const { required, isMobile } = useValidator()
-const dictStore = useDictStoreWithOut()
+const { required } = useValidator()
 
 const typeRef = ref('')
 
@@ -54,9 +48,7 @@ onMounted(() => {
   getTemplateOptions()
 })
 
-const { push } = useRouter()
-
-const { register, tableObject, methods } = useTable<MemberInfoTableData>({
+const { register, tableObject, methods } = useTable<SMSSendData>({
   getListApi: getTableListApi,
   delListApi: delTableListApi,
   response: {
@@ -71,7 +63,7 @@ getList()
 
 const { t } = useI18n()
 
-const handleTypeChange = (item: Recordable) => {
+const handleTypeChange = (item: string) => {
   typeRef.value = item
 }
 
@@ -215,7 +207,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       component: 'Select',
       componentProps: {
         placeholder: '短信模板',
-        options: store.templet,
+        options: store.templet as any,
         onChange: handleTempletChange
       },
       colProps: { span: 12 }
@@ -248,7 +240,7 @@ const dialogWidth = ref('')
 
 const delLoading = ref(false)
 
-const delData = async (row: MemberInfoTableData | null, multiple: boolean) => {
+const delData = async (row: SMSSendData | null, multiple: boolean) => {
   tableObject.currentRow = row
   const { delList, getSelections } = methods
   const selections = await getSelections()
@@ -293,7 +285,7 @@ const save = async () => {
         })
       if (res) {
         dialogVisible.value = false
-        ElMessage.success(res.msg)
+        ElMessage.success(res.msg as string)
         tableObject.currentPage = 1
         getList()
       }

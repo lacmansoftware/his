@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, unref, onMounted, watch, computed, h } from 'vue'
+import { reactive, ref, unref, onMounted, watch, h } from 'vue'
 import { ElButton, ElTag, ElLink, ElMessage, ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { ContentWrap } from '@/components/ContentWrap'
@@ -11,27 +11,13 @@ import { useEmitt } from '@/hooks/web/useEmitt'
 import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { useValidator } from '@/hooks/web/useValidator'
-import { inDict, getAgeByBirthday, getInOptionFormat, getDateInFormat } from '@/utils/common'
-import {
-  topIcon,
-  downloadIcon,
-  uploadIcon,
-  groupIcon,
-  callIcon,
-  msgIcon,
-  plusIcon,
-  deleteIcon
-} from '@/utils/iconList'
+import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
+import { topIcon, downloadIcon, groupIcon, callIcon, msgIcon } from '@/utils/iconList'
 import Write from './components/Write.vue'
 import dict from '@/config/dictionary.json'
-import { useDictStoreWithOut } from '@/store/modules/dict'
+// import { useDictStoreWithOut } from '@/store/modules/dict'
 
-import {
-  getTableListApi,
-  delTableListApi,
-  saveGroupMsgApi,
-  getExportExcelApi
-} from '@/api/appoint/appoint/list'
+import { getTableListApi, delTableListApi, saveGroupMsgApi } from '@/api/appoint/appoint/list'
 import { AppointListData } from '@/api/appoint/appoint/list/types'
 import { getApi } from '@/api/common'
 
@@ -40,10 +26,10 @@ import { PATH_URL } from '@/config/axios'
 defineOptions({
   name: 'SMSSendIndex'
 })
-const { required, isMobile } = useValidator()
-const dictStore = useDictStoreWithOut()
+const { required } = useValidator()
+// const dictStore = useDictStoreWithOut()
 
-const typeRef = ref('')
+const typeRef = ref<any>(null)
 
 const store = {
   type: ref<ComponentOptions[]>([]),
@@ -222,8 +208,8 @@ const crudSchemas = reactive<CrudSchema[]>([
     label: '保險',
     width: '100px',
     formatter: function (row: AppointListData) {
-      var hasInsur =
-        row.insurName || (row.hasHighMedicalInsurance == 1 ? '用戶選擇了高端保險' : '無')
+      const hasInsur =
+        row.insurName || (row.hasHighMedicalInsurance === true ? '用戶選擇了高端保險' : '無')
       if (hasInsur) {
         return hasInsur
       }
@@ -491,7 +477,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       show: true,
       component: 'Select',
-      componentProps: { options: dict.activityList },
+      componentProps: { options: dict.activityLista },
       colProps: { span: 6 }
     }
   },
@@ -503,7 +489,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       show: true,
       component: 'Select',
-      componentProps: { options: dict.subTypeList },
+      componentProps: { options: dict.subTypeLista },
       colProps: { span: 6 }
     }
   },
@@ -582,7 +568,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       component: 'Select',
       componentProps: {
         placeholder: '短信模板',
-        options: store.templet,
+        options: store.templet as any,
         onChange: handleTempletChange
       },
       colProps: { span: 12 }
@@ -613,35 +599,35 @@ const dialogVisible = ref(false)
 const dialogTitle = ref('')
 const dialogWidth = ref('')
 
-const delLoading = ref(false)
+// const delLoading = ref(false)
 
-const delData = async (row: MemberInfoTableData | null, multiple: boolean) => {
-  tableObject.currentRow = row
-  const { delList, getSelections } = methods
-  const selections = await getSelections()
-  delLoading.value = true
-  await delList(
-    multiple
-      ? {
-          multiple: multiple,
-          data: selections.reduce((sum, v) => sum + (sum === '' ? '' : ',') + v.id, '') as string
-        }
-      : { multiple: multiple, data: tableObject.currentRow?.id as string },
-    multiple
-  ).finally(() => {
-    delLoading.value = false
-  })
-}
+// const delData = async (row: MemberInfoTableData | null, multiple: boolean) => {
+//   tableObject.currentRow = row
+//   const { delList, getSelections } = methods
+//   const selections = await getSelections()
+//   delLoading.value = true
+//   await delList(
+//     multiple
+//       ? {
+//           multiple: multiple,
+//           data: selections.reduce((sum, v) => sum + (sum === '' ? '' : ',') + v.id, '') as string
+//         }
+//       : { multiple: multiple, data: tableObject.currentRow?.id as string },
+//     multiple
+//   ).finally(() => {
+//     delLoading.value = false
+//   })
+// }
 
 const actionType = ref('')
 
-const AddAction = () => {
-  dialogTitle.value = '新增短信模板'
-  actionType.value = 'add'
-  dialogWidth.value = ''
-  tableObject.currentRow = null
-  dialogVisible.value = true
-}
+// const AddAction = () => {
+//   dialogTitle.value = '新增短信模板'
+//   actionType.value = 'add'
+//   dialogWidth.value = ''
+//   tableObject.currentRow = null
+//   dialogVisible.value = true
+// }
 
 const writeRef = ref<ComponentRef<typeof Write>>()
 const searchRef = ref<ComponentRef<typeof Search>>()
@@ -653,15 +639,15 @@ const setValues = (value: object) => {
 
 const search = () => {
   const search = unref(searchRef)
-  search.search()
+  search!.search()
 }
 
-const action = (row: TableData, type: string) => {
-  dialogTitle.value = type === 'edit' ? '修改短信模板' : 'exampleDemo.detail'
-  actionType.value = type
-  tableObject.currentRow = row
-  dialogVisible.value = true
-}
+// const action = (row: TableData, type: string) => {
+//   dialogTitle.value = type === 'edit' ? '修改短信模板' : 'exampleDemo.detail'
+//   actionType.value = type
+//   tableObject.currentRow = row
+//   dialogVisible.value = true
+// }
 
 const loading = ref(false)
 
@@ -691,7 +677,7 @@ const save = async () => {
         })
       if (res) {
         dialogVisible.value = false
-        ElMessage.success(res.msg)
+        ElMessage.success(res.msg as string)
         tableObject.currentPage = 1
         getList()
       }
@@ -703,12 +689,21 @@ const confirm = (id: string) => {
   push(`/appoint/appoint/appoint/confirm?id=${id}`)
 }
 const update = (row: AppointListData) => {
+  console.log(row)
   // push(`/appoint/appoint/appoint/confirm?id=${id}`)
 }
-const cancel = (id: string) => {}
-const check = (id: string) => {}
-const packagePay = (id: string) => {}
-const log = (id: string) => {}
+const cancel = (id: string) => {
+  console.log(id)
+}
+const check = (id: string) => {
+  console.log(id)
+}
+const packagePay = (id: string) => {
+  console.log(id)
+}
+const log = (id: string) => {
+  console.log(id)
+}
 
 const pushMsg = () => {
   getApi(`member/appointment/unconfirm/total`).then((res) => {
@@ -724,12 +719,12 @@ const pushMsg = () => {
       )
         .then(() => {
           getApi(`member/appointment/unconfirm/pushMsg`).then((pushRes) => {
-            ElMessage.success(pushRes.msg)
+            ElMessage.success(pushRes.msg as string)
           })
         })
         .catch(() => {})
     } else {
-      ElMessage.error(res.msg)
+      ElMessage.error(res.msg as string)
     }
   })
 }
@@ -752,7 +747,7 @@ const exportExcel = async () => {
 }
 
 const outCall = (mobile: string) => {
-  console.log('out going call: ', searchSchema[8].componentProps.options)
+  console.log('out going call: ', mobile)
 }
 
 const sendMsg = (mobile: string) => {
@@ -820,12 +815,13 @@ watch(typeRef, () => {
             type="primary"
             @click="
               check(
-                row.id,
-                row.hospitalId,
-                row.doctorId,
-                row.appointmentTimeStart,
-                row.appointmentTimeEnd,
-                row.memberId
+                row.id
+                // ,
+                // row.hospitalId,
+                // row.doctorId,
+                // row.appointmentTimeStart,
+                // row.appointmentTimeEnd,
+                // row.memberId
               )
             "
             class="mr-5px"
@@ -834,7 +830,12 @@ watch(typeRef, () => {
           <ElLink
             v-if="row.paymentStatus === 'UNPAY'"
             type="primary"
-            @click="packagePay(row.id, row.memberId, row.memberName, row.doctorId)"
+            @click="
+              packagePay(
+                row.id
+                // , row.memberId, row.memberName, row.doctorId
+              )
+            "
             class="mr-5px"
             >改套餐</ElLink
           >

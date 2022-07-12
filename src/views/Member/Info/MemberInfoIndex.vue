@@ -9,24 +9,18 @@ import { getTableListApi, saveTableApi, delTableListApi, saveMergeApi } from '@/
 import { useTable } from '@/hooks/web/useTable'
 import { MemberInfoTableData } from '@/api/member/types'
 import { reactive, ref, unref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { useEmitt } from '@/hooks/web/useEmitt'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { inDict, getAgeByBirthday } from '@/utils/common'
 import { callIcon, msgIcon, plusIcon, mergeIcon } from '@/utils/iconList'
-import { searchConfig, crudConfig } from './index'
 import Write from './components/Write.vue'
 import Detail from './components/Detail.vue'
 import Merge from './components/Merge.vue'
 import dict from '@/config/dictionary.json'
-import { useDictStoreWithOut } from '@/store/modules/dict'
 import { getPinyinCode, getInOptionFormat } from '@/utils/common'
 
 defineOptions({
   name: 'MemberInfoManagement'
 })
-
-const dictStore = useDictStoreWithOut()
 
 const store = {
   certificate: ref<ComponentOptions[]>([]),
@@ -59,8 +53,6 @@ onMounted(() => {
   setStore('isMarried', '/sys/dict/type/MEMBER_Married', 'code', 'value')
   setStore('memberSource', '/sys/dict/type/MEMBER_Source', 'code', 'value')
 })
-
-const { push } = useRouter()
 
 const { register, tableObject, methods } = useTable<MemberInfoTableData>({
   getListApi: getTableListApi,
@@ -244,7 +236,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: store.certificate
+        options: store.certificate as any
       },
       colProps: { span: 6 },
       show: true
@@ -274,7 +266,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       component: 'Select',
       componentProps: {
         style: { width: '100%' },
-        options: store.country
+        options: store.country as any
       },
       colProps: {
         span: 8
@@ -292,7 +284,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       component: 'Select',
       componentProps: {
         style: { width: '100%' },
-        options: store.nativePlace
+        options: store.nativePlace as any
       },
       colProps: {
         span: 8
@@ -310,7 +302,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       component: 'Select',
       componentProps: {
         style: { width: '100%' },
-        options: store.nationality
+        options: store.nationality as any
       },
       colProps: {
         span: 8
@@ -342,7 +334,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       component: 'Select',
       componentProps: {
         style: { width: '100%' },
-        options: store.education
+        options: store.education as any
       },
       colProps: {
         span: 8
@@ -360,7 +352,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       component: 'Select',
       componentProps: {
         style: { width: '100%' },
-        options: store.isMarried
+        options: store.isMarried as any
       },
       colProps: {
         span: 8
@@ -451,7 +443,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       component: 'Select',
       componentProps: {
         style: { width: '100%' },
-        options: store.memberSource
+        options: store.memberSource as any
       },
       colProps: {
         span: 8
@@ -535,7 +527,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       component: 'Select',
       componentProps: {
         style: { width: '100%' },
-        options: store.hospital
+        options: store.hospital as any
       },
       colProps: { span: 16 },
       show: true
@@ -544,7 +536,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: store.hospital
+        options: store.hospital as any
       },
       colProps: { span: 6 },
       show: true
@@ -600,7 +592,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: {
       component: 'Select',
       componentProps: {
-        options: store.level,
+        options: store.level as any,
         style: { width: '100%' }
       },
       colProps: {
@@ -614,7 +606,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: store.level
+        options: store.level as any
       },
       colProps: { span: 6 },
       show: true
@@ -629,7 +621,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: store.cardStatus
+        options: store.cardStatus as any
       },
       colProps: { span: 6 },
       show: true
@@ -650,7 +642,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Input',
       componentProps: {
-        options: store.level
+        options: store.level as any
       },
       colProps: { span: 6 },
       show: true
@@ -693,7 +685,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: store.disease
+        options: store.disease as any
       },
       colProps: { span: 6 },
       show: true
@@ -859,7 +851,7 @@ const MergeAction = () => {
   dialogVisible.value = true
 }
 
-const action = (row: TableData, type: string) => {
+const action = (row: MemberInfoTableData, type: string) => {
   dialogTitle.value = type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail'
   dialogWidth.value = '90%'
   actionType.value = type
@@ -873,7 +865,7 @@ const mergeRef = ref<ComponentRef<typeof Merge>>()
 const loading = ref(false)
 
 const outCall = (mobile: string) => {
-  console.log('out going call: ', searchSchema[8].componentProps.options)
+  console.log('out going call: ', mobile)
 }
 
 const sendMsg = (mobile: string) => {
@@ -894,7 +886,7 @@ const save = async () => {
           })
         if (res) {
           dialogVisible.value = false
-          ElMessage.success(res.msg)
+          ElMessage.success(res.msg as string)
           tableObject.currentPage = 1
           getList()
         }
@@ -902,7 +894,7 @@ const save = async () => {
     })
   } else if (actionType.value === 'merge') {
     const merge = unref(mergeRef)
-    const { sMember } = merge
+    const { sMember }: { sMember: string[] } = merge
     await merge?.elFormRef?.validate(async (isValid) => {
       if (isValid) {
         loading.value = true
@@ -916,7 +908,7 @@ const save = async () => {
           })
         if (res) {
           dialogVisible.value = false
-          ElMessage.success(res.msg)
+          ElMessage.success(res.msg as string)
         }
       }
     })

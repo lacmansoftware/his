@@ -1,31 +1,23 @@
 <script setup lang="ts">
-import { reactive, ref, unref, onMounted, watch, computed, nextTick, h } from 'vue'
+import { reactive, ref, unref, onMounted, h } from 'vue'
 import { ElButton, ElLink, ElMessage, ElTag } from 'element-plus'
-import { useRouter } from 'vue-router'
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { Table } from '@/components/Table'
 import { useI18n } from '@/hooks/web/useI18n'
-import { useEmitt } from '@/hooks/web/useEmitt'
 import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import { useValidator } from '@/hooks/web/useValidator'
-import { inDict, getAgeByBirthday, getInOptionFormat } from '@/utils/common'
-import { plusIcon, deleteIcon } from '@/utils/iconList'
+import { inDict, getInOptionFormat } from '@/utils/common'
+import { plusIcon } from '@/utils/iconList'
 import Write from './components/Write.vue'
 import dict from '@/config/dictionary.json'
-import { useDictStoreWithOut } from '@/store/modules/dict'
 
 import { getTableListApi, delTableListApi, saveTableApi } from '@/api/recipel/offline/input'
-import { SMSTemplateData } from '@/api/recipel/offline/input/types'
-import { getApi } from '@/api/common'
 
 defineOptions({
   name: 'SMSSendIndex'
 })
-const { required, isMobile } = useValidator()
-const dictStore = useDictStoreWithOut()
 
 const store = {
   type: ref<ComponentOptions[]>([])
@@ -39,9 +31,7 @@ onMounted(async () => {
   setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
 })
 
-const { push } = useRouter()
-
-const { register, tableObject, methods } = useTable<MemberInfoTableData>({
+const { register, tableObject, methods } = useTable<any>({
   getListApi: getTableListApi,
   delListApi: delTableListApi,
   response: {
@@ -578,7 +568,7 @@ const dialogWidth = ref('')
 
 const delLoading = ref(false)
 
-const delData = async (row: MemberInfoTableData | null, multiple: boolean) => {
+const delData = async (row: any | null, multiple: boolean) => {
   tableObject.currentRow = row
   const { delList, getSelections } = methods
   const selections = await getSelections()
@@ -608,7 +598,7 @@ const AddAction = () => {
 
 const writeRef = ref<ComponentRef<typeof Write>>()
 
-const action = (row: TableData, type: string) => {
+const action = (row: any, type: string) => {
   dialogTitle.value = type === 'edit' ? '修改短信模板' : 'exampleDemo.detail'
   actionType.value = type
   tableObject.currentRow = row
@@ -639,7 +629,7 @@ const save = async () => {
         })
       if (res) {
         dialogVisible.value = false
-        ElMessage.success(res.msg)
+        ElMessage.success(res.msg as string)
         tableObject.currentPage = 1
         getList()
       }

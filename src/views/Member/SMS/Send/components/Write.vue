@@ -2,14 +2,14 @@
 import { Form } from '@/components/Form'
 import { useForm } from '@/hooks/web/useForm'
 import { PropType, reactive, watch } from 'vue'
-import { TableData } from '@/api/table/types'
+import { SMSSendData } from '@/api/workorder/sms/send/types'
 import { useValidator } from '@/hooks/web/useValidator'
 
 const { required } = useValidator()
 
 const props = defineProps({
   currentRow: {
-    type: Object as PropType<Nullable<TableData>>,
+    type: Object as PropType<Nullable<SMSSendData>>,
     default: () => null
   },
   formSchema: {

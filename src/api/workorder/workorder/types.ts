@@ -20,6 +20,7 @@ export type MemberInfoTableData = {
 }
 
 export type CommentType = {
+  id: string
   handlerName: string | null
   createTime: string | null
   comment: string | null

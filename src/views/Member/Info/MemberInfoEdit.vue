@@ -5,8 +5,8 @@ import { ref, unref } from 'vue'
 import { ElButton } from 'element-plus'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useRouter, useRoute } from 'vue-router'
-import { saveTableApi, getTableDetApi } from '@/api/table'
-import { TableData } from '@/api/table/types'
+import { saveTableApi, getTableDetApi } from '@/api/member'
+import { MemberInfoTableData } from '@/api/member/types'
 import { useEmitt } from '@/hooks/web/useEmitt'
 
 const { emitter } = useEmitt()
@@ -17,7 +17,7 @@ const { query } = useRoute()
 
 const { t } = useI18n()
 
-const currentRow = ref<Nullable<TableData>>(null)
+const currentRow = ref<Nullable<MemberInfoTableData>>(null)
 
 const getTableDet = async () => {
   const res = await getTableDetApi(query.id as string)
@@ -37,7 +37,7 @@ const save = async () => {
   const validate = await write?.elFormRef?.validate()?.catch(() => {})
   if (validate) {
     loading.value = true
-    const data = (await write?.getFormData()) as TableData
+    const data = (await write?.getFormData()) as MemberInfoTableData
     const res = await saveTableApi(data)
       .catch(() => {})
       .finally(() => {

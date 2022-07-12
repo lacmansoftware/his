@@ -1,30 +1,18 @@
 <script setup lang="ts">
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
-import { Dialog } from '@/components/Dialog'
-import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElTag, ElLink, ElMessage } from 'element-plus'
+// import { useI18n } from '@/hooks/web/useI18n'
 import { Table } from '@/components/Table'
 import { useTable } from '@/hooks/web/useTable'
-import { reactive, ref, unref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { useEmitt } from '@/hooks/web/useEmitt'
+import { reactive, ref, onMounted } from 'vue'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import { inDict, getAgeByBirthday } from '@/utils/common'
-import { printerIcon } from '@/utils/iconList'
-import { searchConfig, crudConfig } from './index'
-import dict from '@/config/dictionary.json'
-import { useDictStoreWithOut } from '@/store/modules/dict'
-import { getPinyinCode, getInOptionFormat } from '@/utils/common'
+import { getInOptionFormat } from '@/utils/common'
 
 import { getTableListApi } from '@/api/workorder/sms/reply'
-import { SMSReplyData } from '@/api/workorder/sms/reply/types'
 
 defineOptions({
   name: 'SMSReplyIndex'
 })
-
-const dictStore = useDictStoreWithOut()
 
 const store = {
   feePayHospitalId: ref<ComponentOptions[]>([])
@@ -39,9 +27,7 @@ onMounted(() => {
   setStore('feePayHospitalId', '/sys/hospital', 'id', 'name')
 })
 
-const { push } = useRouter()
-
-const { register, tableObject, methods } = useTable<MemberInfoTableData>({
+const { register, tableObject, methods } = useTable<any>({
   getListApi: getTableListApi,
   response: {
     list: 'data',
@@ -53,7 +39,7 @@ const { getList, setSearchParams } = methods
 
 getList()
 
-const { t } = useI18n()
+// const { t } = useI18n()
 
 const crudSchemas = reactive<CrudSchema[]>([
   {
@@ -117,7 +103,7 @@ const crudSchemas = reactive<CrudSchema[]>([
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
-const loading = ref(false)
+// const loading = ref(false)
 </script>
 
 <template>

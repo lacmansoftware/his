@@ -1,31 +1,25 @@
 <script setup lang="ts">
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
-import { Dialog } from '@/components/Dialog'
-import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElTag, ElLink, ElMessage } from 'element-plus'
+// import { useI18n } from '@/hooks/web/useI18n'
+import { ElLink, ElMessage } from 'element-plus'
 import { Table } from '@/components/Table'
 import { getTableListApi, getPrintApi } from '@/api/protocol'
 import { useTable } from '@/hooks/web/useTable'
-import { MemberInfoTableData } from '@/api/protocol/types'
-import { reactive, ref, unref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { useEmitt } from '@/hooks/web/useEmitt'
+import { MemberProtocolTableData } from '@/api/protocol/types'
+import { reactive, ref, onMounted } from 'vue'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import { inDict, getAgeByBirthday } from '@/utils/common'
+import { inDict } from '@/utils/common'
 import { printerIcon } from '@/utils/iconList'
-import { searchConfig, crudConfig } from './index'
-import Write from './components/Write.vue'
-import Detail from './components/Detail.vue'
 import dict from '@/config/dictionary.json'
-import { useDictStoreWithOut } from '@/store/modules/dict'
-import { getPinyinCode, getInOptionFormat } from '@/utils/common'
+// import { useDictStoreWithOut } from '@/store/modules/dict'
+import { getInOptionFormat } from '@/utils/common'
 
 defineOptions({
   name: 'MemberProtocolManagement'
 })
 
-const dictStore = useDictStoreWithOut()
+// const dictStore = useDictStoreWithOut()
 
 const store = {
   feePayHospitalId: ref<ComponentOptions[]>([])
@@ -40,9 +34,7 @@ onMounted(() => {
   setStore('feePayHospitalId', '/sys/hospital', 'id', 'name')
 })
 
-const { push } = useRouter()
-
-const { register, tableObject, methods } = useTable<MemberInfoTableData>({
+const { register, tableObject, methods } = useTable<MemberProtocolTableData>({
   getListApi: getTableListApi,
   response: {
     list: 'data',
@@ -54,7 +46,7 @@ const { getList, setSearchParams } = methods
 
 getList()
 
-const { t } = useI18n()
+// const { t } = useI18n()
 
 const crudSchemas = reactive<CrudSchema[]>([
   {
@@ -86,7 +78,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: store.feePayHospitalId
+        options: store.feePayHospitalId.value
       },
       colProps: { span: 6 },
       show: true
@@ -211,14 +203,14 @@ const crudSchemas = reactive<CrudSchema[]>([
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
-const printAction = async (row: TableData) => {
+const printAction = async (row: MemberProtocolTableData) => {
   const res = await getPrintApi(row.id)
   if (res.success) {
-    ElMessage.success(res.msg)
+    ElMessage.success(res.msg as string)
   }
 }
 
-const loading = ref(false)
+// const loading = ref(false)
 </script>
 
 <template>

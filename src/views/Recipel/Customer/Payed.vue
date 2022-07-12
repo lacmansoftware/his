@@ -374,7 +374,7 @@ const save = async () => {
         })
       if (res) {
         dialogVisible.value = false
-        ElMessage.success(res.msg)
+        ElMessage.success(res.msg as string)
         tableObject.currentPage = 1
         getList()
       }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Form } from '@/components/Form'
 import { ContentDetailWrap } from '@/components/ContentDetailWrap'
-import { onMounted, PropType, reactive, watch, ref, unref } from 'vue'
+import { onMounted, reactive, ref, unref } from 'vue'
 import { ElButton, ElMessage, ElDivider } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
 import { useForm } from '@/hooks/web/useForm'
@@ -10,7 +10,6 @@ import { useEmitt } from '@/hooks/web/useEmitt'
 import { useRouter, useRoute } from 'vue-router'
 import { saveUpdateStatusApi } from '@/api/appoint/appoint/hospital'
 import { UpdateStatusType } from '@/api/appoint/appoint/hospital/types'
-import { IDomEditor } from '@wangeditor/editor'
 import { getInOptionFormat, returnDateString } from '@/utils/common'
 import { getApi } from '@/api/common'
 
@@ -64,7 +63,7 @@ const handleQuerySelect = (item: Recordable) => {
     latestHandleTime: returnDateString(60),
     nextContactTime: returnDateString(15)
   })
-  contactUserId.value = item.id
+  // contactUserId.value = item.id
 }
 
 const schema = reactive<FormSchema[]>([
@@ -128,18 +127,17 @@ const schema = reactive<FormSchema[]>([
     label: '門店',
     component: 'Select',
     componentProps: {
-      options: store.feePayHospitalId
+      options: store.feePayHospitalId as any
     },
     colProps: { span: 6 }
   },
   {
     field: 'doctorId',
     label: '大夫',
-    show: true,
     component: 'Select',
     componentProps: {
       filterable: true,
-      options: store.doctorId
+      options: store.doctorId as any
     },
     colProps: { span: 6 },
     formItemProps: {
@@ -276,13 +274,13 @@ const save = async () => {
       const res = await saveUpdateStatusApi({
         id: query.id,
         datareplyChannel: data.source
-      })
+      } as UpdateStatusType)
         .catch(() => {})
         .finally(() => {
           loading.value = false
         })
       if (res) {
-        ElMessage.success(res.msg)
+        ElMessage.success(res.msg as string)
         emitter.emit('getList', 'confirm')
         // push('/appoint/example-page')
         go(-1)
@@ -297,13 +295,14 @@ onMounted(() => {
   //   go(-1)
   // }
 })
+const rules = []
 </script>
 
 <template>
   <ContentDetailWrap title="收銀結算" @back="push('/cash/notcharged/index')">
     <ElDivider content-position="left" class="mt-0">患者信息</ElDivider>
     <PatientSelect ref="patientRef" />
-    <ChargeItemTable :member-id="unref(patientRef)?.memberId" />
+    <ChargeItemTable :member-id="unref(patientRef)!.memberId" />
 
     <Form :rules="rules" @register="register" />
 

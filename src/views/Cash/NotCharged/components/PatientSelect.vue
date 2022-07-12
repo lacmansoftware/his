@@ -1,36 +1,26 @@
 <script setup lang="ts">
 import { Form } from '@/components/Form'
-import { ContentDetailWrap } from '@/components/ContentDetailWrap'
-import { onMounted, PropType, reactive, watch, ref, unref } from 'vue'
-import { ElButton, ElMessage } from 'element-plus'
+import { onMounted, reactive, ref } from 'vue'
 import { useValidator } from '@/hooks/web/useValidator'
 import { useForm } from '@/hooks/web/useForm'
-import { useI18n } from '@/hooks/web/useI18n'
-import { useEmitt } from '@/hooks/web/useEmitt'
-import { useRouter, useRoute } from 'vue-router'
-import { saveUpdateStatusApi } from '@/api/appoint/appoint/hospital'
-import { UpdateStatusType } from '@/api/appoint/appoint/hospital/types'
-import { IDomEditor } from '@wangeditor/editor'
-import { getInOptionFormat, returnDateString } from '@/utils/common'
+// import { useI18n } from '@/hooks/web/useI18n'
+// import { getInOptionFormat } from '@/utils/common'
 import { getApi } from '@/api/common'
 
 import dict from '@/config/dictionary.json'
 
 const { required } = useValidator()
-const { emitter } = useEmitt()
-const { push, go } = useRouter()
-const { query } = useRoute()
-const { t } = useI18n()
+// const { t } = useI18n()
 
-const store = {
-  // doctorId: ref<ComponentOptions[]>([]),
-  // feePayHospitalId: ref<ComponentOptions[]>([])
-}
-const memberId = ref(null)
+// const store = {
+// doctorId: ref<ComponentOptions[]>([]),
+// feePayHospitalId: ref<ComponentOptions[]>([])
+// }
+const memberId = ref<any>(null)
 
-const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
-  store[key].value = await getInOptionFormat(url, valueField, labelField)
-}
+// const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
+//   store[key].value = await getInOptionFormat(url, valueField, labelField)
+// }
 
 onMounted(async () => {
   // setStore('certificate', '/sys/dict/type/MEMBER_Certificate', 'code', 'value')
@@ -151,7 +141,7 @@ defineExpose({
 </script>
 
 <template>
-  <Form :rules="rules" @register="register">
+  <Form @register="register">
     <template #memberFilter-default="{ item }">
       <div class="flex w-full" justify="evenly">
         <span class="flex-1">{{ item.memberName }}</span>
