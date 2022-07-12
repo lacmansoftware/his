@@ -167,7 +167,7 @@ const AddItem = () => {
   itemKindDialogVisible.value = false
   itemDetailDialogVisible.value = true
   itemDetailDialogTitle.value = itemKindData.find((item) => item.id === itemKind.value)?.text
-  itemDetailDialogWidth = '80%'
+  itemDetailDialogWidth.value = '80%'
 }
 
 const delLoading = ref(false)
@@ -303,6 +303,6 @@ const save = async () => {
     :title="itemDetailDialogTitle"
     :width="itemDetailDialogWidth"
   >
-    <ProductItem v-if="itemKind === 'life'" />
+    <ProductItem v-if="itemKind === 'life'" :member-id="memberId" />
   </ElDialog>
 </template>
