@@ -22,6 +22,7 @@ import { TableData } from '@/api/table/types'
 import { h, ref, unref, reactive } from 'vue'
 import Write from './Write.vue'
 import Detail from './Detail.vue'
+import ProductItem from './ProductItem.vue'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 
 const { register, tableObject, methods } = useTable<TableData>({
@@ -166,6 +167,7 @@ const AddItem = () => {
   itemKindDialogVisible.value = false
   itemDetailDialogVisible.value = true
   itemDetailDialogTitle.value = itemKindData.find((item) => item.id === itemKind.value)?.text
+  itemDetailDialogWidth = '80%'
 }
 
 const delLoading = ref(false)
@@ -301,6 +303,6 @@ const save = async () => {
     :title="itemDetailDialogTitle"
     :width="itemDetailDialogWidth"
   >
-    Hello
+    <ProductItem v-if="itemKind === 'life'" />
   </ElDialog>
 </template>
