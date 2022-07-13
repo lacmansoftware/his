@@ -36,6 +36,7 @@ router.beforeEach(async (to, from, next) => {
 
       if (!dictStore.getIsSetDict) {
         // 获取所有字典
+        dictStore.productList.value = []
         dictStore.setDictObj({})
         dictStore.setIsSetDict(true)
       }
