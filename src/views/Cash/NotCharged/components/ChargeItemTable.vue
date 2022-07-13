@@ -43,7 +43,7 @@ const itemKindData = [
 ]
 // let chargeItemList = ref<ChargeItemType[]>([])
 let chargeItemList = computed(() => {
-  return dictStore.dictObj.productList
+  return dictStore.productList.value
 })
 
 const loading = ref(false)
@@ -187,7 +187,8 @@ const action = (row: ChargeItemType, type: string) => {
 
 const saveProductItem = () => {
   const product = unref(productRef)
-  dictStore.dictObj.productList = product?.tableDataList as ChargeItemType[]
+  console.log(dictStore.productList)
+  dictStore.productList.value = product?.tableDataList as ChargeItemType[]
   product?.setTableDataEmpty()
   itemDetailDialogVisible.value = false
 
@@ -209,14 +210,7 @@ const saveProductItem = () => {
   // })
 }
 
-onMounted(() => {
-  setTimeout(() => {
-    dictStore.dictObj.memberId = 100
-    // const dictObj = dictStore.getDictObj
-    // dictObj['memberId'] = 30
-    // dictStore.setDictObj(dictObj)
-  }, 3000)
-})
+onMounted(() => {})
 </script>
 
 <template>

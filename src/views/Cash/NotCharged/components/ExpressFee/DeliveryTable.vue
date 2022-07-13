@@ -103,7 +103,7 @@ const columns: TableColumn[] = [
 
 const loading = ref(true)
 
-let tableDataList = ref<ProductItemType[]>([])
+let tableDataList = ref<ProductItemType[]>()
 
 const getTableList = async (params?: Params) => {
   loading.value = false

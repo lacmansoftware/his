@@ -303,8 +303,6 @@ const rules = []
 </script>
 
 <template>
-  {{ dictStore.getDictObj['memberId'] }}
-  {{ dictStore.getDictObj['testId'] }}
   <ContentDetailWrap title="收銀結算" @back="push('/cash/notcharged/index')">
     <ElDivider content-position="left" class="mt-0">患者信息</ElDivider>
     <PatientSelect ref="patientRef" />
