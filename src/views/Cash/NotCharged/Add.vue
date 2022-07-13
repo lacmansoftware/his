@@ -12,6 +12,7 @@ import { saveUpdateStatusApi } from '@/api/appoint/appoint/hospital'
 import { UpdateStatusType } from '@/api/appoint/appoint/hospital/types'
 import { getInOptionFormat, returnDateString } from '@/utils/common'
 import { getApi } from '@/api/common'
+import { useDictStoreWithOut } from '@/store/modules/dict'
 
 import dict from '@/config/dictionary.json'
 import PatientSelect from './components/PatientSelect.vue'
@@ -22,6 +23,7 @@ const { emitter } = useEmitt()
 const { push, go } = useRouter()
 const { query } = useRoute()
 const { t } = useI18n()
+const dictStore = useDictStoreWithOut()
 
 const store = {
   doctorId: ref<ComponentOptions[]>([]),
@@ -289,17 +291,20 @@ const save = async () => {
   })
 }
 
-onMounted(() => {
-  // if (!query?.id) {
-  //   ElMessage.error('no id')
-  //   go(-1)
-  // }
-})
+// onMounted(() => {
+//   setTimeout(() => {
+//     dictStore.setDictObj({
+//       memberId: 10
+//     })
+//   }, 3000)
+// })
 
 const rules = []
 </script>
 
 <template>
+  {{ dictStore.getDictObj['memberId'] }}
+  {{ dictStore.getDictObj['testId'] }}
   <ContentDetailWrap title="收銀結算" @back="push('/cash/notcharged/index')">
     <ElDivider content-position="left" class="mt-0">患者信息</ElDivider>
     <PatientSelect ref="patientRef" />

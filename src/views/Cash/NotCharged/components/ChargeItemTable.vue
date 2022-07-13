@@ -14,12 +14,13 @@ import {
 import { Table } from '@/components/Table'
 import { saveTableApi } from '@/api/cash/notcharged'
 import { ChargeItemType } from '@/api/cash/notcharged/types'
-import { ref, unref, reactive, computed } from 'vue'
+import { ref, unref, reactive, computed, onMounted } from 'vue'
 // import Write from './Write.vue'
 // import Detail from './Detail.vue'
 import ProductItem from './ProductItem.vue'
 import ExpressFee from './ExpressFee/Index.vue'
 import { propTypes } from '@/utils/propTypes'
+import { useDictStoreWithOut } from '@/store/modules/dict'
 
 interface Params {
   pageNum?: number
@@ -30,6 +31,7 @@ const props = defineProps({
   memberId: propTypes.string.def('')
 })
 
+const dictStore = useDictStoreWithOut()
 const productRef = ref<ComponentRef<typeof ProductItem>>()
 const expressRef = ref<ComponentRef<typeof ExpressFee>>()
 const { t } = useI18n()
@@ -41,7 +43,7 @@ const itemKindData = [
 ]
 // let chargeItemList = ref<ChargeItemType[]>([])
 let chargeItemList = computed(() => {
-  return unref(productRef)?.tableDataList as ChargeItemType[]
+  return dictStore.dictObj.productList
 })
 
 const loading = ref(false)
@@ -185,6 +187,7 @@ const action = (row: ChargeItemType, type: string) => {
 
 const saveProductItem = () => {
   const product = unref(productRef)
+  dictStore.dictObj.productList = product?.tableDataList as ChargeItemType[]
   product?.setTableDataEmpty()
   itemDetailDialogVisible.value = false
 
@@ -205,6 +208,15 @@ const saveProductItem = () => {
   //   }
   // })
 }
+
+onMounted(() => {
+  setTimeout(() => {
+    dictStore.dictObj.memberId = 100
+    // const dictObj = dictStore.getDictObj
+    // dictObj['memberId'] = 30
+    // dictStore.setDictObj(dictObj)
+  }, 3000)
+})
 </script>
 
 <template>
