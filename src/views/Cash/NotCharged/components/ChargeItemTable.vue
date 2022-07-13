@@ -18,7 +18,7 @@ import { ref, unref, reactive, computed } from 'vue'
 // import Write from './Write.vue'
 // import Detail from './Detail.vue'
 import ProductItem from './ProductItem.vue'
-import ExpressFee from './ExpressFee.vue'
+import ExpressFee from './ExpressFee/Index.vue'
 import { propTypes } from '@/utils/propTypes'
 
 interface Params {

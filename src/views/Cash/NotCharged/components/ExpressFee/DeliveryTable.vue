@@ -172,27 +172,6 @@ defineExpose({
 </script>
 
 <template>
-  <ElFormItem prop="projectFilter" label="添加：">
-    <ElAutocomplete
-      v-model="projectFilter"
-      :fetch-suggestions="
-        async (queryString: string, cb: Fn): Promise<any> => {
-          const res = await getInOptionFormat(`/charges/projects?keyWords=${queryString}&memberId=${memberId}`, 'title', 'title', 'filter')
-          cb(res)
-        }
-      "
-      @select="handleProjectFilterSelect"
-      :trigger-on-focus="false"
-      placeholder="名稱/拼音"
-    >
-      <template #default="{ item }">
-        <div class="flex w-full" justify="evenly">
-          <span class="flex-1">{{ item.title }}</span>
-          <span class="flex-1">{{ item.originUnitPrice }}</span>
-        </div>
-      </template>
-    </ElAutocomplete>
-  </ElFormItem>
   <Table :columns="columns" :data="tableDataList" :loading="loading" :selection="false">
     <template #amount="data">
       <ElInputNumber
