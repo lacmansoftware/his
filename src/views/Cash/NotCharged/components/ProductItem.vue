@@ -2,7 +2,7 @@
 import { useI18n } from '@/hooks/web/useI18n'
 import { Table } from '@/components/Table'
 import { ProductItemType } from '@/api/cash/notcharged/types'
-import { ref } from 'vue'
+import { onMounted, ref, watch, watchEffect } from 'vue'
 import { ElButton, ElFormItem, ElAutocomplete, ElMessage, ElInputNumber } from 'element-plus'
 import { getInOptionFormat } from '@/utils/common'
 import { propTypes } from '@/utils/propTypes'
@@ -96,7 +96,8 @@ const columns: TableColumn[] = [
   },
   {
     label: '操作',
-    field: 'action'
+    field: 'action',
+    width: '100px'
   }
 ]
 
@@ -110,14 +111,8 @@ const getTableList = async (params?: Params) => {
 
 getTableList()
 
-const acitonFn = (data: TableSlotDefault) => {
-  //   $index: 0
-  // cellIndex: 11
-  // column: {order: '', id: 'el-table_3_column_33', type: 'default', property: 'action', align: 'is-left', …}
-  // expanded: false
-  // row: Proxy {id: 'NO20180528114428', name: '兒童退燒藥浴包（官捨）', dataTypeName: '自有产品', dataType: 'life', title: '兒童退燒藥浴包（官捨）', …}
-  // store: {ns: {…}, assertRowKey: ƒ, updateColumns: ƒ, scheduleLayout: ƒ, isSelected: ƒ, …}
-  // _self: {uid: 1990, vnode: {…}, type: {…}, parent: {…}, appContext: {…}, …}
+const delectFn = (data: TableSlotDefault) => {
+  // tableDataList.value
   console.log(data)
 }
 
@@ -138,14 +133,24 @@ const handleProjectFilterSelect = (item: Recordable) => {
   } as ProductItemType)
 }
 
+watch(tableDataList.value, (value, oldValue) => {
+  tableDataList.value.forEach((row) => {
+    row.originPrice = mul(row.unitPrice, row.amount)
+    row.price = mul(row.unitPrice, row.amount, row.discount / 100.0)
+  })
+  // console.log('tableDataList changed wegwg: ', value, oldValue)
+})
+
+watchEffect(() => {
+  // console.log('table list length: wewegge ', tableDataList.value.length)
+})
+
 const handleAmountChange = (row: ProductItemType, value: number) => {
   if (row.isPresell !== 'Y' && value > row.currentQty) {
     ElMessage.error('禁止超過當前庫存量！')
     row.amount = row.currentQty
     return
   }
-  row.originPrice = mul(row.unitPrice, value)
-  row.price = mul(row.unitPrice, value, row.discount / 100.0)
 }
 
 const handleDiscountChange = (row: ProductItemType, value: number) => {
@@ -188,6 +193,7 @@ defineExpose({
         class="!w-[100%]"
         v-model="data.row.amount"
         @change="(value) => handleAmountChange(data.row, value as number)"
+        :min="1"
       />
     </template>
     <template #discount="data">
@@ -195,11 +201,13 @@ defineExpose({
         class="!w-[100%]"
         v-model="data.row.discount"
         @change="(value) => handleDiscountChange(data.row, value as number)"
+        :min="80"
+        :max="200"
       />
     </template>
     <template #action="data">
-      <ElButton type="primary" @click="acitonFn(data as TableSlotDefault)">
-        {{ t('tableDemo.action') }}
+      <ElButton type="primary" @click="delectFn(data as TableSlotDefault)">
+        {{ t('formDemo.delete') }}
       </ElButton>
     </template>
   </Table>
