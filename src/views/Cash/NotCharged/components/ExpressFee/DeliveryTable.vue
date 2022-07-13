@@ -7,12 +7,14 @@ import { ElButton, ElFormItem, ElAutocomplete, ElMessage, ElInputNumber } from '
 import { getInOptionFormat } from '@/utils/common'
 import { propTypes } from '@/utils/propTypes'
 import { mul } from '@/utils/number'
+import { useDictStoreWithOut } from '@/store/modules/dict'
 
 interface Params {
   pageNum?: number
   pageSize?: number
 }
 
+const dictStore = useDictStoreWithOut()
 const { t } = useI18n()
 const props = defineProps({
   memberId: propTypes.string.def('')
@@ -103,7 +105,8 @@ const columns: TableColumn[] = [
 
 const loading = ref(true)
 
-let tableDataList = ref<ProductItemType[]>()
+// let tableDataList = dictStore.productList
+let tableDataList = ref<ProductItemType[]>(dictStore.productList.value)
 
 const getTableList = async (params?: Params) => {
   loading.value = false

@@ -187,8 +187,9 @@ const action = (row: ChargeItemType, type: string) => {
 
 const saveProductItem = () => {
   const product = unref(productRef)
-  console.log(dictStore.productList)
-  dictStore.productList.value = product?.tableDataList as ChargeItemType[]
+  dictStore.productList.value = dictStore.productList.value?.concat(
+    product?.tableDataList as ChargeItemType[]
+  )
   product?.setTableDataEmpty()
   itemDetailDialogVisible.value = false
 
