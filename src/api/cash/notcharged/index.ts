@@ -1,5 +1,5 @@
 import { useAxios } from '@/hooks/web/useAxios'
-import type { NotChargedTableData } from './types'
+import type { AddressItemType, NotChargedTableData } from './types'
 
 const request = useAxios()
 
@@ -49,6 +49,24 @@ export const updateTableApi = async (data: any): Promise<IResponse> => {
   const res = await request.post({
     url: '/member/workorder/update',
     headersType: 'application/x-www-form-urlencoded',
+    data
+  })
+  return res && res.data
+}
+
+export const postAddressItemsApi = async (data: Partial<CartItemType>): Promise<IResponse> => {
+  const res = await request.post({
+    url: '/order/address/items',
+    headersType: 'multipart/form-data;',
+    data
+  })
+  return res && res.data
+}
+
+export const postProductPriceApi = async (data: any): Promise<IResponse> => {
+  const res = await request.post({
+    url: '/product/price',
+    headersType: 'multipart/form-data;',
     data
   })
   return res && res.data

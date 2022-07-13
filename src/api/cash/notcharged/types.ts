@@ -32,6 +32,11 @@ export type ProductItemType = {
   value: string
   unitPrice: number
   originPrice: number
+  _status: string
+  activityId: string
+  free: string
+  referee: string
+  refereeName: string
 }
 
 export type ChargeItemType = {
@@ -112,4 +117,15 @@ export type CartItemType = {
   _checked: boolean
   _disabled: boolean
   _request: string
+}
+
+export type AddressItemType = {
+  drugState: string
+  totalNum: number
+  recipelId: string
+  dataType: string
+  num: number
+  expressNum: number
+  onceNum: string
+  tempTypeName: string
 }

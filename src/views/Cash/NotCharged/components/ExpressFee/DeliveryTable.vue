@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { useI18n } from '@/hooks/web/useI18n'
 import { Table } from '@/components/Table'
-import { ProductItemType } from '@/api/cash/notcharged/types'
-import { ref, watch, watchEffect } from 'vue'
+import { postAddressItemsApi, postProductPriceApi } from '@/api/cash/notcharged'
+import { ProductItemType, CartItemType } from '@/api/cash/notcharged/types'
+import { onMounted, ref, watch, watchEffect } from 'vue'
 import { ElButton, ElFormItem, ElAutocomplete, ElMessage, ElInputNumber } from 'element-plus'
 import { getInOptionFormat } from '@/utils/common'
 import { propTypes } from '@/utils/propTypes'
 import { mul } from '@/utils/number'
 import { useDictStoreWithOut } from '@/store/modules/dict'
+import { postApi } from '@/api/common'
 
 interface Params {
   pageNum?: number
@@ -22,84 +24,82 @@ const props = defineProps({
 
 const columns: TableColumn[] = [
   {
-    label: '名稱',
-    field: 'title'
-  },
-  {
-    label: '單位',
-    field: 'unit'
-  },
-  {
-    label: '產品類型',
-    field: 'businessSubType',
+    label: '處方編號',
+    field: 'recipelId',
     formatter: function (row) {
-      if (row.businessSubType == 'PRODUCT') {
-        return '商品'
-      } else if (row.businessSubType == 'YNZJ') {
-        return '自有產品'
-      } else if (row.businessSubType == 'DLDX') {
-        return '代理代銷'
-      }
+      return row.recipelId
+      // if (e.row.drugState === '國貨產品') {
+      //   return '<span>' + e.value + '</span>'
+      // }
+      // return (
+      //   '<span onclick="getRecipelDetail(\'' +
+      //   e.value +
+      //   '\');" style="cursor:pointer;color:#D1A673;">' +
+      //   e.value +
+      //   '</span>'
+      // )
     }
   },
   {
-    label: '單價',
-    field: 'originUnitPrice'
+    label: '類型',
+    field: 'tempTypeName'
   },
   {
-    label: '庫存量',
-    field: 'currentQty'
+    label: '劑型',
+    field: 'drugState'
   },
   {
-    label: '購買量',
-    field: 'amount',
-    width: '150px'
+    label: '總數',
+    field: 'totalNum'
   },
   {
-    label: '折扣率(%)',
-    field: 'discount',
-    width: '150px'
-    // formatter: function (row) {
-    //   var row = row
-    //   if (row.activityId) {
-    //     //活動不允許設置折扣率
-    //     return (
-    //       '<input type="text" readonly="readonly" style="width:50%;background: #ccc" value="' +
-    //       row.amount +
-    //       '" data-allow="number"/>%'
-    //     )
-    //   }
-    //   return (
-    //     '<input type="text" style="width:50%;" value="' + row.discount + '" data-allow="number"/>%'
-    //   )
-    // }
+    label: '已快遞劑數',
+    field: 'expressNum'
   },
   {
-    label: '總價(原價)',
-    field: 'originPrice'
+    label: 'ml/每袋',
+    field: 'onceNum'
   },
   {
-    label: '折后價',
-    field: 'price'
-  },
-  {
-    label: '是否預售',
-    field: 'isPresell',
+    label: '是否代煎',
+    field: 'proxy',
+
     formatter: function (row) {
-      if (row.isPresell === 'Y') {
-        return '是'
-      }
-      return '否'
+      // if (e.row.drugState === '湯劑') {
+      //   if (e.value === 'Y') {
+      //     return (
+      //       '<select">' +
+      //       '<option value="Y">是</option>' +
+      //       '<option value="N">否</option>' +
+      //       '</select>'
+      //     )
+      //   } else if (e.value === 'N') {
+      //     return (
+      //       '<select">' +
+      //       '<option value="N">否</option>' +
+      //       '<option value="Y">是</option>' +
+      //       '</select>'
+      //     )
+      //   } else {
+      //     return (
+      //       '<select">' +
+      //       '<option>請選擇</option>' +
+      //       '<option value="Y">是</option>' +
+      //       '<option value="N">否</option>' +
+      //       '</select>'
+      //     )
+      //   }
+      // }
+      return '--'
     }
   },
   {
-    label: '大夫推薦',
-    field: 'recommendDoctor'
-  },
-  {
-    label: '操作',
-    field: 'action',
-    width: '100px'
+    label: '本次快遞劑數',
+    field: 'num',
+    formatter: function (row) {
+      const value = row.num || ''
+      return '<input type="text" style="width:50%;" value="' + value + '" data-allow="number"/>'
+    }
   }
 ]
 
@@ -119,23 +119,7 @@ const deleteFn = (data: TableSlotDefault) => {
   console.log(data)
 }
 
-const projectFilter = ref<string>()
 const discountNumber = ref(98)
-
-const handleProjectFilterSelect = (item: Recordable) => {
-  tableDataList.value.push({
-    ...item,
-    unitPrice: item.originUnitPrice,
-    recommendDoctor: '--',
-    dataType: 'life',
-    amount: 1,
-    drugId: item.id,
-    discount: discountNumber.value,
-    originPrice: item.originUnitPrice,
-    price: mul(item.originUnitPrice, discountNumber.value / 100.0)
-  } as ProductItemType)
-  projectFilter.value = ''
-}
 
 watch(tableDataList.value, (value, oldValue) => {
   tableDataList.value.forEach((row) => {
@@ -172,6 +156,39 @@ defineExpose({
   tableDataList,
   setTableDataEmpty
 })
+
+// onMounted(async () => {
+//   const res1 = await postApi('/price/cart', {
+//     cartArray: dictStore.productList.value.map((item: ProductItemType) => ({
+//       ...item,
+//       _status: 'add',
+//       activityId: '',
+//       free: 'N',
+//       referee: '',
+//       refereeName: ''
+//     })) as ProductItemType[],
+//     payArray: [],
+//     memberId: props.memberId
+//   })
+//   console.log(res1)
+
+//   const res = await postProductPriceApi({
+//     memberId: props.memberId,
+//     cartArray: dictStore.productList.value.map((item: ProductItemType) => ({
+//       ...item,
+//       _status: 'add',
+//       activityId: '',
+//       free: 'N',
+//       referee: '',
+//       refereeName: ''
+//     })) as ProductItemType[]
+//   })
+//   postAddressItemsApi({
+//     items: dictStore.productList.value as CartItemType[]
+//   }).then((res) => {
+//     console.log(res)
+//   })
+// })
 </script>
 
 <template>
