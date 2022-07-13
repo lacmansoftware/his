@@ -18,3 +18,12 @@ export const getApi = async (url: string): Promise<IResponse> => {
   const res = await request.get({ url: url })
   return res && res.data
 }
+
+export const postApi = async (url: string, data: any): Promise<IResponse> => {
+  const res = await request.post({
+    url: url,
+    headersType: 'application/x-www-form-urlencoded',
+    data
+  })
+  return res && res.data
+}
