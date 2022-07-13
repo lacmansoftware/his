@@ -289,7 +289,7 @@ onMounted(() => {})
     :width="itemDetailDialogWidth"
   >
     <ProductItem v-if="itemKind === 'life'" :member-id="memberId" ref="productRef" />
-    <ExpressFee v-if="itemKind === 'express'" ref="expressRef" />
+    <ExpressFee v-if="itemKind === 'express'" :member-id="memberId" ref="expressRef" />
 
     <template #footer>
       <ElButton type="primary" @click="saveProductItem">
