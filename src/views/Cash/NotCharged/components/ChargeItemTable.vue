@@ -21,6 +21,7 @@ import ProductItem from './ProductItem.vue'
 import ExpressFee from './ExpressFee/Index.vue'
 import { propTypes } from '@/utils/propTypes'
 import { useDictStoreWithOut } from '@/store/modules/dict'
+import Other from './Other.vue'
 
 interface Params {
   pageNum?: number
@@ -34,6 +35,7 @@ const props = defineProps({
 const dictStore = useDictStoreWithOut()
 const productRef = ref<ComponentRef<typeof ProductItem>>()
 const expressRef = ref<ComponentRef<typeof ExpressFee>>()
+const otherRef = ref<ComponentRef<typeof Other>>()
 const { t } = useI18n()
 const itemKind = ref<any>(null)
 const itemKindData = [
@@ -290,6 +292,7 @@ onMounted(() => {})
   >
     <ProductItem v-if="itemKind === 'life'" :member-id="memberId" ref="productRef" />
     <ExpressFee v-if="itemKind === 'express'" :member-id="memberId" ref="expressRef" />
+    <Other v-if="itemKind === 'other'" :member-id="memberId" ref="otherRef" />
 
     <template #footer>
       <ElButton type="primary" @click="saveProductItem">
