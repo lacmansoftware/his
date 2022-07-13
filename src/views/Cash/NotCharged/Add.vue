@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Form } from '@/components/Form'
 import { ContentDetailWrap } from '@/components/ContentDetailWrap'
-import { onMounted, reactive, ref, unref } from 'vue'
+import { onMounted, reactive, ref, unref, watch, watchEffect } from 'vue'
 import { ElButton, ElMessage, ElDivider } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
 import { useForm } from '@/hooks/web/useForm'
@@ -295,6 +295,7 @@ onMounted(() => {
   //   go(-1)
   // }
 })
+
 const rules = []
 </script>
 
@@ -302,7 +303,7 @@ const rules = []
   <ContentDetailWrap title="收銀結算" @back="push('/cash/notcharged/index')">
     <ElDivider content-position="left" class="mt-0">患者信息</ElDivider>
     <PatientSelect ref="patientRef" />
-    <ChargeItemTable :member-id="unref(patientRef)!.memberId" />
+    <ChargeItemTable :member-id="unref(patientRef)?.memberId" />
 
     <Form :rules="rules" @register="register" />
 
