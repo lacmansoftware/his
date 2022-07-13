@@ -22,7 +22,7 @@ export const getApi = async (url: string): Promise<IResponse> => {
 export const postApi = async (url: string, data: any): Promise<IResponse> => {
   const res = await request.post({
     url: url,
-    headersType: 'application/x-www-form-urlencoded',
+    headersType: 'multipart/form-data;',
     data
   })
   return res && res.data
