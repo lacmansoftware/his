@@ -15,9 +15,10 @@ import { Table } from '@/components/Table'
 import { saveTableApi } from '@/api/cash/notcharged'
 import { ChargeItemType } from '@/api/cash/notcharged/types'
 import { ref, unref, reactive, computed } from 'vue'
-import Write from './Write.vue'
+// import Write from './Write.vue'
 // import Detail from './Detail.vue'
 import ProductItem from './ProductItem.vue'
+import ExpressFee from './ExpressFee.vue'
 import { propTypes } from '@/utils/propTypes'
 
 interface Params {
@@ -30,7 +31,7 @@ const props = defineProps({
 })
 
 const productRef = ref<ComponentRef<typeof ProductItem>>()
-const writeRef = ref<ComponentRef<typeof Write>>()
+const expressRef = ref<ComponentRef<typeof ExpressFee>>()
 const { t } = useI18n()
 const itemKind = ref<any>(null)
 const itemKindData = [
@@ -281,6 +282,8 @@ const saveProductItem = () => {
     :width="itemDetailDialogWidth"
   >
     <ProductItem v-if="itemKind === 'life'" :member-id="memberId" ref="productRef" />
+    <ExpressFee v-if="itemKind === 'express'" ref="expressRef" />
+
     <template #footer>
       <ElButton type="primary" @click="saveProductItem">
         {{ t('exampleDemo.save') }}
