@@ -33,3 +33,7 @@ export type ProductItemType = {
   unitPrice: number
   originPrice: number
 }
+
+export type ChargeItemType = {
+  id: string
+}

@@ -154,6 +154,10 @@ const handleDiscountChange = (row: ProductItemType, value: number) => {
     ElMessage.error('折扣範圍80-200')
   }
 }
+
+defineExpose({
+  tableDataList
+})
 </script>
 
 <template>
