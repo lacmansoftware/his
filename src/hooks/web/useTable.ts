@@ -153,7 +153,11 @@ export const useTable = <T = any>(config?: UseTableConfig<T>) => {
       methods.getList()
     },
     // 删除数据
-    delList: async (ids: string[] | number[], multiple: boolean, message = true) => {
+    delList: async (
+      ids: string[] | number[] | { multiple: boolean; data: string },
+      multiple: boolean,
+      message = true
+    ) => {
       const tableRef = await getTable()
       if (multiple) {
         if (!tableRef?.selections.length) {

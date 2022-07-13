@@ -1,37 +1,30 @@
 <script setup lang="tsx">
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
-import { Dialog } from '@/components/Dialog'
-import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElTag, ElLink, ElMessage, ElDatePicker } from 'element-plus'
+// import { useI18n } from '@/hooks/web/useI18n'
+import { ElDatePicker } from 'element-plus'
 import { Table } from '@/components/Table'
-import { getTableListApi, getPrintApi } from '@/api/appoint/appoint'
 import { useTable } from '@/hooks/web/useTable'
-import { MemberInfoTableData } from '@/api/appoint/appoint/types'
 import { reactive, ref, unref, onMounted, watch, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { useEmitt } from '@/hooks/web/useEmitt'
+// import { useRouter } from 'vue-router'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import { inDict, getAgeByBirthday } from '@/utils/common'
-import { printerIcon } from '@/utils/iconList'
-import { searchConfig, crudConfig } from './index'
-import Write from './components/Write.vue'
-import Detail from './components/Detail.vue'
-import dict from '@/config/dictionary.json'
-import { useDictStoreWithOut } from '@/store/modules/dict'
-import { getPinyinCode, getInOptionFormat, formatObject, getWeekSEDate } from '@/utils/common'
+import { getInOptionFormat, formatObject, getWeekSEDate } from '@/utils/common'
 import { getApi } from '@/api/common'
 
+import { getTableListApi } from '@/api/appoint/appoint/appoint'
+import { AppointDoctorTableData } from '@/api/appoint/appoint/appoint/types'
+
+import ColumnView from './ColumnView.vue'
+
 defineOptions({
-  name: 'WorkOrderIndex'
+  name: 'AppointManageAppointIndex'
 })
 
-const dictStore = useDictStoreWithOut()
 const curWeek = ref(getWeekSEDate())
 const curWeekDate = ref(curWeek.value.startDate)
 
 const store = {
-  allSelectData: ref<ComponentOptions[]>([]),
+  allSelectData: ref<any>([]),
   feePayHospitalId: ref<ComponentOptions[]>([])
 }
 
@@ -73,9 +66,7 @@ onMounted(async () => {
   search()
 })
 
-const { push } = useRouter()
-
-const { register, tableObject, methods } = useTable<MemberInfoTableData>({
+const { register, tableObject, methods } = useTable<AppointDoctorTableData>({
   getListApi: getTableListApi,
   response: {
     list: 'data',
@@ -83,11 +74,10 @@ const { register, tableObject, methods } = useTable<MemberInfoTableData>({
   }
 })
 
-const { getList, setSearchParams } = methods
+// const { getList, setSearchParams } = methods
+const { setSearchParams } = methods
 
-getList()
-
-const { t } = useI18n()
+// const { t } = useI18n()
 
 const crudSchemas = reactive<CrudSchema[]>([
   {
@@ -98,7 +88,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: sysCities
+        options: sysCities as any
       },
       colProps: { span: 6 },
       show: true
@@ -112,7 +102,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: sysHospitals
+        options: sysHospitals as any
       },
       colProps: { span: 6 },
       show: true
@@ -126,7 +116,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: doctorInfos
+        options: doctorInfos as any
       },
       colProps: { span: 6 },
       show: true
@@ -140,7 +130,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     search: {
       component: 'Select',
       componentProps: {
-        options: sysDiseases
+        options: sysDiseases as any
       },
       colProps: { span: 6 },
       show: true
@@ -248,14 +238,7 @@ const crudSchemas = reactive<CrudSchema[]>([
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
-const printAction = async (row: TableData) => {
-  const res = await getPrintApi(row.id)
-  if (res.success) {
-    ElMessage.success(res.msg)
-  }
-}
-
-const loading = ref(false)
+// const loading = ref(false)
 const searchRef = ref<ComponentRef<typeof Search>>()
 
 const setValues = (value) => {
@@ -265,7 +248,7 @@ const setValues = (value) => {
 
 const search = () => {
   const search = unref(searchRef)
-  search.search()
+  search!.search()
 }
 
 watch(curWeekDate, async () => {
@@ -276,31 +259,6 @@ watch(curWeekDate, async () => {
   })
   search()
 })
-
-const HandleColumn = (props: any) => {
-  const { row, colId } = props
-  const data = row?.children.find((item) => {
-    if (item.start === curWeek.value.range[colId]) return true
-  })
-
-  return typeof data !== 'undefined' ? (
-    <div class="flex flex-col align-top">
-      <p>{row?.name}</p>
-      <p>{`已约/上限: ${data?.totalMeet}/${data?.totalLimit}`}</p>
-      <h4>医生列表</h4>
-      {data?.children.map((doctor) => (
-        <>
-          <div key={doctor.id}>
-            <p>{doctor.name}</p>
-            <p>{`已约/上限: ${doctor.meet}/${doctor.limit}`}</p>
-          </div>
-        </>
-      ))}
-    </div>
-  ) : (
-    <div></div>
-  )
-}
 </script>
 
 <template>
@@ -322,7 +280,6 @@ const HandleColumn = (props: any) => {
         format="[Week] ww - YYYY/MM/DD"
         placeholder="Pick a week"
         value-format="YYYY/MM/DD"
-        @change="test"
       />
     </div>
 
@@ -341,43 +298,43 @@ const HandleColumn = (props: any) => {
       <template #hospital="{ row }">
         <div class="flex flex-col align-middle">
           <p>{{ row?.name }}</p>
-          <p>{{ `上限 ${row?.totalLimit} 人` }}</p>
-          <p>{{ `已约 ${row?.totalMeet} 人` }}</p>
+          <p>查看醫生信息</p>
         </div>
       </template>
       <template #col0="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="0" />
+          <!-- <HandleColumn :row="row" :colId="0" /> -->
+          <ColumnView :row="row" :col-id="0" :cur-week="curWeek" />
         </div>
       </template>
       <template #col1="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="1" />
+          <ColumnView :row="row" :colId="1" :cur-week="curWeek" />
         </div>
       </template>
       <template #col2="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="2" />
+          <ColumnView :row="row" :colId="2" :cur-week="curWeek" />
         </div>
       </template>
       <template #col3="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="3" />
+          <ColumnView :row="row" :colId="3" :cur-week="curWeek" />
         </div>
       </template>
       <template #col4="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="4" />
+          <ColumnView :row="row" :colId="4" :cur-week="curWeek" />
         </div>
       </template>
       <template #col5="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="5" />
+          <ColumnView :row="row" :colId="5" :cur-week="curWeek" />
         </div>
       </template>
       <template #col6="{ row }">
         <div>
-          <HandleColumn :row="row" :colId="6" />
+          <ColumnView :row="row" :colId="6" :cur-week="curWeek" />
         </div>
       </template>
     </Table>

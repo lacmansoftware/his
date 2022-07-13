@@ -146,7 +146,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         component: getParentLayout(),
         name: 'WorkOrderSub',
         meta: {
-          title: '會員管理',
+          title: '工單管理',
           alwaysShow: true
         },
         children: [
@@ -208,7 +208,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/appoint',
     component: Layout,
-    redirect: '/workorder/workorder/add',
+    redirect: '/appoint/appoint/hospital/index',
     name: 'Appoint',
     meta: {
       title: '預約掛號',
@@ -226,11 +226,88 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         },
         children: [
           {
+            path: 'hospital/index',
+            component: () => import('@/views/Appoint/Appoint/Hospital/Index.vue'),
+            name: 'AppointManageHospitalIndex',
+            meta: {
+              title: '新建預約(醫館)'
+            }
+          },
+          {
             path: 'appoint/index',
             component: () => import('@/views/Appoint/Appoint/Appoint/Index.vue'),
-            name: 'AppointManageYiguanIndex',
+            name: 'AppointManageAppointIndex',
             meta: {
               title: '新建預約(醫生)'
+            }
+          },
+          {
+            path: 'appoint/confirm',
+            component: () => import('@/views/Appoint/Appoint/Appoint/Confirm.vue'),
+            name: 'AppointManageAppointConfirm',
+            meta: {
+              title: '新建預約(醫館)',
+              noTagsView: false,
+              noCache: true,
+              hidden: true,
+              showMainRoute: true,
+              activeMenu: '/appoint/appoint/appoint/index'
+            }
+          },
+          {
+            path: 'appoint/add',
+            component: () => import('@/views/Appoint/Appoint/Appoint/Add.vue'),
+            name: 'AppointManageAppointAdd',
+            meta: {
+              title: '新建預約',
+              noTagsView: false,
+              noCache: true,
+              hidden: true,
+              showMainRoute: true,
+              activeMenu: '/appoint/appoint/appoint/index'
+            }
+          },
+          {
+            path: 'list/index',
+            component: () => import('@/views/Appoint/Appoint/List/Index.vue'),
+            name: 'AppointManageListIndex',
+            meta: {
+              title: '預約列表'
+            }
+          }
+        ]
+      },
+      {
+        path: 'regist',
+        component: getParentLayout(),
+        name: 'AppointRegist',
+        meta: {
+          title: '掛號管理',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'add',
+            component: () => import('@/views/Appoint/Regist/Add.vue'),
+            name: 'AppointRegistAdd',
+            meta: {
+              title: '新建掛號'
+            }
+          },
+          {
+            path: 'registered/index',
+            component: () => import('@/views/Appoint/Regist/Registered/Index.vue'),
+            name: 'AppointRegistRegisteredIndex',
+            meta: {
+              title: '已掛號'
+            }
+          },
+          {
+            path: 'unregistered/index',
+            component: () => import('@/views/Appoint/Regist/Unregistered/Index.vue'),
+            name: 'AppointRegistUnregisteredIndex',
+            meta: {
+              title: '未掛號'
             }
           }
         ]
@@ -238,199 +315,152 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     ]
   },
   {
-    path: '/components',
+    path: '/recipel',
     component: Layout,
-    redirect: '/components/icon',
-    name: 'ComponentsDemo',
+    redirect: '/recipel/offline/input/index',
+    name: 'Recipel',
     meta: {
-      title: t('router.component'),
-      icon: 'bx:bxs-component',
+      title: '錄方審方',
+      icon: 'ep:management',
       alwaysShow: true
     },
     children: [
       {
-        path: 'form',
+        path: 'offline',
         component: getParentLayout(),
-        name: 'Form',
+        name: 'RecipelOffline',
         meta: {
-          title: t('router.form'),
+          title: '門診處方',
           alwaysShow: true
         },
         children: [
           {
-            path: 'default-form',
-            component: () => import('@/views/Components/Form/DefaultForm.vue'),
-            name: 'DefaultForm',
+            path: 'input/index',
+            component: () => import('@/views/Recipel/Offline/Input/Index.vue'),
+            name: 'RecipelOfflineInputIndex',
             meta: {
-              title: t('router.defaultForm')
+              title: '處方錄入'
             }
           },
           {
-            path: 'use-form',
-            component: () => import('@/views/Components/Form/UseFormDemo.vue'),
-            name: 'UseForm',
+            path: 'audit/index',
+            component: () => import('@/views/Recipel/Offline/Audit/Index.vue'),
+            name: 'RecipelOfflineAuditIndex',
             meta: {
-              title: 'UseForm'
-            }
-          },
-          {
-            path: 'ref-form',
-            component: () => import('@/views/Components/Form/RefForm.vue'),
-            name: 'RefForm',
-            meta: {
-              title: 'RefForm'
+              title: '處方審核'
             }
           }
         ]
       },
       {
-        path: 'table',
+        path: 'online',
         component: getParentLayout(),
-        name: 'TableDemo',
+        name: 'RecipelOnline',
         meta: {
-          title: t('router.table'),
+          title: '網診處方',
           alwaysShow: true
         },
         children: [
           {
-            path: 'default-table',
-            component: () => import('@/views/Components/Table/DefaultTable.vue'),
-            name: 'DefaultTable',
+            path: 'input/index',
+            component: () => import('@/views/Recipel/Online/Input/Index.vue'),
+            name: 'RecipelOnlineInputIndex',
+            props: {
+              pageType: 'online-input-index'
+            },
             meta: {
-              title: t('router.defaultTable')
+              title: '處方錄入'
             }
           },
           {
-            path: 'use-table',
-            component: () => import('@/views/Components/Table/UseTableDemo.vue'),
-            name: 'UseTable',
+            path: 'unpay/index',
+            component: () => import('@/views/Recipel/Online/Unpay/Index.vue'),
+            name: 'RecipelOnlineUnpayIndex',
             meta: {
-              title: 'UseTable'
-            }
-          },
-          {
-            path: 'ref-table',
-            component: () => import('@/views/Components/Table/RefTable.vue'),
-            name: 'RefTable',
-            meta: {
-              title: 'RefTable'
+              title: '未付款處方'
             }
           }
         ]
       },
       {
-        path: 'editor-demo',
+        path: 'customer',
         component: getParentLayout(),
-        name: 'EditorDemo',
+        name: 'RecipelCustomer',
         meta: {
-          title: t('router.editor'),
+          title: '醫生專屬',
           alwaysShow: true
         },
         children: [
           {
-            path: 'editor',
-            component: () => import('@/views/Components/Editor/Editor.vue'),
-            name: 'Editor',
+            path: 'index',
+            component: () => import('@/views/Recipel/Online/Input/Index.vue'),
+            name: 'RecipelCustomerIndex',
+            props: {
+              pageType: 'customer-index'
+            },
             meta: {
-              title: t('router.richText')
+              title: '慈祿門診',
+              noCache: true
+            }
+          },
+          {
+            path: 'payed',
+            component: () => import('@/views/Recipel/Customer/Payed.vue'),
+            name: 'RecipelCustomerPayed',
+            meta: {
+              title: '已收費'
             }
           }
         ]
-      },
+      }
+    ]
+  },
+  {
+    path: '/cash',
+    component: Layout,
+    redirect: '/cash/notcharged/index',
+    name: 'Cash',
+    meta: {
+      title: '收銀管理',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
       {
-        path: 'search',
-        component: () => import('@/views/Components/Search.vue'),
-        name: 'Search',
+        path: 'notcharged/index',
+        component: () => import('@/views/Cash/NotCharged/Index.vue'),
+        name: 'CashNotChargedIndex',
         meta: {
-          title: t('router.search')
+          title: '待收費'
         }
       },
       {
-        path: 'descriptions',
-        component: () => import('@/views/Components/Descriptions.vue'),
-        name: 'Descriptions',
+        path: 'notcharged/add',
+        component: () => import('@/views/Cash/NotCharged/Add.vue'),
+        name: 'CashNotChargedAdd',
         meta: {
-          title: t('router.descriptions')
+          title: '收銀結算',
+          noTagsView: true,
+          noCache: true,
+          hidden: true,
+          showMainRoute: true,
+          activeMenu: '/cash/notcharged/index'
         }
       },
       {
-        path: 'image-viewer',
-        component: () => import('@/views/Components/ImageViewer.vue'),
-        name: 'ImageViewer',
+        path: 'charged/index',
+        component: () => import('@/views/Cash/Charged/Index.vue'),
+        name: 'CashChargedIndex',
         meta: {
-          title: t('router.imageViewer')
+          title: '已收費'
         }
       },
       {
-        path: 'dialog',
-        component: () => import('@/views/Components/Dialog.vue'),
-        name: 'Dialog',
+        path: 'pending/index',
+        component: () => import('@/views/Cash/Pending/Index.vue'),
+        name: 'CashPendingIndex',
         meta: {
-          title: t('router.dialog')
-        }
-      },
-      {
-        path: 'icon',
-        component: () => import('@/views/Components/Icon.vue'),
-        name: 'Icon',
-        meta: {
-          title: t('router.icon')
-        }
-      },
-      {
-        path: 'echart',
-        component: () => import('@/views/Components/Echart.vue'),
-        name: 'Echart',
-        meta: {
-          title: t('router.echart')
-        }
-      },
-      {
-        path: 'count-to',
-        component: () => import('@/views/Components/CountTo.vue'),
-        name: 'CountTo',
-        meta: {
-          title: t('router.countTo')
-        }
-      },
-      {
-        path: 'qrcode',
-        component: () => import('@/views/Components/Qrcode.vue'),
-        name: 'Qrcode',
-        meta: {
-          title: t('router.qrcode')
-        }
-      },
-      {
-        path: 'highlight',
-        component: () => import('@/views/Components/Highlight.vue'),
-        name: 'Highlight',
-        meta: {
-          title: t('router.highlight')
-        }
-      },
-      {
-        path: 'infotip',
-        component: () => import('@/views/Components/Infotip.vue'),
-        name: 'Infotip',
-        meta: {
-          title: t('router.infotip')
-        }
-      },
-      {
-        path: 'input-password',
-        component: () => import('@/views/Components/InputPassword.vue'),
-        name: 'InputPassword',
-        meta: {
-          title: t('router.inputPassword')
-        }
-      },
-      {
-        path: 'sticky',
-        component: () => import('@/views/Components/Sticky.vue'),
-        name: 'Sticky',
-        meta: {
-          title: t('router.sticky')
+          title: '欠費'
         }
       }
     ]

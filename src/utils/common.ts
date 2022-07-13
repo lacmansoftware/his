@@ -1,6 +1,7 @@
 import dict from '@/config/dictionary.json'
 import { pinyin } from 'pinyin-pro'
 import { getApi } from '@/api/common'
+import moment from 'moment'
 
 export const inDict = (val, data: string) => {
   try {
@@ -63,12 +64,28 @@ export const getPinyinCode = (zhongwen: string) => {
   return py.toUpperCase().replace(/\s/g, '')
 }
 
-export const getInOptionFormat = async (url: string, valueField: string, labelField: string) => {
+export const getInOptionFormat = async (
+  url: string,
+  valueField: string,
+  labelField: string,
+  type = 'default'
+): Promise<any> => {
   const res = await getApi(url)
-  return res?.data.map((item) => ({
-    label: item[labelField],
-    value: item[valueField]
-  }))
+  return res?.data.map((item) => {
+    const ret =
+      type === 'filter'
+        ? {
+            ...item
+          }
+        : {}
+    ret.label = labelField
+      .split('+')
+      .reduce((ret, labelFieldItem) => ret + item[labelFieldItem], '')
+    ret.value = valueField
+      .split('+')
+      .reduce((ret, valueFieldItem) => ret + item[valueFieldItem], '')
+    return ret
+  })
 }
 
 export const formatObject = (data: object[], valueField: string, labelField: string) => {
@@ -79,7 +96,8 @@ export const formatObject = (data: object[], valueField: string, labelField: str
 }
 
 export const getDateInFormat = (date: Date, style = '/') => {
-  return date.toJSON().slice(0, 10).replace(/-/g, style)
+  const nDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+  return nDate.toISOString().slice(0, 10).replace(/-/g, style)
 }
 
 export const getWeekSEDate = (curDate = '') => {
@@ -88,7 +106,7 @@ export const getWeekSEDate = (curDate = '') => {
   const endDate = new Date(curr.setDate(curr.getDate() - curr.getDay() + 7))
   const range: string[] = []
   curr.setDate(curr.getDate() - curr.getDay() - 7)
-  for (let i = 1; i <= 7; i++) {
+  for (let i = 0; i < 7; i++) {
     curr.setDate(curr.getDate() - curr.getDay() + i)
     range.push(getDateInFormat(curr, '-'))
   }
@@ -97,4 +115,43 @@ export const getWeekSEDate = (curDate = '') => {
     endDate: getDateInFormat(endDate),
     range: range
   }
+}
+
+export const returnDateString = (minutue: number) => {
+  minutue = minutue || 0
+  const _lastDateTime = new Date(new Date().getTime() + minutue * 60 * 1000)
+  return (
+    _lastDateTime.getFullYear() +
+    '-' +
+    (_lastDateTime.getMonth() < 9
+      ? '0' + (_lastDateTime.getMonth() + 1)
+      : _lastDateTime.getMonth() + 1) +
+    '-' +
+    (_lastDateTime.getDate() < 10 ? '0' + _lastDateTime.getDate() : _lastDateTime.getDate()) +
+    ' ' +
+    (_lastDateTime.getHours() < 10 ? '0' + _lastDateTime.getHours() : _lastDateTime.getHours()) +
+    ':' +
+    (_lastDateTime.getMinutes() < 10
+      ? '0' + _lastDateTime.getMinutes()
+      : _lastDateTime.getMinutes())
+  )
+}
+
+export const timelineLabels = (desiredStartTime, desiredEndTime, interval, period) => {
+  const startTimeMoment = moment(desiredStartTime, 'HH:mm')
+  const endTimeMoment = moment(desiredEndTime, 'HH:mm')
+  const totalPeriod = moment.duration(endTimeMoment.diff(startTimeMoment)).as(period)
+
+  const timeLabels = []
+  for (let i = 0; i <= totalPeriod; i += Number(interval)) {
+    startTimeMoment.add(i === 0 ? 0 : interval, period)
+    timeLabels.push(startTimeMoment.format('HH:mm') as never)
+  }
+
+  return timeLabels
+}
+
+export const isValidTime = (dateString: string, timeString: string) => {
+  if (moment() <= moment(`${dateString} ${timeString}`, 'YYYY-MM-DD HH:mm')) return true
+  return false
 }

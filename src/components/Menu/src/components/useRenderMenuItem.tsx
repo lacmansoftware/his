@@ -17,7 +17,7 @@ export const useRenderMenuItem = (
         const { oneShowingChild, onlyOneChild } = hasOneShowingChild(v.children, v)
         const fullPath = isUrl(v.path)
           ? v.path
-          : getAllParentPath<AppRouteRecordRaw>(allRouters, v.path).join('/')
+          : getAllParentPath<AppRouteRecordRaw>(allRouters, v).join('/')
 
         const { renderMenuTitle } = useRenderMenuTitle()
 

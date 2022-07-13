@@ -3,47 +3,52 @@ import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElButton, ElTag, ElLink, ElMessage } from 'element-plus'
+import { ElButton, ElLink } from 'element-plus'
 import { Table } from '@/components/Table'
-import { getTableListApi, getPrintApi } from '@/api/protocol'
 import { useTable } from '@/hooks/web/useTable'
-import { MemberInfoTableData } from '@/api/protocol/types'
 import { reactive, ref, unref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { useEmitt } from '@/hooks/web/useEmitt'
+// import { useRouter } from 'vue-router'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import { inDict, getAgeByBirthday } from '@/utils/common'
-import { printerIcon } from '@/utils/iconList'
-import { searchConfig, crudConfig } from './index'
+import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import Write from './components/Write.vue'
-import Detail from './components/Detail.vue'
 import dict from '@/config/dictionary.json'
-import { useDictStoreWithOut } from '@/store/modules/dict'
-import { getPinyinCode, getInOptionFormat } from '@/utils/common'
+import { getApi } from '@/api/common'
+
+import { getTableListApi, delTableListApi, updateTableApi } from '@/api/workorder/workorder'
 
 defineOptions({
   name: 'WorkOrderIndex'
 })
 
-const dictStore = useDictStoreWithOut()
+const my = ref(false)
+const notComplate = ref(false)
+const writeRef = ref<ComponentRef<typeof Write>>()
 
 const store = {
-  feePayHospitalId: ref<ComponentOptions[]>([])
+  feePayHospitalId: ref<ComponentOptions[]>([]),
+  type: ref<ComponentOptions[]>([])
 }
 
 const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
   store[key].value = await getInOptionFormat(url, valueField, labelField)
 }
 
-onMounted(() => {
+onMounted(async () => {
   // setStore('certificate', '/sys/dict/type/MEMBER_Certificate', 'code', 'value')
   setStore('feePayHospitalId', '/sys/hospital', 'id', 'name')
+  setStore('type', '/sys/dict/query/WORKORDER_Type', 'code', 'value')
+
+  const today = getDateInFormat(new Date(), '-')
+  setValues({
+    startTime: today,
+    endTime: today
+  })
+  search()
 })
 
-const { push } = useRouter()
-
-const { register, tableObject, methods } = useTable<MemberInfoTableData>({
+const { register, tableObject, methods } = useTable<any>({
   getListApi: getTableListApi,
+  delListApi: delTableListApi,
   response: {
     list: 'data',
     total: 'total'
@@ -52,48 +57,124 @@ const { register, tableObject, methods } = useTable<MemberInfoTableData>({
 
 const { getList, setSearchParams } = methods
 
-getList()
-
 const { t } = useI18n()
+
+const handleStatusChange = (item: Recordable) => {
+  search()
+}
+
+const userIdSearch = async (queryString: string, cb: Fn) => {
+  const res = await getApi(`/sys/user?keyWords=${queryString}`)
+  const result = res?.data.map((item) => ({
+    id: item.id,
+    value: item.name
+  }))
+  cb(result)
+}
+
+const deptIdSearch = async (queryString: string, cb: Fn) => {
+  const res = await getApi(`/sys/dept/list?keyWords=${queryString}`)
+  const result = res?.data.map((item) => ({
+    id: item.id,
+    value: item.name
+  }))
+  cb(result)
+}
+
+const handleUserIdSelect = (item: Recordable) => {
+  console.log(item)
+}
+
+const handleDeptIdSelect = (item: Recordable) => {
+  console.log(item)
+}
 
 const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
-    field: 'action',
-    width: '120px',
-    form: { show: false }
+    field: 'action'
   },
   {
-    label: '繳費門店',
-    field: 'feePayHospitalName',
-    width: '120px'
-  },
-  {
-    label: '繳費時間',
-    field: 'feePayTime',
-    width: '135px'
-  },
-  {
-    label: '會員卡號',
-    field: 'memberCardNum',
-    width: '85px'
-  },
-  {
-    label: '繳費門店',
-    field: 'feePayHospitalId',
+    label: '服務狀態',
+    field: 'status',
     form: { show: false },
-    table: { show: false },
     search: {
-      component: 'Select',
+      component: 'Radio',
       componentProps: {
-        options: store.feePayHospitalId
+        style: 'width: 100%',
+        options: dict.member.workOrderStatus,
+        onChange: handleStatusChange
       },
+      colProps: { span: 24 },
+      value: 'nothand',
+      show: true
+    }
+  },
+  {
+    label: '工單號',
+    field: 'id',
+    form: { show: false },
+    search: {
+      component: 'Input',
       colProps: { span: 6 },
       show: true
     }
   },
   {
-    label: '會員繳費日期',
+    label: '客戶姓名',
+    field: 'name',
+    search: {
+      component: 'Input',
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    label: '客戶電話',
+    field: 'mobile',
+    form: { show: false },
+    search: {
+      component: 'Input',
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    label: '處理時間',
+    field: 'modifyTime'
+  },
+  {
+    label: '轉交類型',
+    field: 'transferType'
+  },
+  {
+    label: '轉交人',
+    field: 'transferName'
+  },
+  {
+    label: '受理人',
+    field: 'handlerName'
+  },
+  {
+    label: '結束時間',
+    field: 'latestHandleTime'
+  },
+  {
+    label: '工單類型',
+    field: 'typeName'
+  },
+  {
+    label: '備註',
+    field: 'comment',
+    form: { show: false },
+    search: {
+      component: 'Input',
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    label: '處理時間',
     field: 'startTime',
     form: { show: false },
     table: { show: false },
@@ -108,7 +189,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    label: '到',
+    label: '處理時間',
     field: 'endTime',
     form: { show: false },
     table: { show: false },
@@ -123,102 +204,154 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    label: '會員卡號',
-    field: 'memberCardNum',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'Input',
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    label: '狀態',
-    field: 'status',
+    label: '工單類型',
+    field: 'type',
     form: { show: false },
     table: { show: false },
     search: {
       component: 'Select',
       componentProps: {
-        options: dict.memberProtocol.status
+        options: store.type as any
       },
       colProps: { span: 6 },
       show: true
     }
   },
   {
-    label: '姓名',
-    field: 'memberName',
+    label: '轉交人',
+    field: 'userId',
     form: { show: false },
+    table: { show: false },
     search: {
-      component: 'Input',
+      component: 'Autocomplete',
+      componentProps: {
+        style: { width: '100%' },
+        fetchSuggestions: userIdSearch,
+        onSelect: handleUserIdSelect
+      },
       colProps: { span: 6 },
       show: true
     }
   },
   {
-    label: '檔案號',
-    field: 'archivesNo',
+    label: '部門',
+    field: 'deptId',
     form: { show: false },
+    table: { show: false },
     search: {
-      component: 'Input',
+      component: 'Autocomplete',
+      componentProps: {
+        style: { width: '100%' },
+        fetchSuggestions: deptIdSearch,
+        onSelect: handleDeptIdSelect
+      },
       colProps: { span: 6 },
       show: true
     }
   },
   {
-    label: '手機',
-    field: 'memberMobile',
+    field: 'my',
+    label: '',
     form: { show: false },
+    table: { show: false },
     search: {
-      component: 'Input',
-      colProps: { span: 6 },
-      show: true
+      show: true,
+      component: 'Hidden',
+      colProps: { span: 0 },
+      value: my as any
     }
   },
   {
-    label: '協議編號',
-    field: 'protocolCode',
+    field: 'notComplate',
+    label: '',
     form: { show: false },
+    table: { show: false },
     search: {
-      component: 'Input',
-      colProps: { span: 6 },
-      show: true
+      show: true,
+      component: 'Hidden',
+      colProps: { span: 0 },
+      value: notComplate as any
     }
-  },
-  {
-    label: '狀態',
-    field: 'status',
-    width: '60px'
-  },
-  {
-    label: '簽署途徑',
-    field: 'signType',
-    width: '100px'
-  },
-  {
-    label: '協議簽署時間',
-    field: 'signTime',
-    width: '100px'
-  },
-  {
-    label: '協議簽署門店',
-    field: 'protocalHospitalName',
-    width: '100px'
   }
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
 
-const printAction = async (row: TableData) => {
-  const res = await getPrintApi(row.id)
-  if (res.success) {
-    ElMessage.success(res.msg)
-  }
+const delLoading = ref(false)
+
+const delData = async (row: any | null) => {
+  tableObject.currentRow = row
+  const { delList } = methods
+  // const selections = await getSelections()
+  delLoading.value = true
+  await delList(row.id, false).finally(() => {
+    delLoading.value = false
+  })
+}
+
+const dialogVisible = ref(false)
+const dialogTitle = ref('')
+const actionType = ref('')
+
+const action = (row: any, type: string) => {
+  dialogTitle.value = t(type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail')
+  actionType.value = type
+  tableObject.currentRow = row
+  dialogVisible.value = true
 }
 
 const loading = ref(false)
+const searchRef = ref<ComponentRef<typeof Search>>()
+
+const setValues = (value: object) => {
+  const search = unref(searchRef)
+  search?.setValues(value)
+}
+
+const search = () => {
+  const search = unref(searchRef)
+  search!.search()
+}
+
+const myOrder = () => {
+  my.value = !my.value
+  console.log(my.value)
+
+  search()
+}
+
+const notComplateOrder = () => {
+  notComplate.value = !notComplate.value
+  search()
+}
+
+const save = async () => {
+  const write = unref(writeRef)
+  await write?.elFormRef?.validate(async (isValid) => {
+    if (isValid) {
+      loading.value = true
+      const data = (await write?.getFormData()) as any
+      const res = await updateTableApi({
+        workOrderId: data?.id,
+        status: data?.status,
+        transferType: data?.transferType,
+        transferId: data?.transferId,
+        transferName: data?.transferName,
+        note: data?.comment,
+        type: data?.type
+      })
+        .catch(() => {})
+        .finally(() => {
+          loading.value = false
+        })
+      if (res) {
+        dialogVisible.value = false
+        tableObject.currentPage = 1
+        getList()
+      }
+    }
+  })
+}
 </script>
 
 <template>
@@ -229,7 +362,17 @@ const loading = ref(false)
       :inline="false"
       @search="setSearchParams"
       @reset="setSearchParams"
+      ref="searchRef"
     />
+
+    <div class="mb-10px text-right relative">
+      <ElButton type="primary" class="absolute bottom-4 right-38" @click="myOrder"
+        >我的工單</ElButton
+      >
+      <ElButton type="success" class="absolute bottom-4 right-8" @click="notComplateOrder"
+        >未完成工單</ElButton
+      >
+    </div>
 
     <Table
       v-model:pageSize="tableObject.pageSize"
@@ -241,18 +384,35 @@ const loading = ref(false)
         total: tableObject.total
       }"
       @register="register"
+      :selection="false"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="printAction(row)" :icon="printerIcon" class="flex gap-1"
-          >打印簽訂</ElLink
-        >
+        <ElLink type="primary" @click="action(row, 'edit')">受理</ElLink>
+        <ElLink :loading="delLoading" type="danger" @click="delData(row)">刪除</ElLink>
       </template>
 
       <template #status="{ row }">
-        {{ inDict(row.status, 'memberProtocol.status') }}
+        {{ inDict(row.status, 'member.workOrderStatus') }}
       </template>
     </Table>
   </ContentWrap>
+
+  <Dialog v-model="dialogVisible" :title="dialogTitle" width="90%">
+    <Write
+      v-if="actionType !== 'detail'"
+      ref="writeRef"
+      :form-schema="allSchemas.formSchema"
+      :current-row="tableObject.currentRow"
+      :is-edit="true"
+    />
+
+    <template #footer>
+      <ElButton v-if="actionType !== 'detail'" type="primary" :loading="loading" @click="save">
+        {{ t('exampleDemo.save') }}
+      </ElButton>
+      <ElButton @click="dialogVisible = false">{{ t('dialogDemo.close') }}</ElButton>
+    </template>
+  </Dialog>
 </template>
 
 <style lang="less" scoped>

@@ -1526,7 +1526,7 @@
       "pageSize": 2147483647,
       "name": "預約列表",
       "seq": 3,
-      "url": "/html/appoint/appoint_manage/appoint_list/main.html",
+      "url": "/appoint/appoint/list/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "0301",
@@ -1645,7 +1645,7 @@
       "pageSize": 2147483647,
       "name": "新建預約(醫館)",
       "seq": 1,
-      "url": "/html/appoint/appoint_manage/appoint_hospital/main.html",
+      "url": "/appoint/appoint/hospital/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "0301",
@@ -1686,6 +1686,23 @@
       "platform": ""
     },
     {
+      "id": "030111",
+      "createTime": "2017-11-18 14:33:57",
+      "modifyTime": "2017-11-13 16:47:45",
+      "createUser": "",
+      "modifyUser": "",
+      "isDeleted": "N",
+      "pageNum": 1,
+      "pageSize": 2147483647,
+      "name": "新建預約",
+      "seq": 12,
+      "url": "/appoint/appoint/appoint/add",
+      "icon": null,
+      "resourceType": "m",
+      "parentId": "0301",
+      "platform": ""
+    },
+    {
       "id": "0302",
       "createTime": "2017-11-18 14:34:05",
       "modifyTime": "2017-11-13 16:47:45",
@@ -1696,7 +1713,7 @@
       "pageSize": 2147483647,
       "name": "掛號管理",
       "seq": 2,
-      "url": null,
+      "url": "/appoint/regist",
       "icon": null,
       "resourceType": "m",
       "parentId": "03",
@@ -1713,7 +1730,7 @@
       "pageSize": 2147483647,
       "name": "新建掛號",
       "seq": 1,
-      "url": "/html/appoint/regist_manage/newregistered/main.html",
+      "url": "/appoint/regist/add",
       "icon": null,
       "resourceType": "m",
       "parentId": "0302",
@@ -1730,7 +1747,7 @@
       "pageSize": 2147483647,
       "name": "已掛號",
       "seq": 2,
-      "url": "/html/appoint/regist_manage/registered/main.html",
+      "url": "/appoint/regist/registered/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "0302",
@@ -1747,7 +1764,7 @@
       "pageSize": 2147483647,
       "name": "未掛號",
       "seq": 3,
-      "url": "/html/appoint/regist_manage/unregistered/main.html",
+      "url": "/appoint/regist/unregistered/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "0302",
@@ -1815,7 +1832,7 @@
       "pageSize": 2147483647,
       "name": "錄方審方",
       "seq": 4,
-      "url": null,
+      "url": "/recipel",
       "icon": null,
       "resourceType": "f",
       "parentId": null,
@@ -1832,7 +1849,7 @@
       "pageSize": 2147483647,
       "name": "門診處方",
       "seq": 1,
-      "url": "",
+      "url": "/recipel/offline",
       "icon": null,
       "resourceType": null,
       "parentId": "04",
@@ -1849,7 +1866,7 @@
       "pageSize": 2147483647,
       "name": "處方錄入",
       "seq": 1,
-      "url": "/html/recipel/offline/input/main.html",
+      "url": "/recipel/offline/input/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "0401",
@@ -1866,7 +1883,7 @@
       "pageSize": 2147483647,
       "name": "處方審核",
       "seq": 2,
-      "url": "/html/recipel/offline/audit/main.html",
+      "url": "/recipel/offline/audit/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "0401",
@@ -1883,7 +1900,7 @@
       "pageSize": 2147483647,
       "name": "網診處方",
       "seq": 2,
-      "url": "",
+      "url": "/recipel/online",
       "icon": null,
       "resourceType": null,
       "parentId": "04",
@@ -1900,7 +1917,7 @@
       "pageSize": 2147483647,
       "name": "處方錄入",
       "seq": 1,
-      "url": "/html/recipel/online/input/main.html",
+      "url": "/recipel/online/input/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "0402",
@@ -1917,7 +1934,7 @@
       "pageSize": 2147483647,
       "name": "未付款處方",
       "seq": 2,
-      "url": "/html/recipel/online/unpay/main.html ",
+      "url": "/recipel/online/unpay/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "0402",
@@ -1951,7 +1968,7 @@
       "pageSize": 2147483647,
       "name": "醫生專屬",
       "seq": 3,
-      "url": "",
+      "url": "/recipel/customer",
       "icon": null,
       "resourceType": "m",
       "parentId": "04",
@@ -1968,7 +1985,7 @@
       "pageSize": 2147483647,
       "name": "慈祿門診",
       "seq": 1,
-      "url": "/html/recipel/customer/main.html",
+      "url": "/recipel/customer/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "0403",
@@ -1985,7 +2002,7 @@
       "pageSize": 2147483647,
       "name": "已收費",
       "seq": 1,
-      "url": "/html/recipel/customer/payed.html",
+      "url": "/recipel/customer/payed",
       "icon": null,
       "resourceType": "m",
       "parentId": "0403",
@@ -2002,7 +2019,7 @@
       "pageSize": 2147483647,
       "name": "收銀管理",
       "seq": 5,
-      "url": null,
+      "url": "/cash",
       "icon": null,
       "resourceType": "f",
       "parentId": null,
@@ -2019,7 +2036,7 @@
       "pageSize": 2147483647,
       "name": "待收費",
       "seq": 1,
-      "url": "/html/cash/uncash/main.html",
+      "url": "/cash/notcharged/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "05",
@@ -2060,6 +2077,23 @@
       "platform": ""
     },
     {
+      "id": "050103",
+      "createTime": "2018-09-12 10:48:51",
+      "modifyTime": "2018-09-12 10:49:00",
+      "createUser": "",
+      "modifyUser": "",
+      "isDeleted": "N",
+      "pageNum": 1,
+      "pageSize": 2147483647,
+      "name": "收銀結算",
+      "seq": 2,
+      "url": "/cash/notcharged/add",
+      "icon": null,
+      "resourceType": "b",
+      "parentId": "0501",
+      "platform": ""
+    },
+    {
       "id": "0502",
       "createTime": "2017-11-18 10:35:40",
       "modifyTime": "2017-11-13 16:47:45",
@@ -2070,7 +2104,7 @@
       "pageSize": 2147483647,
       "name": "已收費",
       "seq": 2,
-      "url": "/html/cash/cashed/main.html",
+      "url": "/cash/charged/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "05",
@@ -2104,7 +2138,7 @@
       "pageSize": 2147483647,
       "name": "欠費",
       "seq": 3,
-      "url": "/html/cash/arrear/main.html",
+      "url": "/cash/pending/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "05",
@@ -5086,96 +5120,21 @@
       "platform": "normal"
     },
     {
-      "url": "/components",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/form",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/form/default-form",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/form/use-form",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/form/ref-form",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/table",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/table/default-table",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/table/use-table",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/table/ref-table",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/editor-demo",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/editor-demo/editor",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/search",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/descriptions",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/image-viewer",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/dialog",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/icon",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/echart",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/count-to",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/qrcode",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/highlight",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/components/infotip",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/Components/InputPassword",
-      "isDeleted": "N"
-    },
-    {
-      "url": "/Components/Sticky",
-      "isDeleted": "N"
+      "id": "2005",
+      "createTime": "2019-05-25 16:16:34",
+      "modifyTime": "2019-05-25 16:16:34",
+      "createUser": "",
+      "modifyUser": "",
+      "isDeleted": "N",
+      "pageNum": 1,
+      "pageSize": 2147483647,
+      "name": "收費項目",
+      "seq": 5,
+      "url": "/appoint/appoint/appoint/confirm",
+      "icon": null,
+      "resourceType": "m",
+      "parentId": "20",
+      "platform": "normal"
     }
   ],
   "total": 296,

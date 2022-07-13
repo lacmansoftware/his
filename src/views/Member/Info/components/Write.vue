@@ -70,9 +70,7 @@ const temp = [
   }
 ]
 
-const setPinyinCode = (item: any) => {
-  console.log('clicked ', item)
-}
+const handleHasChildChange = () => {}
 </script>
 
 <template>

@@ -1,3854 +1,3870 @@
 {
-  "recipel_tempType_ZCY": "ZCY",
-  "recipel_tempType_ZCNY": "ZCNY",
-  "recipel_tempType_TREAT": "treat",
-  "RECIPEL_WARNING_NUM": 500,
-  "ZHENGANZISONG": "ZS",
-  "SHANSONG": "SS",
-  "SHUNFENGKUAIDI": "SF",
-  "CUSTOMER_DOCTOR_NAME": "慈祿門診",
-  "CUSTOMER_DOCTOR_NAME_ID": "bb2cfcb7350041a789e8fdc4ee3561f8",
-  "CUSTOMER_DOCTOR_ServiceFeePercentList": [
-      {
-          "value": 50,
-          "label": "50%"
-      },
-      {
-          "value": 100,
-          "label": "100%"
-      },
-      {
-          "value": 150,
-          "label": "150%"
-      },
-      {
-          "value": 200,
-          "label": "200%"
-      }
-  ],
-  "sysDict": {},
-  "sex": [
-      {
-          "value": "M",
-          "label": "男"
-      },
-      {
-          "value": "F",
-          "label": "女"
-      }
-  ],
-  "sex2": [
-      {
-          "value": "M",
-          "label": "男"
-      },
-      {
-          "value": "F",
-          "label": "女"
-      }
-  ],
-  "smsStatus": [
-      {
-          "value": "SEND",
-          "label": "已發送"
-      },
-      {
-          "value": "FAIL",
-          "label": "失敗"
-      },
-      {
-          "value": "SUCC",
-          "label": "成功"
-      }
-  ],
-  "marriageStatus": [
-      {
-          "value": "0",
-          "label": "未婚"
-      },
-      {
-          "value": "1",
-          "label": "已婚"
-      }
-  ],
-  "status": [
-      {
-          "value": "Y",
-          "label": "正常"
-      },
-      {
-          "value": "N",
-          "label": "禁用"
-      }
-  ],
-  "isdebug": [
-      {
-          "value": "Y",
-          "label": "是"
-      },
-      {
-          "value": "N",
-          "label": "否"
-      }
-  ],
-  "doctorSource": [
-      {
-          "value": "bd",
-          "label": "BD"
-      },
-      {
-          "value": "ZA",
-          "label": "翼+"
-      }
-  ],
-  "doctorStatus": [
-      {
-          "value": "REG",
-          "label": "註冊"
-      },
-      {
-          "value": "PASS",
-          "label": "已認證"
-      },
-      {
-          "value": "AP",
-          "label": "待認證"
-      },
-      {
-          "value": "REJ",
-          "label": "未通過"
-      }
-  ],
-  "doctorStatus2": [
-      {
-          "value": "Y",
-          "label": "啟用"
-      },
-      {
-          "value": "N",
-          "label": "停用"
-      }
-  ],
-  "serviceSwitch": [
-      {
-          "value": "OFF",
-          "label": "否",
-          "_checked": true
-      },
-      {
-          "value": "ON",
-          "label": "是"
-      }
-  ],
-  "isSchedule": [
-      {
-          "value": "ON",
-          "label": "是"
-      },
-      {
-          "value": "OFF",
-          "label": "否"
-      }
-  ],
-  "drugTypeList": [
-      {
-          "value": "ZCNY",
-          "label": "中成藥"
-      },
-      {
-          "value": "ZCY",
-          "label": "中草藥"
-      },
-      {
-          "value": "YNZJ",
-          "label": "自有產品"
-      }
-  ],
-  "sendStatus": [
-      {
-          "value": "WAITING",
-          "label": "代發葯"
-      },
-      {
-          "value": "SENED",
-          "label": "已發葯"
-      },
-      {
-          "value": "RETURN",
-          "label": "已退"
-      },
-      {
-          "value": "P_RETURN",
-          "label": "部分退"
-      }
-  ],
-  "bilingStatus": [
-      {
-          "value": "UNPAY",
-          "label": "未結算"
-      },
-      {
-          "value": "PAYED",
-          "label": "已結算"
-      }
-  ],
-  "orderStatus": [
-      {
-          "value": "PAYED",
-          "label": "已付款"
-      },
-      {
-          "value": "REFUND",
-          "label": "已退款"
-      },
-      {
-          "value": "REFUNDING",
-          "label": "退款中"
-      },
-      {
-          "value": "END",
-          "label": "結束"
-      },
-      {
-          "value": "Q",
-          "label": "欠費"
-      }
-  ],
-  "urlReciveObject": [
-      {
-          "value": "self",
-          "label": "客人自己",
-          "_checked": true
-      },
-      {
-          "value": "other",
-          "label": "他人代付"
-      }
-  ],
-  "offlinePaymentStatus": [
-      {
-          "value": "PAYED",
-          "label": "已付款"
-      },
-      {
-          "value": "REFUNDING",
-          "label": "退款中"
-      },
-      {
-          "value": "REFUND",
-          "label": "已退款"
-      },
-      {
-          "value": "ARRE",
-          "label": "欠費"
-      }
-  ],
-  "onlinePaymentStatus": [
-      {
-          "value": "PAYED",
-          "label": "已付款"
-      },
-      {
-          "value": "REFUNDING",
-          "label": "退款中"
-      },
-      {
-          "value": "REFUND",
-          "label": "已退款"
-      },
-      {
-          "value": "END",
-          "label": "已結束"
-      }
-  ],
-  "payType": [
-      {
-          "value": "ALIPAY",
-          "label": "支付寶支付"
-      },
-      {
-          "value": "WXPAY",
-          "label": "微信支付"
-      }
-  ],
-  "consumeType": [
-      {
-          "value": "graphic",
-          "label": "圖文問診"
-      },
-      {
-          "value": "phone",
-          "label": "電話問診"
-      },
-      {
-          "value": "offline",
-          "label": "線下問診"
-      },
-      {
-          "value": "consult",
-          "label": "診后諮詢"
-      },
-      {
-          "value": "recipel",
-          "label": "處方訂單"
-      },
-      {
-          "value": "refund",
-          "label": "退款"
-      }
-  ],
-  "isFinish": [
-      {
-          "value": "PAYED",
-          "label": "未完成"
-      },
-      {
-          "value": "END",
-          "label": "已完成"
-      }
-  ],
-  "expressStatus": [
-      {
-          "value": "WAITING",
-          "label": "待發貨"
-      },
-      {
-          "value": "SEND",
-          "label": "已發貨"
-      },
-      {
-          "value": "DELIVERY",
-          "label": "派送中"
-      },
-      {
-          "value": "YILANSHOU",
-          "label": "已攬收"
-      },
-      {
-          "value": "ACCEPT",
-          "label": "已完成"
-      }
-  ],
-  "insurType": [
-      {
-          "value": "內資",
-          "label": "內資"
-      },
-      {
-          "value": "外資",
-          "label": "外資"
-      },
-      {
-          "value": "合資",
-          "label": "合資"
-      }
-  ],
-  "recipeType": [
-      {
-          "value": "ZCY",
-          "label": "中草藥"
-      },
-      {
-          "value": "ZCNY",
-          "label": "中成藥"
-      },
-      {
-          "value": "treat",
-          "label": "治療方"
-      }
-  ],
-  "orderOrigin": [
-      {
-          "value": "0",
-          "label": "網診"
-      },
-      {
-          "value": "1",
-          "label": "門診"
-      }
-  ],
-  "expressType": [
-      {
-          "value": "SF",
-          "label": "順豐快遞"
-      },
-      {
-          "value": "sfdf",
-          "label": "順豐到付"
-      },
-      {
-          "value": "ZS",
-          "label": "翼+自送"
-      },
-      {
-          "value": "SS",
-          "label": "閃送"
-      },
-      {
-          "value": "ssdf",
-          "label": "閃送到付"
-      },
-      {
-          "value": "DADA",
-          "label": "達達·當日達"
-      },
-      {
-          "value": "SELF",
-          "label": "自取"
-      },
-      {
-          "value": "tongcheng",
-          "label": "順豐同城"
-      },
-      {
-          "value": "QT",
-          "label": "其他"
-      }
-  ],
-  "noSelfExpressType": [
-      {
-          "value": "SF",
-          "label": "順豐快遞"
-      },
-      {
-          "value": "sfdf",
-          "label": "順豐到付"
-      },
-      {
-          "value": "ZS",
-          "label": "翼+自送"
-      },
-      {
-          "value": "SS",
-          "label": "閃送"
-      },
-      {
-          "value": "ssdf",
-          "label": "閃送到付"
-      },
-      {
-          "value": "DADA",
-          "label": "達達·當日達"
-      },
-      {
-          "value": "tongcheng",
-          "label": "順豐同城"
-      },
-      {
-          "value": "QT",
-          "label": "其他"
-      }
-  ],
-  "kmOrderStatus": [
-      {
-          "value": "5",
-          "label": "審核中"
-      },
-      {
-          "value": "15",
-          "label": "調劑中"
-      },
-      {
-          "value": "17",
-          "label": "備貨完成"
-      },
-      {
-          "value": "98",
-          "label": "審核失敗"
-      },
-      {
-          "value": "99",
-          "label": "用戶放棄"
-      },
-      {
-          "value": "199",
-          "label": "已退葯"
-      },
-      {
-          "value": "20",
-          "label": "物流分揀中"
-      },
-      {
-          "value": "25",
-          "label": "派送完畢"
-      }
-  ],
-  "adjustStatus": [
-      {
-          "value": "Y",
-          "label": "已完成"
-      },
-      {
-          "value": "N",
-          "label": "未完成"
-      }
-  ],
-  "decoNum": [
-      {
-          "value": "0",
-          "label": "自煎"
-      },
-      {
-          "value": "1",
-          "label": "代煎"
-      }
-  ],
-  "useRoute": [
-      {
-          "value": "NF",
-          "label": "內服",
-          "_checked": true
-      },
-      {
-          "value": "WY",
-          "label": "外用"
-      }
-  ],
-  "dosageform": [
-      {
-          "value": "s",
-          "label": "湯劑",
-          "_checked": true
-      },
-      {
-          "value": "p",
-          "label": "散劑"
-      },
-      {
-          "value": "w",
-          "label": "丸劑"
-      },
-      {
-          "value": "c",
-          "label": "膏劑"
-      },
-      {
-          "value": "k",
-          "label": "顆粒劑",
-          "_disabled": true
-      },
-      {
-          "value": "y",
-          "label": "中成藥"
-      }
-  ],
-  "inventoryStatus": [
-      {
-          "value": "REGIST",
-          "label": "已登記"
-      },
-      {
-          "value": "PASS",
-          "label": "已通過"
-      }
-  ],
-  "isStaff": [
-      {
-          "value": "Y",
-          "label": "員工及家屬"
-      },
-      {
-          "value": "N",
-          "label": "客人",
-          "_checked": true
-      }
-  ],
-  "couponType": [
-      {
-          "value": "DK",
-          "label": "代金券"
-      },
-      {
-          "value": "ZK",
-          "label": "折扣券"
-      }
-  ],
-  "commonStatus": [
-      {
-          "value": "REGIST",
-          "label": "已登記"
-      },
-      {
-          "value": "PASS",
-          "label": "已通過"
-      },
-      {
-          "value": "REJECT",
-          "label": "已駁回"
-      }
-  ],
-  "saveRemark": [
-      {
-          "value": "Y",
-          "label": "保存備註"
-      }
-  ],
-  "kmDosageform": [
-      {
-          "value": "s",
-          "label": "湯劑"
-      },
-      {
-          "value": "c",
-          "label": "膏劑"
-      }
-  ],
-  "drugArea": [
-      {
-          "value": "S",
-          "label": "南方藥典"
-      },
-      {
-          "value": "N",
-          "label": "北方藥典"
-      }
-  ],
-  "orderType": [
-      {
-          "value": "graphic",
-          "label": "圖文問診"
-      },
-      {
-          "value": "phone",
-          "label": "電話問診"
-      },
-      {
-          "value": "consult",
-          "label": "診后諮詢"
-      },
-      {
-          "value": "recipel",
-          "label": "購葯"
-      },
-      {
-          "value": "life",
-          "label": "國貨產品"
-      },
-      {
-          "value": "package",
-          "label": "購買套餐"
-      },
-      {
-          "value": "supplement",
-          "label": "補收"
-      }
-  ],
-  "transactionSubType": [
-      {
-          "value": "HYF",
-          "label": "會員費"
-      },
-      {
-          "value": "ZC",
-          "label": "轉出"
-      },
-      {
-          "value": "TF",
-          "label": "退費"
-      },
-      {
-          "value": "TK",
-          "label": "退卡"
-      },
-      {
-          "value": "ZR",
-          "label": "轉入"
-      },
-      {
-          "value": "HYKCZ",
-          "label": "會員卡充值"
-      },
-      {
-          "value": "CFZF",
-          "label": "處方作廢"
-      },
-      {
-          "value": "WHXXKCSF",
-          "label": "文化線下課程收費"
-      },
-      {
-          "value": "WHXXKCTF",
-          "label": "文化線下課程退費"
-      },
-      {
-          "value": "WHXXHDSF",
-          "label": "文化線下活動收費"
-      },
-      {
-          "value": "WHXXHDTF",
-          "label": "文化線下活動退費"
-      },
-      {
-          "value": "course",
-          "label": "講座報名"
-      },
-      {
-          "value": "CD",
-          "label": "沖抵"
-      },
-      {
-          "value": "ZF",
-          "label": "作廢"
-      },
-      {
-          "value": "ZCXF",
-          "label": "正常消費"
-      },
-      {
-          "value": "recipel",
-          "label": "正常消費"
-      },
-      {
-          "value": "graphic",
-          "label": "正常消費"
-      },
-      {
-          "value": "offline",
-          "label": "正常消費"
-      },
-      {
-          "value": "OLD_YHQ",
-          "label": "遺留優惠券"
-      },
-      {
-          "value": "PAY_ARRE",
-          "label": "結算欠費"
-      },
-      {
-          "value": "REFUNDBALANCE",
-          "label": "退餘額"
-      }
-  ],
-  "deco_type1": [
-      {
-          "value": "XJ",
-          "label": "先煎"
-      },
-      {
-          "value": "HX",
-          "label": "後下"
-      },
-      {
-          "value": "DJ",
-          "label": "單煎"
-      }
-  ],
-  "deco_type2": [
-      {
-          "value": "BJ",
-          "label": "包煎"
-      },
-      {
-          "value": "DS",
-          "label": "搗碎"
-      },
-      {
-          "value": "SX",
-          "label": "水洗"
-      },
-      {
-          "value": "DF",
-          "label": "打粉"
-      }
-  ],
-  "deco_type3": [
-      {
-          "value": "YH",
-          "label": "烊化"
-      },
-      {
-          "value": "CF",
-          "label": "沖服"
-      },
-      {
-          "value": "JF",
-          "label": "焗服"
-      },
-      {
-          "value": "DF",
-          "label": "兌服"
-      },
-      {
-          "value": "TF",
-          "label": "吞服"
-      }
-  ],
-  "self": [
-      {
-          "value": "Y",
-          "label": "自備"
-      }
-  ],
-  "allself": [
-      {
-          "value": "Y",
-          "label": "全方外購"
-      }
-  ],
-  "voucherType": [
-      {
-          "value": "ALL",
-          "label": "不限"
-      },
-      {
-          "value": "XS",
-          "label": "線上看診"
-      },
-      {
-          "value": "XX",
-          "label": "線下門診"
-      }
-  ],
-  "visitType": [
-      {
-          "value": "F",
-          "label": "初"
-      },
-      {
-          "value": "R",
-          "label": "復"
-      },
-      {
-          "value": "S",
-          "label": "首"
-      }
-  ],
-  "registerStatus": [
-      {
-          "value": "Y",
-          "label": "已挂號"
-      },
-      {
-          "value": "N",
-          "label": "未挂號"
-      }
-  ],
-  "display": [
-      {
-          "value": "Y",
-          "label": "是"
-      },
-      {
-          "value": "N",
-          "label": "否"
-      }
-  ],
-  "qyflag": [
-      {
-          "value": "DIRECT",
-          "label": "直營"
-      },
-      {
-          "value": "JOIN",
-          "label": "加盟"
-      }
-  ],
-  "roleType": [
-      {
-          "value": "core",
-          "label": "總部"
-      },
-      {
-          "value": "normal",
-          "label": "診所"
-      }
-  ],
-  "judge": [
-      {
-          "value": "Y",
-          "label": "具備開膏方資格"
-      }
-  ],
-  "sendMode": [
-      {
-          "value": "1",
-          "label": "電話"
-      },
-      {
-          "value": "0",
-          "label": "微信"
-      }
-  ],
-  "insurance": [
-      {
-          "value": "0",
-          "label": "走保險"
-      },
-      {
-          "value": "1",
-          "label": "已接診過的病人走保險，新增首診病人不走保險"
-      },
-      {
-          "value": "2",
-          "label": "無保險"
-      }
-  ],
-  "allOrderType": [
-      {
-          "value": "graphic",
-          "label": "圖文問診"
-      },
-      {
-          "value": "graphic_visit",
-          "label": "圖文問診複診"
-      },
-      {
-          "value": "phone",
-          "label": "電話問診"
-      },
-      {
-          "value": "phone_visit",
-          "label": "電話問診複診"
-      },
-      {
-          "value": "offline",
-          "label": "門診診費"
-      },
-      {
-          "value": "offline_visit",
-          "label": "線下問診複診"
-      },
-      {
-          "value": "consult",
-          "label": "診后諮詢"
-      },
-      {
-          "value": "csjj",
-          "label": "創收獎金"
-      },
-      {
-          "value": "recipel",
-          "label": "處方訂單"
-      },
-      {
-          "value": "prescription",
-          "label": "患者上傳處方單"
-      },
-      {
-          "value": "consulted",
-          "label": "診后諮詢補貼"
-      },
-      {
-          "value": "qrcode",
-          "label": "掃碼獎勵"
-      },
-      {
-          "value": "tworeward",
-          "label": "兩單120元獎勵"
-      },
-      {
-          "value": "invitation",
-          "label": "邀請醫生獎勵"
-      },
-      {
-          "value": "deco",
-          "label": "補代煎費"
-      },
-      {
-          "value": "package",
-          "label": "購買套餐"
-      },
-      {
-          "value": "specialist",
-          "label": "購買專科"
-      },
-      {
-          "value": "voucher",
-          "label": "購買優惠券"
-      },
-      {
-          "value": "life",
-          "label": "產品"
-      },
-      {
-          "value": "supplement",
-          "label": "補收費用"
-      },
-      {
-          "value": "course",
-          "label": "講座"
-      },
-      {
-          "value": "buyCard",
-          "label": "購買會員卡"
-      },
-      {
-          "value": "wx_coupon",
-          "label": "微信抵扣金"
-      }
-  ],
-  "logicType": [
-      {
-          "value": ">",
-          "label": "大於"
-      },
-      {
-          "value": ">=",
-          "label": "大於等於"
-      },
-      {
-          "value": "=",
-          "label": "等於"
-      },
-      {
-          "value": "<=",
-          "label": "小於等於"
-      },
-      {
-          "value": "<",
-          "label": "小於"
-      },
-      {
-          "value": "!=",
-          "label": "不等於"
-      }
-  ],
-  "logic": [
-      {
-          "value": "and",
-          "label": "且"
-      },
-      {
-          "value": "or",
-          "label": "或"
-      }
-  ],
-  "templetesex": [
-      {
-          "value": "MF",
-          "label": "不限"
-      },
-      {
-          "value": "M",
-          "label": "男"
-      },
-      {
-          "value": "F",
-          "label": "女"
-      }
-  ],
-  "createFrom": [
-      {
-          "value": "offline",
-          "label": "門診"
-      },
-      {
-          "value": "online",
-          "label": "網診"
-      }
-  ],
-  "showInWx": [
-      {
-          "value": "Y",
-          "label": "在微信中显示"
-      }
-  ],
-  "wxAppointment": [
-      {
-          "value": "Y",
-          "label": "開放微信預約"
-      }
-  ],
-  "isNeedAppointPic": [
-      {
-          "value": "Y",
-          "label": "需要約診截圖"
-      }
-  ],
-  "skipInquiry": [
-      {
-          "value": "Y",
-          "label": "允許患者跳過問診單",
-          "_checked": true
-      }
-  ],
-  "printwzd": [
-      {
-          "value": "Y",
-          "label": "打印問診單"
-      }
-  ],
-  "printzdjg": [
-      {
-          "value": "Y",
-          "label": "打印診斷結果"
-      }
-  ],
-  "couldBuyConsult": [
-      {
-          "value": "Y",
-          "label": "有看診記錄才可以買診后提問"
-      }
-  ],
-  "prescibeCol": [
-      {
-          "title": "藥品",
-          "field": "drugName",
-          "width": "120px"
-      },
-      {
-          "title": "單位",
-          "field": "unitStandard",
-          "width": "30px"
-      },
-      {
-          "title": "單價",
-          "field": "unitPrice",
-          "width": "50px"
-      },
-      {
-          "title": "庫存",
-          "field": "currentQty",
-          "width": "50px"
-      }
-  ],
-  "memberColumns": [
-      {
-          "title": "姓名",
-          "field": "memberName",
-          "width": "40px"
-      },
-      {
-          "title": "手機",
-          "field": "memberMobile",
-          "width": "60px"
-      },
-      {
-          "title": "病案號",
-          "field": "id",
-          "width": "120px"
-      }
-  ],
-  "pharmacy": {
-      "orderRequestStatus": [
-          {
-              "value": "T",
-              "label": "已登記"
-          },
-          {
-              "value": "W",
-              "label": "請貨中"
-          },
-          {
-              "value": "P",
-              "label": "採購中"
-          },
-          {
-              "value": "F",
-              "label": "已完成"
-          }
-      ],
-      "purchaseStatus": [
-          {
-              "value": "P",
-              "label": "審核通過"
-          },
-          {
-              "value": "L",
-              "label": "部分入庫"
-          },
-          {
-              "value": "F",
-              "label": "完全入庫"
-          }
-      ],
-      "stockinStatus": [
-          {
-              "value": "T",
-              "label": "已登記"
-          },
-          {
-              "value": "W",
-              "label": "待審核"
-          },
-          {
-              "value": "P",
-              "label": "審核通過"
-          },
-          {
-              "value": "A",
-              "label": "中心審核通過"
-          }
-      ],
-      "stockoutStatus": [
-          {
-              "value": "T",
-              "label": "已登記"
-          },
-          {
-              "value": "W",
-              "label": "待審核"
-          },
-          {
-              "value": "P",
-              "label": "已審核"
-          },
-          {
-              "value": "A",
-              "label": "已接受"
-          },
-          {
-              "value": "L",
-              "label": "待撤銷"
-          },
-          {
-              "value": "C",
-              "label": "已撤銷"
-          }
-      ],
-      "transferStatus": [
-          {
-              "value": "P",
-              "label": "中心已審核"
-          },
-          {
-              "value": "A",
-              "label": "已接受"
-          },
-          {
-              "value": "L",
-              "label": "待撤銷"
-          },
-          {
-              "value": "C",
-              "label": "已撤銷"
-          }
-      ],
-      "inventoryChangeStatus": [
-          {
-              "value": "C",
-              "label": "出庫"
-          },
-          {
-              "value": "R",
-              "label": "入庫"
-          },
-          {
-              "value": "F",
-              "label": "門診發葯"
-          },
-          {
-              "value": "T",
-              "label": "門診退葯"
-          },
-          {
-              "value": "L",
-              "label": "藥房報損"
-          },
-          {
-              "value": "Y",
-              "label": "藥房退葯"
-          },
-          {
-              "value": "K",
-              "label": "葯庫退葯"
-          },
-          {
-              "value": "ZT",
-              "label": "轉藥房退葯"
-          },
-          {
-              "value": "ZF",
-              "label": "轉藥房發葯"
-          }
-      ],
-      "drugType": [
-          {
-              "value": "ZCY",
-              "label": "中草藥"
-          },
-          {
-              "value": "ZCNY",
-              "label": "中成藥"
-          }
-      ],
-      "returnStatus": [
-          {
-              "value": "T",
-              "label": "已登記"
-          },
-          {
-              "value": "W",
-              "label": "藥房待審核"
-          },
-          {
-              "value": "P",
-              "label": "藥房已審核"
-          },
-          {
-              "value": "A",
-              "label": "中心已審核"
-          }
-      ],
-      "ykReturnStatus": [
-          {
-              "value": "T",
-              "label": "中心已登記"
-          },
-          {
-              "value": "W",
-              "label": "中心待審核"
-          },
-          {
-              "value": "P",
-              "label": "中心已審核"
-          },
-          {
-              "value": "A",
-              "label": "中心已審核"
-          }
-      ],
-      "productMakeStatus": [
-          {
-              "value": "T",
-              "label": "已登記"
-          },
-          {
-              "value": "W",
-              "label": "待審核"
-          },
-          {
-              "value": "P",
-              "label": "已審核"
-          },
-          {
-              "value": "M",
-              "label": "製作中"
-          },
-          {
-              "value": "L",
-              "label": "部分入庫"
-          },
-          {
-              "value": "A",
-              "label": "全部入庫"
-          }
-      ],
-      "productMakeStatus1": [
-          {
-              "value": "W",
-              "label": "待審核"
-          },
-          {
-              "value": "P",
-              "label": "已審核"
-          },
-          {
-              "value": "M",
-              "label": "製作中"
-          },
-          {
-              "value": "L",
-              "label": "部分入庫"
-          },
-          {
-              "value": "A",
-              "label": "全部入庫"
-          }
-      ],
-      "ynzjStatus": [
-          {
-              "value": "T",
-              "label": "已登記"
-          },
-          {
-              "value": "W",
-              "label": "待審核"
-          },
-          {
-              "value": "P",
-              "label": "已審核"
-          }
-      ]
-  },
-  "memberProtocol": {
-      "status": [
-          {
-              "value": "Y",
-              "label": "已簽"
-          },
-          {
-              "value": "N",
-              "label": "未簽"
-          },
-          {
-              "value": "A",
-              "label": "終止"
-          }
-      ]
-  },
-  "memberCard": {
-      "status": [
-          {
-              "value": "N",
-              "label": "正常"
-          },
-          {
-              "value": "F",
-              "label": "凍結"
-          },
-          {
-              "value": "D",
-              "label": "作廢"
-          },
-          {
-              "value": "T",
-              "label": "已退卡"
-          }
-      ]
-  },
-  "drug": {
-      "status": [
-          {
-              "value": "Y",
-              "label": "正常"
-          },
-          {
-              "value": "N",
-              "label": "不正常"
-          }
-      ],
-      "type": [
-          {
-              "value": "1",
-              "label": "還可以"
-          },
-          {
-              "value": "2",
-              "label": "滿意"
-          },
-          {
-              "value": "3",
-              "label": "很滿意"
-          }
-      ],
-      "score": [
-          {
-              "value": "1",
-              "label": "1"
-          },
-          {
-              "value": "2",
-              "label": "2"
-          },
-          {
-              "value": "3",
-              "label": "3"
-          },
-          {
-              "value": "4",
-              "label": "4"
-          },
-          {
-              "value": "5",
-              "label": "5"
-          }
-      ],
-      "isOn": [
-          {
-              "value": "0",
-              "label": "關"
-          },
-          {
-              "value": "1",
-              "label": "開"
-          }
-      ],
-      "isSpecial": [
-          {
-              "value": "0",
-              "label": "否"
-          },
-          {
-              "value": "1",
-              "label": "是"
-          }
-      ],
-      "gmp": [
-          {
-              "value": "0",
-              "label": "無"
-          },
-          {
-              "value": "1",
-              "label": "有"
-          }
-      ],
-      "isMerge": [
-          {
-              "value": "yes",
-              "label": "是"
-          }
-      ],
-      "recipelStatus": [
-          {
-              "value": "Y",
-              "label": "正常"
-          },
-          {
-              "value": "N",
-              "label": "禁用"
-          }
-      ],
-      "isAcc": [
-          {
-              "value": "Y",
-              "label": "是"
-          },
-          {
-              "value": "N",
-              "label": "否"
-          }
-      ],
-      "isGravidaTaboo": [
-          {
-              "value": "W",
-              "label": "無"
-          },
-          {
-              "value": "S",
-              "label": "慎用"
-          },
-          {
-              "value": "J",
-              "label": "禁用"
-          }
-      ],
-      "source": [
-          {
-              "value": "GC",
-              "label": "國產"
-          },
-          {
-              "value": "JK",
-              "label": "進口"
-          },
-          {
-              "value": "WZ",
-              "label": "未知"
-          }
-      ],
-      "returnStatus": [
-          {
-              "value": "-1",
-              "label": "未退葯"
-          },
-          {
-              "value": "0",
-              "label": "部分退"
-          },
-          {
-              "value": "1",
-              "label": "全部退"
-          }
-      ],
-      "cny": [
-          {
-              "value": "ZCY",
-              "label": "中草藥"
-          },
-          {
-              "value": "KLJ",
-              "label": "免煎中藥"
-          }
-      ],
-      "zcny": [
-          {
-              "value": "ZCNY",
-              "label": "中成藥"
-          },
-          {
-              "value": "YNZJ",
-              "label": "內部製劑"
-          },
-          {
-              "value": "JKSP",
-              "label": "健康食品"
-          }
-      ],
-      "treat": [
-          {
-              "value": "treat",
-              "label": "針灸"
-          }
-      ],
-      "subtreat": [
-          {
-              "value": "zjz",
-              "label": "針"
-          },
-          {
-              "value": "zjj",
-              "label": "灸"
-          },
-          {
-              "value": "bg",
-              "label": "拔罐"
-          },
-          {
-              "value": "amo",
-              "label": "按摩"
-          },
-          {
-              "value": "qt",
-              "label": "其它"
-          }
-      ]
-  },
-  "birthday": {
-      "periods": [
-          {
-              "value": "1",
-              "label": "子時"
-          },
-          {
-              "value": "2",
-              "label": "丑時"
-          },
-          {
-              "value": "3",
-              "label": "寅時"
-          },
-          {
-              "value": "4",
-              "label": "卯時"
-          },
-          {
-              "value": "5",
-              "label": "辰時"
-          },
-          {
-              "value": "6",
-              "label": "巳時"
-          },
-          {
-              "value": "7",
-              "label": "午時"
-          },
-          {
-              "value": "8",
-              "label": "未時"
-          },
-          {
-              "value": "9",
-              "label": "申時"
-          },
-          {
-              "value": "10",
-              "label": "酉時"
-          },
-          {
-              "value": "11",
-              "label": "戌時"
-          },
-          {
-              "value": "12",
-              "label": "亥時"
-          }
-      ]
-  },
-  "member": {
-      "contactPreference": [
-          {
-              "value": "0",
-              "label": "沒有偏好"
-          },
-          {
-              "value": "TEL",
-              "label": "電話"
-          },
-          {
-              "value": "SMS",
-              "label": "短信"
-          },
-          {
-              "value": "wechat",
-              "label": "微信"
-          }
-      ],
-      "workOrderTransferType": [
-          {
-              "value": "person",
-              "label": "個人"
-          },
-          {
-              "value": "dept",
-              "label": "部門"
-          }
-      ],
-      "workOrderStatus": [
-          {
-              "value": "nohand",
-              "label": "無需處理"
-          },
-          {
-              "value": "nothand",
-              "label": "未處理",
-              "_checked": true
-          },
-          {
-              "value": "handling",
-              "label": "處理中"
-          },
-          {
-              "value": "handled",
-              "label": "處理完成"
-          }
-      ],
-      "workOrderRemind": [
-          {
-              "value": "1",
-              "label": "創建提醒"
-          }
-      ],
-      "addressType": [
-          {
-              "value": "Home",
-              "label": "家庭"
-          },
-          {
-              "value": "Company",
-              "label": "單位"
-          },
-          {
-              "value": "Other",
-              "label": "其他"
-          }
-      ],
-      "memberAddress": [
-          {
-              "value": "Y",
-              "label": "默認地址"
-          }
-      ],
-      "specialistStatus": [
-          {
-              "value": "N",
-              "label": "正常"
-          },
-          {
-              "value": "Y",
-              "label": "使用完"
-          },
-          {
-              "value": "R",
-              "label": "已退"
-          },
-          {
-              "value": "G",
-              "label": "已過期"
-          }
-      ],
-      "voucherStatus": [
-          {
-              "value": "N",
-              "label": "未使用"
-          },
-          {
-              "value": "Y",
-              "label": "已使用"
-          }
-      ],
-      "relationList": [
-          {
-              "value": "couple",
-              "label": "夫妻"
-          },
-          {
-              "value": "fatherSon",
-              "label": "父子"
-          },
-          {
-              "value": "motherDaughter",
-              "label": "母女"
-          },
-          {
-              "value": "BrothersSisters",
-              "label": "兄弟姐妹"
-          },
-          {
-              "value": "friend",
-              "label": "朋友"
-          },
-          {
-              "value": "colleague",
-              "label": "同事"
-          },
-          {
-              "value": "mz",
-              "label": "母子"
-          },
-          {
-              "value": "other",
-              "label": "其他"
-          },
-          {
-              "value": "father",
-              "label": "爸爸"
-          },
-          {
-              "value": "mother",
-              "label": "媽媽"
-          },
-          {
-              "value": "husband",
-              "label": "老公"
-          },
-          {
-              "value": "wife",
-              "label": "老婆"
-          },
-          {
-              "value": "son",
-              "label": "兒子"
-          },
-          {
-              "value": "daughter",
-              "label": "女兒"
-          },
-          {
-              "value": "family",
-              "label": "家人"
-          },
-          {
-              "value": "friend",
-              "label": "朋友"
-          }
-      ],
-      "relation": [
-          {
-              "value": "father",
-              "label": "爸爸"
-          },
-          {
-              "value": "mother",
-              "label": "媽媽"
-          },
-          {
-              "value": "husband",
-              "label": "老公"
-          },
-          {
-              "value": "wife",
-              "label": "老婆"
-          },
-          {
-              "value": "son",
-              "label": "兒子"
-          },
-          {
-              "value": "daughter",
-              "label": "女兒"
-          },
-          {
-              "value": "family",
-              "label": "家人"
-          },
-          {
-              "value": "friend",
-              "label": "朋友"
-          }
-      ],
-      "insureCode": [
-          {
-              "value": "cons",
-              "label": "診費"
-          },
-          {
-              "value": "drug",
-              "label": "藥費"
-          },
-          {
-              "value": "make",
-              "label": "藥品處置費"
-          },
-          {
-              "value": "project",
-              "label": "國貨鋪"
-          },
-          {
-              "value": "treat",
-              "label": "治療費"
-          },
-          {
-              "value": "express",
-              "label": "快遞費"
-          },
-          {
-              "value": "other",
-              "label": "其他"
-          }
-      ],
-      "insurStatus": [
-          {
-              "value": "N",
-              "label": "無效"
-          },
-          {
-              "value": "Y",
-              "label": "有效"
-          }
-      ],
-      "order": [
-          {
-              "value": "mzrq",
-              "label": "末診時間正序"
-          },
-          {
-              "value": "mzrq desc",
-              "label": "末診時間倒序"
-          },
-          {
-              "value": "szrq",
-              "label": "初診時間正序"
-          },
-          {
-              "value": "szrq desc",
-              "label": "初診時間倒序"
-          }
-      ]
-  },
-  "bd": {
-      "isCityManager": [
-          {
-              "value": "Y",
-              "label": "是"
-          },
-          {
-              "value": "N",
-              "label": "否"
-          }
-      ],
-      "isAreaManager": [
-          {
-              "value": "D",
-              "label": "是"
-          },
-          {
-              "value": "N",
-              "label": "否"
-          }
-      ]
-  },
-  "appoint": {
-      "source": [
-          {
-              "value": "TEL",
-              "label": "電話"
-          },
-          {
-              "value": "SPOT",
-              "label": "現場"
-          },
-          {
-              "value": "WX",
-              "label": "微信"
-          },
-          {
-              "value": "SMS",
-              "label": "短信"
-          },
-          {
-              "value": "EXAMI",
-              "label": "泰康保險"
-          },
-          {
-              "value": "EXAMISX",
-              "label": "中醫體檢私享套餐"
-          },
-          {
-              "value": "EXAMIZX",
-              "label": "中醫體檢誠意套餐"
-          },
-          {
-              "value": "MINI",
-              "label": "小程序預約"
-          }
-      ],
-      "replyChannel": [
-          {
-              "value": "TEL",
-              "label": "電話"
-          },
-          {
-              "value": "SPOT",
-              "label": "現場"
-          },
-          {
-              "value": "WX",
-              "label": "微信"
-          },
-          {
-              "value": "SMS",
-              "label": "短信"
-          },
-          {
-              "value": "NULL",
-              "label": "未回復"
-          }
-      ],
-      "pendingFlag": [
-          {
-              "value": "N",
-              "label": "否"
-          },
-          {
-              "value": "Y",
-              "label": "是"
-          }
-      ],
-      "status": [
-          {
-              "value": "QRJZ",
-              "label": "確認就診"
-          },
-          {
-              "value": "YYY",
-              "label": "已預約"
-          },
-          {
-              "value": "YQX",
-              "label": "已取消"
-          },
-          {
-              "value": "HFQX",
-              "label": "回復取消"
-          },
-          {
-              "value": "YGH",
-              "label": "已挂號"
-          },
-          {
-              "value": "YTH",
-              "label": "已退號"
-          },
-          {
-              "value": "DQX",
-              "label": "待取消"
-          },
-          {
-              "value": "TIMEOUT",
-              "label": "超時關閉"
-          }
-      ],
-      "showCancel": [
-          {
-              "value": "1",
-              "label": "显示取消預約"
-          }
-      ],
-      "paymentStatus": [
-          {
-              "value": "UNPAY",
-              "label": "未支付"
-          },
-          {
-              "value": "PAYED",
-              "label": "已支付"
-          }
-      ],
-      "usePrCard": [
-          {
-              "value": "0",
-              "label": "否"
-          },
-          {
-              "value": "1",
-              "label": "是"
-          }
-      ],
-      "hasHighMedicalInsurance": [
-          {
-              "value": "0",
-              "label": "否"
-          },
-          {
-              "value": "1",
-              "label": "是"
-          }
-      ],
-      "payType": [
-          {
-              "value": "1",
-              "label": "先支付",
-              "_checked": true
-          },
-          {
-              "value": "0",
-              "label": "先不支付"
-          }
-      ],
-      "registerType": [
-          {
-              "value": "R",
-              "label": "現場挂號"
-          },
-          {
-              "value": "N",
-              "label": "預約挂號"
-          },
-          {
-              "value": "J",
-              "label": "加診"
-          }
-      ],
-      "payState": [
-          {
-              "value": "YYZ",
-              "label": "等待支付"
-          },
-          {
-              "value": "TIMEOUT",
-              "label": "已失效"
-          },
-          {
-              "value": "PAYED",
-              "label": "已支付"
-          }
-      ]
-  },
-  "recipelInputStatus": [
-      {
-          "value": "N",
-          "label": "未錄入"
-      },
-      {
-          "value": "Y",
-          "label": "已錄入"
-      }
-  ],
-  "recipelAuditStatus": [
-      {
-          "value": "TJ",
-          "label": "未審核"
-      },
-      {
-          "value": "YSH",
-          "label": "已審核"
-      }
-  ],
-  "recipelHiddenCons": [
-      {
-          "value": "Y",
-          "label": "隱藏"
-      }
-  ],
-  "offlineRecipelType": [
-      {
-          "value": "normal",
-          "label": "普通門診"
-      },
-      {
-          "value": "special",
-          "label": "專科"
-      },
-      {
-          "value": "package",
-          "label": "套餐"
-      },
-      {
-          "value": "accordingparty",
-          "label": "照方抓藥"
-      },
-      {
-          "value": "goods",
-          "label": "直購國貨"
-      }
-  ],
-  "offlineRecipelType2": [
-      {
-          "value": "normal",
-          "label": "普通門診"
-      },
-      {
-          "value": "special",
-          "label": "專科門診"
-      },
-      {
-          "value": "specialist",
-          "label": "專科門診"
-      },
-      {
-          "value": "package",
-          "label": "套餐門診"
-      },
-      {
-          "value": "accordingparty",
-          "label": "照方抓藥"
-      }
-  ],
-  "visitStatus": [
-      {
-          "value": "C",
-          "label": "未提交"
-      },
-      {
-          "value": "W",
-          "label": "待審核"
-      },
-      {
-          "value": "F",
-          "label": "已提交"
-      },
-      {
-          "value": "A",
-          "label": "已購買"
-      }
-  ],
-  "appointmentType": [
-      {
-          "value": "normal",
-          "label": "普通門診"
-      },
-      {
-          "value": "specialist",
-          "label": "專科門診"
-      },
-      {
-          "value": "package",
-          "label": "套餐"
-      }
-  ],
-  "isInsur": [
-      {
-          "value": "Y",
-          "label": "保險客人"
-      }
-  ],
-  "seeStatus": [
-      {
-          "value": "Y",
-          "label": "已結束"
-      },
-      {
-          "value": "N",
-          "label": "未結束"
-      }
-  ],
-  "onlineRecipelType": [
-      {
-          "value": "app",
-          "label": "APP開方"
-      },
-      {
-          "value": "photo",
-          "label": "醫生拍方"
-      },
-      {
-          "value": "trans",
-          "label": "人際傳方"
-      }
-  ],
-  "onlineRecipelOrigin": [
-      {
-          "value": "APP",
-          "label": "APP開方"
-      },
-      {
-          "value": "PC",
-          "label": "手寫方"
-      },
-      {
-          "value": "DOCTOR",
-          "label": "电子方"
-      },
-      {
-          "value": "photo",
-          "label": "醫生拍方"
-      },
-      {
-          "value": "trans",
-          "label": "人際傳方"
-      }
-  ],
-  "isDebug": [
-      {
-          "value": "1",
-          "label": "显示測試醫生"
-      }
-  ],
-  "isdebugY": [
-      {
-          "value": "Y",
-          "label": "是測試醫生"
-      }
-  ],
-  "isdebugYN": [
-      {
-          "value": "Y",
-          "label": "是"
-      },
-      {
-          "value": "N",
-          "label": "否"
-      }
-  ],
-  "useCard": [
-      {
-          "value": "Y",
-          "label": "使用會員卡結算"
-      }
-  ],
-  "allowAppoint": [
-      {
-          "value": "Y",
-          "label": "未購買套餐不允許預約"
-      }
-  ],
-  "insurActive": [
-      {
-          "value": "Y",
-          "label": "正常"
-      },
-      {
-          "value": "N",
-          "label": "停用"
-      }
-  ],
-  "hasChild": [
-      {
-          "value": "N",
-          "label": "未生育"
-      },
-      {
-          "value": "Y",
-          "label": "已生育"
-      }
-  ],
-  "numList": [
-      {
-          "value": "1",
-          "label": "1"
-      },
-      {
-          "value": "2",
-          "label": "2"
-      },
-      {
-          "value": "3",
-          "label": "3"
-      },
-      {
-          "value": "4",
-          "label": "4"
-      },
-      {
-          "value": "5",
-          "label": "5"
-      },
-      {
-          "value": "6",
-          "label": "6"
-      },
-      {
-          "value": "7",
-          "label": "7"
-      }
-  ],
-  "getDrugType": [
-      {
-          "value": "SELF",
-          "label": "自取"
-      },
-      {
-          "value": "EXPRESS",
-          "label": "快遞"
-      }
-  ],
-  "isMakeProduct": [
-      {
-          "value": "yes",
-          "label": "是"
-      },
-      {
-          "value": "",
-          "label": "否",
-          "_checked": true
-      }
-  ],
-  "week": [
-      {
-          "value": "1",
-          "label": "星期一"
-      },
-      {
-          "value": "2",
-          "label": "星期二"
-      },
-      {
-          "value": "3",
-          "label": "星期三"
-      },
-      {
-          "value": "4",
-          "label": "星期四"
-      },
-      {
-          "value": "5",
-          "label": "星期五"
-      },
-      {
-          "value": "6",
-          "label": "星期六"
-      },
-      {
-          "value": "7",
-          "label": "星期天"
-      }
-  ],
-  "isSpecialist": [
-      {
-          "value": "normal",
-          "label": "普通門診"
-      },
-      {
-          "value": "specialist",
-          "label": "專科門診"
-      },
-      {
-          "value": "package",
-          "label": "套餐門診"
-      }
-  ],
-  "returnType": [
-      {
-          "value": "original",
-          "label": "原支付方式",
-          "_checked": true
-      },
-      {
-          "value": "ZBTK",
-          "label": "總部退款"
-      },
-      {
-          "value": "HYK",
-          "label": "會員卡"
-      }
-  ],
-  "chargeType": [
-      {
-          "value": "ZZBX",
-          "label": "保險"
-      },
-      {
-          "value": "HYK",
-          "label": "會員卡"
-      },
-      {
-          "value": "TRDF",
-          "label": "他人會員卡"
-      },
-      {
-          "value": "POS",
-          "label": "POS"
-      },
-      {
-          "value": "XJ",
-          "label": "現金"
-      },
-      {
-          "value": "GGK",
-          "label": "公關卡"
-      },
-      {
-          "value": "YHZZ",
-          "label": "銀行轉賬"
-      },
-      {
-          "value": "ZBTK",
-          "label": "總部退款"
-      },
-      {
-          "value": "ZP",
-          "label": "支票"
-      },
-      {
-          "value": "WEIDIAN",
-          "label": "微店"
-      },
-      {
-          "value": "PEACE_CARD",
-          "label": "安心卡"
-      },
-      {
-          "value": "WXPAY",
-          "label": "微信"
-      },
-      {
-          "value": "ALIPAY",
-          "label": "支付寶"
-      },
-      {
-          "value": "ARRE",
-          "label": "欠費"
-      },
-      {
-          "value": "YHQ",
-          "label": "優惠券"
-      },
-      {
-          "value": "GIFT_CARD",
-          "label": "充值卡"
-      }
-  ],
-  "chargeTypeList": [
-      {
-          "value": "ZZBX",
-          "label": "保險"
-      },
-      {
-          "value": "HYK",
-          "label": "會員卡"
-      },
-      {
-          "value": "TRDF",
-          "label": "他人會員卡"
-      },
-      {
-          "value": "POS",
-          "label": "POS"
-      },
-      {
-          "value": "XJ",
-          "label": "現金"
-      },
-      {
-          "value": "GGK",
-          "label": "公關卡"
-      },
-      {
-          "value": "YHZZ",
-          "label": "銀行轉賬"
-      },
-      {
-          "value": "ZBTK",
-          "label": "總部退款"
-      },
-      {
-          "value": "ZP",
-          "label": "支票"
-      },
-      {
-          "value": "WEIDIAN",
-          "label": "微店"
-      },
-      {
-          "value": "PEACE_CARD",
-          "label": "安心卡"
-      },
-      {
-          "value": "WXPAY",
-          "label": "微信"
-      },
-      {
-          "value": "ALIPAY",
-          "label": "支付寶"
-      },
-      {
-          "value": "ARRE",
-          "label": "欠費"
-      },
-      {
-          "value": "YHQ",
-          "label": "優惠券"
-      },
-      {
-          "value": "GIFT_CARD",
-          "label": "充值卡"
-      },
-      {
-          "value": "USE_PACKAGE",
-          "label": "套餐"
-      },
-      {
-          "value": "USE_SPECIALIST",
-          "label": "專科"
-      },
-      {
-          "value": "OLD_YHQ",
-          "label": "遺留優惠券"
-      }
-  ],
-  "dataType": [
-      {
-          "value": "drug",
-          "label": "藥費"
-      },
-      {
-          "value": "package",
-          "label": "套餐"
-      },
-      {
-          "value": "life",
-          "label": "國貨產品"
-      },
-      {
-          "value": "addClinic",
-          "label": "診費"
-      },
-      {
-          "value": "clinic",
-          "label": "診費"
-      },
-      {
-          "value": "deco",
-          "label": "代煎費"
-      },
-      {
-          "value": "make",
-          "label": "代煎費"
-      },
-      {
-          "value": "treat",
-          "label": "治療方"
-      },
-      {
-          "value": "use_package",
-          "label": "套餐"
-      },
-      {
-          "value": "express",
-          "label": "快遞費"
-      },
-      {
-          "value": "course",
-          "label": "講座"
-      },
-      {
-          "value": "other",
-          "label": "其他費用"
-      }
-  ],
-  "retundType": [
-      {
-          "value": "ZZBX",
-          "label": "保險"
-      },
-      {
-          "value": "HYK",
-          "label": "會員卡"
-      },
-      {
-          "value": "TRDF",
-          "label": "他人會員卡"
-      },
-      {
-          "value": "POS",
-          "label": "POS"
-      },
-      {
-          "value": "XJ",
-          "label": "現金"
-      },
-      {
-          "value": "GGK",
-          "label": "公關卡"
-      },
-      {
-          "value": "YHZZ",
-          "label": "銀行轉賬"
-      },
-      {
-          "value": "ZP",
-          "label": "支票"
-      },
-      {
-          "value": "YHQ",
-          "label": "優惠券"
-      },
-      {
-          "value": "PEACE_CARD",
-          "label": "安心卡"
-      },
-      {
-          "value": "ARRE",
-          "label": "欠費"
-      },
-      {
-          "value": "USE_PACKAGE",
-          "label": "套餐"
-      },
-      {
-          "value": "USE_SPECIALIST",
-          "label": "專科"
-      },
-      {
-          "value": "OLD_YHQ",
-          "label": "優惠券"
-      },
-      {
-          "value": "WEIDIAN",
-          "label": "微店"
-      },
-      {
-          "value": "WXPAY",
-          "label": "微店"
-      },
-      {
-          "value": "ALIPAY",
-          "label": "微店"
-      },
-      {
-          "value": "WX_COUPON",
-          "label": "膏方抵扣碼"
-      }
-  ],
-  "arrearType": [
-      {
-          "value": "ZJQF",
-          "label": "就診欠費"
-      },
-      {
-          "value": "BXQF",
-          "label": "保險拒賠欠費"
-      },
-      {
-          "value": "SY",
-          "label": "爽約欠費"
-      }
-  ],
-  "makeMap": {
-      "p": "打粉費",
-      "w": "制丸費",
-      "c": "制膏費"
-  },
-  "market": {
-      "voucherMethod": [
-          {
-              "value": "DJQ",
-              "label": "代金券"
-          },
-          {
-              "value": "MJQ",
-              "label": "滿減券"
-          },
-          {
-              "value": "ZKQ",
-              "label": "折扣券"
-          }
-      ],
-      "voucherIsTerminate": [
-          {
-              "value": "N",
-              "label": "正常"
-          },
-          {
-              "value": "Y",
-              "label": "已失效"
-          }
-      ],
-      "voucherType": [
-          {
-              "value": "XX",
-              "label": "門診"
-          },
-          {
-              "value": "XS",
-              "label": "網診"
-          }
-      ],
-      "voucherRange": [
-          {
-              "value": "ZF",
-              "label": "診費"
-          },
-          {
-              "value": "YF",
-              "label": "藥費"
-          },
-          {
-              "value": "YF&GHCP",
-              "label": "藥費+產品"
-          },
-          {
-              "value": "ZLF",
-              "label": "治療費"
-          },
-          {
-              "value": "YPCZF",
-              "label": "藥品處置費"
-          },
-          {
-              "value": "KDF",
-              "label": "快遞費"
-          },
-          {
-              "value": "GHCP",
-              "label": "產品"
-          },
-          {
-              "value": "PACKAGE",
-              "label": "套餐"
-          },
-          {
-              "value": "SPECIALIST",
-              "label": "專科"
-          }
-      ],
-      "cardIsUse": [
-          {
-              "value": "N",
-              "label": "未使用"
-          },
-          {
-              "value": "Y",
-              "label": "已使用"
-          }
-      ],
-      "ypczfType": [
-          {
-              "value": "DJF",
-              "label": "代煎費"
-          },
-          {
-              "value": "DFF",
-              "label": "打粉費"
-          },
-          {
-              "value": "ZWF",
-              "label": "制丸費"
-          },
-          {
-              "value": "ZGF",
-              "label": "制膏費"
-          }
-      ],
-      "packageType": [
-          {
-              "value": "offline",
-              "label": "門診套餐"
-          },
-          {
-              "value": "online",
-              "label": "網診套餐"
-          },
-          {
-              "value": "combo",
-              "label": "組合套餐"
-          }
-      ],
-      "messageType": [
-          {
-              "value": "ACTIVITY",
-              "label": "活動推送"
-          }
-      ],
-      "reciverType": [
-          {
-              "value": "all",
-              "label": "全網推送"
-          },
-          {
-              "value": "single",
-              "label": "指定醫生"
-          }
-      ],
-      "sendType": [
-          {
-              "value": "SYSTEM",
-              "label": "系統發放"
-          },
-          {
-              "value": "WX",
-              "label": "微信領取"
-          },
-          {
-              "value": "MAN",
-              "label": "人工發放"
-          }
-      ]
-  },
-  "commentType": [
-      {
-          "value": "1",
-          "label": "1"
-      },
-      {
-          "value": "2",
-          "label": "2"
-      },
-      {
-          "value": "3",
-          "label": "3"
-      },
-      {
-          "value": "4",
-          "label": "4"
-      },
-      {
-          "value": "5",
-          "label": "5"
-      }
-  ],
-  "serviceType": [
-      {
-          "value": "1",
-          "label": "1"
-      },
-      {
-          "value": "2",
-          "label": "2"
-      },
-      {
-          "value": "3",
-          "label": "3"
-      },
-      {
-          "value": "4",
-          "label": "4"
-      },
-      {
-          "value": "5",
-          "label": "5"
-      }
-  ],
-  "scheType": [
-      {
-          "value": "ZDY",
-          "label": "自定義"
-      },
-      {
-          "value": "MB",
-          "label": "模板"
-      }
-  ],
-  "quickReplyType": [
-      {
-          "value": "quick_reply_zzwt",
-          "label": "診中問題"
-      },
-      {
-          "value": "quick_reply_tljy,dljy",
-          "label": "調理建議"
-      },
-      {
-          "value": "quick_reply_changyonghuifu",
-          "label": "常用回復"
-      },
-      {
-          "value": "quick_reply_ycykd",
-          "label": "藥材與快遞"
-      }
-  ],
-  "RXDispenseStatus": [
-      {
-          "value": "SEND",
-          "label": "已發葯"
-      },
-      {
-          "value": "WAITING",
-          "label": "未發葯"
-      }
-  ],
-  "decoMake": [
-      {
-          "value": "N",
-          "label": "自煎"
-      },
-      {
-          "value": "Y",
-          "label": "代煎"
-      }
-  ],
-  "weixin_prefix": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxda6e1b2c1b561518&redirect_uri=https://mp.zanchina.com/weixin/door/",
-  "unVisitStatus": [
-      {
-          "value": "Y",
-          "label": "已回訪"
-      },
-      {
-          "value": "W",
-          "label": "未回訪"
-      },
-      {
-          "value": "G",
-          "label": "已過期"
-      }
-  ],
-  "tmPrize": [
-      {
-          "value": "JZC",
-          "label": "姜棗茶1小包"
-      },
-      {
-          "value": "MMTYZ",
-          "label": "面膜體驗裝1張"
-      },
-      {
-          "value": "HT",
-          "label": "紅糖1包"
-      },
-      {
-          "value": "XYCYMC",
-          "label": "足浴粉（薰衣草+益母草）共2包"
-      },
-      {
-          "value": "NMP",
-          "label": "檸檬片1袋"
-      },
-      {
-          "value": "ZT",
-          "label": "足貼"
-      },
-      {
-          "value": "FYT",
-          "label": "扶陽貼1片"
-      }
-  ],
-  "tmColumns": [
-      {
-          "title": "姓名",
-          "field": "name",
-          "width": "40px"
-      },
-      {
-          "title": "手機",
-          "field": "mobile",
-          "width": "60px"
-      }
-  ],
-  "product": {
-      "type": [
-          {
-              "value": "YNZJ",
-              "label": "自有產品"
-          },
-          {
-              "value": "PRODUCT",
-              "label": "商品"
-          }
-      ],
-      "subType": [
-          {
-              "value": "GHSP",
-              "label": "國貨"
-          },
-          {
-              "value": "YNZJ",
-              "label": "自有產品"
-          },
-          {
-              "value": "DLDX",
-              "label": "代理代銷"
-          },
-          {
-              "value": "SERVICE",
-              "label": "服務類產品"
-          }
-      ],
-      "kind": [
-          {
-              "value": "FOOD",
-              "label": "食品"
-          },
-          {
-              "value": "HCARE",
-              "label": "保健"
-          },
-          {
-              "value": "BOOK",
-              "label": "圖書"
-          },
-          {
-              "value": "LIFE",
-              "label": "生活用品"
-          }
-      ],
-      "approveStatus": [
-          {
-              "value": "DTJ",
-              "label": "待提交"
-          },
-          {
-              "value": "YTJ",
-              "label": "已提交"
-          },
-          {
-              "value": "YSH",
-              "label": "已審核"
-          },
-          {
-              "value": "YBH",
-              "label": "被駁回"
-          }
-      ],
-      "status": [
-          {
-              "value": "Y",
-              "label": "正常"
-          },
-          {
-              "value": "N",
-              "label": "停用"
-          }
-      ],
-      "sendStatus": [
-          {
-              "value": "WAITING",
-              "label": "未備貨"
-          },
-          {
-              "value": "SEND",
-              "label": "已備貨"
-          }
-      ],
-      "isReqProduct": [
-          {
-              "value": "0",
-              "label": "無"
-          },
-          {
-              "value": "1",
-              "label": "有"
-          }
-      ],
-      "epType": [
-          {
-              "value": "A",
-              "label": "A"
-          },
-          {
-              "value": "B",
-              "label": "B"
-          },
-          {
-              "value": "C",
-              "label": "C"
-          }
-      ],
-      "isShowInBanner": [
-          {
-              "value": "1",
-              "label": "显示"
-          },
-          {
-              "value": "0",
-              "label": "不显示"
-          }
-      ],
-      "activityType": [
-          {
-              "value": "MZK",
-              "label": "滿折"
-          },
-          {
-              "value": "MZ",
-              "label": "滿贈"
-          },
-          {
-              "value": "MM",
-              "label": "滿免"
-          },
-          {
-              "value": "MJP",
-              "label": "滿減-金額"
-          },
-          {
-              "value": "MJA",
-              "label": "滿減-數量"
-          }
-      ],
-      "activityProduct": [
-          {
-              "value": "ALL",
-              "label": "全部產品參与活動",
-              "_checked": true
-          },
-          {
-              "value": "PART",
-              "label": "部分產品參与活動"
-          },
-          {
-              "value": "NOPART",
-              "label": "部分產品不參与活動"
-          }
-      ],
-      "activityStatus": [
-          {
-              "value": "WKS",
-              "label": "未開始"
-          },
-          {
-              "value": "ING",
-              "label": "進行中"
-          },
-          {
-              "value": "END",
-              "label": "已結束"
-          }
-      ],
-      "order": [
-          {
-              "value": "asc",
-              "label": "從小到大"
-          },
-          {
-              "value": "desc",
-              "label": "從大到小"
-          }
-      ],
-      "mzkType": [
-          {
-              "value": "MZKMJ",
-              "label": "滿金額",
-              "_checked": true
-          },
-          {
-              "value": "MZKMS",
-              "label": "滿數量"
-          }
-      ],
-      "mzType": [
-          {
-              "value": "MZMJ",
-              "label": "滿金額",
-              "_checked": true
-          },
-          {
-              "value": "MZMS",
-              "label": "滿數量"
-          }
-      ],
-      "mmType": [
-          {
-              "value": "MMMJ",
-              "label": "滿金額",
-              "_checked": true
-          },
-          {
-              "value": "MMMS",
-              "label": "滿數量"
-          }
-      ],
-      "returnType": [
-          {
-              "value": "Y",
-              "label": "已退"
-          },
-          {
-              "value": "N",
-              "label": "未退"
-          },
-          {
-              "value": "H",
-              "label": "部分退"
-          }
-      ],
-      "mmFree": [
-          {
-              "value": "MIN",
-              "label": "最小金額",
-              "_checked": true
-          },
-          {
-              "value": "MAX",
-              "label": "最大金額"
-          }
-      ],
-      "promotionWay": [
-          {
-              "value": "offline",
-              "label": "線下（門店）"
-          },
-          {
-              "value": "online",
-              "label": "線上（微信）"
-          }
-      ],
-      "returnStatus": [
-          {
-              "value": "-1",
-              "label": "未退貨"
-          },
-          {
-              "value": "0",
-              "label": "部分退"
-          },
-          {
-              "value": "1",
-              "label": "全部退"
-          }
-      ]
-  },
-  "doctor": {
-      "cash": {
-          "applyStatus": [
-              {
-                  "value": "A",
-                  "label": "申請中"
-              },
-              {
-                  "value": "Y",
-                  "label": "已發放"
-              },
-              {
-                  "value": "N",
-                  "label": "已駁回"
-              },
-              {
-                  "value": "W",
-                  "label": "等待回調處理"
-              }
-          ]
-      },
-      "enterprise": {
-          "paymentStatus": [
-              {
-                  "value": "SUCCESS",
-                  "label": "轉賬成功"
-              },
-              {
-                  "value": "FAILED",
-                  "label": "轉賬失敗"
-              },
-              {
-                  "value": "PROCESSING",
-                  "label": "處理中"
-              }
-          ]
-      },
-      "walletDetail": {
-          "type": [
-              {
-                  "value": "reward",
-                  "label": "獎勵"
-              },
-              {
-                  "value": "DTX",
-                  "label": "自助提現"
-              },
-              {
-                  "value": "ZCY",
-                  "label": "草藥"
-              },
-              {
-                  "value": "clinic",
-                  "label": "診費"
-              },
-              {
-                  "value": "addClinic",
-                  "label": "附加診費"
-              },
-              {
-                  "value": "YNZJ",
-                  "label": "自有產品"
-              },
-              {
-                  "value": "service",
-                  "label": "服務費"
-              },
-              {
-                  "value": "tworeward",
-                  "label": "兩單獎勵"
-              },
-              {
-                  "value": "treat",
-                  "label": "治療項"
-              }
-          ]
-      },
-      "protocal": [
-          {
-              "value": "Y",
-              "label": "同意"
-          },
-          {
-              "value": "N",
-              "label": "不同意"
-          }
-      ]
-  },
-  "achieve": [],
-  "introFlag": [
-      {
-          "value": "introFlag",
-          "label": "給客人發《100元門診診費代金券》",
-          "_checked": true
-      }
-  ],
-  "courseStatus": [
-      {
-          "value": "doing",
-          "label": "進行中"
-      },
-      {
-          "value": "end",
-          "label": "已結束"
-      },
-      {
-          "value": "ready",
-          "label": "未開始"
-      }
-  ],
-  "memberCourseStatus": [
-      {
-          "value": "N",
-          "label": "已報名"
-      },
-      {
-          "value": "Y",
-          "label": "已簽到"
-      },
-      {
-          "value": "Q",
-          "label": "已取消"
-      }
-  ],
-  "course": {
-      "channel": [
-          {
-              "value": "電話",
-              "label": "電話"
-          },
-          {
-              "value": "現場",
-              "label": "現場"
-          }
-      ]
-  },
-  "settle": [
-      {
-          "value": "N",
-          "label": "醫館承擔成本"
-      }
-  ],
-  "hospitalConst": [
-      {
-          "value": "Y",
-          "label": "醫館承擔成本"
-      }
-  ],
-  "yesOrNo": [
-      {
-          "value": "N",
-          "label": "無"
-      },
-      {
-          "value": "Y",
-          "label": "有"
-      }
-  ],
-  "canOrCant": [
-      {
-          "value": "Y",
-          "label": "能"
-      },
-      {
-          "value": "N",
-          "label": "否"
-      }
-  ],
-  "doctorRecipeType": [
-      {
-          "value": "ZCY",
-          "label": "中草藥",
-          "_checked": true
-      },
-      {
-          "value": "ZCNY",
-          "label": "中成藥",
-          "_checked": true
-      },
-      {
-          "value": "treat",
-          "label": "治療方",
-          "_checked": true
-      }
-  ],
-  "inputWay": [
-      {
-          "value": "yfyl",
-          "label": "一方一量",
-          "_checked": true
-      },
-      {
-          "value": "xfhl",
-          "label": "先方后量"
-      }
-  ],
-  "daijianMap": {
-      "s": [
-          "代煎",
-          "自煎"
-      ],
-      "k": [
-          "代煎",
-          "自煎"
-      ],
-      "p": [
-          "代加工",
-          "自加工"
-      ],
-      "w": [
-          "代加工",
-          "自加工"
-      ],
-      "c": [
-          "代加工",
-          "自加工"
-      ],
-      "": [
-          "代加工",
-          "自加工"
-      ],
-      "undefined": [
-          "代加工",
-          "自加工"
-      ],
-      "null": [
-          "代加工",
-          "自加工"
-      ]
-  },
-  "isDeco": [
-      {
-          "value": "Y",
-          "label": "能代煎"
-      },
-      {
-          "value": "N",
-          "label": "不能代煎"
-      }
-  ],
-  "offlineOrderType": [
-      {
-          "value": "buyCard",
-          "label": "購買會員卡"
-      },
-      {
-          "value": "offline",
-          "label": "門診診費"
-      },
-      {
-          "value": "recipel",
-          "label": "處方訂單"
-      },
-      {
-          "value": "course",
-          "label": "講座"
-      },
-      {
-          "value": "life",
-          "label": "產品"
-      },
-      {
-          "value": "package",
-          "label": "購買套餐"
-      },
-      {
-          "value": "specialist",
-          "label": "購買專科"
-      },
-      {
-          "value": "supplement",
-          "label": "補收費用"
-      }
-  ],
-  "onlineOrderType": [
-      {
-          "value": "buyCard",
-          "label": "購買會員卡"
-      },
-      {
-          "value": "recipel",
-          "label": "處方訂單"
-      },
-      {
-          "value": "graphic",
-          "label": "圖文問診"
-      },
-      {
-          "value": "phone",
-          "label": "電話問診"
-      },
-      {
-          "value": "consult",
-          "label": "診后諮詢"
-      },
-      {
-          "value": "life",
-          "label": "產品"
-      },
-      {
-          "value": "course",
-          "label": "講座"
-      },
-      {
-          "value": "package",
-          "label": "購買套餐"
-      },
-      {
-          "value": "specialist",
-          "label": "購買專科"
-      },
-      {
-          "value": "supplement",
-          "label": "補收費用"
-      },
-      {
-          "value": "wx_coupon",
-          "label": "微信抵扣金"
-      }
-  ],
-  "comboOrderStatus": [
-      {
-          "value": "tjz",
-          "label": "調劑中"
-      },
-      {
-          "value": "tjwc",
-          "label": "調劑完成"
-      },
-      {
-          "value": "SEND",
-          "label": "已發貨"
-      },
-      {
-          "value": "YILANSHOU",
-          "label": "已攬收"
-      },
-      {
-          "value": "DELIVERY",
-          "label": "派件中"
-      },
-      {
-          "value": "ACCEPT",
-          "label": "已簽收"
-      },
-      {
-          "value": "ywc",
-          "label": "已完成"
-      }
-  ],
-  "isFurtherTime": [
-      {
-          "value": "Y",
-          "label": "建議複診時間",
-          "_checked": true
-      }
-  ],
-  "isHide": [
-      {
-          "value": "Y",
-          "label": "購買前隱藏藥品克數"
-      }
-  ],
-  "reciHide": [
-      {
-          "value": "Y",
-          "label": "隱藏處方詳情"
-      }
-  ],
-  "serviceFeePercent": [
-      {
-          "value": "10",
-          "label": "10%"
-      },
-      {
-          "value": "20",
-          "label": "20%"
-      },
-      {
-          "value": "30",
-          "label": "30%"
-      },
-      {
-          "value": "40",
-          "label": "40%"
-      },
-      {
-          "value": "50",
-          "label": "50%"
-      },
-      {
-          "value": "60",
-          "label": "60%"
-      },
-      {
-          "value": "70",
-          "label": "70%"
-      },
-      {
-          "value": "80",
-          "label": "80%"
-      }
-  ],
-  "recommendProductCol": [
-      {
-          "title": "產品名稱",
-          "field": "productName"
-      },
-      {
-          "title": "單位",
-          "field": "unit",
-          "width": "50px"
-      },
-      {
-          "title": "數量",
-          "field": "num",
-          "width": "50px"
-      }
-  ],
-  "onlyCard": [
-      {
-          "value": "HYK",
-          "label": "會員卡"
-      },
-      {
-          "value": "TRDF",
-          "label": "他人會員卡"
-      },
-      {
-          "value": "WEIDIAN",
-          "label": "微店"
-      },
-      {
-          "value": "SENDURL",
-          "label": "推送支付鏈接"
-      }
-  ],
-  "appPushRange": [
-      {
-          "value": "all",
-          "label": "全部"
-      },
-      {
-          "value": "ZA",
-          "label": "系內"
-      },
-      {
-          "value": "bd",
-          "label": "系外"
-      },
-      {
-          "value": "specify",
-          "label": "部分大夫"
-      }
-  ],
-  "appPushType": [
-      {
-          "value": "2",
-          "label": "文字",
-          "_checked": true
-      },
-      {
-          "value": "3",
-          "label": "圖片"
-      },
-      {
-          "value": "1",
-          "label": "鏈接"
-      }
-  ],
-  "urgent": [
-      {
-          "value": "Y",
-          "label": "加急處理"
-      }
-  ],
-  "member_level": [
-      {
-          "value": "9cac8d0c99994324b8efc2e6204b0667",
-          "label": "員工"
-      },
-      {
-          "value": "VIP1",
-          "label": "VIP1"
-      },
-      {
-          "value": "VIP2",
-          "label": "VIP2"
-      },
-      {
-          "value": "VIP3",
-          "label": "VIP3"
-      },
-      {
-          "value": "BLACK_CARD",
-          "label": "喜悅鑽卡"
-      },
-      {
-          "value": "VIP4",
-          "label": "VIP4"
-      },
-      {
-          "value": "VIP5",
-          "label": "VIP5"
-      },
-      {
-          "value": "PTHY",
-          "label": "歡喜金卡"
-      },
-      {
-          "value": "HJK",
-          "label": "會籍卡"
-      },
-      {
-          "value": "PTKR",
-          "label": "普通客人"
-      }
-  ],
-  "appointment_plus_type": [
-      {
-          "value": "I",
-          "label": "保險加號"
-      }
-  ],
-  "drugSub": [
-      {
-          "value": "ZCY",
-          "label": "中草藥"
-      },
-      {
-          "value": "KLJ",
-          "label": "免煎中藥"
-      }
-  ],
-  "printsize": [
-      {
-          "value": "297mm",
-          "label": "A4"
-      },
-      {
-          "value": "148mm",
-          "label": "A5"
-      }
-  ],
-  "printtype": [
-      {
-          "value": "zhengming",
-          "label": "應診證明書",
-          "_checked": true
-      },
-      {
-          "value": "jiatiao",
-          "label": "病假證明書"
-      }
-  ],
-  "printinfo": [
-      {
-          "value": "y",
-          "label": "允許",
-          "_checked": true
-      },
-      {
-          "value": "n",
-          "label": "不允許"
-      }
-  ],
-  "printtime": [
-      {
-          "value": "day",
-          "label": "按天",
-          "_checked": true
-      },
-      {
-          "value": "time",
-          "label": "按小時和分鐘"
-      },
-      {
-          "value": "custom",
-          "label": "自定義"
-      }
-  ]
+    "recipel_tempType_ZCY": "ZCY",
+    "recipel_tempType_ZCNY": "ZCNY",
+    "recipel_tempType_TREAT": "treat",
+    "RECIPEL_WARNING_NUM": 500,
+    "ZHENGANZISONG": "ZS",
+    "SHANSONG": "SS",
+    "SHUNFENGKUAIDI": "SF",
+    "CUSTOMER_DOCTOR_NAME": "慈祿門診",
+    "CUSTOMER_DOCTOR_NAME_ID": "bb2cfcb7350041a789e8fdc4ee3561f8",
+    "CUSTOMER_DOCTOR_ServiceFeePercentList": [
+        {
+            "value": 50,
+            "label": "50%"
+        },
+        {
+            "value": 100,
+            "label": "100%"
+        },
+        {
+            "value": 150,
+            "label": "150%"
+        },
+        {
+            "value": 200,
+            "label": "200%"
+        }
+    ],
+    "sysDict": {},
+    "sex": [
+        {
+            "value": "M",
+            "label": "男"
+        },
+        {
+            "value": "F",
+            "label": "女"
+        }
+    ],
+    "sex2": [
+        {
+            "value": "M",
+            "label": "男"
+        },
+        {
+            "value": "F",
+            "label": "女"
+        }
+    ],
+    "smsStatus": [
+        {
+            "value": "SEND",
+            "label": "已發送"
+        },
+        {
+            "value": "FAIL",
+            "label": "失敗"
+        },
+        {
+            "value": "SUCC",
+            "label": "成功"
+        }
+    ],
+    "marriageStatus": [
+        {
+            "value": "0",
+            "label": "未婚"
+        },
+        {
+            "value": "1",
+            "label": "已婚"
+        }
+    ],
+    "status": [
+        {
+            "value": "Y",
+            "label": "正常"
+        },
+        {
+            "value": "N",
+            "label": "禁用"
+        }
+    ],
+    "isdebug": [
+        {
+            "value": "Y",
+            "label": "是"
+        },
+        {
+            "value": "N",
+            "label": "否"
+        }
+    ],
+    "doctorSource": [
+        {
+            "value": "bd",
+            "label": "BD"
+        },
+        {
+            "value": "ZA",
+            "label": "翼+"
+        }
+    ],
+    "doctorStatus": [
+        {
+            "value": "REG",
+            "label": "註冊"
+        },
+        {
+            "value": "PASS",
+            "label": "已認證"
+        },
+        {
+            "value": "AP",
+            "label": "待認證"
+        },
+        {
+            "value": "REJ",
+            "label": "未通過"
+        }
+    ],
+    "doctorStatus2": [
+        {
+            "value": "Y",
+            "label": "啟用"
+        },
+        {
+            "value": "N",
+            "label": "停用"
+        }
+    ],
+    "serviceSwitch": [
+        {
+            "value": "OFF",
+            "label": "否",
+            "_checked": true
+        },
+        {
+            "value": "ON",
+            "label": "是"
+        }
+    ],
+    "isSchedule": [
+        {
+            "value": "ON",
+            "label": "是"
+        },
+        {
+            "value": "OFF",
+            "label": "否"
+        }
+    ],
+    "drugTypeList": [
+        {
+            "value": "ZCNY",
+            "label": "中成藥"
+        },
+        {
+            "value": "ZCY",
+            "label": "中草藥"
+        },
+        {
+            "value": "YNZJ",
+            "label": "自有產品"
+        }
+    ],
+    "sendStatus": [
+        {
+            "value": "WAITING",
+            "label": "代發葯"
+        },
+        {
+            "value": "SENED",
+            "label": "已發葯"
+        },
+        {
+            "value": "RETURN",
+            "label": "已退"
+        },
+        {
+            "value": "P_RETURN",
+            "label": "部分退"
+        }
+    ],
+    "bilingStatus": [
+        {
+            "value": "UNPAY",
+            "label": "未結算"
+        },
+        {
+            "value": "PAYED",
+            "label": "已結算"
+        }
+    ],
+    "orderStatus": [
+        {
+            "value": "PAYED",
+            "label": "已付款"
+        },
+        {
+            "value": "REFUND",
+            "label": "已退款"
+        },
+        {
+            "value": "REFUNDING",
+            "label": "退款中"
+        },
+        {
+            "value": "END",
+            "label": "結束"
+        },
+        {
+            "value": "Q",
+            "label": "欠費"
+        }
+    ],
+    "urlReciveObject": [
+        {
+            "value": "self",
+            "label": "客人自己",
+            "_checked": true
+        },
+        {
+            "value": "other",
+            "label": "他人代付"
+        }
+    ],
+    "offlinePaymentStatus": [
+        {
+            "value": "PAYED",
+            "label": "已付款"
+        },
+        {
+            "value": "REFUNDING",
+            "label": "退款中"
+        },
+        {
+            "value": "REFUND",
+            "label": "已退款"
+        },
+        {
+            "value": "ARRE",
+            "label": "欠費"
+        }
+    ],
+    "onlinePaymentStatus": [
+        {
+            "value": "PAYED",
+            "label": "已付款"
+        },
+        {
+            "value": "REFUNDING",
+            "label": "退款中"
+        },
+        {
+            "value": "REFUND",
+            "label": "已退款"
+        },
+        {
+            "value": "END",
+            "label": "已結束"
+        }
+    ],
+    "payType": [
+        {
+            "value": "ALIPAY",
+            "label": "支付寶支付"
+        },
+        {
+            "value": "WXPAY",
+            "label": "微信支付"
+        }
+    ],
+    "consumeType": [
+        {
+            "value": "graphic",
+            "label": "圖文問診"
+        },
+        {
+            "value": "phone",
+            "label": "電話問診"
+        },
+        {
+            "value": "offline",
+            "label": "線下問診"
+        },
+        {
+            "value": "consult",
+            "label": "診后諮詢"
+        },
+        {
+            "value": "recipel",
+            "label": "處方訂單"
+        },
+        {
+            "value": "refund",
+            "label": "退款"
+        }
+    ],
+    "isFinish": [
+        {
+            "value": "PAYED",
+            "label": "未完成"
+        },
+        {
+            "value": "END",
+            "label": "已完成"
+        }
+    ],
+    "expressStatus": [
+        {
+            "value": "WAITING",
+            "label": "待發貨"
+        },
+        {
+            "value": "SEND",
+            "label": "已發貨"
+        },
+        {
+            "value": "DELIVERY",
+            "label": "派送中"
+        },
+        {
+            "value": "YILANSHOU",
+            "label": "已攬收"
+        },
+        {
+            "value": "ACCEPT",
+            "label": "已完成"
+        }
+    ],
+    "insurType": [
+        {
+            "value": "內資",
+            "label": "內資"
+        },
+        {
+            "value": "外資",
+            "label": "外資"
+        },
+        {
+            "value": "合資",
+            "label": "合資"
+        }
+    ],
+    "recipeType": [
+        {
+            "value": "ZCY",
+            "label": "中草藥"
+        },
+        {
+            "value": "ZCNY",
+            "label": "中成藥"
+        },
+        {
+            "value": "treat",
+            "label": "治療方"
+        }
+    ],
+    "orderOrigin": [
+        {
+            "value": "0",
+            "label": "網診"
+        },
+        {
+            "value": "1",
+            "label": "門診"
+        }
+    ],
+    "expressType": [
+        {
+            "value": "SF",
+            "label": "順豐快遞"
+        },
+        {
+            "value": "sfdf",
+            "label": "順豐到付"
+        },
+        {
+            "value": "ZS",
+            "label": "翼+自送"
+        },
+        {
+            "value": "SS",
+            "label": "閃送"
+        },
+        {
+            "value": "ssdf",
+            "label": "閃送到付"
+        },
+        {
+            "value": "DADA",
+            "label": "達達·當日達"
+        },
+        {
+            "value": "SELF",
+            "label": "自取"
+        },
+        {
+            "value": "tongcheng",
+            "label": "順豐同城"
+        },
+        {
+            "value": "QT",
+            "label": "其他"
+        }
+    ],
+    "noSelfExpressType": [
+        {
+            "value": "SF",
+            "label": "順豐快遞"
+        },
+        {
+            "value": "sfdf",
+            "label": "順豐到付"
+        },
+        {
+            "value": "ZS",
+            "label": "翼+自送"
+        },
+        {
+            "value": "SS",
+            "label": "閃送"
+        },
+        {
+            "value": "ssdf",
+            "label": "閃送到付"
+        },
+        {
+            "value": "DADA",
+            "label": "達達·當日達"
+        },
+        {
+            "value": "tongcheng",
+            "label": "順豐同城"
+        },
+        {
+            "value": "QT",
+            "label": "其他"
+        }
+    ],
+    "kmOrderStatus": [
+        {
+            "value": "5",
+            "label": "審核中"
+        },
+        {
+            "value": "15",
+            "label": "調劑中"
+        },
+        {
+            "value": "17",
+            "label": "備貨完成"
+        },
+        {
+            "value": "98",
+            "label": "審核失敗"
+        },
+        {
+            "value": "99",
+            "label": "用戶放棄"
+        },
+        {
+            "value": "199",
+            "label": "已退葯"
+        },
+        {
+            "value": "20",
+            "label": "物流分揀中"
+        },
+        {
+            "value": "25",
+            "label": "派送完畢"
+        }
+    ],
+    "adjustStatus": [
+        {
+            "value": "Y",
+            "label": "已完成"
+        },
+        {
+            "value": "N",
+            "label": "未完成"
+        }
+    ],
+    "decoNum": [
+        {
+            "value": "0",
+            "label": "自煎"
+        },
+        {
+            "value": "1",
+            "label": "代煎"
+        }
+    ],
+    "useRoute": [
+        {
+            "value": "NF",
+            "label": "內服",
+            "_checked": true
+        },
+        {
+            "value": "WY",
+            "label": "外用"
+        }
+    ],
+    "dosageform": [
+        {
+            "value": "s",
+            "label": "湯劑",
+            "_checked": true
+        },
+        {
+            "value": "p",
+            "label": "散劑"
+        },
+        {
+            "value": "w",
+            "label": "丸劑"
+        },
+        {
+            "value": "c",
+            "label": "膏劑"
+        },
+        {
+            "value": "k",
+            "label": "顆粒劑",
+            "_disabled": true
+        },
+        {
+            "value": "y",
+            "label": "中成藥"
+        }
+    ],
+    "inventoryStatus": [
+        {
+            "value": "REGIST",
+            "label": "已登記"
+        },
+        {
+            "value": "PASS",
+            "label": "已通過"
+        }
+    ],
+    "isStaff": [
+        {
+            "value": "Y",
+            "label": "員工及家屬"
+        },
+        {
+            "value": "N",
+            "label": "客人",
+            "_checked": true
+        }
+    ],
+    "couponType": [
+        {
+            "value": "DK",
+            "label": "代金券"
+        },
+        {
+            "value": "ZK",
+            "label": "折扣券"
+        }
+    ],
+    "commonStatus": [
+        {
+            "value": "REGIST",
+            "label": "已登記"
+        },
+        {
+            "value": "PASS",
+            "label": "已通過"
+        },
+        {
+            "value": "REJECT",
+            "label": "已駁回"
+        }
+    ],
+    "saveRemark": [
+        {
+            "value": "Y",
+            "label": "保存備註"
+        }
+    ],
+    "kmDosageform": [
+        {
+            "value": "s",
+            "label": "湯劑"
+        },
+        {
+            "value": "c",
+            "label": "膏劑"
+        }
+    ],
+    "drugArea": [
+        {
+            "value": "S",
+            "label": "南方藥典"
+        },
+        {
+            "value": "N",
+            "label": "北方藥典"
+        }
+    ],
+    "orderType": [
+        {
+            "value": "graphic",
+            "label": "圖文問診"
+        },
+        {
+            "value": "phone",
+            "label": "電話問診"
+        },
+        {
+            "value": "consult",
+            "label": "診后諮詢"
+        },
+        {
+            "value": "recipel",
+            "label": "購葯"
+        },
+        {
+            "value": "life",
+            "label": "國貨產品"
+        },
+        {
+            "value": "package",
+            "label": "購買套餐"
+        },
+        {
+            "value": "supplement",
+            "label": "補收"
+        }
+    ],
+    "transactionSubType": [
+        {
+            "value": "HYF",
+            "label": "會員費"
+        },
+        {
+            "value": "ZC",
+            "label": "轉出"
+        },
+        {
+            "value": "TF",
+            "label": "退費"
+        },
+        {
+            "value": "TK",
+            "label": "退卡"
+        },
+        {
+            "value": "ZR",
+            "label": "轉入"
+        },
+        {
+            "value": "HYKCZ",
+            "label": "會員卡充值"
+        },
+        {
+            "value": "CFZF",
+            "label": "處方作廢"
+        },
+        {
+            "value": "WHXXKCSF",
+            "label": "文化線下課程收費"
+        },
+        {
+            "value": "WHXXKCTF",
+            "label": "文化線下課程退費"
+        },
+        {
+            "value": "WHXXHDSF",
+            "label": "文化線下活動收費"
+        },
+        {
+            "value": "WHXXHDTF",
+            "label": "文化線下活動退費"
+        },
+        {
+            "value": "course",
+            "label": "講座報名"
+        },
+        {
+            "value": "CD",
+            "label": "沖抵"
+        },
+        {
+            "value": "ZF",
+            "label": "作廢"
+        },
+        {
+            "value": "ZCXF",
+            "label": "正常消費"
+        },
+        {
+            "value": "recipel",
+            "label": "正常消費"
+        },
+        {
+            "value": "graphic",
+            "label": "正常消費"
+        },
+        {
+            "value": "offline",
+            "label": "正常消費"
+        },
+        {
+            "value": "OLD_YHQ",
+            "label": "遺留優惠券"
+        },
+        {
+            "value": "PAY_ARRE",
+            "label": "結算欠費"
+        },
+        {
+            "value": "REFUNDBALANCE",
+            "label": "退餘額"
+        }
+    ],
+    "deco_type1": [
+        {
+            "value": "XJ",
+            "label": "先煎"
+        },
+        {
+            "value": "HX",
+            "label": "後下"
+        },
+        {
+            "value": "DJ",
+            "label": "單煎"
+        }
+    ],
+    "deco_type2": [
+        {
+            "value": "BJ",
+            "label": "包煎"
+        },
+        {
+            "value": "DS",
+            "label": "搗碎"
+        },
+        {
+            "value": "SX",
+            "label": "水洗"
+        },
+        {
+            "value": "DF",
+            "label": "打粉"
+        }
+    ],
+    "deco_type3": [
+        {
+            "value": "YH",
+            "label": "烊化"
+        },
+        {
+            "value": "CF",
+            "label": "沖服"
+        },
+        {
+            "value": "JF",
+            "label": "焗服"
+        },
+        {
+            "value": "DF",
+            "label": "兌服"
+        },
+        {
+            "value": "TF",
+            "label": "吞服"
+        }
+    ],
+    "self": [
+        {
+            "value": "Y",
+            "label": "自備"
+        }
+    ],
+    "allself": [
+        {
+            "value": "Y",
+            "label": "全方外購"
+        }
+    ],
+    "voucherType": [
+        {
+            "value": "ALL",
+            "label": "不限"
+        },
+        {
+            "value": "XS",
+            "label": "線上看診"
+        },
+        {
+            "value": "XX",
+            "label": "線下門診"
+        }
+    ],
+    "visitType": [
+        {
+            "value": "F",
+            "label": "初"
+        },
+        {
+            "value": "R",
+            "label": "復"
+        },
+        {
+            "value": "S",
+            "label": "首"
+        }
+    ],
+    "registerStatus": [
+        {
+            "value": "Y",
+            "label": "已挂號"
+        },
+        {
+            "value": "N",
+            "label": "未挂號"
+        }
+    ],
+    "display": [
+        {
+            "value": "Y",
+            "label": "是"
+        },
+        {
+            "value": "N",
+            "label": "否"
+        }
+    ],
+    "qyflag": [
+        {
+            "value": "DIRECT",
+            "label": "直營"
+        },
+        {
+            "value": "JOIN",
+            "label": "加盟"
+        }
+    ],
+    "roleType": [
+        {
+            "value": "core",
+            "label": "總部"
+        },
+        {
+            "value": "normal",
+            "label": "診所"
+        }
+    ],
+    "judge": [
+        {
+            "value": "Y",
+            "label": "具備開膏方資格"
+        }
+    ],
+    "sendMode": [
+        {
+            "value": "1",
+            "label": "電話"
+        },
+        {
+            "value": "0",
+            "label": "微信"
+        }
+    ],
+    "insurance": [
+        {
+            "value": "0",
+            "label": "走保險"
+        },
+        {
+            "value": "1",
+            "label": "已接診過的病人走保險，新增首診病人不走保險"
+        },
+        {
+            "value": "2",
+            "label": "無保險"
+        }
+    ],
+    "allOrderType": [
+        {
+            "value": "graphic",
+            "label": "圖文問診"
+        },
+        {
+            "value": "graphic_visit",
+            "label": "圖文問診複診"
+        },
+        {
+            "value": "phone",
+            "label": "電話問診"
+        },
+        {
+            "value": "phone_visit",
+            "label": "電話問診複診"
+        },
+        {
+            "value": "offline",
+            "label": "門診診費"
+        },
+        {
+            "value": "offline_visit",
+            "label": "線下問診複診"
+        },
+        {
+            "value": "consult",
+            "label": "診后諮詢"
+        },
+        {
+            "value": "csjj",
+            "label": "創收獎金"
+        },
+        {
+            "value": "recipel",
+            "label": "處方訂單"
+        },
+        {
+            "value": "prescription",
+            "label": "患者上傳處方單"
+        },
+        {
+            "value": "consulted",
+            "label": "診后諮詢補貼"
+        },
+        {
+            "value": "qrcode",
+            "label": "掃碼獎勵"
+        },
+        {
+            "value": "tworeward",
+            "label": "兩單120元獎勵"
+        },
+        {
+            "value": "invitation",
+            "label": "邀請醫生獎勵"
+        },
+        {
+            "value": "deco",
+            "label": "補代煎費"
+        },
+        {
+            "value": "package",
+            "label": "購買套餐"
+        },
+        {
+            "value": "specialist",
+            "label": "購買專科"
+        },
+        {
+            "value": "voucher",
+            "label": "購買優惠券"
+        },
+        {
+            "value": "life",
+            "label": "產品"
+        },
+        {
+            "value": "supplement",
+            "label": "補收費用"
+        },
+        {
+            "value": "course",
+            "label": "講座"
+        },
+        {
+            "value": "buyCard",
+            "label": "購買會員卡"
+        },
+        {
+            "value": "wx_coupon",
+            "label": "微信抵扣金"
+        }
+    ],
+    "logicType": [
+        {
+            "value": ">",
+            "label": "大於"
+        },
+        {
+            "value": ">=",
+            "label": "大於等於"
+        },
+        {
+            "value": "=",
+            "label": "等於"
+        },
+        {
+            "value": "<=",
+            "label": "小於等於"
+        },
+        {
+            "value": "<",
+            "label": "小於"
+        },
+        {
+            "value": "!=",
+            "label": "不等於"
+        }
+    ],
+    "logic": [
+        {
+            "value": "and",
+            "label": "且"
+        },
+        {
+            "value": "or",
+            "label": "或"
+        }
+    ],
+    "templetesex": [
+        {
+            "value": "MF",
+            "label": "不限"
+        },
+        {
+            "value": "M",
+            "label": "男"
+        },
+        {
+            "value": "F",
+            "label": "女"
+        }
+    ],
+    "createFrom": [
+        {
+            "value": "offline",
+            "label": "門診"
+        },
+        {
+            "value": "online",
+            "label": "網診"
+        }
+    ],
+    "showInWx": [
+        {
+            "value": "Y",
+            "label": "在微信中显示"
+        }
+    ],
+    "wxAppointment": [
+        {
+            "value": "Y",
+            "label": "開放微信預約"
+        }
+    ],
+    "isNeedAppointPic": [
+        {
+            "value": "Y",
+            "label": "需要約診截圖"
+        }
+    ],
+    "skipInquiry": [
+        {
+            "value": "Y",
+            "label": "允許患者跳過問診單",
+            "_checked": true
+        }
+    ],
+    "printwzd": [
+        {
+            "value": "Y",
+            "label": "打印問診單"
+        }
+    ],
+    "printzdjg": [
+        {
+            "value": "Y",
+            "label": "打印診斷結果"
+        }
+    ],
+    "couldBuyConsult": [
+        {
+            "value": "Y",
+            "label": "有看診記錄才可以買診后提問"
+        }
+    ],
+    "prescibeCol": [
+        {
+            "title": "藥品",
+            "field": "drugName",
+            "width": "120px"
+        },
+        {
+            "title": "單位",
+            "field": "unitStandard",
+            "width": "30px"
+        },
+        {
+            "title": "單價",
+            "field": "unitPrice",
+            "width": "50px"
+        },
+        {
+            "title": "庫存",
+            "field": "currentQty",
+            "width": "50px"
+        }
+    ],
+    "memberColumns": [
+        {
+            "title": "姓名",
+            "field": "memberName",
+            "width": "40px"
+        },
+        {
+            "title": "手機",
+            "field": "memberMobile",
+            "width": "60px"
+        },
+        {
+            "title": "病案號",
+            "field": "id",
+            "width": "120px"
+        }
+    ],
+    "pharmacy": {
+        "orderRequestStatus": [
+            {
+                "value": "T",
+                "label": "已登記"
+            },
+            {
+                "value": "W",
+                "label": "請貨中"
+            },
+            {
+                "value": "P",
+                "label": "採購中"
+            },
+            {
+                "value": "F",
+                "label": "已完成"
+            }
+        ],
+        "purchaseStatus": [
+            {
+                "value": "P",
+                "label": "審核通過"
+            },
+            {
+                "value": "L",
+                "label": "部分入庫"
+            },
+            {
+                "value": "F",
+                "label": "完全入庫"
+            }
+        ],
+        "stockinStatus": [
+            {
+                "value": "T",
+                "label": "已登記"
+            },
+            {
+                "value": "W",
+                "label": "待審核"
+            },
+            {
+                "value": "P",
+                "label": "審核通過"
+            },
+            {
+                "value": "A",
+                "label": "中心審核通過"
+            }
+        ],
+        "stockoutStatus": [
+            {
+                "value": "T",
+                "label": "已登記"
+            },
+            {
+                "value": "W",
+                "label": "待審核"
+            },
+            {
+                "value": "P",
+                "label": "已審核"
+            },
+            {
+                "value": "A",
+                "label": "已接受"
+            },
+            {
+                "value": "L",
+                "label": "待撤銷"
+            },
+            {
+                "value": "C",
+                "label": "已撤銷"
+            }
+        ],
+        "transferStatus": [
+            {
+                "value": "P",
+                "label": "中心已審核"
+            },
+            {
+                "value": "A",
+                "label": "已接受"
+            },
+            {
+                "value": "L",
+                "label": "待撤銷"
+            },
+            {
+                "value": "C",
+                "label": "已撤銷"
+            }
+        ],
+        "inventoryChangeStatus": [
+            {
+                "value": "C",
+                "label": "出庫"
+            },
+            {
+                "value": "R",
+                "label": "入庫"
+            },
+            {
+                "value": "F",
+                "label": "門診發葯"
+            },
+            {
+                "value": "T",
+                "label": "門診退葯"
+            },
+            {
+                "value": "L",
+                "label": "藥房報損"
+            },
+            {
+                "value": "Y",
+                "label": "藥房退葯"
+            },
+            {
+                "value": "K",
+                "label": "葯庫退葯"
+            },
+            {
+                "value": "ZT",
+                "label": "轉藥房退葯"
+            },
+            {
+                "value": "ZF",
+                "label": "轉藥房發葯"
+            }
+        ],
+        "drugType": [
+            {
+                "value": "ZCY",
+                "label": "中草藥"
+            },
+            {
+                "value": "ZCNY",
+                "label": "中成藥"
+            }
+        ],
+        "returnStatus": [
+            {
+                "value": "T",
+                "label": "已登記"
+            },
+            {
+                "value": "W",
+                "label": "藥房待審核"
+            },
+            {
+                "value": "P",
+                "label": "藥房已審核"
+            },
+            {
+                "value": "A",
+                "label": "中心已審核"
+            }
+        ],
+        "ykReturnStatus": [
+            {
+                "value": "T",
+                "label": "中心已登記"
+            },
+            {
+                "value": "W",
+                "label": "中心待審核"
+            },
+            {
+                "value": "P",
+                "label": "中心已審核"
+            },
+            {
+                "value": "A",
+                "label": "中心已審核"
+            }
+        ],
+        "productMakeStatus": [
+            {
+                "value": "T",
+                "label": "已登記"
+            },
+            {
+                "value": "W",
+                "label": "待審核"
+            },
+            {
+                "value": "P",
+                "label": "已審核"
+            },
+            {
+                "value": "M",
+                "label": "製作中"
+            },
+            {
+                "value": "L",
+                "label": "部分入庫"
+            },
+            {
+                "value": "A",
+                "label": "全部入庫"
+            }
+        ],
+        "productMakeStatus1": [
+            {
+                "value": "W",
+                "label": "待審核"
+            },
+            {
+                "value": "P",
+                "label": "已審核"
+            },
+            {
+                "value": "M",
+                "label": "製作中"
+            },
+            {
+                "value": "L",
+                "label": "部分入庫"
+            },
+            {
+                "value": "A",
+                "label": "全部入庫"
+            }
+        ],
+        "ynzjStatus": [
+            {
+                "value": "T",
+                "label": "已登記"
+            },
+            {
+                "value": "W",
+                "label": "待審核"
+            },
+            {
+                "value": "P",
+                "label": "已審核"
+            }
+        ]
+    },
+    "memberProtocol": {
+        "status": [
+            {
+                "value": "Y",
+                "label": "已簽"
+            },
+            {
+                "value": "N",
+                "label": "未簽"
+            },
+            {
+                "value": "A",
+                "label": "終止"
+            }
+        ]
+    },
+    "memberCard": {
+        "status": [
+            {
+                "value": "N",
+                "label": "正常"
+            },
+            {
+                "value": "F",
+                "label": "凍結"
+            },
+            {
+                "value": "D",
+                "label": "作廢"
+            },
+            {
+                "value": "T",
+                "label": "已退卡"
+            }
+        ]
+    },
+    "drug": {
+        "status": [
+            {
+                "value": "Y",
+                "label": "正常"
+            },
+            {
+                "value": "N",
+                "label": "不正常"
+            }
+        ],
+        "type": [
+            {
+                "value": "1",
+                "label": "還可以"
+            },
+            {
+                "value": "2",
+                "label": "滿意"
+            },
+            {
+                "value": "3",
+                "label": "很滿意"
+            }
+        ],
+        "score": [
+            {
+                "value": "1",
+                "label": "1"
+            },
+            {
+                "value": "2",
+                "label": "2"
+            },
+            {
+                "value": "3",
+                "label": "3"
+            },
+            {
+                "value": "4",
+                "label": "4"
+            },
+            {
+                "value": "5",
+                "label": "5"
+            }
+        ],
+        "isOn": [
+            {
+                "value": "0",
+                "label": "關"
+            },
+            {
+                "value": "1",
+                "label": "開"
+            }
+        ],
+        "isSpecial": [
+            {
+                "value": "0",
+                "label": "否"
+            },
+            {
+                "value": "1",
+                "label": "是"
+            }
+        ],
+        "gmp": [
+            {
+                "value": "0",
+                "label": "無"
+            },
+            {
+                "value": "1",
+                "label": "有"
+            }
+        ],
+        "isMerge": [
+            {
+                "value": "yes",
+                "label": "是"
+            }
+        ],
+        "recipelStatus": [
+            {
+                "value": "Y",
+                "label": "正常"
+            },
+            {
+                "value": "N",
+                "label": "禁用"
+            }
+        ],
+        "isAcc": [
+            {
+                "value": "Y",
+                "label": "是"
+            },
+            {
+                "value": "N",
+                "label": "否"
+            }
+        ],
+        "isGravidaTaboo": [
+            {
+                "value": "W",
+                "label": "無"
+            },
+            {
+                "value": "S",
+                "label": "慎用"
+            },
+            {
+                "value": "J",
+                "label": "禁用"
+            }
+        ],
+        "source": [
+            {
+                "value": "GC",
+                "label": "國產"
+            },
+            {
+                "value": "JK",
+                "label": "進口"
+            },
+            {
+                "value": "WZ",
+                "label": "未知"
+            }
+        ],
+        "returnStatus": [
+            {
+                "value": "-1",
+                "label": "未退葯"
+            },
+            {
+                "value": "0",
+                "label": "部分退"
+            },
+            {
+                "value": "1",
+                "label": "全部退"
+            }
+        ],
+        "cny": [
+            {
+                "value": "ZCY",
+                "label": "中草藥"
+            },
+            {
+                "value": "KLJ",
+                "label": "免煎中藥"
+            }
+        ],
+        "zcny": [
+            {
+                "value": "ZCNY",
+                "label": "中成藥"
+            },
+            {
+                "value": "YNZJ",
+                "label": "內部製劑"
+            },
+            {
+                "value": "JKSP",
+                "label": "健康食品"
+            }
+        ],
+        "treat": [
+            {
+                "value": "treat",
+                "label": "針灸"
+            }
+        ],
+        "subtreat": [
+            {
+                "value": "zjz",
+                "label": "針"
+            },
+            {
+                "value": "zjj",
+                "label": "灸"
+            },
+            {
+                "value": "bg",
+                "label": "拔罐"
+            },
+            {
+                "value": "amo",
+                "label": "按摩"
+            },
+            {
+                "value": "qt",
+                "label": "其它"
+            }
+        ]
+    },
+    "birthday": {
+        "periods": [
+            {
+                "value": "1",
+                "label": "子時"
+            },
+            {
+                "value": "2",
+                "label": "丑時"
+            },
+            {
+                "value": "3",
+                "label": "寅時"
+            },
+            {
+                "value": "4",
+                "label": "卯時"
+            },
+            {
+                "value": "5",
+                "label": "辰時"
+            },
+            {
+                "value": "6",
+                "label": "巳時"
+            },
+            {
+                "value": "7",
+                "label": "午時"
+            },
+            {
+                "value": "8",
+                "label": "未時"
+            },
+            {
+                "value": "9",
+                "label": "申時"
+            },
+            {
+                "value": "10",
+                "label": "酉時"
+            },
+            {
+                "value": "11",
+                "label": "戌時"
+            },
+            {
+                "value": "12",
+                "label": "亥時"
+            }
+        ]
+    },
+    "member": {
+        "contactPreference": [
+            {
+                "value": "0",
+                "label": "沒有偏好"
+            },
+            {
+                "value": "TEL",
+                "label": "電話"
+            },
+            {
+                "value": "SMS",
+                "label": "短信"
+            },
+            {
+                "value": "wechat",
+                "label": "微信"
+            }
+        ],
+        "workOrderTransferType": [
+            {
+                "value": "person",
+                "label": "個人"
+            },
+            {
+                "value": "dept",
+                "label": "部門"
+            }
+        ],
+        "workOrderStatus": [
+            {
+                "value": "nohand",
+                "label": "無需處理"
+            },
+            {
+                "value": "nothand",
+                "label": "未處理",
+                "_checked": true
+            },
+            {
+                "value": "handling",
+                "label": "處理中"
+            },
+            {
+                "value": "handled",
+                "label": "處理完成"
+            }
+        ],
+        "workOrderRemind": [
+            {
+                "value": "1",
+                "label": "創建提醒"
+            }
+        ],
+        "addressType": [
+            {
+                "value": "Home",
+                "label": "家庭"
+            },
+            {
+                "value": "Company",
+                "label": "單位"
+            },
+            {
+                "value": "Other",
+                "label": "其他"
+            }
+        ],
+        "memberAddress": [
+            {
+                "value": "Y",
+                "label": "默認地址"
+            }
+        ],
+        "specialistStatus": [
+            {
+                "value": "N",
+                "label": "正常"
+            },
+            {
+                "value": "Y",
+                "label": "使用完"
+            },
+            {
+                "value": "R",
+                "label": "已退"
+            },
+            {
+                "value": "G",
+                "label": "已過期"
+            }
+        ],
+        "voucherStatus": [
+            {
+                "value": "N",
+                "label": "未使用"
+            },
+            {
+                "value": "Y",
+                "label": "已使用"
+            }
+        ],
+        "relationList": [
+            {
+                "value": "couple",
+                "label": "夫妻"
+            },
+            {
+                "value": "fatherSon",
+                "label": "父子"
+            },
+            {
+                "value": "motherDaughter",
+                "label": "母女"
+            },
+            {
+                "value": "BrothersSisters",
+                "label": "兄弟姐妹"
+            },
+            {
+                "value": "friend",
+                "label": "朋友"
+            },
+            {
+                "value": "colleague",
+                "label": "同事"
+            },
+            {
+                "value": "mz",
+                "label": "母子"
+            },
+            {
+                "value": "other",
+                "label": "其他"
+            },
+            {
+                "value": "father",
+                "label": "爸爸"
+            },
+            {
+                "value": "mother",
+                "label": "媽媽"
+            },
+            {
+                "value": "husband",
+                "label": "老公"
+            },
+            {
+                "value": "wife",
+                "label": "老婆"
+            },
+            {
+                "value": "son",
+                "label": "兒子"
+            },
+            {
+                "value": "daughter",
+                "label": "女兒"
+            },
+            {
+                "value": "family",
+                "label": "家人"
+            },
+            {
+                "value": "friend",
+                "label": "朋友"
+            }
+        ],
+        "relation": [
+            {
+                "value": "father",
+                "label": "爸爸"
+            },
+            {
+                "value": "mother",
+                "label": "媽媽"
+            },
+            {
+                "value": "husband",
+                "label": "老公"
+            },
+            {
+                "value": "wife",
+                "label": "老婆"
+            },
+            {
+                "value": "son",
+                "label": "兒子"
+            },
+            {
+                "value": "daughter",
+                "label": "女兒"
+            },
+            {
+                "value": "family",
+                "label": "家人"
+            },
+            {
+                "value": "friend",
+                "label": "朋友"
+            }
+        ],
+        "insureCode": [
+            {
+                "value": "cons",
+                "label": "診費"
+            },
+            {
+                "value": "drug",
+                "label": "藥費"
+            },
+            {
+                "value": "make",
+                "label": "藥品處置費"
+            },
+            {
+                "value": "project",
+                "label": "國貨鋪"
+            },
+            {
+                "value": "treat",
+                "label": "治療費"
+            },
+            {
+                "value": "express",
+                "label": "快遞費"
+            },
+            {
+                "value": "other",
+                "label": "其他"
+            }
+        ],
+        "insurStatus": [
+            {
+                "value": "N",
+                "label": "無效"
+            },
+            {
+                "value": "Y",
+                "label": "有效"
+            }
+        ],
+        "order": [
+            {
+                "value": "mzrq",
+                "label": "末診時間正序"
+            },
+            {
+                "value": "mzrq desc",
+                "label": "末診時間倒序"
+            },
+            {
+                "value": "szrq",
+                "label": "初診時間正序"
+            },
+            {
+                "value": "szrq desc",
+                "label": "初診時間倒序"
+            }
+        ]
+    },
+    "bd": {
+        "isCityManager": [
+            {
+                "value": "Y",
+                "label": "是"
+            },
+            {
+                "value": "N",
+                "label": "否"
+            }
+        ],
+        "isAreaManager": [
+            {
+                "value": "D",
+                "label": "是"
+            },
+            {
+                "value": "N",
+                "label": "否"
+            }
+        ]
+    },
+    "appoint": {
+        "source": [
+            {
+                "value": "TEL",
+                "label": "電話"
+            },
+            {
+                "value": "SPOT",
+                "label": "現場"
+            },
+            {
+                "value": "WX",
+                "label": "微信"
+            },
+            {
+                "value": "SMS",
+                "label": "短信"
+            },
+            {
+                "value": "EXAMI",
+                "label": "泰康保險"
+            },
+            {
+                "value": "EXAMISX",
+                "label": "中醫體檢私享套餐"
+            },
+            {
+                "value": "EXAMIZX",
+                "label": "中醫體檢誠意套餐"
+            },
+            {
+                "value": "MINI",
+                "label": "小程序預約"
+            }
+        ],
+        "replyChannel": [
+            {
+                "value": "TEL",
+                "label": "電話"
+            },
+            {
+                "value": "SPOT",
+                "label": "現場"
+            },
+            {
+                "value": "WX",
+                "label": "微信"
+            },
+            {
+                "value": "SMS",
+                "label": "短信"
+            },
+            {
+                "value": "NULL",
+                "label": "未回復"
+            }
+        ],
+        "pendingFlag": [
+            {
+                "value": "N",
+                "label": "否"
+            },
+            {
+                "value": "Y",
+                "label": "是"
+            }
+        ],
+        "status": [
+            {
+                "value": "QRJZ",
+                "label": "確認就診"
+            },
+            {
+                "value": "YYY",
+                "label": "已預約"
+            },
+            {
+                "value": "YQX",
+                "label": "已取消"
+            },
+            {
+                "value": "HFQX",
+                "label": "回復取消"
+            },
+            {
+                "value": "YGH",
+                "label": "已挂號"
+            },
+            {
+                "value": "YTH",
+                "label": "已退號"
+            },
+            {
+                "value": "DQX",
+                "label": "待取消"
+            },
+            {
+                "value": "TIMEOUT",
+                "label": "超時關閉"
+            }
+        ],
+        "showCancel": [
+            {
+                "value": "1",
+                "label": "显示取消預約"
+            }
+        ],
+        "paymentStatus": [
+            {
+                "value": "UNPAY",
+                "label": "未支付"
+            },
+            {
+                "value": "PAYED",
+                "label": "已支付"
+            }
+        ],
+        "usePrCard": [
+            {
+                "value": "0",
+                "label": "否"
+            },
+            {
+                "value": "1",
+                "label": "是"
+            }
+        ],
+        "hasHighMedicalInsurance": [
+            {
+                "value": "0",
+                "label": "否"
+            },
+            {
+                "value": "1",
+                "label": "是"
+            }
+        ],
+        "payType": [
+            {
+                "value": "1",
+                "label": "先支付",
+                "_checked": true
+            },
+            {
+                "value": "0",
+                "label": "先不支付"
+            }
+        ],
+        "registerType": [
+            {
+                "value": "R",
+                "label": "現場挂號"
+            },
+            {
+                "value": "N",
+                "label": "預約挂號"
+            },
+            {
+                "value": "J",
+                "label": "加診"
+            }
+        ],
+        "payState": [
+            {
+                "value": "YYZ",
+                "label": "等待支付"
+            },
+            {
+                "value": "TIMEOUT",
+                "label": "已失效"
+            },
+            {
+                "value": "PAYED",
+                "label": "已支付"
+            }
+        ]
+    },
+    "recipelInputStatus": [
+        {
+            "value": "N",
+            "label": "未錄入"
+        },
+        {
+            "value": "Y",
+            "label": "已錄入"
+        }
+    ],
+    "recipelAuditStatus": [
+        {
+            "value": "TJ",
+            "label": "未審核"
+        },
+        {
+            "value": "YSH",
+            "label": "已審核"
+        }
+    ],
+    "recipelHiddenCons": [
+        {
+            "value": "Y",
+            "label": "隱藏"
+        }
+    ],
+    "offlineRecipelType": [
+        {
+            "value": "normal",
+            "label": "普通門診"
+        },
+        {
+            "value": "special",
+            "label": "專科"
+        },
+        {
+            "value": "package",
+            "label": "套餐"
+        },
+        {
+            "value": "accordingparty",
+            "label": "照方抓藥"
+        },
+        {
+            "value": "goods",
+            "label": "直購國貨"
+        }
+    ],
+    "offlineRecipelType2": [
+        {
+            "value": "normal",
+            "label": "普通門診"
+        },
+        {
+            "value": "special",
+            "label": "專科門診"
+        },
+        {
+            "value": "specialist",
+            "label": "專科門診"
+        },
+        {
+            "value": "package",
+            "label": "套餐門診"
+        },
+        {
+            "value": "accordingparty",
+            "label": "照方抓藥"
+        }
+    ],
+    "visitStatus": [
+        {
+            "value": "C",
+            "label": "未提交"
+        },
+        {
+            "value": "W",
+            "label": "待審核"
+        },
+        {
+            "value": "F",
+            "label": "已提交"
+        },
+        {
+            "value": "A",
+            "label": "已購買"
+        }
+    ],
+    "appointmentType": [
+        {
+            "value": "normal",
+            "label": "普通門診"
+        },
+        {
+            "value": "specialist",
+            "label": "專科門診"
+        },
+        {
+            "value": "package",
+            "label": "套餐"
+        }
+    ],
+    "isInsur": [
+        {
+            "value": "Y",
+            "label": "保險客人"
+        }
+    ],
+    "seeStatus": [
+        {
+            "value": "Y",
+            "label": "已結束"
+        },
+        {
+            "value": "N",
+            "label": "未結束"
+        }
+    ],
+    "onlineRecipelType": [
+        {
+            "value": "app",
+            "label": "APP開方"
+        },
+        {
+            "value": "photo",
+            "label": "醫生拍方"
+        },
+        {
+            "value": "trans",
+            "label": "人際傳方"
+        }
+    ],
+    "onlineRecipelOrigin": [
+        {
+            "value": "APP",
+            "label": "APP開方"
+        },
+        {
+            "value": "PC",
+            "label": "手寫方"
+        },
+        {
+            "value": "DOCTOR",
+            "label": "电子方"
+        },
+        {
+            "value": "photo",
+            "label": "醫生拍方"
+        },
+        {
+            "value": "trans",
+            "label": "人際傳方"
+        }
+    ],
+    "isDebug": [
+        {
+            "value": "1",
+            "label": "显示測試醫生"
+        }
+    ],
+    "isdebugY": [
+        {
+            "value": "Y",
+            "label": "是測試醫生"
+        }
+    ],
+    "isdebugYN": [
+        {
+            "value": "Y",
+            "label": "是"
+        },
+        {
+            "value": "N",
+            "label": "否"
+        }
+    ],
+    "useCard": [
+        {
+            "value": "Y",
+            "label": "使用會員卡結算"
+        }
+    ],
+    "allowAppoint": [
+        {
+            "value": "Y",
+            "label": "未購買套餐不允許預約"
+        }
+    ],
+    "insurActive": [
+        {
+            "value": "Y",
+            "label": "正常"
+        },
+        {
+            "value": "N",
+            "label": "停用"
+        }
+    ],
+    "hasChild": [
+        {
+            "value": "N",
+            "label": "未生育"
+        },
+        {
+            "value": "Y",
+            "label": "已生育"
+        }
+    ],
+    "numList": [
+        {
+            "value": "1",
+            "label": "1"
+        },
+        {
+            "value": "2",
+            "label": "2"
+        },
+        {
+            "value": "3",
+            "label": "3"
+        },
+        {
+            "value": "4",
+            "label": "4"
+        },
+        {
+            "value": "5",
+            "label": "5"
+        },
+        {
+            "value": "6",
+            "label": "6"
+        },
+        {
+            "value": "7",
+            "label": "7"
+        }
+    ],
+    "getDrugType": [
+        {
+            "value": "SELF",
+            "label": "自取"
+        },
+        {
+            "value": "EXPRESS",
+            "label": "快遞"
+        }
+    ],
+    "isMakeProduct": [
+        {
+            "value": "yes",
+            "label": "是"
+        },
+        {
+            "value": "",
+            "label": "否",
+            "_checked": true
+        }
+    ],
+    "week": [
+        {
+            "value": "1",
+            "label": "星期一"
+        },
+        {
+            "value": "2",
+            "label": "星期二"
+        },
+        {
+            "value": "3",
+            "label": "星期三"
+        },
+        {
+            "value": "4",
+            "label": "星期四"
+        },
+        {
+            "value": "5",
+            "label": "星期五"
+        },
+        {
+            "value": "6",
+            "label": "星期六"
+        },
+        {
+            "value": "7",
+            "label": "星期天"
+        }
+    ],
+    "isSpecialist": [
+        {
+            "value": "normal",
+            "label": "普通門診"
+        },
+        {
+            "value": "specialist",
+            "label": "專科門診"
+        },
+        {
+            "value": "package",
+            "label": "套餐門診"
+        }
+    ],
+    "returnType": [
+        {
+            "value": "original",
+            "label": "原支付方式",
+            "_checked": true
+        },
+        {
+            "value": "ZBTK",
+            "label": "總部退款"
+        },
+        {
+            "value": "HYK",
+            "label": "會員卡"
+        }
+    ],
+    "chargeType": [
+        {
+            "value": "ZZBX",
+            "label": "保險"
+        },
+        {
+            "value": "HYK",
+            "label": "會員卡"
+        },
+        {
+            "value": "TRDF",
+            "label": "他人會員卡"
+        },
+        {
+            "value": "POS",
+            "label": "POS"
+        },
+        {
+            "value": "XJ",
+            "label": "現金"
+        },
+        {
+            "value": "GGK",
+            "label": "公關卡"
+        },
+        {
+            "value": "YHZZ",
+            "label": "銀行轉賬"
+        },
+        {
+            "value": "ZBTK",
+            "label": "總部退款"
+        },
+        {
+            "value": "ZP",
+            "label": "支票"
+        },
+        {
+            "value": "WEIDIAN",
+            "label": "微店"
+        },
+        {
+            "value": "PEACE_CARD",
+            "label": "安心卡"
+        },
+        {
+            "value": "WXPAY",
+            "label": "微信"
+        },
+        {
+            "value": "ALIPAY",
+            "label": "支付寶"
+        },
+        {
+            "value": "ARRE",
+            "label": "欠費"
+        },
+        {
+            "value": "YHQ",
+            "label": "優惠券"
+        },
+        {
+            "value": "GIFT_CARD",
+            "label": "充值卡"
+        }
+    ],
+    "chargeTypeList": [
+        {
+            "value": "ZZBX",
+            "label": "保險"
+        },
+        {
+            "value": "HYK",
+            "label": "會員卡"
+        },
+        {
+            "value": "TRDF",
+            "label": "他人會員卡"
+        },
+        {
+            "value": "POS",
+            "label": "POS"
+        },
+        {
+            "value": "XJ",
+            "label": "現金"
+        },
+        {
+            "value": "GGK",
+            "label": "公關卡"
+        },
+        {
+            "value": "YHZZ",
+            "label": "銀行轉賬"
+        },
+        {
+            "value": "ZBTK",
+            "label": "總部退款"
+        },
+        {
+            "value": "ZP",
+            "label": "支票"
+        },
+        {
+            "value": "WEIDIAN",
+            "label": "微店"
+        },
+        {
+            "value": "PEACE_CARD",
+            "label": "安心卡"
+        },
+        {
+            "value": "WXPAY",
+            "label": "微信"
+        },
+        {
+            "value": "ALIPAY",
+            "label": "支付寶"
+        },
+        {
+            "value": "ARRE",
+            "label": "欠費"
+        },
+        {
+            "value": "YHQ",
+            "label": "優惠券"
+        },
+        {
+            "value": "GIFT_CARD",
+            "label": "充值卡"
+        },
+        {
+            "value": "USE_PACKAGE",
+            "label": "套餐"
+        },
+        {
+            "value": "USE_SPECIALIST",
+            "label": "專科"
+        },
+        {
+            "value": "OLD_YHQ",
+            "label": "遺留優惠券"
+        }
+    ],
+    "dataType": [
+        {
+            "value": "drug",
+            "label": "藥費"
+        },
+        {
+            "value": "package",
+            "label": "套餐"
+        },
+        {
+            "value": "life",
+            "label": "國貨產品"
+        },
+        {
+            "value": "addClinic",
+            "label": "診費"
+        },
+        {
+            "value": "clinic",
+            "label": "診費"
+        },
+        {
+            "value": "deco",
+            "label": "代煎費"
+        },
+        {
+            "value": "make",
+            "label": "代煎費"
+        },
+        {
+            "value": "treat",
+            "label": "治療方"
+        },
+        {
+            "value": "use_package",
+            "label": "套餐"
+        },
+        {
+            "value": "express",
+            "label": "快遞費"
+        },
+        {
+            "value": "course",
+            "label": "講座"
+        },
+        {
+            "value": "other",
+            "label": "其他費用"
+        }
+    ],
+    "retundType": [
+        {
+            "value": "ZZBX",
+            "label": "保險"
+        },
+        {
+            "value": "HYK",
+            "label": "會員卡"
+        },
+        {
+            "value": "TRDF",
+            "label": "他人會員卡"
+        },
+        {
+            "value": "POS",
+            "label": "POS"
+        },
+        {
+            "value": "XJ",
+            "label": "現金"
+        },
+        {
+            "value": "GGK",
+            "label": "公關卡"
+        },
+        {
+            "value": "YHZZ",
+            "label": "銀行轉賬"
+        },
+        {
+            "value": "ZP",
+            "label": "支票"
+        },
+        {
+            "value": "YHQ",
+            "label": "優惠券"
+        },
+        {
+            "value": "PEACE_CARD",
+            "label": "安心卡"
+        },
+        {
+            "value": "ARRE",
+            "label": "欠費"
+        },
+        {
+            "value": "USE_PACKAGE",
+            "label": "套餐"
+        },
+        {
+            "value": "USE_SPECIALIST",
+            "label": "專科"
+        },
+        {
+            "value": "OLD_YHQ",
+            "label": "優惠券"
+        },
+        {
+            "value": "WEIDIAN",
+            "label": "微店"
+        },
+        {
+            "value": "WXPAY",
+            "label": "微店"
+        },
+        {
+            "value": "ALIPAY",
+            "label": "微店"
+        },
+        {
+            "value": "WX_COUPON",
+            "label": "膏方抵扣碼"
+        }
+    ],
+    "arrearType": [
+        {
+            "value": "ZJQF",
+            "label": "就診欠費"
+        },
+        {
+            "value": "BXQF",
+            "label": "保險拒賠欠費"
+        },
+        {
+            "value": "SY",
+            "label": "爽約欠費"
+        }
+    ],
+    "makeMap": {
+        "p": "打粉費",
+        "w": "制丸費",
+        "c": "制膏費"
+    },
+    "market": {
+        "voucherMethod": [
+            {
+                "value": "DJQ",
+                "label": "代金券"
+            },
+            {
+                "value": "MJQ",
+                "label": "滿減券"
+            },
+            {
+                "value": "ZKQ",
+                "label": "折扣券"
+            }
+        ],
+        "voucherIsTerminate": [
+            {
+                "value": "N",
+                "label": "正常"
+            },
+            {
+                "value": "Y",
+                "label": "已失效"
+            }
+        ],
+        "voucherType": [
+            {
+                "value": "XX",
+                "label": "門診"
+            },
+            {
+                "value": "XS",
+                "label": "網診"
+            }
+        ],
+        "voucherRange": [
+            {
+                "value": "ZF",
+                "label": "診費"
+            },
+            {
+                "value": "YF",
+                "label": "藥費"
+            },
+            {
+                "value": "YF&GHCP",
+                "label": "藥費+產品"
+            },
+            {
+                "value": "ZLF",
+                "label": "治療費"
+            },
+            {
+                "value": "YPCZF",
+                "label": "藥品處置費"
+            },
+            {
+                "value": "KDF",
+                "label": "快遞費"
+            },
+            {
+                "value": "GHCP",
+                "label": "產品"
+            },
+            {
+                "value": "PACKAGE",
+                "label": "套餐"
+            },
+            {
+                "value": "SPECIALIST",
+                "label": "專科"
+            }
+        ],
+        "cardIsUse": [
+            {
+                "value": "N",
+                "label": "未使用"
+            },
+            {
+                "value": "Y",
+                "label": "已使用"
+            }
+        ],
+        "ypczfType": [
+            {
+                "value": "DJF",
+                "label": "代煎費"
+            },
+            {
+                "value": "DFF",
+                "label": "打粉費"
+            },
+            {
+                "value": "ZWF",
+                "label": "制丸費"
+            },
+            {
+                "value": "ZGF",
+                "label": "制膏費"
+            }
+        ],
+        "packageType": [
+            {
+                "value": "offline",
+                "label": "門診套餐"
+            },
+            {
+                "value": "online",
+                "label": "網診套餐"
+            },
+            {
+                "value": "combo",
+                "label": "組合套餐"
+            }
+        ],
+        "messageType": [
+            {
+                "value": "ACTIVITY",
+                "label": "活動推送"
+            }
+        ],
+        "reciverType": [
+            {
+                "value": "all",
+                "label": "全網推送"
+            },
+            {
+                "value": "single",
+                "label": "指定醫生"
+            }
+        ],
+        "sendType": [
+            {
+                "value": "SYSTEM",
+                "label": "系統發放"
+            },
+            {
+                "value": "WX",
+                "label": "微信領取"
+            },
+            {
+                "value": "MAN",
+                "label": "人工發放"
+            }
+        ]
+    },
+    "commentType": [
+        {
+            "value": "1",
+            "label": "1"
+        },
+        {
+            "value": "2",
+            "label": "2"
+        },
+        {
+            "value": "3",
+            "label": "3"
+        },
+        {
+            "value": "4",
+            "label": "4"
+        },
+        {
+            "value": "5",
+            "label": "5"
+        }
+    ],
+    "serviceType": [
+        {
+            "value": "1",
+            "label": "1"
+        },
+        {
+            "value": "2",
+            "label": "2"
+        },
+        {
+            "value": "3",
+            "label": "3"
+        },
+        {
+            "value": "4",
+            "label": "4"
+        },
+        {
+            "value": "5",
+            "label": "5"
+        }
+    ],
+    "scheType": [
+        {
+            "value": "ZDY",
+            "label": "自定義"
+        },
+        {
+            "value": "MB",
+            "label": "模板"
+        }
+    ],
+    "quickReplyType": [
+        {
+            "value": "quick_reply_zzwt",
+            "label": "診中問題"
+        },
+        {
+            "value": "quick_reply_tljy,dljy",
+            "label": "調理建議"
+        },
+        {
+            "value": "quick_reply_changyonghuifu",
+            "label": "常用回復"
+        },
+        {
+            "value": "quick_reply_ycykd",
+            "label": "藥材與快遞"
+        }
+    ],
+    "RXDispenseStatus": [
+        {
+            "value": "SEND",
+            "label": "已發葯"
+        },
+        {
+            "value": "WAITING",
+            "label": "未發葯"
+        }
+    ],
+    "decoMake": [
+        {
+            "value": "N",
+            "label": "自煎"
+        },
+        {
+            "value": "Y",
+            "label": "代煎"
+        }
+    ],
+    "weixin_prefix": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxda6e1b2c1b561518&redirect_uri=https://mp.zanchina.com/weixin/door/",
+    "unVisitStatus": [
+        {
+            "value": "Y",
+            "label": "已回訪"
+        },
+        {
+            "value": "W",
+            "label": "未回訪"
+        },
+        {
+            "value": "G",
+            "label": "已過期"
+        }
+    ],
+    "tmPrize": [
+        {
+            "value": "JZC",
+            "label": "姜棗茶1小包"
+        },
+        {
+            "value": "MMTYZ",
+            "label": "面膜體驗裝1張"
+        },
+        {
+            "value": "HT",
+            "label": "紅糖1包"
+        },
+        {
+            "value": "XYCYMC",
+            "label": "足浴粉（薰衣草+益母草）共2包"
+        },
+        {
+            "value": "NMP",
+            "label": "檸檬片1袋"
+        },
+        {
+            "value": "ZT",
+            "label": "足貼"
+        },
+        {
+            "value": "FYT",
+            "label": "扶陽貼1片"
+        }
+    ],
+    "tmColumns": [
+        {
+            "title": "姓名",
+            "field": "name",
+            "width": "40px"
+        },
+        {
+            "title": "手機",
+            "field": "mobile",
+            "width": "60px"
+        }
+    ],
+    "product": {
+        "type": [
+            {
+                "value": "YNZJ",
+                "label": "自有產品"
+            },
+            {
+                "value": "PRODUCT",
+                "label": "商品"
+            }
+        ],
+        "subType": [
+            {
+                "value": "GHSP",
+                "label": "國貨"
+            },
+            {
+                "value": "YNZJ",
+                "label": "自有產品"
+            },
+            {
+                "value": "DLDX",
+                "label": "代理代銷"
+            },
+            {
+                "value": "SERVICE",
+                "label": "服務類產品"
+            }
+        ],
+        "kind": [
+            {
+                "value": "FOOD",
+                "label": "食品"
+            },
+            {
+                "value": "HCARE",
+                "label": "保健"
+            },
+            {
+                "value": "BOOK",
+                "label": "圖書"
+            },
+            {
+                "value": "LIFE",
+                "label": "生活用品"
+            }
+        ],
+        "approveStatus": [
+            {
+                "value": "DTJ",
+                "label": "待提交"
+            },
+            {
+                "value": "YTJ",
+                "label": "已提交"
+            },
+            {
+                "value": "YSH",
+                "label": "已審核"
+            },
+            {
+                "value": "YBH",
+                "label": "被駁回"
+            }
+        ],
+        "status": [
+            {
+                "value": "Y",
+                "label": "正常"
+            },
+            {
+                "value": "N",
+                "label": "停用"
+            }
+        ],
+        "sendStatus": [
+            {
+                "value": "WAITING",
+                "label": "未備貨"
+            },
+            {
+                "value": "SEND",
+                "label": "已備貨"
+            }
+        ],
+        "isReqProduct": [
+            {
+                "value": "0",
+                "label": "無"
+            },
+            {
+                "value": "1",
+                "label": "有"
+            }
+        ],
+        "epType": [
+            {
+                "value": "A",
+                "label": "A"
+            },
+            {
+                "value": "B",
+                "label": "B"
+            },
+            {
+                "value": "C",
+                "label": "C"
+            }
+        ],
+        "isShowInBanner": [
+            {
+                "value": "1",
+                "label": "显示"
+            },
+            {
+                "value": "0",
+                "label": "不显示"
+            }
+        ],
+        "activityType": [
+            {
+                "value": "MZK",
+                "label": "滿折"
+            },
+            {
+                "value": "MZ",
+                "label": "滿贈"
+            },
+            {
+                "value": "MM",
+                "label": "滿免"
+            },
+            {
+                "value": "MJP",
+                "label": "滿減-金額"
+            },
+            {
+                "value": "MJA",
+                "label": "滿減-數量"
+            }
+        ],
+        "activityProduct": [
+            {
+                "value": "ALL",
+                "label": "全部產品參与活動",
+                "_checked": true
+            },
+            {
+                "value": "PART",
+                "label": "部分產品參与活動"
+            },
+            {
+                "value": "NOPART",
+                "label": "部分產品不參与活動"
+            }
+        ],
+        "activityStatus": [
+            {
+                "value": "WKS",
+                "label": "未開始"
+            },
+            {
+                "value": "ING",
+                "label": "進行中"
+            },
+            {
+                "value": "END",
+                "label": "已結束"
+            }
+        ],
+        "order": [
+            {
+                "value": "asc",
+                "label": "從小到大"
+            },
+            {
+                "value": "desc",
+                "label": "從大到小"
+            }
+        ],
+        "mzkType": [
+            {
+                "value": "MZKMJ",
+                "label": "滿金額",
+                "_checked": true
+            },
+            {
+                "value": "MZKMS",
+                "label": "滿數量"
+            }
+        ],
+        "mzType": [
+            {
+                "value": "MZMJ",
+                "label": "滿金額",
+                "_checked": true
+            },
+            {
+                "value": "MZMS",
+                "label": "滿數量"
+            }
+        ],
+        "mmType": [
+            {
+                "value": "MMMJ",
+                "label": "滿金額",
+                "_checked": true
+            },
+            {
+                "value": "MMMS",
+                "label": "滿數量"
+            }
+        ],
+        "returnType": [
+            {
+                "value": "Y",
+                "label": "已退"
+            },
+            {
+                "value": "N",
+                "label": "未退"
+            },
+            {
+                "value": "H",
+                "label": "部分退"
+            }
+        ],
+        "mmFree": [
+            {
+                "value": "MIN",
+                "label": "最小金額",
+                "_checked": true
+            },
+            {
+                "value": "MAX",
+                "label": "最大金額"
+            }
+        ],
+        "promotionWay": [
+            {
+                "value": "offline",
+                "label": "線下（門店）"
+            },
+            {
+                "value": "online",
+                "label": "線上（微信）"
+            }
+        ],
+        "returnStatus": [
+            {
+                "value": "-1",
+                "label": "未退貨"
+            },
+            {
+                "value": "0",
+                "label": "部分退"
+            },
+            {
+                "value": "1",
+                "label": "全部退"
+            }
+        ]
+    },
+    "doctor": {
+        "cash": {
+            "applyStatus": [
+                {
+                    "value": "A",
+                    "label": "申請中"
+                },
+                {
+                    "value": "Y",
+                    "label": "已發放"
+                },
+                {
+                    "value": "N",
+                    "label": "已駁回"
+                },
+                {
+                    "value": "W",
+                    "label": "等待回調處理"
+                }
+            ]
+        },
+        "enterprise": {
+            "paymentStatus": [
+                {
+                    "value": "SUCCESS",
+                    "label": "轉賬成功"
+                },
+                {
+                    "value": "FAILED",
+                    "label": "轉賬失敗"
+                },
+                {
+                    "value": "PROCESSING",
+                    "label": "處理中"
+                }
+            ]
+        },
+        "walletDetail": {
+            "type": [
+                {
+                    "value": "reward",
+                    "label": "獎勵"
+                },
+                {
+                    "value": "DTX",
+                    "label": "自助提現"
+                },
+                {
+                    "value": "ZCY",
+                    "label": "草藥"
+                },
+                {
+                    "value": "clinic",
+                    "label": "診費"
+                },
+                {
+                    "value": "addClinic",
+                    "label": "附加診費"
+                },
+                {
+                    "value": "YNZJ",
+                    "label": "自有產品"
+                },
+                {
+                    "value": "service",
+                    "label": "服務費"
+                },
+                {
+                    "value": "tworeward",
+                    "label": "兩單獎勵"
+                },
+                {
+                    "value": "treat",
+                    "label": "治療項"
+                }
+            ]
+        },
+        "protocal": [
+            {
+                "value": "Y",
+                "label": "同意"
+            },
+            {
+                "value": "N",
+                "label": "不同意"
+            }
+        ]
+    },
+    "achieve": [],
+    "introFlag": [
+        {
+            "value": "introFlag",
+            "label": "給客人發《100元門診診費代金券》",
+            "_checked": true
+        }
+    ],
+    "courseStatus": [
+        {
+            "value": "doing",
+            "label": "進行中"
+        },
+        {
+            "value": "end",
+            "label": "已結束"
+        },
+        {
+            "value": "ready",
+            "label": "未開始"
+        }
+    ],
+    "memberCourseStatus": [
+        {
+            "value": "N",
+            "label": "已報名"
+        },
+        {
+            "value": "Y",
+            "label": "已簽到"
+        },
+        {
+            "value": "Q",
+            "label": "已取消"
+        }
+    ],
+    "course": {
+        "channel": [
+            {
+                "value": "電話",
+                "label": "電話"
+            },
+            {
+                "value": "現場",
+                "label": "現場"
+            }
+        ]
+    },
+    "settle": [
+        {
+            "value": "N",
+            "label": "醫館承擔成本"
+        }
+    ],
+    "hospitalConst": [
+        {
+            "value": "Y",
+            "label": "醫館承擔成本"
+        }
+    ],
+    "yesOrNo": [
+        {
+            "value": "N",
+            "label": "無"
+        },
+        {
+            "value": "Y",
+            "label": "有"
+        }
+    ],
+    "canOrCant": [
+        {
+            "value": "Y",
+            "label": "能"
+        },
+        {
+            "value": "N",
+            "label": "否"
+        }
+    ],
+    "doctorRecipeType": [
+        {
+            "value": "ZCY",
+            "label": "中草藥",
+            "_checked": true
+        },
+        {
+            "value": "ZCNY",
+            "label": "中成藥",
+            "_checked": true
+        },
+        {
+            "value": "treat",
+            "label": "治療方",
+            "_checked": true
+        }
+    ],
+    "inputWay": [
+        {
+            "value": "yfyl",
+            "label": "一方一量",
+            "_checked": true
+        },
+        {
+            "value": "xfhl",
+            "label": "先方后量"
+        }
+    ],
+    "daijianMap": {
+        "s": [
+            "代煎",
+            "自煎"
+        ],
+        "k": [
+            "代煎",
+            "自煎"
+        ],
+        "p": [
+            "代加工",
+            "自加工"
+        ],
+        "w": [
+            "代加工",
+            "自加工"
+        ],
+        "c": [
+            "代加工",
+            "自加工"
+        ],
+        "": [
+            "代加工",
+            "自加工"
+        ],
+        "undefined": [
+            "代加工",
+            "自加工"
+        ],
+        "null": [
+            "代加工",
+            "自加工"
+        ]
+    },
+    "isDeco": [
+        {
+            "value": "Y",
+            "label": "能代煎"
+        },
+        {
+            "value": "N",
+            "label": "不能代煎"
+        }
+    ],
+    "offlineOrderType": [
+        {
+            "value": "buyCard",
+            "label": "購買會員卡"
+        },
+        {
+            "value": "offline",
+            "label": "門診診費"
+        },
+        {
+            "value": "recipel",
+            "label": "處方訂單"
+        },
+        {
+            "value": "course",
+            "label": "講座"
+        },
+        {
+            "value": "life",
+            "label": "產品"
+        },
+        {
+            "value": "package",
+            "label": "購買套餐"
+        },
+        {
+            "value": "specialist",
+            "label": "購買專科"
+        },
+        {
+            "value": "supplement",
+            "label": "補收費用"
+        }
+    ],
+    "onlineOrderType": [
+        {
+            "value": "buyCard",
+            "label": "購買會員卡"
+        },
+        {
+            "value": "recipel",
+            "label": "處方訂單"
+        },
+        {
+            "value": "graphic",
+            "label": "圖文問診"
+        },
+        {
+            "value": "phone",
+            "label": "電話問診"
+        },
+        {
+            "value": "consult",
+            "label": "診后諮詢"
+        },
+        {
+            "value": "life",
+            "label": "產品"
+        },
+        {
+            "value": "course",
+            "label": "講座"
+        },
+        {
+            "value": "package",
+            "label": "購買套餐"
+        },
+        {
+            "value": "specialist",
+            "label": "購買專科"
+        },
+        {
+            "value": "supplement",
+            "label": "補收費用"
+        },
+        {
+            "value": "wx_coupon",
+            "label": "微信抵扣金"
+        }
+    ],
+    "comboOrderStatus": [
+        {
+            "value": "tjz",
+            "label": "調劑中"
+        },
+        {
+            "value": "tjwc",
+            "label": "調劑完成"
+        },
+        {
+            "value": "SEND",
+            "label": "已發貨"
+        },
+        {
+            "value": "YILANSHOU",
+            "label": "已攬收"
+        },
+        {
+            "value": "DELIVERY",
+            "label": "派件中"
+        },
+        {
+            "value": "ACCEPT",
+            "label": "已簽收"
+        },
+        {
+            "value": "ywc",
+            "label": "已完成"
+        }
+    ],
+    "isFurtherTime": [
+        {
+            "value": "Y",
+            "label": "建議複診時間",
+            "_checked": true
+        }
+    ],
+    "isHide": [
+        {
+            "value": "Y",
+            "label": "購買前隱藏藥品克數"
+        }
+    ],
+    "reciHide": [
+        {
+            "value": "Y",
+            "label": "隱藏處方詳情"
+        }
+    ],
+    "serviceFeePercent": [
+        {
+            "value": "10",
+            "label": "10%"
+        },
+        {
+            "value": "20",
+            "label": "20%"
+        },
+        {
+            "value": "30",
+            "label": "30%"
+        },
+        {
+            "value": "40",
+            "label": "40%"
+        },
+        {
+            "value": "50",
+            "label": "50%"
+        },
+        {
+            "value": "60",
+            "label": "60%"
+        },
+        {
+            "value": "70",
+            "label": "70%"
+        },
+        {
+            "value": "80",
+            "label": "80%"
+        }
+    ],
+    "recommendProductCol": [
+        {
+            "title": "產品名稱",
+            "field": "productName"
+        },
+        {
+            "title": "單位",
+            "field": "unit",
+            "width": "50px"
+        },
+        {
+            "title": "數量",
+            "field": "num",
+            "width": "50px"
+        }
+    ],
+    "onlyCard": [
+        {
+            "value": "HYK",
+            "label": "會員卡"
+        },
+        {
+            "value": "TRDF",
+            "label": "他人會員卡"
+        },
+        {
+            "value": "WEIDIAN",
+            "label": "微店"
+        },
+        {
+            "value": "SENDURL",
+            "label": "推送支付鏈接"
+        }
+    ],
+    "appPushRange": [
+        {
+            "value": "all",
+            "label": "全部"
+        },
+        {
+            "value": "ZA",
+            "label": "系內"
+        },
+        {
+            "value": "bd",
+            "label": "系外"
+        },
+        {
+            "value": "specify",
+            "label": "部分大夫"
+        }
+    ],
+    "appPushType": [
+        {
+            "value": "2",
+            "label": "文字",
+            "_checked": true
+        },
+        {
+            "value": "3",
+            "label": "圖片"
+        },
+        {
+            "value": "1",
+            "label": "鏈接"
+        }
+    ],
+    "urgent": [
+        {
+            "value": "Y",
+            "label": "加急處理"
+        }
+    ],
+    "member_level": [
+        {
+            "value": "9cac8d0c99994324b8efc2e6204b0667",
+            "label": "員工"
+        },
+        {
+            "value": "VIP1",
+            "label": "VIP1"
+        },
+        {
+            "value": "VIP2",
+            "label": "VIP2"
+        },
+        {
+            "value": "VIP3",
+            "label": "VIP3"
+        },
+        {
+            "value": "BLACK_CARD",
+            "label": "喜悅鑽卡"
+        },
+        {
+            "value": "VIP4",
+            "label": "VIP4"
+        },
+        {
+            "value": "VIP5",
+            "label": "VIP5"
+        },
+        {
+            "value": "PTHY",
+            "label": "歡喜金卡"
+        },
+        {
+            "value": "HJK",
+            "label": "會籍卡"
+        },
+        {
+            "value": "PTKR",
+            "label": "普通客人"
+        }
+    ],
+    "appointment_plus_type": [
+        {
+            "value": "I",
+            "label": "保險加號"
+        }
+    ],
+    "drugSub": [
+        {
+            "value": "ZCY",
+            "label": "中草藥"
+        },
+        {
+            "value": "KLJ",
+            "label": "免煎中藥"
+        }
+    ],
+    "printsize": [
+        {
+            "value": "297mm",
+            "label": "A4"
+        },
+        {
+            "value": "148mm",
+            "label": "A5"
+        }
+    ],
+    "printtype": [
+        {
+            "value": "zhengming",
+            "label": "應診證明書",
+            "_checked": true
+        },
+        {
+            "value": "jiatiao",
+            "label": "病假證明書"
+        }
+    ],
+    "printinfo": [
+        {
+            "value": "y",
+            "label": "允許",
+            "_checked": true
+        },
+        {
+            "value": "n",
+            "label": "不允許"
+        }
+    ],
+    "printtime": [
+        {
+            "value": "day",
+            "label": "按天",
+            "_checked": true
+        },
+        {
+            "value": "time",
+            "label": "按小時和分鐘"
+        },
+        {
+            "value": "custom",
+            "label": "自定義"
+        }
+    ],
+    "subTypeLista": [
+        {
+            "value": "tk_zytj",
+            "label": "中醫體檢"
+        }
+    ],
+    "activityLista": [
+        {
+            "value": "tmj",
+            "label": "團美節"
+        },
+        {
+            "value": "mothers2018",
+            "label": "母親節99特價"
+        }
+    ]
 }
