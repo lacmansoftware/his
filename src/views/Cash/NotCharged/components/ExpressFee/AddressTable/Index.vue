@@ -4,24 +4,37 @@ import { Dialog } from '@/components/Dialog'
 import { useI18n } from '@/hooks/web/useI18n'
 import { ElButton, ElTag, ElRow, ElCol, ElDivider } from 'element-plus'
 import { Table } from '@/components/Table'
-import { getTableListApi, saveTableApi, delTableListApi } from '@/api/table'
+import { getAddressTableListApi, saveTableApi } from '@/api/cash/notcharged'
 import { useTable } from '@/hooks/web/useTable'
 import { TableData } from '@/api/table/types'
-import { h, ref, unref, reactive } from 'vue'
+import { h, ref, unref, reactive, watch } from 'vue'
 import Write from './Write.vue'
-import Detail from './Detail.vue'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
+import { inDict } from '@/utils/common'
+import { propTypes } from '@/utils/propTypes'
+
+const props = defineProps({
+  memberId: propTypes.string.def('')
+})
 
 const { register, tableObject, methods } = useTable<TableData>({
-  getListApi: getTableListApi,
-  delListApi: delTableListApi,
+  getListApi: getAddressTableListApi,
+  // getListApi: (option: any): Promise<any> =>
+  //   getAddressTableListApi({
+  //     ...option,
+  //     memberId: props.memberId
+  //   }),
   response: {
     list: 'list',
     total: 'total'
   }
 })
 
-const { getList, setSearchParams } = methods
+watch(tableObject, (value, oldValue) => {
+  console.log(value, oldValue)
+})
+
+const { getList } = methods
 
 getList()
 
@@ -29,117 +42,52 @@ const { t } = useI18n()
 
 const crudSchemas = reactive<CrudSchema[]>([
   {
-    field: 'index',
-    label: t('tableDemo.index'),
-    type: 'index',
-    form: {
-      show: false
-    },
-    detail: {
-      show: false
+    label: '分類',
+    field: 'addressType',
+    formatter: function (row) {
+      return inDict(row.addressType, 'member.addressType')
     }
   },
   {
-    field: 'title',
-    label: t('tableDemo.title'),
-    search: {
-      show: true
-    },
-    form: {
-      colProps: {
-        span: 24
-      }
-    },
-    detail: {
-      span: 24
-    }
+    label: '收件人',
+    field: 'addressee'
   },
   {
-    field: 'author',
-    label: t('tableDemo.author')
+    label: '收件人手機',
+    field: 'mobile'
   },
   {
-    field: 'display_time',
-    label: t('tableDemo.displayTime'),
-    form: {
-      component: 'DatePicker',
-      componentProps: {
-        type: 'datetime',
-        valueFormat: 'YYYY-MM-DD HH:mm:ss'
-      }
-    }
+    label: '所在地區',
+    field: 'cityName'
   },
   {
-    field: 'importance',
-    label: t('tableDemo.importance'),
-    formatter: (_: Recordable, __: TableColumn, cellValue: number) => {
-      return h(
-        ElTag,
-        {
-          type: cellValue === 1 ? 'success' : cellValue === 2 ? 'warning' : 'danger'
-        },
-        () =>
-          cellValue === 1
-            ? t('tableDemo.important')
-            : cellValue === 2
-            ? t('tableDemo.good')
-            : t('tableDemo.commonly')
-      )
-    },
-    form: {
-      component: 'Select',
-      componentProps: {
-        options: [
-          {
-            label: '重要',
-            value: 3
-          },
-          {
-            label: '良好',
-            value: 2
-          },
-          {
-            label: '一般',
-            value: 1
-          }
-        ]
+    label: '詳細地區',
+    field: 'addressDetail'
+  },
+  {
+    label: '備註',
+    field: 'remark'
+  },
+  {
+    label: '默認地址',
+    field: 'isDefault',
+    formatter: function (row) {
+      if (row.isDefault === 'Y') {
+        return '<input type="radio" name="isDefault" checked="true"/>默認地址'
+      } else {
+        return (
+          '<label for="isDefault' +
+          row.id +
+          '" style="cursor: pointer;"><input id="isDefault' +
+          row.id +
+          '" type="radio" name="isDefault"/>設為默認地址</label>'
+        )
       }
     }
   },
   {
-    field: 'pageviews',
-    label: t('tableDemo.pageviews'),
-    form: {
-      component: 'InputNumber',
-      value: 0
-    }
-  },
-  {
-    field: 'content',
-    label: t('exampleDemo.content'),
-    table: {
-      show: false
-    },
-    form: {
-      component: 'Editor',
-      colProps: {
-        span: 24
-      }
-    },
-    detail: {
-      span: 24
-    }
-  },
-  {
-    field: 'action',
-    width: '260px',
-    label: t('tableDemo.action'),
-    form: {
-      show: false
-    },
-    detail: {
-      show: false
-    }
+    label: '操作',
+    field: 'action'
   }
 ])
 
@@ -155,25 +103,10 @@ const AddAction = () => {
   dialogVisible.value = true
 }
 
-const delLoading = ref(false)
-
-const delData = async (row: TableData | null, multiple: boolean) => {
-  tableObject.currentRow = row
-  const { delList, getSelections } = methods
-  const selections = await getSelections()
-  delLoading.value = true
-  await delList(
-    multiple ? selections.map((v) => v.id) : [tableObject.currentRow?.id as string],
-    multiple
-  ).finally(() => {
-    delLoading.value = false
-  })
-}
-
 const actionType = ref('')
 
 const action = (row: TableData, type: string) => {
-  dialogTitle.value = t(type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail')
+  dialogTitle.value = type === 'edit' ? '點擊收起' : 'exampleDemo.detail'
   actionType.value = type
   tableObject.currentRow = row
   dialogVisible.value = true
@@ -236,15 +169,7 @@ const save = async () => {
       @register="register"
     >
       <template #action="{ row }">
-        <ElButton type="primary" @click="action(row, 'edit')">
-          {{ t('exampleDemo.edit') }}
-        </ElButton>
-        <ElButton type="success" @click="action(row, 'detail')">
-          {{ t('exampleDemo.detail') }}
-        </ElButton>
-        <ElButton type="danger" @click="delData(row, false)">
-          {{ t('exampleDemo.del') }}
-        </ElButton>
+        <ElButton type="primary" @click="action(row, 'edit')"> 編輯 </ElButton>
       </template>
     </Table>
   </ContentWrap>
@@ -254,12 +179,6 @@ const save = async () => {
       v-if="actionType !== 'detail'"
       ref="writeRef"
       :form-schema="allSchemas.formSchema"
-      :current-row="tableObject.currentRow"
-    />
-
-    <Detail
-      v-if="actionType === 'detail'"
-      :detail-schema="allSchemas.detailSchema"
       :current-row="tableObject.currentRow"
     />
 
