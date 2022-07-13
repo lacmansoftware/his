@@ -112,11 +112,11 @@ const getTableList = async (params?: Params) => {
 getTableList()
 
 const delectFn = (data: TableSlotDefault) => {
-  // tableDataList.value
+  tableDataList.value = tableDataList.value.filter((item) => item.id !== data.row.id)
   console.log(data)
 }
 
-const projectFilter = ref<any>(null)
+const projectFilter = ref<string>()
 const discountNumber = ref(98)
 
 const handleProjectFilterSelect = (item: Recordable) => {
@@ -131,6 +131,7 @@ const handleProjectFilterSelect = (item: Recordable) => {
     originPrice: item.originUnitPrice,
     price: mul(item.originUnitPrice, discountNumber.value / 100.0)
   } as ProductItemType)
+  projectFilter.value = ''
 }
 
 watch(tableDataList.value, (value, oldValue) => {
