@@ -182,24 +182,27 @@ const action = (row: ChargeItemType, type: string) => {
   dialogVisible.value = true
 }
 
-const save = async () => {
-  const write = unref(writeRef)
-  await write?.elFormRef?.validate(async (isValid) => {
-    if (isValid) {
-      loading.value = true
-      const data = (await write?.getFormData()) as ChargeItemType
-      const res = await saveTableApi(data)
-        .catch(() => {})
-        .finally(() => {
-          loading.value = false
-        })
-      if (res) {
-        dialogVisible.value = false
-        // tableObject.currentPage = 1
-        // getList()
-      }
-    }
-  })
+const saveProductItem = () => {
+  const product = unref(productRef)
+  product?.setTableDataEmpty()
+  itemDetailDialogVisible.value = false
+
+  // await write?.elFormRef?.validate(async (isValid) => {
+  //   if (isValid) {
+  //     loading.value = true
+  //     const data = (await write?.getFormData()) as ChargeItemType
+  //     const res = await saveTableApi(data)
+  //       .catch(() => {})
+  //       .finally(() => {
+  //         loading.value = false
+  //       })
+  //     if (res) {
+  //       dialogVisible.value = false
+  //       // tableObject.currentPage = 1
+  //       // getList()
+  //     }
+  //   }
+  // })
 }
 </script>
 
@@ -278,5 +281,11 @@ const save = async () => {
     :width="itemDetailDialogWidth"
   >
     <ProductItem v-if="itemKind === 'life'" :member-id="memberId" ref="productRef" />
+    <template #footer>
+      <ElButton type="primary" @click="saveProductItem">
+        {{ t('exampleDemo.save') }}
+      </ElButton>
+      <ElButton @click="itemDetailDialogVisible = false">{{ t('dialogDemo.close') }}</ElButton>
+    </template>
   </ElDialog>
 </template>

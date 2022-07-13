@@ -2,7 +2,7 @@
 import { useI18n } from '@/hooks/web/useI18n'
 import { Table } from '@/components/Table'
 import { ProductItemType } from '@/api/cash/notcharged/types'
-import { onMounted, ref, watch, watchEffect } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
 import { ElButton, ElFormItem, ElAutocomplete, ElMessage, ElInputNumber } from 'element-plus'
 import { getInOptionFormat } from '@/utils/common'
 import { propTypes } from '@/utils/propTypes'
@@ -111,7 +111,7 @@ const getTableList = async (params?: Params) => {
 
 getTableList()
 
-const delectFn = (data: TableSlotDefault) => {
+const deleteFn = (data: TableSlotDefault) => {
   tableDataList.value = tableDataList.value.filter((item) => item.id !== data.row.id)
   console.log(data)
 }
@@ -161,8 +161,13 @@ const handleDiscountChange = (row: ProductItemType, value: number) => {
   }
 }
 
+const setTableDataEmpty = () => {
+  tableDataList.value = []
+}
+
 defineExpose({
-  tableDataList
+  tableDataList,
+  setTableDataEmpty
 })
 </script>
 
@@ -207,7 +212,7 @@ defineExpose({
       />
     </template>
     <template #action="data">
-      <ElButton type="primary" @click="delectFn(data as TableSlotDefault)">
+      <ElButton type="primary" @click="deleteFn(data as TableSlotDefault)">
         {{ t('formDemo.delete') }}
       </ElButton>
     </template>
