@@ -150,12 +150,7 @@ const delData = async (row: any | null, multiple: boolean) => {
   const selections = await getSelections()
   delLoading.value = true
   await delList(
-    multiple
-      ? {
-          multiple: multiple,
-          data: selections.reduce((sum, v) => sum + (sum === '' ? '' : ',') + v.id, '') as string
-        }
-      : { multiple: multiple, data: tableObject.currentRow?.id as string },
+    multiple ? selections.map((v) => v.id) : [tableObject.currentRow?.id as string],
     multiple
   ).finally(() => {
     delLoading.value = false

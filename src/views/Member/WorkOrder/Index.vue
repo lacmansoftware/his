@@ -284,7 +284,7 @@ const delData = async (row: any | null) => {
   const { delList } = methods
   // const selections = await getSelections()
   delLoading.value = true
-  await delList(row.id, false).finally(() => {
+  await delList([row.id], false).finally(() => {
     delLoading.value = false
   })
 }

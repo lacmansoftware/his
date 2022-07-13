@@ -8,6 +8,15 @@ export const getTableListApi = async (params: any): Promise<IResponse> => {
   return res && res.data
 }
 
+export const getAddressTableListApi = async (params: any): Promise<IResponse> => {
+  // const res = await request.get({ url: `member/address/member/${params.memberId}`, params })
+  const res = await request.get({
+    url: `member/address/member/76ce4156ae804227a12ec23a2c07edec`,
+    params
+  })
+  return res && res.data
+}
+
 export const saveTableApi = async (data: Partial<NotChargedTableData>): Promise<IResponse> => {
   const res = await request.post({
     url: '/sms/templet',

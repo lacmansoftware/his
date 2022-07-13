@@ -47,7 +47,7 @@ const expressPriceRef = ref('')
     </el-radio-group>
   </ElForm>
 
-  <AddressTable />
+  <AddressTable :member-id="memberId" />
 
   <ElDivider content-position="left">快遞備註</ElDivider>
   <ElFormItem prop="remark" label="填寫備註" label-width="150px">
