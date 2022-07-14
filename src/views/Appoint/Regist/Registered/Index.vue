@@ -9,7 +9,7 @@ import { Table } from '@/components/Table'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
+import { inDict, getInOptionFormat, getDateInFormat, getAgeByBirthday } from '@/utils/common'
 import { plusIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
@@ -52,113 +52,127 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
     field: 'action',
-    width: '250px',
+    width: '180px',
     form: { show: false }
   },
   {
-    label: '挂號編號',
-    field: 'registerNum'
-  },
-  {
-    label: '類別',
-    field: 'leibie',
-    width: '60px',
+    label: '狀態',
+    field: 'status',
+    width: '100px',
     formatter: function (row) {
-      const date = row.appointmentTimeEnd
-      if (date) {
-        const d1 = new Date(date + ' 00:00:00')
-        if (dateCompare(d1, new Date()) > 0) {
-          return '預收款'
-        }
-      }
-      const courseStatus = row.courseStatus
-      if ((courseStatus && courseStatus == 'N') || courseStatus == 'Q') {
-        return '預收款'
-      }
-
-      return '實付款'
+      return inDict(row.status, 'appoint.status')
     }
   },
   {
-    label: '門診類型',
-    field: 'visitType',
-    width: '80px',
-    formatter: function (row) {
-      const subType = row.orderSubType
-      if (subType === 'package') {
-        return '套餐門診'
-      }
-      if (subType === 'specialist') {
-        return '專科門診'
-      }
-      const v = inDict(row.visitType, 'offlineRecipelType')
-      return !v ? inDict(row.orderType, 'allOrderType') : v
-    }
+    label: '門店',
+    field: 'hospitalName',
+    width: '100px'
   },
   {
-    label: '實收金額',
-    field: 'price',
-    width: '80px'
-  },
-  {
-    label: '客人',
+    label: '客人姓名',
     field: 'memberName',
-    width: '80px'
+    width: '50px'
   },
   {
     label: '手機',
     field: 'memberMobile',
-    width: '100px'
+    width: '70px'
   },
   {
     label: '性別',
-    field: 'memberSex',
-    width: '40px',
+    field: 'memberGender',
+    width: '50px',
     formatter: function (row) {
-      return inDict(row.memberSex, 'sex')
+      return inDict(row.memberGender, 'sex')
     }
   },
   {
     label: '年齡',
-    field: 'memberAge',
-    width: '40px'
-  },
-  {
-    label: '大夫',
-    field: 'doctorName',
-    width: '100px'
-  },
-  {
-    label: '初複診',
-    field: 'visitStatus',
-    width: '45px',
+    field: 'memberBirthday',
+    width: '70px',
     formatter: function (row) {
-      return inDict(row.visitStatus, 'visitType')
+      return getAgeByBirthday(row.memberBirthday)
     }
   },
   {
+    label: '醫生',
+    field: 'doctorName',
+    width: '50px'
+  },
+  {
+    label: '約診類型',
+    field: 'appointmentType',
+    width: '70px',
+    formatter: function (row) {
+      return inDict(row.appointmentType, 'isSpecialist')
+    }
+  },
+  {
+    label: '套餐',
+    field: 'packageName',
+    width: '70px'
+  },
+  {
+    label: '專科名稱',
+    field: 'specialistName',
+    width: '80px'
+  },
+  {
     label: '挂號時間',
-    field: 'registerTime',
-    width: '100px'
+    field: 'registerDate',
+    width: '80px'
   },
   {
     label: '預約時間',
     field: 'appointmentTimeStart',
+    width: '80px'
+  },
+  {
+    label: '客人級別',
+    field: 'memberLevelName',
     width: '100px'
   },
   {
-    label: '就診待遇',
-    field: 'levelName'
-  },
-  {
-    label: '是否保險',
-    field: 'memberInsurName',
+    label: '檔案號',
+    field: 'archivesNo',
     width: '80px'
   },
   {
-    label: '操作人',
-    field: 'modifyUser',
-    width: '80px'
+    label: '初複診',
+    field: 'visitType',
+    width: '100px',
+    formatter: function (row) {
+      return inDict(row.visitType, 'visitType')
+    }
+  },
+  {
+    label: '重要客人',
+    field: 'importantGuestName',
+    width: '100px'
+  },
+  {
+    label: '保險',
+    field: 'insurName',
+    width: '100px'
+  },
+  {
+    label: '備註',
+    field: 'note',
+    width: '100px',
+    formatter: function (row) {
+      // if (row.paymentStatus == 'PAYED') {
+      //   highLight.push(row._uuid)
+      // }
+      return row.note
+    }
+  },
+  {
+    label: '高端醫療險種類',
+    field: 'hasHighMedicalInsurance',
+    width: '100px',
+    formatter: function (row) {
+      return inDict(row.hasHighMedicalInsurance, 'appoint.hasHighMedicalInsurance')
+    }
   },
 
   // Search Schema
@@ -381,8 +395,8 @@ const save = async () => {
 }
 
 const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) => {
-  if (row.recipelAmount > 0) {
-    return 'success-row'
+  if (row.paymentStatus === 'PAYED') {
+    return 'warning-row'
   }
   return ''
 }
@@ -446,30 +460,18 @@ const canMakeUp = (orderType) => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink
-          v-if="canMakeUp(row.orderType)"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >補收</ElLink
+        <ElLink v-if="row.status !== 'YTH'" type="primary" @click="settlement(row)" class="mr-5px"
+          >退號</ElLink
+        >
+        <ElLink v-if="row.status !== 'YTH'" type="primary" @click="settlement(row)" class="mr-5px"
+          >更新保險</ElLink
         >
         <ElLink
-          v-if="canMakeUp(row.orderType)"
+          v-if="row.status !== 'YTH' && row.paymentStatus === 'UNPAY'"
           type="primary"
           @click="settlement(row)"
           class="mr-5px"
-          >退費</ElLink
-        >
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">作廢</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">小票</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">快遞單</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">處置單</ElLink>
-        <ElLink
-          v-if="row.memberInsurName === 'GBG'"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >保險小票</ElLink
+          >改套餐</ElLink
         >
       </template>
     </Table>
