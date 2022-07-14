@@ -57,6 +57,18 @@ body {
   }
 }
 
+td,
+th {
+  padding: 3px 0 !important;
+}
+
+.@{elNamespace}-table .cell {
+  padding: 0 !important;
+}
+.@{elNamespace}-table-column--selection {
+  text-align: center !important;
+}
+
 .@{prefix-cls}-grey-mode {
   filter: grayscale(100%);
 }
