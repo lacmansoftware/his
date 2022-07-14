@@ -396,7 +396,7 @@ const save = async () => {
 
 const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) => {
   if (row.paymentStatus === 'PAYED') {
-    return 'warning-row'
+    return 'tr-danger-row'
   }
   return ''
 }
