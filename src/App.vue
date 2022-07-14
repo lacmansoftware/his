@@ -69,6 +69,10 @@ th {
   text-align: center !important;
 }
 
+.tr-danger-row {
+  --el-table-tr-bg-color: var(--el-color-danger-light-9) !important;
+}
+
 .@{prefix-cls}-grey-mode {
   filter: grayscale(100%);
 }
