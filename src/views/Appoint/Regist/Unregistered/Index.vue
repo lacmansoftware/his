@@ -319,37 +319,18 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    field: 'marketActivity',
-    label: '活動',
+    field: 'paymentStatus',
+    label: '是否支付',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Select',
       componentProps: {
-        filterable: true
+        filterable: true,
+        options: dict.appoint.paymentStatus as any
       },
-      colProps: { span: 6 },
-      api: async () => {
-        return await getInOptionFormat('/market/activity/list?pageSize=0&type=0', 'id', 'name')
-      }
-    }
-  },
-  {
-    field: 'firstDisease',
-    label: '病種',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        filterable: true
-      },
-      colProps: { span: 6 },
-      api: async () => {
-        return await getInOptionFormat('/sys/diseases', 'id', 'name')
-      }
+      colProps: { span: 6 }
     }
   }
 ])
@@ -434,10 +415,10 @@ const save = async () => {
 }
 
 const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) => {
-  if (row.paymentStatus === 'PAYED') {
-    return 'tr-danger-row'
-  }
-  return ''
+  // if (row.paymentStatus === 'PAYED') {
+  //   return 'tr-danger-row'
+  // }
+  // return ''
 }
 
 const settlement = (row: NotChargedTableData) => {
