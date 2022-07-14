@@ -31,7 +31,7 @@ import ChargeItemTable from './components/ChargeItemTable.vue'
 const { required } = useValidator()
 const { emitter } = useEmitt()
 const { push, go } = useRouter()
-const { query } = useRoute()
+const { query, params } = useRoute()
 const { t } = useI18n()
 const dictStore = useDictStoreWithOut()
 

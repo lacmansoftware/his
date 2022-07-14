@@ -1,12 +1,29 @@
 export type NotChargedTableData = {
   id: string
-  member: string
-  doctor: string
-  registerTimeStart: string
-  registerTimeEnd: string
-  createTimeStart: string
-  createTimeEnd: string
-  registerNum: string
+  createTime: string
+  modifyTime: string
+  createUser: string
+  modifyUser: string
+  isDeleted: string
+  memberId: string
+  visitType: string
+  visitStatus: string
+  memberName: string
+  memberMobile: string
+  doctorName: string
+  doctorId: string
+  levelName: string
+  memberAge: string
+  memberSex: string
+  memberInsurId: string
+  memberInsurName: string
+  registerTime: string
+  isCache: string
+  pageNum: 1
+  pageSize: 2147483647
+  price: null
+  recipelAmount: 0
+  registerNum: null
 }
 
 export type ProductItemType = {

@@ -326,6 +326,23 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
   return ''
 }
 
+const settlement = (row: NotChargedTableData) => {
+  push({
+    path: '/cash/notcharged/add',
+    query: {
+      id: row.id,
+      // wxId: row.wxId,
+      memberId: row.memberId,
+      memberInsurId: row.memberInsurId,
+      isCache: row.isCache,
+      ooClass: 'offline',
+      // sheet: row.sheet,
+      doctorName: row.doctorName,
+      doctorId: row.doctorId
+    }
+  })
+}
+
 onMounted(async () => {
   setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
   await setValues({
@@ -365,10 +382,7 @@ onMounted(async () => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="action(row, 'edit')" class="mr-5px">編輯</ElLink>
-        <ElLink type="danger" @click="delData(row, false)">
-          {{ t('exampleDemo.del') }}
-        </ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">結算</ElLink>
       </template>
       <template #value="{ row }">
         {{ row.sysDict.value }}
