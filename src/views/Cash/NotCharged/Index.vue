@@ -321,7 +321,7 @@ const save = async () => {
 
 const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) => {
   if (row.recipelAmount > 0) {
-    return 'success-row'
+    return 'tr-success-row'
   }
   return ''
 }

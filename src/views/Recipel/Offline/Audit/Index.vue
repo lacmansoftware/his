@@ -372,9 +372,9 @@ const save = async () => {
 
 const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) => {
   if (rowIndex === 1) {
-    return 'warning-row'
+    return 'tr-warning-row'
   } else if (rowIndex === 3) {
-    return 'success-row'
+    return 'tr-success-row'
   }
   return ''
 }
