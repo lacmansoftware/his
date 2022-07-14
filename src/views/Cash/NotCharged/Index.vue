@@ -328,8 +328,8 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
 
 const settlement = (row: NotChargedTableData) => {
   push({
-    path: '/cash/notcharged/add',
-    query: {
+    name: 'CashNotChargedAdd',
+    params: {
       id: row.id,
       // wxId: row.wxId,
       memberId: row.memberId,

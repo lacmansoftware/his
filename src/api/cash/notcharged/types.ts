@@ -142,3 +142,23 @@ export type AddressItemType = {
   onceNum: string
   tempTypeName: string
 }
+
+export type settleMemberInfoType = {
+  id: String
+  hasCard: boolean
+  memberAge: string
+  memberInsurId: string
+  memberName: string
+  levelName: string
+  staff: string
+  memberSex: string
+  visitType: string
+  oweText: string
+  doctorName: string
+  memberInsurName: string
+  memberMobile: string
+  memberId: string
+  memberCard: object
+  currentOwe: number
+  owe: number
+}

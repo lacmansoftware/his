@@ -27,6 +27,7 @@ import { useDictStoreWithOut } from '@/store/modules/dict'
 import dict from '@/config/dictionary.json'
 import PatientSelect from './components/PatientSelect.vue'
 import ChargeItemTable from './components/ChargeItemTable.vue'
+import MemberInfo from './components/MemberInfo.vue'
 
 const { required } = useValidator()
 const { emitter } = useEmitt()
@@ -311,7 +312,8 @@ const rules = []
 <template>
   <ContentDetailWrap title="收銀結算" @back="push('/cash/notcharged/index')">
     <ElDivider content-position="left" class="mt-0">患者信息</ElDivider>
-    <PatientSelect ref="patientRef" />
+    <PatientSelect v-if="!params.memberId" ref="patientRef" />
+    <MemberInfo v-else ref="memberInfoRef" :member-info="params" />
     <ChargeItemTable :member-id="unref(patientRef)?.memberId" />
 
     <ElDivider content-position="left" class="mt-0">填寫備註</ElDivider>

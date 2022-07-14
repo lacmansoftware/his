@@ -8,6 +8,13 @@ export const getTableListApi = async (params: any): Promise<IResponse> => {
   return res && res.data
 }
 
+export const getSettlementMemberApi = async (params: any): Promise<IResponse> => {
+  const res = await request.get({
+    url: `/settlement/member/${params.memberId}?virsitRecordId=${params.id}`
+  })
+  return res && res.data
+}
+
 export const getAddressTableListApi = async (params: any): Promise<IResponse> => {
   // const res = await request.get({ url: `member/address/member/${params.memberId}`, params })
   const res = await request.get({
