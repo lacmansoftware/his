@@ -15,7 +15,7 @@ import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
 import { getTableListApi, delTableListApi, saveTableApi } from '@/api/cash/pending'
 import { NotChargedTableData } from '@/api/cash/pending/types'
-import { dateCompare } from '@/utils/date'
+import dict from '@/config/dictionary.json'
 
 defineOptions({
   name: 'CashNotChargedIndex'
@@ -129,29 +129,39 @@ const crudSchemas = reactive<CrudSchema[]>([
 
   // Search Schema
   {
-    field: 'member',
-    label: '客人',
+    field: 'memberName',
+    label: '客人姓名',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Input',
-      componentProps: {
-        placeholder: '客人姓名/手機'
-      },
+      componentProps: {},
       colProps: { span: 6 }
     }
   },
   {
-    field: 'doctor',
-    label: '醫生',
+    field: 'memberMobile',
+    label: '客人手機',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Input',
+      componentProps: {},
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'doctorName',
+    label: '大夫姓名',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Input',
       componentProps: {
-        placeholder: '醫生姓名/手機'
+        placeholder: '大夫姓名'
       },
       colProps: { span: 6 }
     }
@@ -166,37 +176,6 @@ const crudSchemas = reactive<CrudSchema[]>([
       component: 'Input',
       componentProps: {
         placeholder: '挂號編號'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'registerTimeStart',
-    label: '挂號日期',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD',
-        placeholder: '挂號日期'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'registerTimeEnd',
-    label: '到',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
       },
       colProps: { span: 6 }
     }
@@ -232,37 +211,18 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    field: 'paymentCategory',
-    label: '支付類別',
+    field: 'type',
+    label: '欠費類型',
     form: { show: false },
     table: { show: false },
     search: {
       component: 'Select',
       componentProps: {
-        placeholder: '支付類別',
-        options: [
-          { value: 'YSK', label: '預收款' },
-          { value: 'SFK', label: '實付款' }
-        ] as any
+        placeholder: '欠費類型',
+        options: dict.arrearType as any
       },
       colProps: { span: 6 },
       show: true
-    }
-  },
-  {
-    field: 'needExpress',
-    label: '',
-    labelWidth: '0',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Checkbox',
-      componentProps: {
-        options: [{ value: 'EXPRESS', label: '需要快遞' }]
-      },
-      colProps: { span: 6 },
-      value: []
     }
   }
 ])
