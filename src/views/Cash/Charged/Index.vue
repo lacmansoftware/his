@@ -191,6 +191,20 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
+    field: 'registerNum',
+    label: '挂號編號',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        placeholder: '挂號編號'
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
     field: 'registerTimeStart',
     label: '挂號日期',
     form: { show: false },
@@ -252,17 +266,37 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    field: 'registerNum',
-    label: '挂號編號',
+    field: 'paymentCategory',
+    label: '支付類別',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Select',
+      componentProps: {
+        placeholder: '支付類別',
+        options: [
+          { value: 'YSK', label: '預收款' },
+          { value: 'SFK', label: '實付款' }
+        ] as any
+      },
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'needExpress',
+    label: '',
+    labelWidth: '0',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
-      component: 'Input',
+      component: 'Checkbox',
       componentProps: {
-        placeholder: '挂號編號'
+        options: [{ value: 'EXPRESS', label: '需要快遞' }]
       },
-      colProps: { span: 6 }
+      colProps: { span: 6 },
+      value: []
     }
   }
 ])
@@ -377,6 +411,15 @@ onMounted(async () => {
   })
   search()
 })
+
+const canMakeUp = (orderType) => {
+  return (
+    orderType !== 'buyCard' &&
+    orderType !== 'recharge' &&
+    orderType !== 'package' &&
+    orderType !== 'specialist'
+  )
+}
 </script>
 
 <template>
@@ -385,16 +428,10 @@ onMounted(async () => {
       :schema="allSchemas.searchSchema"
       :is-col="true"
       :inline="false"
-      :layout="'bottom'"
-      :buttom-position="'right'"
       @search="setSearchParams"
       @reset="setSearchParams"
       ref="searchRef"
     />
-
-    <div class="mb-10px ml-10px mt-[-32px]">
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">購買產品</ElButton>
-    </div>
 
     <Table
       v-model:pageSize="tableObject.pageSize"
@@ -409,10 +446,31 @@ onMounted(async () => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">結算</ElLink>
-      </template>
-      <template #value="{ row }">
-        {{ row.sysDict.value }}
+        <ElLink
+          v-if="canMakeUp(row.orderType)"
+          type="primary"
+          @click="settlement(row)"
+          class="mr-5px"
+          >補收</ElLink
+        >
+        <ElLink
+          v-if="canMakeUp(row.orderType)"
+          type="primary"
+          @click="settlement(row)"
+          class="mr-5px"
+          >退費</ElLink
+        >
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">作廢</ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">小票</ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">快遞單</ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">處置單</ElLink>
+        <ElLink
+          v-if="row.memberInsurName === 'GBG'"
+          type="primary"
+          @click="settlement(row)"
+          class="mr-5px"
+          >保險小票</ElLink
+        >
       </template>
     </Table>
   </ContentWrap>
