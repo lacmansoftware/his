@@ -6,7 +6,7 @@ import { store } from '../index'
 export interface DictState {
   isSetDict: boolean
   dictObj: Recordable
-  productList: any
+  chargeItemList: any
 }
 
 export const useDictStore = defineStore({
@@ -14,7 +14,7 @@ export const useDictStore = defineStore({
   state: (): DictState => ({
     isSetDict: false,
     dictObj: {},
-    productList: ref<ChargeItemType[]>([])
+    chargeItemList: ref<ChargeItemType[]>([])
   }),
   persist: {
     enabled: true

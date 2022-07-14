@@ -40,10 +40,6 @@ export type ProductItemType = {
 }
 
 export type ChargeItemType = {
-  id: string
-}
-
-export type CartItemType = {
   activityId: string
   addressId: string
   amount: number

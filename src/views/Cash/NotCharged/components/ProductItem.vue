@@ -169,6 +169,10 @@ defineExpose({
   tableDataList,
   setTableDataEmpty
 })
+
+// onMounted(() => {
+//   setTableDataEmpty()
+// })
 </script>
 
 <template>

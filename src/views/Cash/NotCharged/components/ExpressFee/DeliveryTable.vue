@@ -2,7 +2,7 @@
 import { useI18n } from '@/hooks/web/useI18n'
 import { Table } from '@/components/Table'
 import { postAddressItemsApi, postProductPriceApi } from '@/api/cash/notcharged'
-import { ProductItemType, CartItemType } from '@/api/cash/notcharged/types'
+import { ProductItemType } from '@/api/cash/notcharged/types'
 import { onMounted, ref, watch, watchEffect } from 'vue'
 import { ElButton, ElFormItem, ElAutocomplete, ElMessage, ElInputNumber } from 'element-plus'
 import { getInOptionFormat } from '@/utils/common'
@@ -105,8 +105,8 @@ const columns: TableColumn[] = [
 
 const loading = ref(true)
 
-// let tableDataList = dictStore.productList
-let tableDataList = ref<ProductItemType[]>(dictStore.productList.value)
+// let tableDataList = dictStore.chargeItemList
+let tableDataList = ref<ProductItemType[]>(dictStore.chargeItemList.value)
 
 const getTableList = async (params?: Params) => {
   loading.value = false
@@ -159,7 +159,7 @@ defineExpose({
 
 // onMounted(async () => {
 //   const res1 = await postApi('/price/cart', {
-//     cartArray: dictStore.productList.value.map((item: ProductItemType) => ({
+//     cartArray: dictStore.chargeItemList.value.map((item: ProductItemType) => ({
 //       ...item,
 //       _status: 'add',
 //       activityId: '',
@@ -174,7 +174,7 @@ defineExpose({
 
 //   const res = await postProductPriceApi({
 //     memberId: props.memberId,
-//     cartArray: dictStore.productList.value.map((item: ProductItemType) => ({
+//     cartArray: dictStore.chargeItemList.value.map((item: ProductItemType) => ({
 //       ...item,
 //       _status: 'add',
 //       activityId: '',
@@ -184,7 +184,7 @@ defineExpose({
 //     })) as ProductItemType[]
 //   })
 //   postAddressItemsApi({
-//     items: dictStore.productList.value as CartItemType[]
+//     items: dictStore.chargeItemList.value as CartItemType[]
 //   }).then((res) => {
 //     console.log(res)
 //   })
