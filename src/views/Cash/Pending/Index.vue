@@ -52,7 +52,7 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
     field: 'action',
-    width: '250px',
+    width: '200px',
     form: { show: false }
   },
   {
@@ -354,20 +354,20 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
 }
 
 const settlement = (row: NotChargedTableData) => {
-  push({
-    name: 'CashNotChargedAdd',
-    params: {
-      id: row.id,
-      // wxId: row.wxId,
-      memberId: row.memberId,
-      memberInsurId: row.memberInsurId,
-      isCache: row.isCache,
-      ooClass: 'offline',
-      // sheet: row.sheet,
-      doctorName: row.doctorName,
-      doctorId: row.doctorId
-    }
-  })
+  // push({
+  //   name: 'CashNotChargedAdd',
+  //   params: {
+  //     id: row.id,
+  //     // wxId: row.wxId,
+  //     memberId: row.memberId,
+  //     memberInsurId: row.memberInsurId,
+  //     isCache: row.isCache,
+  //     ooClass: 'offline',
+  //     // sheet: row.sheet,
+  //     doctorName: row.doctorName,
+  //     doctorId: row.doctorId
+  //   }
+  // })
 }
 
 onMounted(async () => {
@@ -408,31 +408,12 @@ const canMakeUp = (orderType) => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink
-          v-if="canMakeUp(row.orderType)"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >補收</ElLink
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">結算</ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">補收</ElLink>
+        <ElLink v-if="row.type !== 'BXQF'" type="primary" @click="settlement(row)" class="mr-5px"
+          >小票</ElLink
         >
-        <ElLink
-          v-if="canMakeUp(row.orderType)"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >退費</ElLink
-        >
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">作廢</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">小票</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">快遞單</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">處置單</ElLink>
-        <ElLink
-          v-if="row.memberInsurName === 'GBG'"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >保險小票</ElLink
-        >
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">補收鏈接</ElLink>
       </template>
     </Table>
   </ContentWrap>
