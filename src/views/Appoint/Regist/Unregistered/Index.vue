@@ -53,26 +53,13 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
     field: 'action',
-    width: '180px',
-    form: { show: false }
-  },
-  {
-    label: '狀態',
-    field: 'status',
     width: '100px',
-    formatter: function (row) {
-      return inDict(row.status, 'appoint.status')
-    }
-  },
-  {
-    label: '門店',
-    field: 'hospitalName',
-    width: '100px'
+    form: { show: false }
   },
   {
     label: '客人姓名',
     field: 'memberName',
-    width: '50px'
+    width: '80px'
   },
   {
     label: '手機',
@@ -119,14 +106,22 @@ const crudSchemas = reactive<CrudSchema[]>([
     width: '80px'
   },
   {
-    label: '挂號時間',
-    field: 'registerDate',
-    width: '80px'
+    label: '預約日期',
+    field: 'appointmentTimeStart',
+    width: '80px',
+    formatter: function (row) {
+      return row.appointmentTimeStart.split(/\s/)[0]
+    }
   },
   {
-    label: '預約時間',
+    label: '預約時段',
     field: 'appointmentTimeStart',
-    width: '80px'
+    width: '100px',
+    formatter: function (row) {
+      const start = row.appointmentTimeStart.split(/\s/)[1]
+      const end = row.appointmentTimeEnd.split(/\s/)[1]
+      return start + '至' + end
+    }
   },
   {
     label: '客人級別',
@@ -136,7 +131,7 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '檔案號',
     field: 'archivesNo',
-    width: '80px'
+    width: '100px'
   },
   {
     label: '初複診',
@@ -153,27 +148,36 @@ const crudSchemas = reactive<CrudSchema[]>([
   },
   {
     label: '保險',
-    field: 'insurName',
-    width: '100px'
+    width: '100px',
+    formatter: function (row) {
+      const hasInsur =
+        row.insurName || (row.hasHighMedicalInsurance == 1 ? '用戶選擇了高端保險' : '無')
+      if (hasInsur) {
+        return hasInsur
+      }
+      return '無'
+    }
+  },
+  {
+    label: '是否使用公關卡',
+    field: 'usePrCard',
+    width: '100px',
+    formatter: function (row) {
+      return inDict(row.usePrCard, 'appoint.usePrCard')
+    }
+  },
+  {
+    label: '是否支付診費',
+    field: 'paymentStatus',
+    width: '100px',
+    formatter: function (row) {
+      return inDict(row.paymentStatus, 'appoint.paymentStatus')
+    }
   },
   {
     label: '備註',
     field: 'note',
-    width: '100px',
-    formatter: function (row) {
-      // if (row.paymentStatus == 'PAYED') {
-      //   highLight.push(row._uuid)
-      // }
-      return row.note
-    }
-  },
-  {
-    label: '高端醫療險種類',
-    field: 'hasHighMedicalInsurance',
-    width: '100px',
-    formatter: function (row) {
-      return inDict(row.hasHighMedicalInsurance, 'appoint.hasHighMedicalInsurance')
-    }
+    width: '100px'
   },
 
   // Search Schema
@@ -502,14 +506,9 @@ const canMakeUp = (orderType) => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink v-if="row.status !== 'YTH'" type="primary" @click="settlement(row)" class="mr-5px"
-          >退號</ElLink
-        >
-        <ElLink v-if="row.status !== 'YTH'" type="primary" @click="settlement(row)" class="mr-5px"
-          >更新保險</ElLink
-        >
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">挂號</ElLink>
         <ElLink
-          v-if="row.status !== 'YTH' && row.paymentStatus === 'UNPAY'"
+          v-if="row.paymentStatus === 'UNPAY'"
           type="primary"
           @click="settlement(row)"
           class="mr-5px"
