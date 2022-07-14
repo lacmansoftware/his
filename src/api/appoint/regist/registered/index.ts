@@ -4,6 +4,7 @@ import type { AddressItemType, ChargeItemType, NotChargedTableData } from './typ
 const request = useAxios()
 
 export const getTableListApi = async (params: any): Promise<IResponse> => {
+  params.status = 'YGH'
   const res = await request.get({ url: '/member/appointment/registeration/list', params })
   return res && res.data
 }
