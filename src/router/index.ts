@@ -464,6 +464,46 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: '/order',
+    component: Layout,
+    redirect: '/order/offline/paid/index',
+    name: 'Order',
+    meta: {
+      title: '訂單管理',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'offline',
+        component: getParentLayout(),
+        name: 'OrderOffline',
+        meta: {
+          title: '門診訂單',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'paid/index',
+            component: () => import('@/views/Order/Offline/Paid/Index.vue'),
+            name: 'OrderOfflinePaidIndex',
+            meta: {
+              title: '已付款'
+            }
+          },
+          {
+            path: 'unpaid/index',
+            component: () => import('@/views/Order/Offline/Unpaid/Index.vue'),
+            name: 'OrderOfflineUnpaidIndex',
+            meta: {
+              title: '未付款'
+            }
+          }
+        ]
+      }
+    ]
   }
 ]
 
