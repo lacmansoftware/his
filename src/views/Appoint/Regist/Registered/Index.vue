@@ -16,6 +16,7 @@ import Write from '@/views/Cash/NotCharged/components/Write.vue'
 import { getTableListApi, delTableListApi, saveTableApi } from '@/api/appoint/regist/registered'
 import { NotChargedTableData } from '@/api/appoint/regist/registered/types'
 import { dateCompare } from '@/utils/date'
+import dict from '@/config/dictionary.json'
 
 defineOptions({
   name: 'CashNotChargedIndex'
@@ -177,49 +178,66 @@ const crudSchemas = reactive<CrudSchema[]>([
 
   // Search Schema
   {
-    field: 'member',
-    label: '客人',
+    field: 'memberName',
+    label: '客人姓名',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Input',
       componentProps: {
-        placeholder: '客人姓名/手機'
+        placeholder: '請填寫'
       },
       colProps: { span: 6 }
     }
   },
   {
-    field: 'doctor',
+    field: 'memberMobile',
+    label: '手機號',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        placeholder: '請填寫'
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'archivesNo',
+    label: '檔案號',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        placeholder: '請填寫'
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
     label: '醫生',
+    field: 'doctorId',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
-      component: 'Input',
+      component: 'Select',
       componentProps: {
-        placeholder: '醫生姓名/手機'
+        filterable: true
       },
-      colProps: { span: 6 }
+      colProps: { span: 6 },
+      api: async () => {
+        return await getInOptionFormat('/doctor', 'id', 'name')
+      }
     }
   },
   {
-    field: 'registerNum',
-    label: '挂號編號',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Input',
-      componentProps: {
-        placeholder: '挂號編號'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'registerTimeStart',
+    field: 'dateStart',
     label: '挂號日期',
     form: { show: false },
     table: { show: false },
@@ -235,7 +253,7 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    field: 'registerTimeEnd',
+    field: 'dateEnd',
     label: '到',
     form: { show: false },
     table: { show: false },
@@ -250,67 +268,84 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    field: 'createTimeStart',
-    label: '創建日期',
+    field: 'memberLevel',
+    label: '會員級別',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'createTimeEnd',
-    label: '到',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'paymentCategory',
-    label: '支付類別',
-    form: { show: false },
-    table: { show: false },
-    search: {
       component: 'Select',
       componentProps: {
-        placeholder: '支付類別',
-        options: [
-          { value: 'YSK', label: '預收款' },
-          { value: 'SFK', label: '實付款' }
-        ] as any
+        filterable: true
       },
       colProps: { span: 6 },
-      show: true
+      api: async () => {
+        return await getInOptionFormat('/sys/member/level', 'id', 'levelName')
+      }
     }
   },
   {
-    field: 'needExpress',
-    label: '',
-    labelWidth: '0',
+    field: 'visitType',
+    label: '初複診',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
-      component: 'Checkbox',
+      component: 'Select',
       componentProps: {
-        options: [{ value: 'EXPRESS', label: '需要快遞' }]
+        filterable: true,
+        options: dict.visitType as any
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'appointmentType',
+    label: '約診類型',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        filterable: true,
+        options: dict.isSpecialist as any
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'marketActivity',
+    label: '活動',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        filterable: true
       },
       colProps: { span: 6 },
-      value: []
+      api: async () => {
+        return await getInOptionFormat('/market/activity/list?pageSize=0&type=0', 'id', 'name')
+      }
+    }
+  },
+  {
+    field: 'firstDisease',
+    label: '病種',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        filterable: true
+      },
+      colProps: { span: 6 },
+      api: async () => {
+        return await getInOptionFormat('/sys/diseases', 'id', 'name')
+      }
     }
   }
 ])
@@ -340,7 +375,7 @@ const delData = async (row: NotChargedTableData | null, multiple: boolean) => {
 const actionType = ref('')
 
 const AddAction = () => {
-  push(`/cash/notcharged/add`)
+  // push(`/cash/notcharged/add`)
 }
 
 const writeRef = ref<ComponentRef<typeof Write>>()
@@ -421,7 +456,8 @@ const settlement = (row: NotChargedTableData) => {
 onMounted(async () => {
   setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
   await setValues({
-    createTimeStart: getDateInFormat(new Date(), '-')
+    dateStart: getDateInFormat(new Date(), '-'),
+    dateEnd: getDateInFormat(new Date(), '-')
   })
   search()
 })
@@ -442,10 +478,16 @@ const canMakeUp = (orderType) => {
       :schema="allSchemas.searchSchema"
       :is-col="true"
       :inline="false"
+      :layout="'bottom'"
+      :buttom-position="'right'"
       @search="setSearchParams"
       @reset="setSearchParams"
       ref="searchRef"
     />
+
+    <div class="mb-10px ml-10px mt-[-32px]">
+      <ElButton type="primary" @click="AddAction" :icon="plusIcon">導出</ElButton>
+    </div>
 
     <Table
       v-model:pageSize="tableObject.pageSize"
