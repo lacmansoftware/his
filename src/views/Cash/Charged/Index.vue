@@ -388,20 +388,20 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
 }
 
 const settlement = (row: NotChargedTableData) => {
-  push({
-    name: 'CashNotChargedAdd',
-    params: {
-      id: row.id,
-      // wxId: row.wxId,
-      memberId: row.memberId,
-      memberInsurId: row.memberInsurId,
-      isCache: row.isCache,
-      ooClass: 'offline',
-      // sheet: row.sheet,
-      doctorName: row.doctorName,
-      doctorId: row.doctorId
-    }
-  })
+  // push({
+  //   name: 'CashNotChargedAdd',
+  //   params: {
+  //     id: row.id,
+  //     // wxId: row.wxId,
+  //     memberId: row.memberId,
+  //     memberInsurId: row.memberInsurId,
+  //     isCache: row.isCache,
+  //     ooClass: 'offline',
+  //     // sheet: row.sheet,
+  //     doctorName: row.doctorName,
+  //     doctorId: row.doctorId
+  //   }
+  // })
 }
 
 onMounted(async () => {
