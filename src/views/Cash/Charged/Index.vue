@@ -52,7 +52,7 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
     field: 'action',
-    width: '120px',
+    width: '250px',
     form: { show: false }
   },
   {
