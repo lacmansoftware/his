@@ -9,7 +9,7 @@ import { Table } from '@/components/Table'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import { inDict, getInOptionFormat } from '@/utils/common'
+import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import { plusIcon } from '@/utils/iconList'
 import Write from './components/Write.vue'
 
@@ -20,6 +20,8 @@ defineOptions({
   name: 'CashNotChargedIndex'
 })
 
+const searchRef = ref<ComponentRef<typeof Search>>()
+
 const store = {
   type: ref<ComponentOptions[]>([])
 }
@@ -27,10 +29,6 @@ const store = {
 const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
   store[key].value = await getInOptionFormat(url, valueField, labelField)
 }
-
-onMounted(() => {
-  setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
-})
 
 const { push } = useRouter()
 
@@ -45,7 +43,7 @@ const { register, tableObject, methods } = useTable<NotChargedTableData>({
 
 const { getList, setSearchParams } = methods
 
-getList()
+// getList()
 
 const { t } = useI18n()
 
@@ -281,6 +279,16 @@ const action = (row: NotChargedTableData, type: string) => {
 
 const loading = ref(false)
 
+const setValues = (value) => {
+  const search = unref(searchRef)
+  search?.setValues(value)
+}
+
+const search = () => {
+  const search = unref(searchRef)
+  search!.search()
+}
+
 const save = async () => {
   const write = unref(writeRef)
   await write?.elFormRef?.validate(async (isValid) => {
@@ -317,6 +325,14 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
   }
   return ''
 }
+
+onMounted(async () => {
+  setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
+  await setValues({
+    createTimeStart: getDateInFormat(new Date(), '-')
+  })
+  search()
+})
 </script>
 
 <template>
@@ -329,6 +345,7 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
       :buttom-position="'right'"
       @search="setSearchParams"
       @reset="setSearchParams"
+      ref="searchRef"
     />
 
     <div class="mb-10px ml-10px mt-[-32px]">
