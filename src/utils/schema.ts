@@ -13,6 +13,7 @@ export const genSearchSchema = (
       search: {
         component: 'Select',
         componentProps: {
+          placeholder: optionObj?.placeholder ?? null,
           options: optionObj.options
         },
         colProps: { span: 6 },
@@ -29,6 +30,7 @@ export const genSearchSchema = (
       search: {
         component: 'Select',
         componentProps: {
+          placeholder: optionObj?.placeholder ?? null,
           filterable: optionObj?.filterable ?? false
         },
         colProps: { span: 6 },
@@ -62,6 +64,7 @@ export const genSearchSchema = (
       search: {
         component: 'DatePicker',
         componentProps: {
+          placeholder: optionObj?.placeholder ?? null,
           type: 'date',
           valueFormat: 'YYYY-MM-DD'
         },

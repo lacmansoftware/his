@@ -54,7 +54,6 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
     field: 'action',
-    width: '150px',
     form: { show: false }
   },
   {
@@ -112,105 +111,40 @@ const crudSchemas = reactive<CrudSchema[]>([
   },
 
   // Search Schema
-  genSearchSchema('apiSelect', 'hospitalId', '使用門店', {
-    filterable: true,
+  genSearchSchema('apiSelect', 'hospitalId', '申請門店', {
+    placeholder: null,
     api: async () => {
-      return await getInOptionFormat('/sys/hospital', 'id', 'name')
+      return await getInOptionFormat('sys/hospital/hospitals', 'id', 'name')
     }
   }),
-  {
-    field: 'orderNo',
-    label: '訂單編號',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Input',
-      componentProps: {
-        placeholder: '訂單編號'
-      },
-      colProps: { span: 6 }
+  genSearchSchema('apiSelect', 'pharmacyId', '製作藥房', {
+    placeholder: '製作藥房',
+    api: async () => {
+      return await getInOptionFormat('index/pharmacys', 'id', 'name')
     }
-  },
-  {
-    field: 'memberInfo',
-    label: '客人信息',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Input',
-      componentProps: {
-        placeholder: '姓名/手機號'
-      },
-      colProps: { span: 6 }
-    }
-  },
-
-  {
-    field: 'returnState',
-    label: '退貨狀態',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'Select',
-      componentProps: {
-        options: dict.product.returnType as any
-      },
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    field: 'createUser',
-    label: '收銀員',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Input',
-      componentProps: {
-        placeholder: '收銀員'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  genSearchSchema('input', 'businessName', '商品', {
-    placeholder: '商品'
   }),
-  {
-    field: 'doctorName',
-    label: '關聯醫生',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Input',
-      componentProps: {
-        placeholder: '關聯醫生'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  genSearchSchema('sourceSelect', 'createFrom', '訂單來源', {
-    options: dict.product.promotionWay as any
-  }) as CrudSchema,
-  genSearchSchema('datePicker', 'startTime', '會員繳費日期'),
-  genSearchSchema('datePicker', 'endTime', '到'),
-  {
-    field: 'refereeValue',
-    label: '推薦人',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Input',
-      componentProps: {
-        placeholder: '推薦人'
-      },
-      colProps: { span: 6 }
-    }
-  }
+  genSearchSchema('datePicker', 'startDate', '提交時間', {
+    placeholder: '日期'
+  }),
+  genSearchSchema('datePicker', 'endDate', '到', {
+    placeholder: '日期'
+  }),
+  genSearchSchema('input', 'id', '製作單號', {
+    placeholder: '製作單號'
+  }),
+  genSearchSchema('input', 'productName', '商品名稱', {
+    placeholder: '商品名稱'
+  }),
+  genSearchSchema('datePicker', 'approveStartDate', '審核時間', {
+    placeholder: '日期'
+  }),
+  genSearchSchema('datePicker', 'approveEndDate', '到', {
+    placeholder: '日期'
+  }),
+  genSearchSchema('sourceSelect', 'status', '狀態', {
+    placeholder: '狀態',
+    options: dict.pharmacy.productMakeStatus as any
+  })
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
@@ -344,10 +278,16 @@ const canMakeUp = (orderType) => {
       :schema="allSchemas.searchSchema"
       :is-col="true"
       :inline="false"
+      :layout="'bottom'"
+      :buttom-position="'right'"
       @search="setSearchParams"
       @reset="setSearchParams"
       ref="searchRef"
     />
+
+    <div class="mb-10px ml-10px mt-[-32px]">
+      <ElButton type="primary" @click="AddAction" :icon="plusIcon">購買產品</ElButton>
+    </div>
 
     <Table
       v-model:pageSize="tableObject.pageSize"
