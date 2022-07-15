@@ -605,6 +605,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '請貨單'
             }
+          },
+          {
+            path: 'purchase/index',
+            component: () => import('@/views/Product/Request/Purchase/Index.vue'),
+            name: 'ProductRequestPurchaseIndex',
+            meta: {
+              title: '採購單'
+            }
           }
         ]
       }
