@@ -118,40 +118,16 @@ const crudSchemas = reactive<CrudSchema[]>([
   },
 
   // Search Schema
-  genSearchSchema('apiSelect', 'hospitalId', '申請門店', {
-    placeholder: null,
-    api: async () => {
-      return await getInOptionFormat('sys/hospital/hospitals', 'id', 'name')
-    }
-  }),
-  genSearchSchema('apiSelect', 'pharmacyId', '製作藥房', {
-    placeholder: '製作藥房',
-    api: async () => {
-      return await getInOptionFormat('index/pharmacys', 'id', 'name')
-    }
-  }),
-  genSearchSchema('datePicker', 'startDate', '提交時間', {
-    placeholder: '日期'
-  }),
-  genSearchSchema('datePicker', 'endDate', '到', {
-    placeholder: '日期'
-  }),
-  genSearchSchema('input', 'id', '製作單號', {
-    placeholder: '製作單號'
-  }),
-  genSearchSchema('input', 'productName', '商品名稱', {
-    placeholder: '商品名稱'
-  }),
-  genSearchSchema('datePicker', 'approveStartDate', '審核時間', {
-    placeholder: '日期'
-  }),
-  genSearchSchema('datePicker', 'approveEndDate', '到', {
-    placeholder: '日期'
-  }),
+  genSearchSchema('input', 'id', '請貨單號', { placeholder: '請貨單號' }),
   genSearchSchema('sourceSelect', 'status', '狀態', {
     placeholder: '狀態',
-    options: dict.pharmacy.productMakeStatus as any
-  })
+    options: dict.pharmacy.orderRequestStatus as any
+  }),
+  genSearchSchema('datePicker', 'startDate', '創建時間', { placeholder: '日期' }),
+  genSearchSchema('datePicker', 'endDate', '到', { placeholder: '日期' }),
+  genSearchSchema('input', 'productName', '商品名稱', { placeholder: '商品名稱' }),
+  genSearchSchema('datePicker', 'sStartDate', '提交時間', { placeholder: '日期' }),
+  genSearchSchema('datePicker', 'sEndDate', '到', { placeholder: '日期' })
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
