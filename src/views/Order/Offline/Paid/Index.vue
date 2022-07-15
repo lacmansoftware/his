@@ -13,8 +13,8 @@ import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import { plusIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
-import { getTableListApi, delTableListApi, saveTableApi } from '@/api/cash/charged'
-import { NotChargedTableData } from '@/api/cash/charged/types'
+import { getTableListApi, delTableListApi, saveTableApi } from '@/api/order/offline/paid'
+import { NotChargedTableData } from '@/api/order/offline/paid/types'
 import { dateCompare } from '@/utils/date'
 
 defineOptions({
@@ -52,68 +52,41 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
     field: 'action',
-    width: '250px',
+    width: '100px',
     form: { show: false }
   },
   {
-    label: '挂號編號',
-    field: 'registerNum'
+    label: '訂單編號',
+    field: 'orderNo',
+    width: '140px'
   },
   {
-    label: '類別',
-    field: 'leibie',
-    width: '60px',
+    label: '下單時間',
+    field: 'createTime',
+    width: '120px'
+  },
+  {
+    label: '訂單類型',
+    field: 'orderType',
+    width: '120px',
     formatter: function (row) {
-      const date = row.appointmentTimeEnd
-      if (date) {
-        const d1 = new Date(date + ' 00:00:00')
-        if (dateCompare(d1, new Date()) > 0) {
-          return '預收款'
-        }
-      }
-      const courseStatus = row.courseStatus
-      if ((courseStatus && courseStatus == 'N') || courseStatus == 'Q') {
-        return '預收款'
-      }
-
-      return '實付款'
+      return inDict(row.orderType, 'allOrderType')
     }
   },
   {
-    label: '門診類型',
-    field: 'visitType',
-    width: '80px',
-    formatter: function (row) {
-      const subType = row.orderSubType
-      if (subType === 'package') {
-        return '套餐門診'
-      }
-      if (subType === 'specialist') {
-        return '專科門診'
-      }
-      const v = inDict(row.visitType, 'offlineRecipelType')
-      return !v ? inDict(row.orderType, 'allOrderType') : v
-    }
-  },
-  {
-    label: '實收金額',
-    field: 'price',
-    width: '80px'
+    label: '價格（元）',
+    field: 'paymentPrice',
+    width: '70px'
   },
   {
     label: '客人',
     field: 'memberName',
-    width: '80px'
-  },
-  {
-    label: '手機',
-    field: 'memberMobile',
-    width: '100px'
+    width: '70px'
   },
   {
     label: '性別',
     field: 'memberSex',
-    width: '40px',
+    width: '50px',
     formatter: function (row) {
       return inDict(row.memberSex, 'sex')
     }
@@ -121,44 +94,122 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '年齡',
     field: 'memberAge',
-    width: '40px'
+    width: '50px'
+  },
+  {
+    label: '手機',
+    field: 'memberMobile',
+    width: '80px'
+  },
+  {
+    label: '微信昵稱',
+    field: 'wxName',
+    width: '70px'
+  },
+  {
+    label: '門店',
+    field: 'hospitalName',
+    width: '70px'
   },
   {
     label: '大夫',
     field: 'doctorName',
-    width: '100px'
+    width: '70px'
   },
   {
-    label: '初複診',
-    field: 'visitStatus',
-    width: '45px',
+    label: '支付狀態',
+    field: 'status',
+    width: '70px',
     formatter: function (row) {
-      return inDict(row.visitStatus, 'visitType')
+      if ('END' === row.status || 'UNPAY' === row.status) {
+        return '未付款'
+      } else if ('REFUNDING' === row.status) {
+        return '退款中'
+      } else if ('REFUND' === row.status) {
+        return '退款'
+      } else {
+        return '已付款'
+      }
     }
   },
   {
-    label: '挂號時間',
-    field: 'registerTime',
-    width: '100px'
+    label: '訂單狀態',
+    field: 'status',
+    width: '70px',
+    formatter: function (row) {
+      if (row.orderType === 'recipel') {
+        if ('' === row.dispensingStatus) {
+          return '調劑中'
+        }
+      }
+      if (row.orderType === 'recipel') {
+        if (row.expressType === 'SELF' && 'SEND' === row.dispensingStatus) {
+          return '已完成'
+        }
+      }
+      if (
+        (row.orderSubType === 'GHSP' || row.orderSubType === 'DLDX') &&
+        row.expressType !== 'SELF'
+      ) {
+        if (row.expressStatus === 'WAITING') {
+          return '調劑中'
+        }
+        return inDict(row.expressStatus, 'expressStatus')
+      }
+      if (row.orderSubType === 'YNZJ' && row.expressType !== 'SELF') {
+        if ('' === row.dispensingStatus) {
+          return '調劑中'
+        }
+      }
+      if (row.expressType === 'SELF' && row.orderType === 'life') {
+        return '已完成'
+      }
+      if (row.expressType !== 'SELF' && 'SEND' === row.dispensingStatus) {
+        if (row.expressStatus === 'WAITING') {
+          return '調劑完成'
+        }
+        return inDict(row.expressStatus, 'expressStatus')
+      } else {
+        if (row.status === 'PAYED' && row.orderType !== 'recipel' && row.orderType !== 'life') {
+          return '已付款'
+        }
+      }
+    }
+  },
+  {
+    label: '配送方式',
+    field: 'expressType',
+    width: '70px',
+    formatter: function (row) {
+      if (row.expressType === null || row.expressType === '') {
+        return '--'
+      }
+      return inDict(row.expressType, 'expressType')
+    }
   },
   {
     label: '預約時間',
     field: 'appointmentTimeStart',
-    width: '100px'
+    width: '150px',
+    formatter: function (row) {
+      if (row.appointmentTimeEnd) {
+        return (
+          row.appointmentTimeStart +
+          '-' +
+          row.appointmentTimeEnd.substr(11, row.appointmentTimeEnd.length)
+        )
+      }
+    }
   },
   {
-    label: '就診待遇',
-    field: 'levelName'
-  },
-  {
-    label: '是否保險',
-    field: 'memberInsurName',
-    width: '80px'
-  },
-  {
-    label: '操作人',
+    label: '操作員',
     field: 'modifyUser',
-    width: '80px'
+    width: '70px'
+  },
+  {
+    label: '操作時間',
+    field: 'modifyTime',
+    width: '120px'
   },
 
   // Search Schema
@@ -446,31 +497,8 @@ const canMakeUp = (orderType) => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink
-          v-if="canMakeUp(row.orderType)"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >補收</ElLink
-        >
-        <ElLink
-          v-if="canMakeUp(row.orderType)"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >退費</ElLink
-        >
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">作廢</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">小票</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">快遞單</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">處置單</ElLink>
-        <ElLink
-          v-if="row.memberInsurName === 'GBG'"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >保險小票</ElLink
-        >
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">回訪</ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">訂單詳情</ElLink>
       </template>
     </Table>
   </ContentWrap>
