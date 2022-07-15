@@ -517,6 +517,25 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     },
     children: [
       {
+        path: 'order',
+        component: getParentLayout(),
+        name: 'ProductOrder',
+        meta: {
+          title: '銷售管理',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'index',
+            component: () => import('@/views/Product/Order/Index.vue'),
+            name: 'ProductOrderIndex',
+            meta: {
+              title: '銷售訂單'
+            }
+          }
+        ]
+      },
+      {
         path: 'index',
         component: () => import('@/views/Product/Index.vue'),
         name: 'ProductIndex',
