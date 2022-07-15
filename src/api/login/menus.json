@@ -4960,7 +4960,7 @@
       "pageSize": 2147483647,
       "name": "調撥確認",
       "seq": 3,
-      "url": "/html/product/transfer/main.html",
+      "url": "/product/request/transfer/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "1606",

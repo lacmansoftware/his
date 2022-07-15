@@ -613,6 +613,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '採購單'
             }
+          },
+          {
+            path: 'transfer/index',
+            component: () => import('@/views/Product/Request/Transfer/Index.vue'),
+            name: 'ProductRequestTransferIndex',
+            meta: {
+              title: '調撥確認'
+            }
           }
         ]
       }
