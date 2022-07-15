@@ -100,16 +100,15 @@ const crudSchemas = reactive<CrudSchema[]>([
   },
 
   // Search Schema
-  genSearchSchema('input', 'id', '請貨單號', { placeholder: '請貨單號' }),
+  genSearchSchema('datePicker', 'startDate', '中心出庫日期', { placeholder: '日期' }),
+  genSearchSchema('datePicker', 'endDate', '到', { placeholder: '日期' }),
+  genSearchSchema('input', 'id', '調撥單號', { placeholder: '調撥單號' }),
   genSearchSchema('sourceSelect', 'status', '狀態', {
     placeholder: '狀態',
-    options: dict.pharmacy.orderRequestStatus as any
+    options: dict.pharmacy.transferStatus as any
   }),
-  genSearchSchema('datePicker', 'startDate', '創建時間', { placeholder: '日期' }),
-  genSearchSchema('datePicker', 'endDate', '到', { placeholder: '日期' }),
-  genSearchSchema('input', 'productName', '商品名稱', { placeholder: '商品名稱' }),
-  genSearchSchema('datePicker', 'sStartDate', '提交時間', { placeholder: '日期' }),
-  genSearchSchema('datePicker', 'sEndDate', '到', { placeholder: '日期' })
+  genSearchSchema('datePicker', 'tStartDate', '門店入庫日期', { placeholder: '日期' }),
+  genSearchSchema('datePicker', 'tEndDate', '到', { placeholder: '日期' })
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
