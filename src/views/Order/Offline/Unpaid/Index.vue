@@ -13,9 +13,10 @@ import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import { plusIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
-import { getTableListApi, delTableListApi, saveTableApi } from '@/api/cash/charged'
-import { NotChargedTableData } from '@/api/cash/charged/types'
+import { getTableListApi, delTableListApi, saveTableApi } from '@/api/order/offline/unpaid'
+import { NotChargedTableData } from '@/api/order/offline/unpaid/types'
 import { dateCompare } from '@/utils/date'
+import dict from '@/config/dictionary.json'
 
 defineOptions({
   name: 'CashNotChargedIndex'
@@ -52,68 +53,41 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
     field: 'action',
-    width: '250px',
+    width: '100px',
     form: { show: false }
   },
   {
-    label: '挂號編號',
-    field: 'registerNum'
+    label: '訂單編號',
+    field: 'orderNo',
+    width: '140px'
   },
   {
-    label: '類別',
-    field: 'leibie',
-    width: '60px',
+    label: '下單時間',
+    field: 'createTime',
+    width: '120px'
+  },
+  {
+    label: '訂單類型',
+    field: 'orderType',
+    width: '120px',
     formatter: function (row) {
-      const date = row.appointmentTimeEnd
-      if (date) {
-        const d1 = new Date(date + ' 00:00:00')
-        if (dateCompare(d1, new Date()) > 0) {
-          return '預收款'
-        }
-      }
-      const courseStatus = row.courseStatus
-      if ((courseStatus && courseStatus == 'N') || courseStatus == 'Q') {
-        return '預收款'
-      }
-
-      return '實付款'
+      return inDict(row.orderType, 'allOrderType')
     }
   },
   {
-    label: '門診類型',
-    field: 'visitType',
-    width: '80px',
-    formatter: function (row) {
-      const subType = row.orderSubType
-      if (subType === 'package') {
-        return '套餐門診'
-      }
-      if (subType === 'specialist') {
-        return '專科門診'
-      }
-      const v = inDict(row.visitType, 'offlineRecipelType')
-      return !v ? inDict(row.orderType, 'allOrderType') : v
-    }
-  },
-  {
-    label: '實收金額',
+    label: '價格（元）',
     field: 'price',
-    width: '80px'
+    width: '70px'
   },
   {
     label: '客人',
     field: 'memberName',
-    width: '80px'
-  },
-  {
-    label: '手機',
-    field: 'memberMobile',
-    width: '100px'
+    width: '70px'
   },
   {
     label: '性別',
     field: 'memberSex',
-    width: '40px',
+    width: '50px',
     formatter: function (row) {
       return inDict(row.memberSex, 'sex')
     }
@@ -121,47 +95,128 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '年齡',
     field: 'memberAge',
-    width: '40px'
+    width: '50px'
   },
   {
-    label: '大夫',
+    label: '手機',
+    field: 'memberMobile',
+    width: '80px'
+  },
+  {
+    label: '微信昵稱',
+    field: 'wxName',
+    width: '70px'
+  },
+  {
+    label: '醫生',
     field: 'doctorName',
-    width: '100px'
+    width: '70px'
   },
   {
-    label: '初複診',
-    field: 'visitStatus',
-    width: '45px',
-    formatter: function (row) {
-      return inDict(row.visitStatus, 'visitType')
-    }
-  },
-  {
-    label: '挂號時間',
-    field: 'registerTime',
-    width: '100px'
+    label: '門店',
+    field: 'hospitalName',
+    width: '70px'
   },
   {
     label: '預約時間',
-    field: 'appointmentTimeStart',
-    width: '100px'
+    field: 'reserveTime',
+    width: '150px'
   },
   {
-    label: '就診待遇',
-    field: 'levelName'
+    label: '支付狀態',
+    field: 'status',
+    width: '70px',
+    formatter: function (row) {
+      if ('END' === row.status || 'UNPAY' === row.status) {
+        return '未付款'
+      } else if ('REFUNDING' === row.status) {
+        return '退款中'
+      } else if ('REFUND' === row.status) {
+        return '退款'
+      } else {
+        return '已付款'
+      }
+    }
   },
   {
-    label: '是否保險',
-    field: 'memberInsurName',
-    width: '80px'
+    label: '配送方式',
+    field: 'expressType',
+    width: '70px',
+    formatter: function (row) {
+      if (row.expressType === null || row.expressType === '') {
+        return '--'
+      }
+      return inDict(row.expressType, 'expressType')
+    }
   },
   {
-    label: '操作人',
+    label: '快遞狀態',
+    field: 'expressStatus',
+    width: '70px',
+    formatter: function (row) {
+      if ('PAYED' === row.expressStatus) {
+        return '已接單'
+      }
+      return inDict(row.expressStatus, 'expressStatus')
+    }
+  },
+  {
+    label: '操作員',
     field: 'modifyUser',
-    width: '80px'
+    width: '70px'
+  },
+  {
+    label: '操作時間',
+    field: 'modifyTime',
+    width: '120px'
   },
 
   // Search Schema
+  {
+    field: 'orderTimeStart',
+    label: '下單時間',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'orderTimeEnd',
+    label: '到',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'orderNo',
+    label: '訂單編號',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        placeholder: '訂單編號'
+      },
+      colProps: { span: 6 }
+    }
+  },
+
   {
     field: 'member',
     label: '客人',
@@ -171,42 +226,89 @@ const crudSchemas = reactive<CrudSchema[]>([
       show: true,
       component: 'Input',
       componentProps: {
-        placeholder: '客人姓名/手機'
+        placeholder: '姓名/手機號'
       },
       colProps: { span: 6 }
     }
   },
+
   {
     field: 'doctor',
-    label: '醫生',
+    label: '大夫',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Input',
       componentProps: {
-        placeholder: '醫生姓名/手機'
+        placeholder: '大夫姓名'
       },
       colProps: { span: 6 }
     }
   },
   {
-    field: 'registerNum',
-    label: '挂號編號',
+    field: 'orderTypes',
+    label: '訂單類型',
     form: { show: false },
     table: { show: false },
     search: {
-      show: true,
-      component: 'Input',
+      component: 'Select',
       componentProps: {
-        placeholder: '挂號編號'
+        placeholder: '訂單類型',
+        options: dict.offlineOrderType as any
       },
-      colProps: { span: 6 }
+      colProps: { span: 6 },
+      show: true
     }
   },
   {
-    field: 'registerTimeStart',
-    label: '挂號日期',
+    field: 'status',
+    label: '支付狀態',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Select',
+      componentProps: {
+        placeholder: '支付狀態',
+        options: dict.offlinePaymentStatus as any
+      },
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'expressType',
+    label: '配送方式',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Select',
+      componentProps: {
+        placeholder: '配送方式',
+        options: dict.expressType as any
+      },
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'comboStatus',
+    label: '訂單狀態',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Select',
+      componentProps: {
+        placeholder: '訂單狀態',
+        options: dict.comboOrderStatus as any
+      },
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'modifyTimeStart',
+    label: '操作時間',
     form: { show: false },
     table: { show: false },
     search: {
@@ -215,13 +317,13 @@ const crudSchemas = reactive<CrudSchema[]>([
       componentProps: {
         type: 'date',
         valueFormat: 'YYYY-MM-DD',
-        placeholder: '挂號日期'
+        placeholder: '起始'
       },
       colProps: { span: 6 }
     }
   },
   {
-    field: 'registerTimeEnd',
+    field: 'modifyTimeEnd',
     label: '到',
     form: { show: false },
     table: { show: false },
@@ -236,67 +338,20 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    field: 'createTimeStart',
-    label: '創建日期',
+    field: 'hospitalId',
+    label: '門店',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'createTimeEnd',
-    label: '到',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'paymentCategory',
-    label: '支付類別',
-    form: { show: false },
-    table: { show: false },
-    search: {
       component: 'Select',
       componentProps: {
-        placeholder: '支付類別',
-        options: [
-          { value: 'YSK', label: '預收款' },
-          { value: 'SFK', label: '實付款' }
-        ] as any
+        filterable: true
       },
       colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    field: 'needExpress',
-    label: '',
-    labelWidth: '0',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Checkbox',
-      componentProps: {
-        options: [{ value: 'EXPRESS', label: '需要快遞' }]
-      },
-      colProps: { span: 6 },
-      value: []
+      api: async () => {
+        return await getInOptionFormat('/sys/hospital', 'id', 'name')
+      }
     }
   }
 ])
@@ -446,31 +501,7 @@ const canMakeUp = (orderType) => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink
-          v-if="canMakeUp(row.orderType)"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >補收</ElLink
-        >
-        <ElLink
-          v-if="canMakeUp(row.orderType)"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >退費</ElLink
-        >
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">作廢</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">小票</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">快遞單</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">處置單</ElLink>
-        <ElLink
-          v-if="row.memberInsurName === 'GBG'"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >保險小票</ElLink
-        >
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">訂單詳情</ElLink>
       </template>
     </Table>
   </ContentWrap>
