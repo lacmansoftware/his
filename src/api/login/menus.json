@@ -4892,7 +4892,7 @@
       "pageSize": 2147483647,
       "name": "退成品",
       "seq": 4,
-      "url": "/html/product/ynzj/return/main.html",
+      "url": "/product/ynzj/return/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "1605",

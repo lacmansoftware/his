@@ -578,6 +578,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '成品入庫'
             }
+          },
+          {
+            path: 'return/index',
+            component: () => import('@/views/Product/Ynzj/Return/Index.vue'),
+            name: 'ProductYnzjReturnApprove',
+            meta: {
+              title: '退成品'
+            }
           }
         ]
       }
