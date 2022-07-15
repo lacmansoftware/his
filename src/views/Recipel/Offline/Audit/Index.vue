@@ -393,7 +393,8 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
     />
 
     <div class="mb-10px ml-10px mt-[-32px]">
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增</ElButton>
+      <!-- <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增</ElButton> -->
+      提示：电子方還有5張處方沒有審核！
     </div>
 
     <Table

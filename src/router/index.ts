@@ -286,14 +286,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           alwaysShow: true
         },
         children: [
-          {
-            path: 'add',
-            component: () => import('@/views/Appoint/Regist/Add.vue'),
-            name: 'AppointRegistAdd',
-            meta: {
-              title: '新建掛號'
-            }
-          },
+          // {
+          //   path: 'add',
+          //   component: () => import('@/views/Appoint/Regist/Add.vue'),
+          //   name: 'AppointRegistAdd',
+          //   meta: {
+          //     title: '新建掛號'
+          //   }
+          // },
           {
             path: 'registered/index',
             component: () => import('@/views/Appoint/Regist/Registered/Index.vue'),

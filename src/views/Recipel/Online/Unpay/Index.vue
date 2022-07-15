@@ -384,7 +384,7 @@ const save = async () => {
     />
 
     <div class="mb-10px ml-10px mt-[-32px]">
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增</ElButton>
+      <!-- <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增</ElButton> -->
     </div>
 
     <Table
