@@ -64,26 +64,26 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: { show: false }
   },
   {
-    label: '申請門店',
+    label: '請貨門店',
     field: 'hospitalName',
-    width: '110px'
+    width: '120px'
   },
   {
-    label: '製作藥房',
-    field: 'pharmacyName',
-    width: '110px'
-  },
-  {
-    label: '製作單編號',
+    label: '請貨單編號',
     field: 'id',
     width: '135px'
+  },
+  {
+    label: '子請貨單',
+    field: 'childSize',
+    width: '65px'
   },
   {
     label: '狀態',
     field: 'status',
     width: '60px',
     formatter: function (row) {
-      return inDict(row.status, 'pharmacy.productMakeStatus')
+      return inDict(row.status, 'pharmacy.orderRequestStatus')
     }
   },
   {
@@ -109,12 +109,12 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '備註',
     field: 'remark',
-    width: '150px'
+    width: '90px'
   },
   {
     label: '審批或駁回備註',
     field: 'rebutDesc',
-    width: '110px'
+    width: '100px'
   },
 
   // Search Schema
@@ -310,17 +310,27 @@ const canMakeUp = (orderType) => {
     >
       <template #action="{ row }">
         <div v-if="row.status === 'T'">
-          <ElLink type="primary" @click="settlement(row)" class="mr-5px">修改</ElLink>
-          <ElLink type="primary" @click="settlement(row)" class="mr-5px">提交</ElLink>
-          <ElLink type="primary" @click="settlement(row)" class="mr-5px">刪除</ElLink>
-        </div>
-        <div v-else-if="row.status === 'W'">
-          <ElLink type="primary" @click="settlement(row)" class="mr-5px">修改</ElLink>
-          <ElLink type="primary" @click="settlement(row)" class="mr-5px">撤回</ElLink>
-          <ElLink type="primary" @click="settlement(row)" class="mr-5px">刪除</ElLink>
+          <div v-if="row.childSize > 0">
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">修改</ElLink>
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">提交中心</ElLink>
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">刪除</ElLink>
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">取消合併</ElLink>
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">子請貨單</ElLink>
+          </div>
+          <div v-else>
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">修改</ElLink>
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">提交中心</ElLink>
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">刪除</ElLink>
+          </div>
         </div>
         <div v-else>
-          <ElLink type="primary" @click="settlement(row)" class="mr-5px">查看</ElLink>
+          <div v-if="row.childSize > 0">
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">查看</ElLink>
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">子請貨單</ElLink>
+          </div>
+          <div v-else>
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">查看</ElLink>
+          </div>
         </div>
       </template>
     </Table>
