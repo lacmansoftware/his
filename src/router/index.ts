@@ -621,6 +621,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '調撥確認'
             }
+          },
+          {
+            path: 'mdreturn/index',
+            component: () => import('@/views/Product/Request/MdReturn/Index.vue'),
+            name: 'ProductRequestMdReturnIndex',
+            meta: {
+              title: '門店退貨'
+            }
           }
         ]
       }
