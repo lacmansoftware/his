@@ -542,6 +542,25 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '產品字典庫'
         }
+      },
+      {
+        path: 'ynzj',
+        component: getParentLayout(),
+        name: 'ProductYnzj',
+        meta: {
+          title: '自有產品管理',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'make/index',
+            component: () => import('@/views/Product/Ynzj/Make/Index.vue'),
+            name: 'ProductYnzjMakeIndex',
+            meta: {
+              title: '製作單'
+            }
+          }
+        ]
       }
     ]
   }

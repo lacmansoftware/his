@@ -2,7 +2,7 @@ export const genSearchSchema = (
   schemaType: string,
   fieldValue: string,
   labelValue: string,
-  optionObj: any
+  optionObj: any = {}
 ) => {
   if (schemaType === 'sourceSelect') {
     return {
@@ -68,7 +68,7 @@ export const genSearchSchema = (
         colProps: { span: 6 },
         show: true
       }
-    }
+    } as any
   }
 
   return {}
