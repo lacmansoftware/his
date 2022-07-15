@@ -64,57 +64,39 @@ const crudSchemas = reactive<CrudSchema[]>([
     form: { show: false }
   },
   {
-    label: '請貨門店',
-    field: 'hospitalName',
-    width: '120px'
-  },
-  {
-    label: '請貨單編號',
-    field: 'id',
-    width: '135px'
-  },
-  {
-    label: '子請貨單',
-    field: 'childSize',
-    width: '65px'
+    label: '調撥單號',
+    field: 'id'
   },
   {
     label: '狀態',
     field: 'status',
-    width: '60px',
     formatter: function (row) {
-      return inDict(row.status, 'pharmacy.orderRequestStatus')
+      return inDict(row.status, 'pharmacy.transferStatus')
     }
   },
   {
-    label: '創建日期',
-    field: 'createTime',
-    width: '130px'
+    label: '出庫日期',
+    field: 'approveTime'
   },
   {
-    label: '創建人',
-    field: 'createUser',
-    width: '65px'
+    label: '出庫審核人',
+    field: 'approver'
   },
   {
-    label: '提交日期',
-    field: 'submitTime',
-    width: '130px'
+    label: '門店入庫日期',
+    field: 'transferTime'
   },
   {
-    label: '提交人',
-    field: 'submitUser',
-    width: '65px'
+    label: '門店入庫審核人',
+    field: 'transferUser'
   },
   {
-    label: '備註',
-    field: 'remark',
-    width: '90px'
+    label: '中心出庫備註',
+    field: 'remark'
   },
   {
-    label: '審批或駁回備註',
-    field: 'rebutDesc',
-    width: '100px'
+    label: '調撥備註',
+    field: 'transferRemark'
   },
 
   // Search Schema
@@ -285,28 +267,11 @@ const canMakeUp = (orderType) => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <div v-if="row.status === 'T'">
-          <div v-if="row.childSize > 0">
-            <ElLink type="primary" @click="settlement(row)" class="mr-5px">修改</ElLink>
-            <ElLink type="primary" @click="settlement(row)" class="mr-5px">提交中心</ElLink>
-            <ElLink type="primary" @click="settlement(row)" class="mr-5px">刪除</ElLink>
-            <ElLink type="primary" @click="settlement(row)" class="mr-5px">取消合併</ElLink>
-            <ElLink type="primary" @click="settlement(row)" class="mr-5px">子請貨單</ElLink>
-          </div>
-          <div v-else>
-            <ElLink type="primary" @click="settlement(row)" class="mr-5px">修改</ElLink>
-            <ElLink type="primary" @click="settlement(row)" class="mr-5px">提交中心</ElLink>
-            <ElLink type="primary" @click="settlement(row)" class="mr-5px">刪除</ElLink>
-          </div>
+        <div v-if="row.status === 'P'">
+          <ElLink type="primary" @click="settlement(row)" class="mr-5px">審核</ElLink>
         </div>
         <div v-else>
-          <div v-if="row.childSize > 0">
-            <ElLink type="primary" @click="settlement(row)" class="mr-5px">查看</ElLink>
-            <ElLink type="primary" @click="settlement(row)" class="mr-5px">子請貨單</ElLink>
-          </div>
-          <div v-else>
-            <ElLink type="primary" @click="settlement(row)" class="mr-5px">查看</ElLink>
-          </div>
+          <ElLink type="primary" @click="settlement(row)" class="mr-5px">查看</ElLink>
         </div>
       </template>
     </Table>
