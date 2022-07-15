@@ -53,6 +53,7 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
     field: 'action',
+    width: '150px',
     form: { show: false }
   },
   {
@@ -142,82 +143,97 @@ const crudSchemas = reactive<CrudSchema[]>([
 
   // Search Schema
   {
-    field: 'orderTimeStart',
-    label: '下單時間',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'orderTimeEnd',
-    label: '到',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'orderNo',
-    label: '訂單編號',
+    field: 'name',
+    label: '產品名稱',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Input',
       componentProps: {
-        placeholder: '訂單編號'
+        placeholder: '產品名稱'
       },
       colProps: { span: 6 }
     }
   },
-
   {
-    field: 'member',
-    label: '客人',
+    field: 'type',
+    label: '產品類型',
     form: { show: false },
     table: { show: false },
     search: {
-      show: true,
-      component: 'Input',
+      component: 'Select',
       componentProps: {
-        placeholder: '姓名/手機號'
+        placeholder: '訂單類型',
+        options: dict.product.type as any
       },
-      colProps: { span: 6 }
+      colProps: { span: 6 },
+      show: true
     }
   },
-
   {
-    field: 'doctor',
-    label: '大夫',
+    field: 'subType',
+    label: '產品子類型',
     form: { show: false },
     table: { show: false },
     search: {
-      show: true,
-      component: 'Input',
+      component: 'Select',
       componentProps: {
-        placeholder: '大夫姓名'
+        placeholder: '訂單類型',
+        options: dict.product.subType as any
       },
-      colProps: { span: 6 }
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'isPresell',
+    label: '是否可以預售',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Select',
+      componentProps: {
+        placeholder: '訂單類型',
+        options: dict.display as any
+      },
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'approveStatus',
+    label: '審核狀態',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Select',
+      componentProps: {
+        placeholder: '訂單類型',
+        options: dict.product.approveStatus as any
+      },
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'status',
+    label: '使用狀態',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Select',
+      componentProps: {
+        placeholder: '訂單類型',
+        options: dict.product.status as any
+      },
+      colProps: { span: 6 },
+      show: true
     }
   },
   {
     field: 'hospitalId',
-    label: '門店',
+    label: '使用門店',
     form: { show: false },
     table: { show: false },
     search: {
@@ -230,6 +246,36 @@ const crudSchemas = reactive<CrudSchema[]>([
       api: async () => {
         return await getInOptionFormat('/sys/hospital', 'id', 'name')
       }
+    }
+  },
+  {
+    field: 'isReqProduct',
+    label: '創建時間',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Select',
+      componentProps: {
+        placeholder: '訂單類型',
+        options: dict.product.isReqProduct as any
+      },
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'createDate',
+    label: '創建時間',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
+      colProps: { span: 6 }
     }
   }
 ])
@@ -361,10 +407,16 @@ const canMakeUp = (orderType) => {
       :schema="allSchemas.searchSchema"
       :is-col="true"
       :inline="false"
+      :layout="'bottom'"
+      :buttom-position="'right'"
       @search="setSearchParams"
       @reset="setSearchParams"
       ref="searchRef"
     />
+
+    <div class="mb-10px ml-10px mt-[-32px]">
+      <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增 批量操作 提交</ElButton>
+    </div>
 
     <Table
       v-model:pageSize="tableObject.pageSize"
@@ -379,7 +431,19 @@ const canMakeUp = (orderType) => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">訂單詳情</ElLink>
+        <div v-if="row.approveStatus === 'DTJ' || row.approveStatus === 'YBH'">
+          <ElLink type="primary" @click="settlement(row)" class="mr-5px">編輯</ElLink>
+          <ElLink type="primary" @click="settlement(row)" class="mr-5px">查看</ElLink>
+          <ElLink type="primary" @click="settlement(row)" class="mr-5px">刪除</ElLink>
+          <ElLink type="primary" @click="settlement(row)" class="mr-5px">提交</ElLink>
+        </div>
+        <div v-else-if="row.approveStatus === 'YTJ'">
+          <ElLink type="primary" @click="settlement(row)" class="mr-5px">查看</ElLink>
+          <ElLink type="primary" @click="settlement(row)" class="mr-5px">撤回</ElLink>
+        </div>
+        <div v-else-if="row.approveStatus === 'YSH'">
+          <ElLink type="primary" @click="settlement(row)" class="mr-5px">查看</ElLink>
+        </div>
       </template>
     </Table>
   </ContentWrap>
