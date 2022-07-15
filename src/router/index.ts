@@ -559,6 +559,17 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '製作單'
             }
+          },
+          {
+            path: 'make/approve',
+            component: () => import('@/views/Product/Ynzj/Make/Index.vue'),
+            name: 'ProductYnzjMakeApprove',
+            props: {
+              pageType: 'approve'
+            },
+            meta: {
+              title: '製作審核'
+            }
           }
         ]
       }

@@ -4705,7 +4705,7 @@
       "pageSize": 2147483647,
       "name": "製作審核",
       "seq": 2,
-      "url": "/html/product/ynzj/make/approve.html",
+      "url": "/product/ynzj/make/approve",
       "icon": null,
       "resourceType": "m",
       "parentId": "1605",

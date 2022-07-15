@@ -23,6 +23,13 @@ defineOptions({
   name: 'CashNotChargedIndex'
 })
 
+const props = defineProps({
+  pageType: {
+    type: String,
+    default: ''
+  }
+})
+
 const searchRef = ref<ComponentRef<typeof Search>>()
 
 const store = {
@@ -285,7 +292,7 @@ const canMakeUp = (orderType) => {
       ref="searchRef"
     />
 
-    <div class="mb-10px ml-10px mt-[-32px]">
+    <div v-if="pageType !== 'approve'" class="mb-10px ml-10px mt-[-32px]">
       <ElButton type="primary" @click="AddAction" :icon="plusIcon">購買產品</ElButton>
     </div>
 
