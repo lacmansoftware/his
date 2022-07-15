@@ -570,6 +570,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '製作審核'
             }
+          },
+          {
+            path: 'stockin/index',
+            component: () => import('@/views/Product/Ynzj/Stockin/Index.vue'),
+            name: 'ProductYnzjStockinApprove',
+            meta: {
+              title: '成品入庫'
+            }
           }
         ]
       }
