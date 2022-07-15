@@ -504,6 +504,27 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         ]
       }
     ]
+  },
+  {
+    path: '/product',
+    component: Layout,
+    redirect: '/product/index',
+    name: 'Product',
+    meta: {
+      title: '產品管理',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/Product/Index.vue'),
+        name: 'ProductIndex',
+        meta: {
+          title: '產品字典庫'
+        }
+      }
+    ]
   }
 ]
 
