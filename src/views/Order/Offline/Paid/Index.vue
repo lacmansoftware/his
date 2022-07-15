@@ -16,6 +16,7 @@ import Write from '@/views/Cash/NotCharged/components/Write.vue'
 import { getTableListApi, delTableListApi, saveTableApi } from '@/api/order/offline/paid'
 import { NotChargedTableData } from '@/api/order/offline/paid/types'
 import { dateCompare } from '@/utils/date'
+import dict from '@/config/dictionary.json'
 
 defineOptions({
   name: 'CashNotChargedIndex'
@@ -214,6 +215,51 @@ const crudSchemas = reactive<CrudSchema[]>([
 
   // Search Schema
   {
+    field: 'orderTimeStart',
+    label: '下單時間',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'orderTimeEnd',
+    label: '到',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'DatePicker',
+      componentProps: {
+        type: 'date',
+        valueFormat: 'YYYY-MM-DD'
+      },
+      colProps: { span: 6 }
+    }
+  },
+  {
+    field: 'orderNo',
+    label: '訂單編號',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        placeholder: '訂單編號'
+      },
+      colProps: { span: 6 }
+    }
+  },
+
+  {
     field: 'member',
     label: '客人',
     form: { show: false },
@@ -222,42 +268,89 @@ const crudSchemas = reactive<CrudSchema[]>([
       show: true,
       component: 'Input',
       componentProps: {
-        placeholder: '客人姓名/手機'
+        placeholder: '姓名/手機號'
       },
       colProps: { span: 6 }
     }
   },
+
   {
     field: 'doctor',
-    label: '醫生',
+    label: '大夫',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
       component: 'Input',
       componentProps: {
-        placeholder: '醫生姓名/手機'
+        placeholder: '大夫姓名'
       },
       colProps: { span: 6 }
     }
   },
   {
-    field: 'registerNum',
-    label: '挂號編號',
+    field: 'orderTypes',
+    label: '訂單類型',
     form: { show: false },
     table: { show: false },
     search: {
-      show: true,
-      component: 'Input',
+      component: 'Select',
       componentProps: {
-        placeholder: '挂號編號'
+        placeholder: '訂單類型',
+        options: dict.offlineOrderType as any
       },
-      colProps: { span: 6 }
+      colProps: { span: 6 },
+      show: true
     }
   },
   {
-    field: 'registerTimeStart',
-    label: '挂號日期',
+    field: 'status',
+    label: '支付狀態',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Select',
+      componentProps: {
+        placeholder: '支付狀態',
+        options: dict.offlinePaymentStatus as any
+      },
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'expressType',
+    label: '配送方式',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Select',
+      componentProps: {
+        placeholder: '配送方式',
+        options: dict.expressType as any
+      },
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'comboStatus',
+    label: '訂單狀態',
+    form: { show: false },
+    table: { show: false },
+    search: {
+      component: 'Select',
+      componentProps: {
+        placeholder: '訂單狀態',
+        options: dict.comboOrderStatus as any
+      },
+      colProps: { span: 6 },
+      show: true
+    }
+  },
+  {
+    field: 'modifyTimeStart',
+    label: '操作時間',
     form: { show: false },
     table: { show: false },
     search: {
@@ -266,13 +359,13 @@ const crudSchemas = reactive<CrudSchema[]>([
       componentProps: {
         type: 'date',
         valueFormat: 'YYYY-MM-DD',
-        placeholder: '挂號日期'
+        placeholder: '起始'
       },
       colProps: { span: 6 }
     }
   },
   {
-    field: 'registerTimeEnd',
+    field: 'modifyTimeEnd',
     label: '到',
     form: { show: false },
     table: { show: false },
@@ -287,67 +380,20 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   {
-    field: 'createTimeStart',
-    label: '創建日期',
+    field: 'hospitalId',
+    label: '門店',
     form: { show: false },
     table: { show: false },
     search: {
       show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'createTimeEnd',
-    label: '到',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'paymentCategory',
-    label: '支付類別',
-    form: { show: false },
-    table: { show: false },
-    search: {
       component: 'Select',
       componentProps: {
-        placeholder: '支付類別',
-        options: [
-          { value: 'YSK', label: '預收款' },
-          { value: 'SFK', label: '實付款' }
-        ] as any
+        filterable: true
       },
       colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    field: 'needExpress',
-    label: '',
-    labelWidth: '0',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Checkbox',
-      componentProps: {
-        options: [{ value: 'EXPRESS', label: '需要快遞' }]
-      },
-      colProps: { span: 6 },
-      value: []
+      api: async () => {
+        return await getInOptionFormat('/sys/hospital', 'id', 'name')
+      }
     }
   }
 ])
