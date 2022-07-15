@@ -16,6 +16,7 @@ import Write from '@/views/Cash/NotCharged/components/Write.vue'
 import { getTableListApi, delTableListApi, saveTableApi } from '@/api/product/order'
 import { NotChargedTableData } from '@/api/product/order/types'
 import { dateCompare } from '@/utils/date'
+import { genTableSchema, genSearchSchema } from '@/utils/schema'
 import dict from '@/config/dictionary.json'
 
 defineOptions({
@@ -50,12 +51,7 @@ const { getList, setSearchParams } = methods
 const { t } = useI18n()
 
 const crudSchemas = reactive<CrudSchema[]>([
-  {
-    label: '操作',
-    field: 'action',
-    width: '150px',
-    form: { show: false }
-  },
+  genTableSchema('action', '操作'),
   {
     label: '銷售門店',
     field: 'hospitalName',
@@ -101,14 +97,9 @@ const crudSchemas = reactive<CrudSchema[]>([
     field: 'createTime',
     width: '100px'
   },
-  {
-    label: '退貨狀態',
-    field: 'returnState',
-    width: '70px',
-    formatter: function (row) {
-      return inDict(row.returnState, 'product.returnType')
-    }
-  },
+  genTableSchema('returnState', '退貨狀態', function (row) {
+    return inDict(row.returnState, 'product.returnType')
+  }),
   {
     label: '推薦人',
     field: 'refereeValue',
@@ -121,23 +112,12 @@ const crudSchemas = reactive<CrudSchema[]>([
   },
 
   // Search Schema
-  {
-    field: 'hospitalId',
-    label: '使用門店',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        filterable: true
-      },
-      colProps: { span: 6 },
-      api: async () => {
-        return await getInOptionFormat('/sys/hospital', 'id', 'name')
-      }
+  genSearchSchema('apiSelect', 'hospitalId', '使用門店', {
+    filterable: true,
+    api: async () => {
+      return await getInOptionFormat('/sys/hospital', 'id', 'name')
     }
-  },
+  }),
   {
     field: 'orderNo',
     label: '訂單編號',
@@ -195,20 +175,9 @@ const crudSchemas = reactive<CrudSchema[]>([
       colProps: { span: 6 }
     }
   },
-  {
-    field: 'businessName',
-    label: '商品',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Input',
-      componentProps: {
-        placeholder: '商品'
-      },
-      colProps: { span: 6 }
-    }
-  },
+  genSearchSchema('input', 'businessName', '商品', {
+    placeholder: '商品'
+  }),
   {
     field: 'doctorName',
     label: '關聯醫生',
@@ -223,50 +192,11 @@ const crudSchemas = reactive<CrudSchema[]>([
       colProps: { span: 6 }
     }
   },
-  {
-    field: 'createFrom',
-    label: '訂單來源',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'Select',
-      componentProps: {
-        options: dict.product.promotionWay as any
-      },
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    label: '會員繳費日期',
-    field: 'startTime',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    label: '到',
-    field: 'endTime',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 },
-      show: true
-    }
-  },
+  genSearchSchema('sourceSelect', 'createFrom', '訂單來源', {
+    options: dict.product.promotionWay as any
+  }) as CrudSchema,
+  genSearchSchema('datePicker', 'startTime', '會員繳費日期'),
+  genSearchSchema('datePicker', 'endTime', '到'),
   {
     field: 'refereeValue',
     label: '推薦人',
@@ -392,6 +322,10 @@ onMounted(async () => {
     startTime: getDateInFormat(new Date(), '-')
   })
   search()
+  // const res = genSearchSchema('sourceSelect', 'createFrom', '訂單來源', {
+  //   options: dict.product.promotionWay as any
+  // })
+  // console.log(res)
 })
 
 const canMakeUp = (orderType) => {
