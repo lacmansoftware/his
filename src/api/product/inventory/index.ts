@@ -8,6 +8,11 @@ export const getTableListApi = async (params: any): Promise<IResponse> => {
   return res && res.data
 }
 
+export const getPriceLogTableApi = async (params: any): Promise<IResponse> => {
+  const res = await request.get({ url: '/product/pricechangelog', params })
+  return res && res.data
+}
+
 export const getSettlementMemberApi = async (params: any): Promise<IResponse> => {
   const res = await request.get({
     url: `/settlement/member/${params.memberId}?virsitRecordId=${params.id}`

@@ -650,27 +650,12 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             }
           },
           {
-            path: 'purchase/index',
-            component: () => import('@/views/Product/Request/Purchase/Index.vue'),
-            name: 'ProductRequestPurchaseIndex',
+            path: 'price_change_log/list_price_change_log',
+            component: () =>
+              import('@/views/Product/Inventory/PriceChangeLog/ListPriceChangeLog.vue'),
+            name: 'ProductInventoryPriceChangeLogListPriceChangeLog',
             meta: {
-              title: '採購單'
-            }
-          },
-          {
-            path: 'transfer/index',
-            component: () => import('@/views/Product/Request/Transfer/Index.vue'),
-            name: 'ProductRequestTransferIndex',
-            meta: {
-              title: '調撥確認'
-            }
-          },
-          {
-            path: 'mdreturn/index',
-            component: () => import('@/views/Product/Request/MdReturn/Index.vue'),
-            name: 'ProductRequestMdReturnIndex',
-            meta: {
-              title: '門店退貨'
+              title: '零售價調整記錄'
             }
           }
         ]

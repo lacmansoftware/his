@@ -4603,7 +4603,7 @@
       "pageSize": 2147483647,
       "name": "零售價調整記錄",
       "seq": 2,
-      "url": "/html/product_core/price_change_log/list_price_change_log.html",
+      "url": "/product/inventory/price_change_log/list_price_change_log",
       "icon": null,
       "resourceType": "m",
       "parentId": "1604",
