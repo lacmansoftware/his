@@ -1,3 +1,5 @@
+import { getApi } from '@/api/common'
+
 export const genSearchSchema = (
   schemaType: string,
   fieldValue: string,
@@ -90,6 +92,37 @@ export const genSearchSchema = (
           labelWidth: labelValue === '' && !optionObj?.labelWidth ? '0px' : null
         },
         value: optionObj?.value ?? []
+      }
+    }
+  }
+  if (schemaType === 'autocomplete') {
+    return {
+      label: labelValue,
+      field: fieldValue,
+      form: { show: false },
+      table: { show: false },
+      search: {
+        component: 'Autocomplete',
+        componentProps: {
+          style: 'width: 100%',
+          triggerOnFocus: false,
+          fetchSuggestions: async (queryString: string, cb: Fn) => {
+            const res = await getApi(`${optionObj!.url}?keyWords=${queryString}`)
+            const result = res?.data.map((item) => ({
+              ...item,
+              value: item[optionObj!.itemValue],
+              link: item[optionObj!.itemLink]
+            }))
+            cb(result)
+          },
+          onSelect: (item: Recordable) => {},
+          slots: {
+            default: true
+          },
+          placeholder: optionObj?.placeholder ?? null
+        },
+        colProps: { span: optionObj?.span ?? 6 },
+        show: true
       }
     }
   }
