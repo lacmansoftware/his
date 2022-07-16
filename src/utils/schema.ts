@@ -14,7 +14,7 @@ export const genSearchSchema = (
         component: 'Select',
         componentProps: {
           placeholder: optionObj?.placeholder ?? null,
-          options: optionObj.options
+          options: optionObj?.options ?? null
         },
         colProps: { span: 6 },
         show: true
@@ -72,6 +72,26 @@ export const genSearchSchema = (
         show: true
       }
     } as any
+  }
+  if (schemaType === 'checkbox') {
+    return {
+      label: labelValue,
+      field: fieldValue,
+      form: { show: false },
+      table: { show: false },
+      search: {
+        show: true,
+        component: 'Checkbox',
+        componentProps: {
+          options: optionObj?.options ?? null
+        },
+        colProps: { span: 6 },
+        formItemProps: {
+          labelWidth: labelValue === '' && !optionObj?.labelWidth ? '0px' : null
+        },
+        value: optionObj?.value ?? []
+      }
+    }
   }
 
   return {}
