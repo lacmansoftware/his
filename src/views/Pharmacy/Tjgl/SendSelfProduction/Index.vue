@@ -13,8 +13,12 @@ import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import { plusIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
-import { getTableListApi, delTableListApi, saveTableApi } from '@/api/pharmacy/tjgl/sendrug'
-import { NotChargedTableData } from '@/api/pharmacy/tjgl/sendrug/types'
+import {
+  getTableListApi,
+  delTableListApi,
+  saveTableApi
+} from '@/api/pharmacy/tjgl/sendselfproduction'
+import { NotChargedTableData } from '@/api/pharmacy/tjgl/sendselfproduction/types'
 import { dateCompare } from '@/utils/date'
 import { genTableSchema, genSearchSchema } from '@/utils/schema'
 import dict from '@/config/dictionary.json'
@@ -61,155 +65,127 @@ const crudSchemas = reactive<CrudSchema[]>([
   {
     label: '操作',
     field: 'action',
-    width: '250px',
+    width: '150px',
     form: { show: false }
   },
+  { label: '出貨門店', field: 'hospitalName' },
+  { label: '藥房', field: 'pharmacyName' },
   {
-    label: '藥房',
-    field: 'pharmacyName'
-  },
-  {
-    label: '調劑狀態',
+    label: '備貨狀態',
     field: 'sendStatus',
     width: '60px',
     formatter: function (row) {
-      return inDict(row.sendStatus, 'RXDispenseStatus')
+      if ('SEND' === row.sendStatus) {
+        return '已備貨'
+      } else {
+        return '未備貨'
+      }
     }
-  },
-  {
-    label: '開方門店',
-    field: 'hospitalName'
-  },
-  {
-    label: '訂單編號',
-    field: 'orderNo'
-  },
-  {
-    label: '處方編號',
-    field: 'recipelCode'
-  },
-  {
-    label: '處方名稱',
-    field: 'recipelName',
-    width: '60px'
-  },
-  {
-    label: '患者',
-    field: 'patientName',
-    width: '60px'
-  },
-  {
-    label: '電話',
-    field: 'patientMobile',
-    width: '85px'
-  },
-  {
-    label: '醫生',
-    field: 'doctorName',
-    width: '70px'
   },
   {
     label: '訂單來源',
-    field: 'orderOrigin',
+    field: 'createFrom',
     width: '60px',
     formatter: function (row) {
-      return row.orderOrigin
+      return inDict(row.createFrom, 'createFrom2')
     }
   },
+  { label: '訂單編號', field: 'orderNo' },
   {
-    label: '處方類型',
-    field: 'tempType',
-    width: '70px',
+    label: '處方編號',
+    field: 'reciId',
     formatter: function (row) {
-      return inDict(row.tempType, 'recipeType')
+      return row.reciId
     }
   },
+  { label: '產品名稱', field: 'productName', width: '60px' },
   {
-    label: '總劑數',
-    field: 'totalNum',
-    width: '50px'
+    label: '產品子類型',
+    field: 'businessSubType',
+    width: '60px',
+    formatter: function (row) {
+      return inDict(row.businessSubType, 'drugTypeList')
+    }
   },
   {
     label: '劑型',
-    field: 'drugState',
-    width: '60px'
+    field: 'dosageform',
+    width: '60px',
+    formatter: function (row) {
+      return inDict(row.dosageform, 'dosageform')
+    }
   },
+  { label: '購買數量', field: 'totalNum', width: '60px' },
+  {
+    label: '退貨狀態',
+    field: 'returnStatus',
+    width: '60px',
+    formatter: function (row) {
+      var num = row.totalNum - row.returnAmount
+      if (row.totalNum === num) {
+        return '未退貨'
+      } else if (0 === num) {
+        return '全退'
+      } else if (0 < num && num < row.totalNum) {
+        return '部分退'
+      }
+      return '未退貨'
+    }
+  },
+  { label: '退貨數量', field: 'returnAmount', width: '60px' },
+  { label: '患者', field: 'memberName', width: '60px' },
+  { label: '電話', field: 'memberMobile', width: '85px' },
+  { label: '醫生', field: 'doctorName', width: '70px' },
   {
     label: '配送方式',
     field: 'expressType',
     width: '60px',
     formatter: function (row) {
-      if (row.expressType == null) {
+      if (row.expressType === null) {
         return '自取'
       }
-      return inDict(row.expressType, 'expressType2')
+      return inDict(row.expressType, 'expressType')
     }
   },
-  {
-    label: '是否代煎',
-    field: 'brewingNum',
-    formatter: function (row) {
-      if (!row.brewingNum || row.brewingNum < 1) {
-        if (row.drugState === '湯劑') {
-          return '自煎'
-        }
-        return '自加工'
-      } else {
-        if (row.drugState === '湯劑') {
-          return '代煎'
-        }
-        return '代加工'
-      }
-    }
-  },
-  {
-    label: '下單時間',
-    field: 'createTime'
-  },
+  { label: '下單時間', field: 'createTime', width: '70px' },
   {
     label: '支付狀態',
-    field: 'itemStatus',
+    field: 'orderStatus',
+    width: '70px',
     formatter: function (row) {
-      return inDict(row.itemStatus, 'orderStatus')
+      return inDict(row.orderStatus, 'orderStatus')
     }
   },
-  {
-    label: '調劑人',
-    field: 'dispensingUserid'
-  },
-  {
-    label: '調劑時間',
-    field: 'dispensingTime'
-  },
-  {
-    label: '退葯狀態',
-    field: 'returnDrugMark',
-    formatter: function (row) {
-      if (!row.returnDrugMark) {
-        return '未退葯'
-      }
-      return inDict(row.returnDrugMark, 'drug.returnStatus')
-    }
-  },
+  { label: '備貨人', field: 'sendUser', width: '70px' },
+  { label: '備貨時間', field: 'sendTime', width: '70px' },
 
   // Search Schema
-  genSearchSchema('apiSelect', 'pharmacyId', '藥房', {
-    placeholder: '選擇藥房',
+  genSearchSchema('apiSelect', 'hospitalId', '出貨門店', {
+    placeholder: '選擇門店',
     api: async () => {
-      return await getInOptionFormat('pharmacy/info/list/withoutkmzx', 'id', 'name')
+      return await getInOptionFormat('sys/hospital/hospitals', 'id', 'name')
     }
   }),
   genSearchSchema('input', 'orderNo', '訂單編號', { placeholder: '訂單編號' }),
-  genSearchSchema('sourceSelect', 'orderOrigin', '訂單來源', {
+  genSearchSchema('sourceSelect', 'createFrom', '訂單來源', {
     placeholder: '訂單來源',
-    options: dict.orderOrigin as any
+    options: dict.createFrom2 as any
+  }),
+  genSearchSchema('apiSelect', 'pharmacyId', '藥房', {
+    placeholder: '選擇藥房',
+    api: async () => {
+      return await getInOptionFormat('index/pharmacys', 'id', 'name')
+    }
   }),
   genSearchSchema('input', 'doctorName', '醫生姓名', { placeholder: '醫生姓名' }),
-  genSearchSchema('input', 'patientName', '患者姓名/手機', { placeholder: '患者姓名/手機' }),
-  genSearchSchema('input', 'recipelCode', '處方編號', { placeholder: '處方編號' }),
-  genSearchSchema('sourceSelect', 'tempType', '處方類型', {
-    placeholder: '處方類型',
-    options: dict.recipeType as any
+  genSearchSchema('input', 'memberNameOrPhone', '患者姓名/手機', { placeholder: '患者姓名/手機' }),
+  genSearchSchema('sourceSelect', 'dosageform', '劑型', {
+    placeholder: '劑型',
+    options: dict.dosageform as any
+  }),
+  genSearchSchema('sourceSelect', 'businessSubType', '產品子類型', {
+    placeholder: '產品子類型',
+    options: [{ value: 'ynzj', label: '自有產品' }] as any
   }),
   genSearchSchema('sourceSelect', 'expressType', '配送方式', {
     placeholder: '配送方式',
@@ -217,27 +193,13 @@ const crudSchemas = reactive<CrudSchema[]>([
   }),
   genSearchSchema('datePicker', 'startDate', '下單時間', { placeholder: '下單時間' }),
   genSearchSchema('datePicker', 'endDate', '到', { placeholder: '下單時間' }),
-  genSearchSchema('sourceSelect', 'recipelStatus', '調劑狀態', {
-    placeholder: '調劑狀態',
-    options: dict.RXDispenseStatus as any
+  genSearchSchema('sourceSelect', 'sendStatus', '備貨狀態', {
+    placeholder: '備貨狀態',
+    options: dict.product.sendStatus as any
   }),
-  genSearchSchema('sourceSelect', 'decoMake', '處置說明', {
-    placeholder: '處置說明',
-    options: dict.decoMake2 as any
-  }),
-  genSearchSchema('sourceSelect', 'returnDrugMark', '退葯狀態', {
-    placeholder: '退葯狀態',
-    options: dict.drug.returnStatus as any
-  }),
-  genSearchSchema('apiSelect', 'hospitalId', '開方門店', {
-    placeholder: '開方門店',
-    api: async () => {
-      return await getInOptionFormat('sys/hospital/listWithWz', 'id', 'name')
-    }
-  }),
-  genSearchSchema('sourceSelect', 'drugState', '劑型', {
-    placeholder: '劑型',
-    options: dict.dosageform as any
+  genSearchSchema('sourceSelect', 'returnStatus', '退貨狀態', {
+    placeholder: '退貨狀態',
+    options: dict.product.returnStatus as any
   })
 ])
 
@@ -321,7 +283,7 @@ const save = async () => {
 }
 
 const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) => {
-  if (row.orderOrigin === '網診') {
+  if (row.createFrom === 'mobile') {
     return 'tr-success-row'
   }
   return ''
@@ -380,10 +342,7 @@ const canMakeUp = (orderType) => {
     />
 
     <div v-if="pageType !== 'approve'" class="mb-10px ml-10px mt-[-32px]">
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">全部調劑</ElButton>
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">轉出處方統計</ElButton>
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">調劑列表導出</ElButton>
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">處方導出</ElButton>
+      <ElButton type="primary" @click="AddAction" :icon="plusIcon">全部備貨</ElButton>
     </div>
 
     <Table
@@ -400,38 +359,14 @@ const canMakeUp = (orderType) => {
     >
       <template #action="{ row }">
         <ElLink
-          v-if="row.recipelStatus === 'WAITING'"
+          v-if="row.sendStatus == 'WAITING'"
           type="primary"
           @click="settlement(row)"
           class="mr-5px"
-          >發葯</ElLink
+          >備貨</ElLink
         >
-        <ElLink
-          v-if="row.sendStatus === 'WAITING'"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >調劑</ElLink
-        >
-        <ElLink
-          v-if="row.orderOrigin === '網診'"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >轉藥房</ElLink
-        >
-        <ElLink v-else type="primary" @click="settlement(row)" class="mr-5px">轉藥房</ElLink>
         <ElLink type="primary" @click="settlement(row)" class="mr-5px">查看</ElLink>
-        <ElLink
-          v-if="Number(row.printTime)"
-          type="primary"
-          @click="settlement(row)"
-          class="mr-5px"
-          >{{ row.printTime || '' }}</ElLink
-        >
-        <ElLink v-else type="primary" @click="settlement(row)" class="mr-5px">打印</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">快遞單</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">處置單</ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">打印</ElLink>
       </template>
     </Table>
   </ContentWrap>

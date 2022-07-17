@@ -405,6 +405,17 @@
       "label": "其他"
     }
   ],
+  "expressType2": [
+    { "value": "SELF", "label": "自取" },
+    { "value": "EXPRESS", "label": "快遞" },
+    { "value": "SF", "label": "順豐快遞" },
+    { "value": "QT", "label": "其它" },
+    { "value": "SS", "label": "閃送" },
+    { "value": "DADA", "label": "達達·當日達" },
+    { "value": "ZS", "label": "翼+自送" },
+    { "value": "sfdf", "label": "順豐到付" },
+    { "value": "ssdf", "label": "閃送到付" }
+  ],
   "noSelfExpressType": [
     {
       "value": "SF",
@@ -1036,6 +1047,10 @@
       "value": "online",
       "label": "網診"
     }
+  ],
+  "createFrom2": [
+    { "value": "store", "label": "線下(門店)" },
+    { "value": "mobile", "label": "線上(微信)" }
   ],
   "showInWx": [
     {

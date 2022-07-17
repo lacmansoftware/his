@@ -729,6 +729,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '發藥'
             }
+          },
+          {
+            path: 'send_self_product/index',
+            component: () => import('@/views/Pharmacy/Tjgl/SendSelfProduction/Index.vue'),
+            name: 'ProductTjglSendSelfProductionIndex',
+            meta: {
+              title: '發藥-自有產品'
+            }
           }
         ]
       }
