@@ -4637,7 +4637,7 @@
       "pageSize": 2147483647,
       "name": "產品報損",
       "seq": 5,
-      "url": "/html/product/loss/main.html",
+      "url": "/product/inventory/loss/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "1604",
