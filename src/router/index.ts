@@ -737,6 +737,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '發藥-自有產品'
             }
+          },
+          {
+            path: 'decoction/index',
+            component: () => import('@/views/Pharmacy/Tjgl/Decoction/Index.vue'),
+            name: 'ProductTjglDecoctionIndex',
+            meta: {
+              title: '代煎'
+            }
           }
         ]
       }
