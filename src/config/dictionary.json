@@ -3873,5 +3873,9 @@
     { "value": "Y", "label": "代煎" },
     { "value": "SN", "label": "自加工" },
     { "value": "SY", "label": "代加工" }
+  ],
+  "returnDrugStatus": [
+    { "value": "SEND", "label": "未退葯" },
+    { "value": "RETURN", "label": "已退葯" }
   ]
 }

@@ -753,6 +753,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '退藥'
             }
+          },
+          {
+            path: 'zxyf/index',
+            component: () => import('@/views/Pharmacy/Tjgl/Zxyf/Index.vue'),
+            name: 'ProductTjglZxyfIndex',
+            meta: {
+              title: '調劑管理-至信'
+            }
           }
         ]
       }
