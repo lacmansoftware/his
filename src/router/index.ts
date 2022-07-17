@@ -693,6 +693,46 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: '/pharmacy',
+    component: Layout,
+    redirect: '/pharmacy/tjgl/distribution/index',
+    name: 'Pharmacy',
+    meta: {
+      title: '配送管理',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'tjgl/distribution/index',
+        component: () => import('@/views/Pharmacy/Tjgl/Distribution/Index.vue'),
+        name: 'ProductTjglDistributionIndex',
+        meta: {
+          title: '配送管理'
+        }
+      },
+      {
+        path: 'tjgl',
+        component: getParentLayout(),
+        name: 'ProductTjgl',
+        meta: {
+          title: '調劑管理',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'sendrug/index',
+            component: () => import('@/views/Pharmacy/Tjgl/Sendrug/Index.vue'),
+            name: 'ProductTjglSendrugIndex',
+            meta: {
+              title: '發藥'
+            }
+          }
+        ]
+      }
+    ]
   }
 ]
 
