@@ -4620,7 +4620,7 @@
       "pageSize": 2147483647,
       "name": "預警管理",
       "seq": 3,
-      "url": "/html/product/alert/list_alert.html",
+      "url": "/product/inventory/alert/list_alert",
       "icon": null,
       "resourceType": "m",
       "parentId": "1604",

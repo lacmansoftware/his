@@ -657,6 +657,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '零售價調整記錄'
             }
+          },
+          {
+            path: 'alert/list_alert',
+            component: () => import('@/views/Product/Inventory/Alert/ListAlert.vue'),
+            name: 'ProductInventoryAlertListAlert',
+            meta: {
+              title: '預警管理'
+            }
           }
         ]
       }
