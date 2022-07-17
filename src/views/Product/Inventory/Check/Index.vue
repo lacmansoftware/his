@@ -266,7 +266,8 @@ const canMakeUp = (orderType) => {
     />
 
     <div v-if="pageType !== 'approve'" class="mb-10px ml-10px mt-[-32px]">
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">購買產品</ElButton>
+      <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增</ElButton>
+      <ElButton type="primary" @click="AddAction" :icon="plusIcon">導出</ElButton>
     </div>
 
     <Table
