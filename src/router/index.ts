@@ -745,6 +745,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '代煎'
             }
+          },
+          {
+            path: 'returndrug/index',
+            component: () => import('@/views/Pharmacy/Tjgl/Returndrug/Index.vue'),
+            name: 'ProductTjglReturndrugIndex',
+            meta: {
+              title: '退藥'
+            }
           }
         ]
       }
