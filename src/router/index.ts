@@ -665,6 +665,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '預警管理'
             }
+          },
+          {
+            path: 'check/index',
+            component: () => import('@/views/Product/Inventory/Check/Index.vue'),
+            name: 'ProductInventoryCheckIndex',
+            meta: {
+              title: '產品盤庫'
+            }
           }
         ]
       }

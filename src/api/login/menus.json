@@ -4654,7 +4654,7 @@
       "pageSize": 2147483647,
       "name": "產品盤庫",
       "seq": 4,
-      "url": "/html/product/check/main.html",
+      "url": "/product/inventory/check/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "1604",
