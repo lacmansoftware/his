@@ -683,6 +683,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             }
           }
         ]
+      },
+      {
+        path: 'recommended_product_setting/index',
+        component: () => import('@/views/Product/RecommendedProductSetting/Index.vue'),
+        name: 'ProductRecommendedProductSettingIndex',
+        meta: {
+          title: '推薦產品設置'
+        }
       }
     ]
   }

@@ -4552,7 +4552,7 @@
       "pageSize": 2147483647,
       "name": "推薦產品設置",
       "seq": 6,
-      "url": "/html/sys/product/recommended_product_setting/main.html",
+      "url": "/product/recommended_product_setting/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "16",
