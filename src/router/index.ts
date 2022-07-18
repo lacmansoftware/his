@@ -863,6 +863,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '藥品報損'
             }
+          },
+          {
+            path: 'drug_use/list_drug_use',
+            component: () => import('@/views/Pharmacy/Inventory/DrugUse/ListDrugUse.vue'),
+            name: 'PharmacyInventoryDrugUseListDrugUse',
+            meta: {
+              title: '藥品使用情況'
+            }
           }
         ]
       }

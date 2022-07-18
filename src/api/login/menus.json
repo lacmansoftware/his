@@ -2478,7 +2478,7 @@
       "pageSize": 2147483647,
       "name": "藥品使用情況",
       "seq": 5,
-      "url": "/sys/drug_use/list_drug_use.html",
+      "url": "/pharmacy/inventory/drug_use/list_drug_use",
       "icon": null,
       "resourceType": "m",
       "parentId": "0702",

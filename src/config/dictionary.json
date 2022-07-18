@@ -3890,5 +3890,13 @@
   "inventoryQtySort": [
     { "value": "asc", "label": "從小到大" },
     { "value": "desc", "label": "從大到小" }
+  ],
+  "numSort": [
+    { "value": "asc", "label": "從小到大" },
+    { "value": "desc", "label": "從大到小", "_checked": true }
+  ],
+  "alertCompare": [
+    { "value": "less", "label": "低於" },
+    { "value": "more", "label": "高於" }
   ]
 }
