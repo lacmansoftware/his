@@ -807,8 +807,8 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           },
           {
             path: 'transfer/index',
-            component: () => import('@/views/Pharmacy/Center/RequestOrder/Index.vue'),
-            name: 'ProductCenterRequestOrderIndex',
+            component: () => import('@/views/Pharmacy/Center/Transfer/Index.vue'),
+            name: 'ProductCenterTransferIndex',
             meta: {
               title: '調撥確認'
             }
