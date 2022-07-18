@@ -18,7 +18,7 @@ export const genSearchSchema = (
           placeholder: optionObj?.placeholder ?? null,
           options: optionObj?.options ?? null
         },
-        colProps: { span: 6 },
+        colProps: { span: optionObj?.span ?? 6 },
         show: true
       }
     }
@@ -35,7 +35,7 @@ export const genSearchSchema = (
           placeholder: optionObj?.placeholder ?? null,
           filterable: optionObj?.filterable ?? false
         },
-        colProps: { span: 6 },
+        colProps: { span: optionObj?.span ?? 6 },
         api: optionObj.api,
         show: true
       }
@@ -51,7 +51,7 @@ export const genSearchSchema = (
         show: true,
         component: 'Input',
         componentProps: {},
-        colProps: { span: 6 }
+        colProps: { span: optionObj?.span ?? 6 }
       }
     } as any
     if (optionObj?.placeholder) res.search.componentProps.placeholder = optionObj.placeholder
@@ -70,7 +70,7 @@ export const genSearchSchema = (
           type: 'date',
           valueFormat: 'YYYY-MM-DD'
         },
-        colProps: { span: 6 },
+        colProps: { span: optionObj?.span ?? 6 },
         show: true
       }
     } as any
@@ -87,7 +87,7 @@ export const genSearchSchema = (
         componentProps: {
           options: optionObj?.options ?? null
         },
-        colProps: { span: 6 },
+        colProps: { span: optionObj?.span ?? 6 },
         formItemProps: {
           labelWidth: labelValue === '' && !optionObj?.labelWidth ? '0px' : null
         },
@@ -122,6 +122,25 @@ export const genSearchSchema = (
           placeholder: optionObj?.placeholder ?? null
         },
         colProps: { span: optionObj?.span ?? 6 },
+        show: true
+      }
+    }
+  }
+  if (schemaType === 'radio') {
+    return {
+      label: labelValue,
+      field: fieldValue,
+      form: { show: false },
+      table: { show: false },
+      search: {
+        component: 'Radio',
+        componentProps: {
+          style: 'width: 100%',
+          options: optionObj?.options ?? null,
+          onChange: optionObj?.onChange ?? null
+        },
+        colProps: { span: optionObj?.span ?? 6 },
+        value: optionObj?.value ?? '',
         show: true
       }
     }
