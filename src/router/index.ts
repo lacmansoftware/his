@@ -894,6 +894,33 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '治療項目'
         }
+      },
+      {
+        path: 'drug',
+        component: getParentLayout(),
+        name: 'PharmacyCoreDrug',
+        meta: {
+          title: '飲片-藥典管理',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'drug/list_drug',
+            component: () => import('@/views/PharmacyCore/Drug/Drug/ListDrug.vue'),
+            name: 'PharmacyCoreDrugDrugListDrug',
+            meta: {
+              title: '飲片-藥典管理'
+            }
+          },
+          {
+            path: 'drug_three/list_drug',
+            component: () => import('@/views/PharmacyCore/Drug/DrugThree/ListDrug.vue'),
+            name: 'PharmacyCoreDrugDrugThreeListDrug',
+            meta: {
+              title: '飲片-第三方藥典'
+            }
+          }
+        ]
       }
     ]
   }
