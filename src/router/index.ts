@@ -1014,16 +1014,17 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '藥房預警'
             }
-          }
+          },
 
-          // {
-          //   path: 'price_change_log/list_price_change_log',
-          //   component: () => import('@/views/PharmacyCore/Inventory/Inventory/Index.vue'),
-          //   name: 'PharmacyCoreInventoryInventoryIndex',
-          //   meta: {
-          //     title: '零售價調整記錄'
-          //   }
-          // },
+          {
+            path: 'price_change_log/list_price_change_log',
+            component: () =>
+              import('@/views/PharmacyCore/Inventory/PriceChangeLog/ListPriceChangeLog.vue'),
+            name: 'PharmacyCoreInventoryPriceChangeLogListPriceChangeLog',
+            meta: {
+              title: '零售價調整記錄'
+            }
+          }
 
           // {
           //   path: 'batch_no/index',
