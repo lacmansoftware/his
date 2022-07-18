@@ -965,8 +965,8 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           },
           {
             path: 'stockout/index',
-            component: () => import('@/views/PharmacyCore/Drug/Drug/ListDrug.vue'),
-            name: 'PharmacyCoreDrugDrugListDrug',
+            component: () => import('@/views/PharmacyCore/Store/Stockout/Index.vue'),
+            name: 'PharmacyCoreStoreStockoutIndex',
             meta: {
               title: '出庫單'
             }
