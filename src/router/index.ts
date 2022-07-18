@@ -815,8 +815,8 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           },
           {
             path: 'yfreturn/index',
-            component: () => import('@/views/Pharmacy/Center/Yfreturn/Index.vue'),
-            name: 'PharmacyCenterYfreturnIndex',
+            component: () => import('@/views/Pharmacy/Center/YfReturn/Index.vue'),
+            name: 'PharmacyCenterYfReturnIndex',
             meta: {
               title: '藥房退藥'
             }
@@ -965,28 +965,84 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           },
           {
             path: 'stockout/index',
-            component: () => import('@/views/PharmacyCore/Drug/Drug/ListDrug.vue'),
-            name: 'PharmacyCoreDrugDrugListDrug',
+            component: () => import('@/views/PharmacyCore/Store/Stockout/Index.vue'),
+            name: 'PharmacyCoreStoreStockoutIndex',
             meta: {
               title: '出庫單'
             }
           },
           {
             path: 'yfreturn/index',
-            component: () => import('@/views/PharmacyCore/Drug/Drug/ListDrug.vue'),
-            name: 'PharmacyCoreDrugDrugListDrug',
+            component: () => import('@/views/PharmacyCore/Store/Yfreturn/Index.vue'),
+            name: 'PharmacyCoreStoreYfreturnIndex',
             meta: {
               title: '藥房退藥單'
             }
           },
           {
             path: 'ykreturn/index',
-            component: () => import('@/views/PharmacyCore/Drug/Drug/ListDrug.vue'),
-            name: 'PharmacyCoreDrugDrugListDrug',
+            component: () => import('@/views/PharmacyCore/Store/Ykreturn/Index.vue'),
+            name: 'PharmacyCoreStoreYkreturnIndex',
             meta: {
               title: '藥庫退藥單'
             }
           }
+        ]
+      },
+      {
+        path: 'inventory',
+        component: getParentLayout(),
+        name: 'PharmacyCoreInventory',
+        meta: {
+          title: '飲片-庫存管理',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'inventory/index',
+            component: () => import('@/views/PharmacyCore/Inventory/Inventory/Index.vue'),
+            name: 'PharmacyCoreInventoryInventoryIndex',
+            meta: {
+              title: '藥房庫存'
+            }
+          },
+
+          {
+            path: 'alert/list_alert',
+            component: () => import('@/views/PharmacyCore/Inventory/Alert/ListAlert.vue'),
+            name: 'PharmacyCoreInventoryAlertListAlert',
+            meta: {
+              title: '藥房預警'
+            }
+          },
+
+          {
+            path: 'price_change_log/list_price_change_log',
+            component: () =>
+              import('@/views/PharmacyCore/Inventory/PriceChangeLog/ListPriceChangeLog.vue'),
+            name: 'PharmacyCoreInventoryPriceChangeLogListPriceChangeLog',
+            meta: {
+              title: '零售價調整記錄'
+            }
+          }
+
+          // {
+          //   path: 'batch_no/index',
+          //   component: () => import('@/views/PharmacyCore/Inventory/Inventory/Index.vue'),
+          //   name: 'PharmacyCoreInventoryInventoryIndex',
+          //   meta: {
+          //     title: '生產批號管理'
+          //   }
+          // },
+
+          // {
+          //   path: 'drug_conversion_proportion/list',
+          //   component: () => import('@/views/PharmacyCore/Inventory/Inventory/Index.vue'),
+          //   name: 'PharmacyCoreInventoryInventoryIndex',
+          //   meta: {
+          //     title: '藥品濃度比'
+          //   }
+          // }
         ]
       }
     ]

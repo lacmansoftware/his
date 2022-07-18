@@ -3898,5 +3898,6 @@
   "alertCompare": [
     { "value": "less", "label": "低於" },
     { "value": "more", "label": "高於" }
-  ]
+  ],
+  "merge": [{ "value": "Y", "label": "合併庫存" }]
 }
