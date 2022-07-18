@@ -779,6 +779,49 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             }
           }
         ]
+      },
+      {
+        path: 'center',
+        component: getParentLayout(),
+        name: 'ProductCenter',
+        meta: {
+          title: '請貨中心',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'request_order/index',
+            component: () => import('@/views/Pharmacy/Center/RequestOrder/Index.vue'),
+            name: 'ProductCenterRequestOrderIndex',
+            meta: {
+              title: '請貨單'
+            }
+          },
+          {
+            path: 'purchase/index',
+            component: () => import('@/views/Pharmacy/Center/RequestOrder/Index.vue'),
+            name: 'ProductTjglSendSelfProductionIndex',
+            meta: {
+              title: '採購計劃管理'
+            }
+          },
+          {
+            path: 'transfer/index',
+            component: () => import('@/views/Pharmacy/Center/RequestOrder/Index.vue'),
+            name: 'ProductTjglDecoctionIndex',
+            meta: {
+              title: '調撥確認'
+            }
+          },
+          {
+            path: 'yfreturn/index',
+            component: () => import('@/views/Pharmacy/Center/RequestOrder/Index.vue'),
+            name: 'ProductTjglReturndrugIndex',
+            meta: {
+              title: '藥房退藥'
+            }
+          }
+        ]
       }
     ]
   }
