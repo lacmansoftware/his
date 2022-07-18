@@ -949,8 +949,8 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           },
           {
             path: 'purchase/index',
-            component: () => import('@/views/PharmacyCore/Drug/Drug/ListDrug.vue'),
-            name: 'PharmacyCoreDrugDrugListDrug',
+            component: () => import('@/views/PharmacyCore/Store/Purchase/Index.vue'),
+            name: 'PharmacyCoreStorePurchaseIndex',
             meta: {
               title: '採購計劃'
             }
