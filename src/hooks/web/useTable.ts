@@ -102,7 +102,12 @@ export const useTable = <T = any>(config?: UseTableConfig<T>) => {
   }
 
   const delData = async (ids: string[] | number[]) => {
-    const res = await (config?.delListApi && config?.delListApi(ids))
+    // const str = ids.reduce(
+    //   (sum: string, id: string | number) => sum + (sum === '' ? '' : ',') + id,
+    //   ''
+    // )
+    const str = ''
+    const res = await (config?.delListApi && config?.delListApi(str))
     if (res) {
       ElMessage.success(t('common.delSuccess'))
 
@@ -153,11 +158,7 @@ export const useTable = <T = any>(config?: UseTableConfig<T>) => {
       methods.getList()
     },
     // 删除数据
-    delList: async (
-      ids: string[] | number[] | { multiple: boolean; data: string },
-      multiple: boolean,
-      message = true
-    ) => {
+    delList: async (ids: string[] | number[], multiple: boolean, message = true) => {
       const tableRef = await getTable()
       if (multiple) {
         if (!tableRef?.selections.length) {

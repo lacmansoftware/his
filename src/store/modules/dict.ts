@@ -1,16 +1,20 @@
+import { ChargeItemType } from '@/api/cash/notcharged/types'
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 import { store } from '../index'
 
 export interface DictState {
   isSetDict: boolean
   dictObj: Recordable
+  chargeItemList: any
 }
 
 export const useDictStore = defineStore({
   id: 'dict',
   state: (): DictState => ({
     isSetDict: false,
-    dictObj: {}
+    dictObj: {},
+    chargeItemList: ref<ChargeItemType[]>([])
   }),
   persist: {
     enabled: true

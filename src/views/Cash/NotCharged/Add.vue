@@ -2,7 +2,17 @@
 import { Form } from '@/components/Form'
 import { ContentDetailWrap } from '@/components/ContentDetailWrap'
 import { onMounted, reactive, ref, unref, watch, watchEffect } from 'vue'
-import { ElButton, ElMessage, ElDivider } from 'element-plus'
+import {
+  ElButton,
+  ElMessage,
+  ElDivider,
+  ElFormItem,
+  ElInput,
+  ElCheckboxGroup,
+  ElCheckbox,
+  ElRow,
+  ElCol
+} from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
 import { useForm } from '@/hooks/web/useForm'
 import { useI18n } from '@/hooks/web/useI18n'
@@ -12,22 +22,29 @@ import { saveUpdateStatusApi } from '@/api/appoint/appoint/hospital'
 import { UpdateStatusType } from '@/api/appoint/appoint/hospital/types'
 import { getInOptionFormat, returnDateString } from '@/utils/common'
 import { getApi } from '@/api/common'
+import { useDictStoreWithOut } from '@/store/modules/dict'
 
 import dict from '@/config/dictionary.json'
 import PatientSelect from './components/PatientSelect.vue'
 import ChargeItemTable from './components/ChargeItemTable.vue'
+import MemberInfo from './components/MemberInfo.vue'
 
 const { required } = useValidator()
 const { emitter } = useEmitt()
 const { push, go } = useRouter()
-const { query } = useRoute()
+const { query, params } = useRoute()
 const { t } = useI18n()
+const dictStore = useDictStoreWithOut()
 
 const store = {
   doctorId: ref<ComponentOptions[]>([]),
   feePayHospitalId: ref<ComponentOptions[]>([])
 }
 const patientRef = ref<ComponentRef<typeof PatientSelect>>()
+const remarkRef = ref('')
+const takkangkaRef = ref('')
+const chargeTypeRef = ref([])
+const totalPriceRef = ref(0)
 
 const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
   store[key].value = await getInOptionFormat(url, valueField, labelField)
@@ -289,23 +306,39 @@ const save = async () => {
   })
 }
 
-onMounted(() => {
-  // if (!query?.id) {
-  //   ElMessage.error('no id')
-  //   go(-1)
-  // }
-})
-
 const rules = []
 </script>
 
 <template>
   <ContentDetailWrap title="收銀結算" @back="push('/cash/notcharged/index')">
     <ElDivider content-position="left" class="mt-0">患者信息</ElDivider>
-    <PatientSelect ref="patientRef" />
+    <PatientSelect v-if="!params.memberId" ref="patientRef" />
+    <MemberInfo v-else ref="memberInfoRef" :member-info="params" />
     <ChargeItemTable :member-id="unref(patientRef)?.memberId" />
 
-    <Form :rules="rules" @register="register" />
+    <ElDivider content-position="left" class="mt-0">填寫備註</ElDivider>
+    <ElInput v-model="remarkRef" />
+
+    <ElDivider content-position="left" class="mt-0">選擇特殊福利（如果有）</ElDivider>
+    <ElFormItem prop="taikangkaMsg" label="泰康卡號" label-width="100px">
+      <ElInput v-model="takkangkaRef" />
+    </ElFormItem>
+
+    <ElDivider content-position="left" class="mt-0">選擇支付方式</ElDivider>
+    <ElCheckboxGroup v-model="chargeTypeRef">
+      <ElCheckbox v-for="item in dict.chargeType" :key="item.value" :label="item.label" />
+    </ElCheckboxGroup>
+
+    <ElRow>
+      <ElCol :span="12">
+        <ElDivider content-position="left">收費金額</ElDivider>
+      </ElCol>
+      <ElCol :span="12">
+        <ElDivider content-position="right">
+          費用合計：<span class="text-red-500 text-xl">&nbsp;{{ totalPriceRef }}&nbsp;</span>元
+        </ElDivider>
+      </ElCol>
+    </ElRow>
 
     <template #right>
       <ElButton type="primary" :loading="loading" @click="save">

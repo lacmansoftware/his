@@ -2,7 +2,7 @@
 import { useI18n } from '@/hooks/web/useI18n'
 import { Table } from '@/components/Table'
 import { ProductItemType } from '@/api/cash/notcharged/types'
-import { ref } from 'vue'
+import { computed, onMounted, ref, watch, watchEffect } from 'vue'
 import { ElButton, ElFormItem, ElAutocomplete, ElMessage, ElInputNumber } from 'element-plus'
 import { getInOptionFormat } from '@/utils/common'
 import { propTypes } from '@/utils/propTypes'
@@ -96,7 +96,8 @@ const columns: TableColumn[] = [
   },
   {
     label: '操作',
-    field: 'action'
+    field: 'action',
+    width: '100px'
   }
 ]
 
@@ -110,18 +111,12 @@ const getTableList = async (params?: Params) => {
 
 getTableList()
 
-const acitonFn = (data: TableSlotDefault) => {
-  //   $index: 0
-  // cellIndex: 11
-  // column: {order: '', id: 'el-table_3_column_33', type: 'default', property: 'action', align: 'is-left', …}
-  // expanded: false
-  // row: Proxy {id: 'NO20180528114428', name: '兒童退燒藥浴包（官捨）', dataTypeName: '自有产品', dataType: 'life', title: '兒童退燒藥浴包（官捨）', …}
-  // store: {ns: {…}, assertRowKey: ƒ, updateColumns: ƒ, scheduleLayout: ƒ, isSelected: ƒ, …}
-  // _self: {uid: 1990, vnode: {…}, type: {…}, parent: {…}, appContext: {…}, …}
+const deleteFn = (data: TableSlotDefault) => {
+  tableDataList.value = tableDataList.value.filter((item) => item.id !== data.row.id)
   console.log(data)
 }
 
-const projectFilter = ref<any>(null)
+const projectFilter = ref<string>()
 const discountNumber = ref(98)
 
 const handleProjectFilterSelect = (item: Recordable) => {
@@ -136,7 +131,20 @@ const handleProjectFilterSelect = (item: Recordable) => {
     originPrice: item.originUnitPrice,
     price: mul(item.originUnitPrice, discountNumber.value / 100.0)
   } as ProductItemType)
+  projectFilter.value = ''
 }
+
+watch(tableDataList.value, (value, oldValue) => {
+  tableDataList.value.forEach((row) => {
+    row.originPrice = mul(row.unitPrice, row.amount)
+    row.price = mul(row.unitPrice, row.amount, row.discount / 100.0)
+  })
+  // console.log('tableDataList changed wegwg: ', value, oldValue)
+})
+
+watchEffect(() => {
+  // console.log('table list length: wewegge ', tableDataList.value.length)
+})
 
 const handleAmountChange = (row: ProductItemType, value: number) => {
   if (row.isPresell !== 'Y' && value > row.currentQty) {
@@ -144,8 +152,6 @@ const handleAmountChange = (row: ProductItemType, value: number) => {
     row.amount = row.currentQty
     return
   }
-  row.originPrice = mul(row.unitPrice, value)
-  row.price = mul(row.unitPrice, value, row.discount / 100.0)
 }
 
 const handleDiscountChange = (row: ProductItemType, value: number) => {
@@ -155,9 +161,18 @@ const handleDiscountChange = (row: ProductItemType, value: number) => {
   }
 }
 
+const setTableDataEmpty = () => {
+  tableDataList.value = []
+}
+
 defineExpose({
-  tableDataList
+  tableDataList,
+  setTableDataEmpty
 })
+
+// onMounted(() => {
+//   setTableDataEmpty()
+// })
 </script>
 
 <template>
@@ -188,6 +203,7 @@ defineExpose({
         class="!w-[100%]"
         v-model="data.row.amount"
         @change="(value) => handleAmountChange(data.row, value as number)"
+        :min="1"
       />
     </template>
     <template #discount="data">
@@ -195,11 +211,13 @@ defineExpose({
         class="!w-[100%]"
         v-model="data.row.discount"
         @change="(value) => handleDiscountChange(data.row, value as number)"
+        :min="80"
+        :max="200"
       />
     </template>
     <template #action="data">
-      <ElButton type="primary" @click="acitonFn(data as TableSlotDefault)">
-        {{ t('tableDemo.action') }}
+      <ElButton type="primary" @click="deleteFn(data as TableSlotDefault)">
+        {{ t('formDemo.delete') }}
       </ElButton>
     </template>
   </Table>

@@ -9,7 +9,7 @@ import { Table } from '@/components/Table'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import { inDict, getInOptionFormat } from '@/utils/common'
+import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import { plusIcon } from '@/utils/iconList'
 import Write from './components/Write.vue'
 
@@ -20,6 +20,8 @@ defineOptions({
   name: 'CashNotChargedIndex'
 })
 
+const searchRef = ref<ComponentRef<typeof Search>>()
+
 const store = {
   type: ref<ComponentOptions[]>([])
 }
@@ -27,10 +29,6 @@ const store = {
 const setStore = async (key: string, url: string, valueField: string, labelField: string) => {
   store[key].value = await getInOptionFormat(url, valueField, labelField)
 }
-
-onMounted(() => {
-  setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
-})
 
 const { push } = useRouter()
 
@@ -45,7 +43,7 @@ const { register, tableObject, methods } = useTable<NotChargedTableData>({
 
 const { getList, setSearchParams } = methods
 
-getList()
+// getList()
 
 const { t } = useI18n()
 
@@ -257,12 +255,7 @@ const delData = async (row: NotChargedTableData | null, multiple: boolean) => {
   const selections = await getSelections()
   delLoading.value = true
   await delList(
-    multiple
-      ? {
-          multiple: multiple,
-          data: selections.reduce((sum, v) => sum + (sum === '' ? '' : ',') + v.id, '') as string
-        }
-      : { multiple: multiple, data: tableObject.currentRow?.id as string },
+    multiple ? selections.map((v) => v.id) : [tableObject.currentRow?.id as string],
     multiple
   ).finally(() => {
     delLoading.value = false
@@ -285,6 +278,16 @@ const action = (row: NotChargedTableData, type: string) => {
 }
 
 const loading = ref(false)
+
+const setValues = (value) => {
+  const search = unref(searchRef)
+  search?.setValues(value)
+}
+
+const search = () => {
+  const search = unref(searchRef)
+  search!.search()
+}
 
 const save = async () => {
   const write = unref(writeRef)
@@ -318,10 +321,35 @@ const save = async () => {
 
 const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) => {
   if (row.recipelAmount > 0) {
-    return 'success-row'
+    return 'tr-success-row'
   }
   return ''
 }
+
+const settlement = (row: NotChargedTableData) => {
+  push({
+    name: 'CashNotChargedAdd',
+    params: {
+      id: row.id,
+      // wxId: row.wxId,
+      memberId: row.memberId,
+      memberInsurId: row.memberInsurId,
+      isCache: row.isCache,
+      ooClass: 'offline',
+      // sheet: row.sheet,
+      doctorName: row.doctorName,
+      doctorId: row.doctorId
+    }
+  })
+}
+
+onMounted(async () => {
+  setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
+  await setValues({
+    createTimeStart: getDateInFormat(new Date(), '-')
+  })
+  search()
+})
 </script>
 
 <template>
@@ -334,6 +362,7 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
       :buttom-position="'right'"
       @search="setSearchParams"
       @reset="setSearchParams"
+      ref="searchRef"
     />
 
     <div class="mb-10px ml-10px mt-[-32px]">
@@ -353,10 +382,7 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="action(row, 'edit')" class="mr-5px">編輯</ElLink>
-        <ElLink type="danger" @click="delData(row, false)">
-          {{ t('exampleDemo.del') }}
-        </ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">結算</ElLink>
       </template>
       <template #value="{ row }">
         {{ row.sysDict.value }}

@@ -14,11 +14,14 @@ import {
 import { Table } from '@/components/Table'
 import { saveTableApi } from '@/api/cash/notcharged'
 import { ChargeItemType } from '@/api/cash/notcharged/types'
-import { ref, unref, reactive, computed } from 'vue'
-import Write from './Write.vue'
+import { ref, unref, reactive, computed, onMounted } from 'vue'
+// import Write from './Write.vue'
 // import Detail from './Detail.vue'
 import ProductItem from './ProductItem.vue'
+import ExpressFee from './ExpressFee/Index.vue'
 import { propTypes } from '@/utils/propTypes'
+import { useDictStoreWithOut } from '@/store/modules/dict'
+import Other from './Other.vue'
 
 interface Params {
   pageNum?: number
@@ -29,18 +32,20 @@ const props = defineProps({
   memberId: propTypes.string.def('')
 })
 
+const dictStore = useDictStoreWithOut()
 const productRef = ref<ComponentRef<typeof ProductItem>>()
-const writeRef = ref<ComponentRef<typeof Write>>()
+const expressRef = ref<ComponentRef<typeof ExpressFee>>()
+const otherRef = ref<ComponentRef<typeof Other>>()
 const { t } = useI18n()
 const itemKind = ref<any>(null)
 const itemKindData = [
-  { id: 'life', text: '產品' },
-  { id: 'express', text: '快遞費' },
-  { id: 'other', text: '其他' }
+  { id: 'life', text: '產品', width: '80%' },
+  { id: 'express', text: '快遞費', width: '80%' },
+  { id: 'other', text: '其他', width: '30%' }
 ]
 // let chargeItemList = ref<ChargeItemType[]>([])
 let chargeItemList = computed(() => {
-  return unref(productRef)?.tableDataList as ChargeItemType[]
+  return dictStore.chargeItemList.value
 })
 
 const loading = ref(false)
@@ -152,10 +157,11 @@ const SelectItemKind = () => {
 }
 
 const AddItem = () => {
+  const curItem = itemKindData.find((item) => item.id === itemKind.value)
   itemKindDialogVisible.value = false
   itemDetailDialogVisible.value = true
-  itemDetailDialogTitle.value = itemKindData.find((item) => item.id === itemKind.value)!.text
-  itemDetailDialogWidth.value = '80%'
+  itemDetailDialogTitle.value = curItem!.text
+  itemDetailDialogWidth.value = curItem!.width
 }
 
 const delLoading = ref(false)
@@ -182,25 +188,42 @@ const action = (row: ChargeItemType, type: string) => {
   dialogVisible.value = true
 }
 
-const save = async () => {
-  const write = unref(writeRef)
-  await write?.elFormRef?.validate(async (isValid) => {
-    if (isValid) {
-      loading.value = true
-      const data = (await write?.getFormData()) as ChargeItemType
-      const res = await saveTableApi(data)
-        .catch(() => {})
-        .finally(() => {
-          loading.value = false
-        })
-      if (res) {
-        dialogVisible.value = false
-        // tableObject.currentPage = 1
-        // getList()
-      }
-    }
-  })
+const saveProductItem = async () => {
+  if (itemKind.value === 'life') {
+    const product = unref(productRef)
+    dictStore.chargeItemList.value = dictStore.chargeItemList.value?.concat(product?.tableDataList)
+    product?.setTableDataEmpty()
+  } else if (itemKind.value === 'express') {
+  } else if (itemKind.value === 'other') {
+    const other = unref(otherRef)
+    const data = await other?.getFormData()
+    dictStore.chargeItemList.value = dictStore.chargeItemList.value?.concat({
+      ...data
+    } as ChargeItemType)
+    unref(other?.elFormRef)?.resetFields()
+    // other?.setTableDataEmpty()
+  }
+  itemDetailDialogVisible.value = false
+
+  // await write?.elFormRef?.validate(async (isValid) => {
+  //   if (isValid) {
+  //     loading.value = true
+  //     const data = (await write?.getFormData()) as ChargeItemType
+  //     const res = await saveTableApi(data)
+  //       .catch(() => {})
+  //       .finally(() => {
+  //         loading.value = false
+  //       })
+  //     if (res) {
+  //       dialogVisible.value = false
+  //       // tableObject.currentPage = 1
+  //       // getList()
+  //     }
+  //   }
+  // })
 }
+
+onMounted(() => {})
 </script>
 
 <template>
@@ -278,5 +301,14 @@ const save = async () => {
     :width="itemDetailDialogWidth"
   >
     <ProductItem v-if="itemKind === 'life'" :member-id="memberId" ref="productRef" />
+    <ExpressFee v-if="itemKind === 'express'" :member-id="memberId" ref="expressRef" />
+    <Other v-if="itemKind === 'other'" :member-id="memberId" ref="otherRef" />
+
+    <template #footer>
+      <ElButton type="primary" @click="saveProductItem">
+        {{ t('exampleDemo.save') }}
+      </ElButton>
+      <ElButton @click="itemDetailDialogVisible = false">{{ t('dialogDemo.close') }}</ElButton>
+    </template>
   </ElDialog>
 </template>
