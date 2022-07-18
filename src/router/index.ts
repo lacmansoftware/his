@@ -981,8 +981,8 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           },
           {
             path: 'ykreturn/index',
-            component: () => import('@/views/PharmacyCore/Drug/Drug/ListDrug.vue'),
-            name: 'PharmacyCoreDrugDrugListDrug',
+            component: () => import('@/views/PharmacyCore/Store/Ykreturn/Index.vue'),
+            name: 'PharmacyCoreStoreYkreturnIndex',
             meta: {
               title: '藥庫退藥單'
             }
