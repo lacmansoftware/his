@@ -761,6 +761,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '調劑管理-至信'
             }
+          },
+          {
+            path: 'zhenrentang/index',
+            component: () => import('@/views/Pharmacy/Tjgl/Zhenrentang/Index.vue'),
+            name: 'ProductTjglZhenrentangIndex',
+            meta: {
+              title: '調劑管理-真仁堂'
+            }
           }
         ]
       }
