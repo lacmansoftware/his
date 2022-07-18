@@ -769,6 +769,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '調劑管理-真仁堂'
             }
+          },
+          {
+            path: 'kmyf/index',
+            component: () => import('@/views/Pharmacy/Tjgl/Kmyf/Index.vue'),
+            name: 'ProductTjglKmyfIndex',
+            meta: {
+              title: '調劑管理-康美'
+            }
           }
         ]
       }
