@@ -3877,5 +3877,18 @@
   "returnDrugStatus": [
     { "value": "SEND", "label": "未退葯" },
     { "value": "RETURN", "label": "已退葯" }
+  ],
+  "alert": [
+    { "value": "GREATER", "label": "高於" },
+    { "value": "LESSER", "label": "低於" },
+    { "value": "NORMAL", "label": "正常" }
+  ],
+  "inventoryStatus1": [
+    { "value": "Y", "label": "正常" },
+    { "value": "N", "label": "禁用" }
+  ],
+  "inventoryQtySort": [
+    { "value": "asc", "label": "從小到大" },
+    { "value": "desc", "label": "從大到小" }
   ]
 }
