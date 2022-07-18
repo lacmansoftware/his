@@ -839,6 +839,30 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '庫存查看'
             }
+          },
+          {
+            path: 'pharmacy_alert/list_alert',
+            component: () => import('@/views/Pharmacy/Inventory/ListAlert/Index.vue'),
+            name: 'PharmacyInventoryListAlertIndex',
+            meta: {
+              title: '庫存預警'
+            }
+          },
+          {
+            path: 'check/index',
+            component: () => import('@/views/Pharmacy/Inventory/Inventory/Index.vue'),
+            name: 'PharmacyInventoryIndex',
+            meta: {
+              title: '藥房盤點'
+            }
+          },
+          {
+            path: 'loss/index',
+            component: () => import('@/views/Pharmacy/Inventory/Inventory/Index.vue'),
+            name: 'PharmacyInventoryIndex',
+            meta: {
+              title: '藥品報損'
+            }
           }
         ]
       }
