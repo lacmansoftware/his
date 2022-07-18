@@ -850,8 +850,8 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           },
           {
             path: 'check/index',
-            component: () => import('@/views/Pharmacy/Inventory/Inventory/Index.vue'),
-            name: 'PharmacyInventoryIndex',
+            component: () => import('@/views/Pharmacy/Inventory/Check/Index.vue'),
+            name: 'PharmacyInventoryCheckIndex',
             meta: {
               title: '藥房盤點'
             }
