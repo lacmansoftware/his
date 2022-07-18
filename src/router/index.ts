@@ -799,8 +799,8 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           },
           {
             path: 'purchase/index',
-            component: () => import('@/views/Pharmacy/Center/RequestOrder/Index.vue'),
-            name: 'ProductTjglSendSelfProductionIndex',
+            component: () => import('@/views/Pharmacy/Center/Purchase/Index.vue'),
+            name: 'ProductCenterPurchaseIndex',
             meta: {
               title: '採購計劃管理'
             }
@@ -808,7 +808,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           {
             path: 'transfer/index',
             component: () => import('@/views/Pharmacy/Center/RequestOrder/Index.vue'),
-            name: 'ProductTjglDecoctionIndex',
+            name: 'ProductCenterRequestOrderIndex',
             meta: {
               title: '調撥確認'
             }
@@ -816,7 +816,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           {
             path: 'yfreturn/index',
             component: () => import('@/views/Pharmacy/Center/RequestOrder/Index.vue'),
-            name: 'ProductTjglReturndrugIndex',
+            name: 'ProductCenterRequestOrderIndex',
             meta: {
               title: '藥房退藥'
             }
