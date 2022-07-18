@@ -875,6 +875,27 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         ]
       }
     ]
+  },
+  {
+    path: '/pharmacy_core',
+    component: Layout,
+    redirect: '/pharmacy_core/zlxm/list_zlxm',
+    name: 'PharmacyCore',
+    meta: {
+      title: '總部藥房',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'zlxm/list_zlxm',
+        component: () => import('@/views/PharmacyCore/Zlxm/ListZlxm.vue'),
+        name: 'PharmacyCoreZlxmListZlxm',
+        meta: {
+          title: '治療項目'
+        }
+      }
+    ]
   }
 ]
 
