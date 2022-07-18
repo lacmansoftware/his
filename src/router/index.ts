@@ -921,6 +921,73 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             }
           }
         ]
+      },
+      {
+        path: 'supplier/index',
+        component: () => import('@/views/PharmacyCore/Supplier/Index.vue'),
+        name: 'PharmacyCoreSupplieIndex',
+        meta: {
+          title: '飲片-供應商管理'
+        }
+      },
+      {
+        path: 'store',
+        component: getParentLayout(),
+        name: 'PharmacyCoreStore',
+        meta: {
+          title: '飲片-門店請貨',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'request_order/index',
+            component: () => import('@/views/PharmacyCore/Store/RequestOrder/Index.vue'),
+            name: 'PharmacyCoreStoreRequestOrderIndex',
+            meta: {
+              title: '請貨單'
+            }
+          },
+          {
+            path: 'purchase/index',
+            component: () => import('@/views/PharmacyCore/Drug/Drug/ListDrug.vue'),
+            name: 'PharmacyCoreDrugDrugListDrug',
+            meta: {
+              title: '採購計劃'
+            }
+          },
+          {
+            path: 'stockin/index',
+            component: () => import('@/views/PharmacyCore/Drug/Drug/ListDrug.vue'),
+            name: 'PharmacyCoreDrugDrugListDrug',
+            meta: {
+              title: '入庫單'
+            }
+          },
+          {
+            path: 'stockout/index',
+            component: () => import('@/views/PharmacyCore/Drug/Drug/ListDrug.vue'),
+            name: 'PharmacyCoreDrugDrugListDrug',
+            meta: {
+              title: '出庫單'
+            }
+          },
+          {
+            path: 'yfreturn/index',
+            component: () => import('@/views/PharmacyCore/Drug/Drug/ListDrug.vue'),
+            name: 'PharmacyCoreDrugDrugListDrug',
+            meta: {
+              title: '藥房退藥單'
+            }
+          },
+          {
+            path: 'ykreturn/index',
+            component: () => import('@/views/PharmacyCore/Drug/Drug/ListDrug.vue'),
+            name: 'PharmacyCoreDrugDrugListDrug',
+            meta: {
+              title: '藥庫退藥單'
+            }
+          }
+        ]
       }
     ]
   }
