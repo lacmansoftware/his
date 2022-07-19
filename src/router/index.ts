@@ -1369,6 +1369,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '病歷補錄'
         }
+      },
+      {
+        path: 'doctor/medical_record_audit/record_list',
+        component: () => import('@/views/Base/Doctor/MedicalRecordAudit/RecordList.vue'),
+        name: 'BaseDoctorMedicalRecordAuditRecordList',
+        meta: {
+          title: '病歷質檢'
+        }
       }
     ]
   }
