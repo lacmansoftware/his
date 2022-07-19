@@ -1061,6 +1061,65 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '產品-供應商管理'
         }
+      },
+      {
+        path: 'product_core',
+        component: getParentLayout(),
+        name: 'PharmacyCoreProduct',
+        meta: {
+          title: '產品-商品請貨',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'request_order/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/RequestOrder/Index.vue'),
+            name: 'PharmacyCoreProductCoreRequestOrderIndex',
+            meta: {
+              title: '請貨單'
+            }
+          },
+          {
+            path: 'purchase/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Purchase/Index.vue'),
+            name: 'PharmacyCoreProductCorePurchaseIndex',
+            meta: {
+              title: '採購計劃'
+            }
+          },
+          {
+            path: 'stockin/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Stockin/Index.vue'),
+            name: 'PharmacyCoreProductCoreStockinIndex',
+            meta: {
+              title: '入庫單'
+            }
+          },
+          {
+            path: 'stockout/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Stockout/Index.vue'),
+            name: 'PharmacyCoreProductCoreStockoutIndex',
+            meta: {
+              title: '出庫單'
+            }
+          },
+          {
+            path: 'mdreturn/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Mdreturn/Index.vue'),
+            name: 'PharmacyCoreProductCoreMdreturnIndex',
+            meta: {
+              title: '門店退貨'
+            }
+          },
+          {
+            path: 'ykreturn/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Ykreturn/Index.vue'),
+            name: 'PharmacyCoreProductCoreYkreturnIndex',
+            meta: {
+              title: '藥庫退貨'
+            }
+          }
+        ]
       }
     ]
   }
