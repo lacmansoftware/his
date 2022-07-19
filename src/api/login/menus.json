@@ -3770,7 +3770,7 @@
       "pageSize": 2147483647,
       "name": "大夫評價",
       "seq": 10,
-      "url": "/doctor/comments/index",
+      "url": "/base/doctor/comments/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "1002",
