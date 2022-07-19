@@ -1202,6 +1202,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '優惠券'
         }
+      },
+      {
+        path: 'specialist/index',
+        component: () => import('@/views/Market/Specialist/Index.vue'),
+        name: 'MarketSpecialistIndex',
+        meta: {
+          title: '門診專科'
+        }
       }
     ]
   }
