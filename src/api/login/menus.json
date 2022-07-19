@@ -4025,7 +4025,7 @@
       "pageSize": 2147483647,
       "name": "提現審核",
       "seq": 4,
-      "url": "/base/doctor/cash.html",
+      "url": "/base/doctor/cash",
       "icon": null,
       "resourceType": "m",
       "parentId": "1002",

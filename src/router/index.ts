@@ -1345,6 +1345,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             }
           }
         ]
+      },
+      {
+        path: 'doctor/cash',
+        component: () => import('@/views/Base/Doctor/Cash.vue'),
+        name: 'BaseDoctorCash',
+        meta: {
+          title: '提現審核'
+        }
       }
     ]
   }
