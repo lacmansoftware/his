@@ -1318,6 +1318,33 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '停診統計'
         }
+      },
+      {
+        path: 'doctor',
+        component: getParentLayout(),
+        name: 'MarketPackage',
+        meta: {
+          title: '醫師列表',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'certified/index',
+            component: () => import('@/views/Base/Doctor/Certified/Index.vue'),
+            name: 'BaseDoctorCertifiedIndex',
+            meta: {
+              title: '已認證大夫列表'
+            }
+          },
+          {
+            path: 'uncertified/index',
+            component: () => import('@/views/Base/Doctor/Uncertified/Index.vue'),
+            name: 'BaseDoctorUncertifiedIndex',
+            meta: {
+              title: '未認證大夫列表'
+            }
+          }
+        ]
       }
     ]
   }
