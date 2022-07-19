@@ -1210,6 +1210,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '門診專科'
         }
+      },
+      {
+        path: 'insur/index',
+        component: () => import('@/views/Market/Insur/Index.vue'),
+        name: 'MarketInsurIndex',
+        meta: {
+          title: '保險公司管理'
+        }
       }
     ]
   }
