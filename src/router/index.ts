@@ -1033,17 +1033,34 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '生產批號管理'
             }
-          }
+          },
 
-          // {
-          //   path: 'drug_conversion_proportion/list',
-          //   component: () => import('@/views/PharmacyCore/Inventory/Inventory/Index.vue'),
-          //   name: 'PharmacyCoreInventoryInventoryIndex',
-          //   meta: {
-          //     title: '藥品濃度比'
-          //   }
-          // }
+          {
+            path: 'drug_conversion_proportion/list',
+            component: () =>
+              import('@/views/PharmacyCore/Inventory/DrugConversionProportion/List.vue'),
+            name: 'PharmacyCoreInventoryDrugConversionProportionList',
+            meta: {
+              title: '藥品濃度比'
+            }
+          }
         ]
+      },
+      {
+        path: 'product/index',
+        component: () => import('@/views/PharmacyCore/Product/Index.vue'),
+        name: 'PharmacyCoreProductIndex',
+        meta: {
+          title: '產品-字典管理'
+        }
+      },
+      {
+        path: 'product/supplier/index',
+        component: () => import('@/views/Product/Supplier/Index.vue'),
+        name: 'PharmacyCoreProductSupplierIndex',
+        meta: {
+          title: '產品-供應商管理'
+        }
       }
     ]
   }
