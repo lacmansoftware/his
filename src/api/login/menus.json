@@ -3685,7 +3685,7 @@
       "pageSize": 2147483647,
       "name": "產品促銷活動",
       "seq": 6,
-      "url": "/product/activity/index",
+      "url": "/market/product/activity/index",
       "icon": "",
       "resourceType": "m",
       "parentId": "09",

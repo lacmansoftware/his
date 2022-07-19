@@ -1273,6 +1273,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '文章管理'
         }
+      },
+      {
+        path: 'product/activity/index',
+        component: () => import('@/views/Market/Product/Activity/Index.vue'),
+        name: 'MarketProductActivityIndex',
+        meta: {
+          title: '產品促銷活動'
+        }
       }
     ]
   }
