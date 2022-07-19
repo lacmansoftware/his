@@ -3379,7 +3379,7 @@
       "pageSize": 2147483647,
       "name": "營銷管理",
       "seq": 10,
-      "url": null,
+      "url": "/market",
       "icon": null,
       "resourceType": "f",
       "parentId": null,

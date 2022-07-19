@@ -1183,6 +1183,27 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         ]
       }
     ]
+  },
+  {
+    path: '/market',
+    component: Layout,
+    redirect: '/market/voucher/index',
+    name: 'Market',
+    meta: {
+      title: '營銷管理',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'voucher/index',
+        component: () => import('@/views/Market/Voucher/Index.vue'),
+        name: 'MarketVoucherIndex',
+        meta: {
+          title: '優惠券'
+        }
+      }
+    ]
   }
 ]
 
