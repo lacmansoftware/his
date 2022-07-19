@@ -1353,6 +1353,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '提現審核'
         }
+      },
+      {
+        path: 'doctor/reward',
+        component: () => import('@/views/Base/Doctor/Reward.vue'),
+        name: 'BaseDoctorReward',
+        meta: {
+          title: '醫生獎勵'
+        }
       }
     ]
   }

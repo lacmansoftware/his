@@ -4042,7 +4042,7 @@
       "pageSize": 2147483647,
       "name": "醫生獎勵",
       "seq": 5,
-      "url": "/base/doctor/reward.html",
+      "url": "/base/doctor/reward",
       "icon": null,
       "resourceType": "m",
       "parentId": "1002",
