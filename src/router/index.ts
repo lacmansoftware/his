@@ -1120,6 +1120,67 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             }
           }
         ]
+      },
+      {
+        path: 'product_core/inventory',
+        component: getParentLayout(),
+        name: 'PharmacyCoreProductCoreInventory',
+        meta: {
+          title: '產品-庫存管理',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'inventory/index',
+            component: () =>
+              import('@/views/PharmacyCore/ProductCore/Inventory/Inventory/Index.vue'),
+            name: 'PharmacyCoreProductCoreRequestOrderIndex',
+            meta: {
+              title: '庫存查詢'
+            }
+          },
+          {
+            path: 'alert/list_alert',
+            component: () =>
+              import('@/views/PharmacyCore/ProductCore/Inventory/Alert/ListAlert.vue'),
+            name: 'PharmacyCoreProductCorePurchaseIndex',
+            meta: {
+              title: '預警管理'
+            }
+          },
+          {
+            path: 'stockin/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Stockin/Index.vue'),
+            name: 'PharmacyCoreProductCoreStockinIndex',
+            meta: {
+              title: '入庫單'
+            }
+          },
+          {
+            path: 'stockout/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Stockout/Index.vue'),
+            name: 'PharmacyCoreProductCoreStockoutIndex',
+            meta: {
+              title: '出庫單'
+            }
+          },
+          {
+            path: 'mdreturn/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Mdreturn/Index.vue'),
+            name: 'PharmacyCoreProductCoreMdreturnIndex',
+            meta: {
+              title: '門店退貨'
+            }
+          },
+          {
+            path: 'ykreturn/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Ykreturn/Index.vue'),
+            name: 'PharmacyCoreProductCoreYkreturnIndex',
+            meta: {
+              title: '藥庫退貨'
+            }
+          }
+        ]
       }
     ]
   }
