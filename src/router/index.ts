@@ -1218,6 +1218,53 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '保險公司管理'
         }
+      },
+      {
+        path: 'package',
+        component: getParentLayout(),
+        name: 'MarketPackage',
+        meta: {
+          title: '套餐',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'offline/index',
+            component: () => import('@/views/Market/Package/Index.vue'),
+            props: {
+              pageType: 'offline',
+              pageName: '%e9%97%a8%e8%af%8a'
+            },
+            name: 'MarketPackageOffline',
+            meta: {
+              title: '門診套餐'
+            }
+          },
+          {
+            path: 'online/index',
+            component: () => import('@/views/Market/Package/Index.vue'),
+            props: {
+              pageType: 'online',
+              pageName: '%e7%bd%91%e8%af%8a'
+            },
+            name: 'MarketPackageOnline',
+            meta: {
+              title: '門診套餐'
+            }
+          },
+          {
+            path: 'combo/index',
+            component: () => import('@/views/Market/Package/Index.vue'),
+            props: {
+              pageType: 'combo',
+              pageName: '%e7%bb%84%e5%90%88'
+            },
+            name: 'MarketPackageCombo',
+            meta: {
+              title: '門診套餐'
+            }
+          }
+        ]
       }
     ]
   }
