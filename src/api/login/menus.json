@@ -5062,7 +5062,7 @@
       "pageSize": 2147483647,
       "name": "基礎信息",
       "seq": 11,
-      "url": "",
+      "url": "/base/hospital",
       "icon": null,
       "resourceType": "f",
       "parentId": null,

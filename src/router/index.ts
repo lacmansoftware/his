@@ -1379,6 +1379,35 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: '/base/hospital',
+    component: Layout,
+    redirect: '/base/voucher/index',
+    name: 'BaseHospital',
+    meta: {
+      title: '基礎信息',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      // {
+      //   path: 'info/index',
+      //   component: () => import('@/views/Base/Hospital/Info/Index.vue'),
+      //   name: 'BaseHospitalInfoIndex',
+      //   meta: {
+      //     title: '門店信息'
+      //   }
+      // }
+      {
+        path: 'dept/index',
+        component: () => import('@/views/Base/Hospital/Dept/Index.vue'),
+        name: 'BaseHospitalDeptIndex',
+        meta: {
+          title: '部門信息'
+        }
+      }
+    ]
   }
 ]
 
