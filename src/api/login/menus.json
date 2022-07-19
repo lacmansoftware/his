@@ -3668,7 +3668,7 @@
       "pageSize": 2147483647,
       "name": "文章管理",
       "seq": 6,
-      "url": "/doctor/article/index",
+      "url": "/market/doctor/article/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "09",

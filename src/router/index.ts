@@ -1265,6 +1265,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             }
           }
         ]
+      },
+      {
+        path: 'doctor/article/index',
+        component: () => import('@/views/Market/Doctor/Article/Index.vue'),
+        name: 'MarketDoctorArticleIndex',
+        meta: {
+          title: '文章管理'
+        }
       }
     ]
   }
