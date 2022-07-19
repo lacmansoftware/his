@@ -1281,6 +1281,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '產品促銷活動'
         }
+      },
+      {
+        path: 'gift_card/index',
+        component: () => import('@/views/Market/GiftCard/Index.vue'),
+        name: 'MarketGiftCardIndex',
+        meta: {
+          title: '線下卡'
+        }
       }
     ]
   }
