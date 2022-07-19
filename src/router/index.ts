@@ -1406,6 +1406,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '部門信息'
         }
+      },
+      {
+        path: 'user/index',
+        component: () => import('@/views/Base/Hospital/User/Index.vue'),
+        name: 'BaseHospitalUserIndex',
+        meta: {
+          title: '人員信息'
+        }
       }
     ]
   }
