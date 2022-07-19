@@ -1291,6 +1291,35 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: '/base',
+    component: Layout,
+    redirect: '/base/voucher/index',
+    name: 'Base',
+    meta: {
+      title: '醫師管理',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      // {
+      //   path: 'doctor/schedule_manage/index',
+      //   component: () => import('@/views/Base/Doctor/ScheduleManage/Index.vue'),
+      //   name: 'BaseDoctorScheduleManageIndex',
+      //   meta: {
+      //     title: '排班管理'
+      //   }
+      // }
+      {
+        path: 'doctor/schedule_statistics/index',
+        component: () => import('@/views/Base/Doctor/ScheduleStatistics/Index.vue'),
+        name: 'BaseDoctorScheduleStatisticsIndex',
+        meta: {
+          title: '停診統計'
+        }
+      }
+    ]
   }
 ]
 

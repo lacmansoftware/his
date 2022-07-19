@@ -3753,7 +3753,7 @@
       "pageSize": 2147483647,
       "name": "醫師管理",
       "seq": 11,
-      "url": "",
+      "url": "/base",
       "icon": null,
       "resourceType": "f",
       "parentId": null,
