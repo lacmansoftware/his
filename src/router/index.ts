@@ -1024,26 +1024,396 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '零售價調整記錄'
             }
+          },
+
+          {
+            path: 'batch_no/index',
+            component: () => import('@/views/PharmacyCore/Inventory/BatchNo/Index.vue'),
+            name: 'PharmacyCoreInventoryBatchNoIndex',
+            meta: {
+              title: '生產批號管理'
+            }
+          },
+
+          {
+            path: 'drug_conversion_proportion/list',
+            component: () =>
+              import('@/views/PharmacyCore/Inventory/DrugConversionProportion/List.vue'),
+            name: 'PharmacyCoreInventoryDrugConversionProportionList',
+            meta: {
+              title: '藥品濃度比'
+            }
           }
-
-          // {
-          //   path: 'batch_no/index',
-          //   component: () => import('@/views/PharmacyCore/Inventory/Inventory/Index.vue'),
-          //   name: 'PharmacyCoreInventoryInventoryIndex',
-          //   meta: {
-          //     title: '生產批號管理'
-          //   }
-          // },
-
-          // {
-          //   path: 'drug_conversion_proportion/list',
-          //   component: () => import('@/views/PharmacyCore/Inventory/Inventory/Index.vue'),
-          //   name: 'PharmacyCoreInventoryInventoryIndex',
-          //   meta: {
-          //     title: '藥品濃度比'
-          //   }
-          // }
         ]
+      },
+      {
+        path: 'product/index',
+        component: () => import('@/views/PharmacyCore/Product/Index.vue'),
+        name: 'PharmacyCoreProductIndex',
+        meta: {
+          title: '產品-字典管理'
+        }
+      },
+      {
+        path: 'product/supplier/index',
+        component: () => import('@/views/Product/Supplier/Index.vue'),
+        name: 'PharmacyCoreProductSupplierIndex',
+        meta: {
+          title: '產品-供應商管理'
+        }
+      },
+      {
+        path: 'product_core',
+        component: getParentLayout(),
+        name: 'PharmacyCoreProduct',
+        meta: {
+          title: '產品-商品請貨',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'request_order/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/RequestOrder/Index.vue'),
+            name: 'PharmacyCoreProductCoreRequestOrderIndex',
+            meta: {
+              title: '請貨單'
+            }
+          },
+          {
+            path: 'purchase/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Purchase/Index.vue'),
+            name: 'PharmacyCoreProductCorePurchaseIndex',
+            meta: {
+              title: '採購計劃'
+            }
+          },
+          {
+            path: 'stockin/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Stockin/Index.vue'),
+            name: 'PharmacyCoreProductCoreStockinIndex',
+            meta: {
+              title: '入庫單'
+            }
+          },
+          {
+            path: 'stockout/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Stockout/Index.vue'),
+            name: 'PharmacyCoreProductCoreStockoutIndex',
+            meta: {
+              title: '出庫單'
+            }
+          },
+          {
+            path: 'mdreturn/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Mdreturn/Index.vue'),
+            name: 'PharmacyCoreProductCoreMdreturnIndex',
+            meta: {
+              title: '門店退貨'
+            }
+          },
+          {
+            path: 'ykreturn/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Ykreturn/Index.vue'),
+            name: 'PharmacyCoreProductCoreYkreturnIndex',
+            meta: {
+              title: '藥庫退貨'
+            }
+          }
+        ]
+      },
+      {
+        path: 'product_core/inventory',
+        component: getParentLayout(),
+        name: 'PharmacyCoreProductCoreInventory',
+        meta: {
+          title: '產品-庫存管理',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'inventory/index',
+            component: () =>
+              import('@/views/PharmacyCore/ProductCore/Inventory/Inventory/Index.vue'),
+            name: 'PharmacyCoreProductCoreRequestOrderIndex',
+            meta: {
+              title: '庫存查詢'
+            }
+          },
+          {
+            path: 'alert/list_alert',
+            component: () =>
+              import('@/views/PharmacyCore/ProductCore/Inventory/Alert/ListAlert.vue'),
+            name: 'PharmacyCoreProductCorePurchaseIndex',
+            meta: {
+              title: '預警管理'
+            }
+          },
+          {
+            path: 'stockin/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Stockin/Index.vue'),
+            name: 'PharmacyCoreProductCoreStockinIndex',
+            meta: {
+              title: '入庫單'
+            }
+          },
+          {
+            path: 'stockout/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Stockout/Index.vue'),
+            name: 'PharmacyCoreProductCoreStockoutIndex',
+            meta: {
+              title: '出庫單'
+            }
+          },
+          {
+            path: 'mdreturn/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Mdreturn/Index.vue'),
+            name: 'PharmacyCoreProductCoreMdreturnIndex',
+            meta: {
+              title: '門店退貨'
+            }
+          },
+          {
+            path: 'ykreturn/index',
+            component: () => import('@/views/PharmacyCore/ProductCore/Ykreturn/Index.vue'),
+            name: 'PharmacyCoreProductCoreYkreturnIndex',
+            meta: {
+              title: '藥庫退貨'
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/market',
+    component: Layout,
+    redirect: '/market/voucher/index',
+    name: 'Market',
+    meta: {
+      title: '營銷管理',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'voucher/index',
+        component: () => import('@/views/Market/Voucher/Index.vue'),
+        name: 'MarketVoucherIndex',
+        meta: {
+          title: '優惠券'
+        }
+      },
+      {
+        path: 'specialist/index',
+        component: () => import('@/views/Market/Specialist/Index.vue'),
+        name: 'MarketSpecialistIndex',
+        meta: {
+          title: '門診專科'
+        }
+      },
+      {
+        path: 'insur/index',
+        component: () => import('@/views/Market/Insur/Index.vue'),
+        name: 'MarketInsurIndex',
+        meta: {
+          title: '保險公司管理'
+        }
+      },
+      {
+        path: 'package',
+        component: getParentLayout(),
+        name: 'MarketPackage',
+        meta: {
+          title: '套餐',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'offline/index',
+            component: () => import('@/views/Market/Package/Index.vue'),
+            props: {
+              pageType: 'offline',
+              pageName: '%e9%97%a8%e8%af%8a'
+            },
+            name: 'MarketPackageOffline',
+            meta: {
+              title: '門診套餐'
+            }
+          },
+          {
+            path: 'online/index',
+            component: () => import('@/views/Market/Package/Index.vue'),
+            props: {
+              pageType: 'online',
+              pageName: '%e7%bd%91%e8%af%8a'
+            },
+            name: 'MarketPackageOnline',
+            meta: {
+              title: '門診套餐'
+            }
+          },
+          {
+            path: 'combo/index',
+            component: () => import('@/views/Market/Package/Index.vue'),
+            props: {
+              pageType: 'combo',
+              pageName: '%e7%bb%84%e5%90%88'
+            },
+            name: 'MarketPackageCombo',
+            meta: {
+              title: '門診套餐'
+            }
+          }
+        ]
+      },
+      {
+        path: 'doctor/article/index',
+        component: () => import('@/views/Market/Doctor/Article/Index.vue'),
+        name: 'MarketDoctorArticleIndex',
+        meta: {
+          title: '文章管理'
+        }
+      },
+      {
+        path: 'product/activity/index',
+        component: () => import('@/views/Market/Product/Activity/Index.vue'),
+        name: 'MarketProductActivityIndex',
+        meta: {
+          title: '產品促銷活動'
+        }
+      },
+      {
+        path: 'gift_card/index',
+        component: () => import('@/views/Market/GiftCard/Index.vue'),
+        name: 'MarketGiftCardIndex',
+        meta: {
+          title: '線下卡'
+        }
+      }
+    ]
+  },
+  {
+    path: '/base',
+    component: Layout,
+    redirect: '/base/voucher/index',
+    name: 'Base',
+    meta: {
+      title: '醫師管理',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      // {
+      //   path: 'doctor/schedule_manage/index',
+      //   component: () => import('@/views/Base/Doctor/ScheduleManage/Index.vue'),
+      //   name: 'BaseDoctorScheduleManageIndex',
+      //   meta: {
+      //     title: '排班管理'
+      //   }
+      // }
+      {
+        path: 'doctor/schedule_statistics/index',
+        component: () => import('@/views/Base/Doctor/ScheduleStatistics/Index.vue'),
+        name: 'BaseDoctorScheduleStatisticsIndex',
+        meta: {
+          title: '停診統計'
+        }
+      },
+      {
+        path: 'doctor',
+        component: getParentLayout(),
+        name: 'MarketPackage',
+        meta: {
+          title: '醫師列表',
+          alwaysShow: true
+        },
+        children: [
+          {
+            path: 'certified/index',
+            component: () => import('@/views/Base/Doctor/Certified/Index.vue'),
+            name: 'BaseDoctorCertifiedIndex',
+            meta: {
+              title: '已認證大夫列表'
+            }
+          },
+          {
+            path: 'uncertified/index',
+            component: () => import('@/views/Base/Doctor/Uncertified/Index.vue'),
+            name: 'BaseDoctorUncertifiedIndex',
+            meta: {
+              title: '未認證大夫列表'
+            }
+          }
+        ]
+      },
+      {
+        path: 'doctor/cash',
+        component: () => import('@/views/Base/Doctor/Cash.vue'),
+        name: 'BaseDoctorCash',
+        meta: {
+          title: '提現審核'
+        }
+      },
+      {
+        path: 'doctor/comments/index',
+        component: () => import('@/views/Base/Doctor/Comments/Index.vue'),
+        name: 'BaseDoctorCommentsIndex',
+        meta: {
+          title: '大夫評價'
+        }
+      },
+      {
+        path: 'doctor/medical_record_audit/index',
+        component: () => import('@/views/Base/Doctor/MedicalRecordAudit/Index.vue'),
+        name: 'BaseDoctorMedicalRecordAuditIndex',
+        meta: {
+          title: '病歷補錄'
+        }
+      },
+      {
+        path: 'doctor/medical_record_audit/record_list',
+        component: () => import('@/views/Base/Doctor/MedicalRecordAudit/RecordList.vue'),
+        name: 'BaseDoctorMedicalRecordAuditRecordList',
+        meta: {
+          title: '病歷質檢'
+        }
+      }
+    ]
+  },
+  {
+    path: '/base/hospital',
+    component: Layout,
+    redirect: '/base/voucher/index',
+    name: 'BaseHospital',
+    meta: {
+      title: '基礎信息',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      // {
+      //   path: 'info/index',
+      //   component: () => import('@/views/Base/Hospital/Info/Index.vue'),
+      //   name: 'BaseHospitalInfoIndex',
+      //   meta: {
+      //     title: '門店信息'
+      //   }
+      // }
+      {
+        path: 'dept/index',
+        component: () => import('@/views/Base/Hospital/Dept/Index.vue'),
+        name: 'BaseHospitalDeptIndex',
+        meta: {
+          title: '部門信息'
+        }
+      },
+      {
+        path: 'user/index',
+        component: () => import('@/views/Base/Hospital/User/Index.vue'),
+        name: 'BaseHospitalUserIndex',
+        meta: {
+          title: '人員信息'
+        }
       }
     ]
   }

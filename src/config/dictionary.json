@@ -3899,5 +3899,18 @@
     { "value": "less", "label": "低於" },
     { "value": "more", "label": "高於" }
   ],
-  "merge": [{ "value": "Y", "label": "合併庫存" }]
+  "merge": [{ "value": "Y", "label": "合併庫存" }],
+  "giftCardStatus": [
+    { "value": "Y", "label": "已製作" },
+    { "value": "N", "label": "未製作" }
+  ],
+  "giftCardType": [
+    { "value": "C", "label": "充值卡" },
+    { "value": "T", "label": "體檢卡" }
+  ],
+  "yxt": [{ "value": "1", "label": "協調數>=1" }],
+  "checked": [
+    { "value": "Y", "label": "已檢查" },
+    { "value": "N", "label": "未檢查" }
+  ]
 }
