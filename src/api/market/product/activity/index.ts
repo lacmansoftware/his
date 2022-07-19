@@ -15,7 +15,6 @@ export const getSettlementMemberApi = async (params: any): Promise<IResponse> =>
   return res && res.data
 }
 
-
 export const saveTableApi = async (data: Partial<NotChargedTableData>): Promise<IResponse> => {
   const res = await request.post({
     url: '/sms/templet',
