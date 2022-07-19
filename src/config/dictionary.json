@@ -3908,5 +3908,9 @@
     { "value": "C", "label": "充值卡" },
     { "value": "T", "label": "體檢卡" }
   ],
-  "yxt": [{ "value": "1", "label": "協調數>=1" }]
+  "yxt": [{ "value": "1", "label": "協調數>=1" }],
+  "checked": [
+    { "value": "Y", "label": "已檢查" },
+    { "value": "N", "label": "未檢查" }
+  ]
 }
