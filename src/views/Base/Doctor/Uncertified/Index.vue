@@ -13,12 +13,8 @@ import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import { plusIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
-import {
-  getTableListApi,
-  delTableListApi,
-  saveTableApi
-} from '@/api/base/doctor/scheduleStatistics'
-import { NotChargedTableData } from '@/api/base/doctor/scheduleStatistics/types'
+import { getTableListApi, delTableListApi, saveTableApi } from '@/api/base/doctor/certified'
+import { NotChargedTableData } from '@/api/base/doctor/certified/types'
 import { dateCompare } from '@/utils/date'
 import { genTableSchema, genSearchSchema } from '@/utils/schema'
 import dict from '@/config/dictionary.json'
@@ -39,8 +35,12 @@ const setStore = async (key: string, url: string, valueField: string, labelField
 
 const { push } = useRouter()
 
+const getCustomTableListApi = (params: any) => {
+  return getTableListApi(params, 'uncertified')
+}
+
 const { register, tableObject, methods } = useTable<NotChargedTableData>({
-  getListApi: getTableListApi,
+  getListApi: getCustomTableListApi,
   delListApi: delTableListApi,
   response: {
     list: 'data',
@@ -60,87 +60,110 @@ const crudSchemas = reactive<CrudSchema[]>([
     field: 'action',
     width: '150px'
   },
-  { label: '大夫', field: 'doctorName' },
-  { label: '待協調數', field: 'dqx' },
-  { label: '已協調數', field: 'yxt' },
-  { label: '停診總數', field: 'stopNum' },
   {
-    label: '排班變更類型',
-    field: 'type',
+    label: '認證狀態',
+    field: 'authStatus',
     formatter: function (row) {
-      if (row.type) {
-        row.type = row.type.toLowerCase()
-        if (row.type === 'mb') {
-          return '模板'
-        }
-        if (row.type === 'stop') {
-          return '停診'
-        }
-        if (row.type === 'delete') {
-          return '刪除門店'
-        } else if (row.type === 'interval') {
-          return '修改看診間隔'
-        } else if (row.type === 'zdy') {
-          return '自定義'
-        } else {
-          return '--'
-        }
+      if (row.authStatus === 'REG') {
+        return '已登記'
+      } else if (row.authStatus === 'AP') {
+        return '待認證'
+      } else if (row.authStatus === 'REJ') {
+        return '未通過'
       }
     }
   },
+  { label: '大夫姓名', field: 'name' },
   {
-    label: '變更方式',
-    field: 'changeMethod',
+    label: '性別',
+    field: 'sex',
     formatter: function (row) {
-      if (row.changeMethod) {
-        row.changeMethod = row.changeMethod.toLowerCase()
-        if (row.changeMethod === 'delete') {
-          return '刪除'
-        } else if (row.changeMethod === 'add') {
-          return '新增'
-        } else if (row.changeMethod === 'extend') {
-          return '延長'
-        } else if (row.changeMethod === 'shorten') {
-          return '縮短'
-        } else {
-          return '--'
-        }
-      }
+      return inDict(row.sex, 'sex')
+    }
+  },
+  { label: '醫院', field: 'hospital' },
+  { label: '職稱', field: 'titlesName' },
+  { label: '區域', field: 'city' },
+  { label: '經紀人', field: 'bdNames' },
+  { label: '城市經理', field: 'bdCityNames' },
+  {
+    label: '是否排班',
+    field: 'isSchedule',
+    formatter: function (row) {
+      return inDict(row.isSchedule, 'isSchedule')
     }
   },
   {
-    label: '日期',
-    field: 'date',
+    label: '開通網診',
+    field: 'serviceSwitch',
     formatter: function (row) {
-      if (row.type === 'MB') {
-        return row.date + '~ 無限'
-      } else if (row.endDate) {
-        return row.date + '~' + row.endDate
-      } else {
-        return row.date
-      }
+      return inDict(row.serviceSwitch, 'serviceSwitch')
     }
   },
-  { label: '原出診時間', field: 'time' },
-  { label: '新出診時間', field: 'newTime' },
-  { label: '門店', field: 'hospitalName' },
+  { label: '出診門店', field: 'hospitalName' },
+  {
+    label: '是否測試',
+    field: 'debug',
+    formatter: function (row) {
+      return inDict(row.debug, 'isdebugYN')
+    }
+  },
+  { label: '推薦人', field: 'inviteName' },
+  { label: '推薦人手機', field: 'inviteMobile' },
+  { label: '創建時間', field: 'createTime' },
+  { label: '審核時間', field: 'approveTime' },
+  { label: '城市', field: 'city' },
+  {
+    label: '啟用狀態',
+    field: 'status',
+    formatter: function (row) {
+      return inDict(row.status, 'doctorStatus2')
+    }
+  },
   // Search Schema
-  genSearchSchema('apiSelect', 'doctorId', '醫生', {
-    placeholder: '請填寫',
+  genSearchSchema('apiSelect', 'hospitalId', '門診出診門店', {
+    placeholder: '請選擇',
     api: async () => {
-      return await getInOptionFormat('doctor', 'id', 'name')
+      return await getInOptionFormat('member/appointment/hospitals', 'id', 'name')
     },
     filterable: true
   }),
-  genSearchSchema('apiSelect', 'hospitalId', '門店', {
-    placeholder: '請選擇',
+  genSearchSchema('input', 'name', '醫生姓名/手機', { placeholder: null }),
+  genSearchSchema('input', 'hospital', '醫院', { placeholder: null }),
+  genSearchSchema('apiSelect', 'bdId', '經紀人', {
+    placeholder: null,
     api: async () => {
-      return await getInOptionFormat('sys/hospital', 'id', 'name')
+      return await getInOptionFormat('/bd/info', 'id', 'name')
     }
   }),
-  genSearchSchema('datePicker', 'startDate', '停診日期', { placeholder: null }),
-  genSearchSchema('datePicker', 'endDate', '停診日期', { placeholder: null }),
-  genSearchSchema('checkbox', 'yxtStr', '', { options: dict.yxt, value: [] })
+  genSearchSchema('apiSelect', 'city', '所在城市', {
+    placeholder: null,
+    api: async () => {
+      return await getInOptionFormat('/sys/dict/type/doctor_city', 'code', 'value')
+    }
+  }),
+  genSearchSchema('sourceSelect', 'authStatus', '認證狀態', {
+    placeholder: null,
+    options: dict.doctorStatus as any
+  }),
+  genSearchSchema('sourceSelect', 'debug', '是否測試', {
+    placeholder: null,
+    options: dict.isdebug as any
+  }),
+  genSearchSchema('sourceSelect', 'isSchedule', '是否排班', {
+    placeholder: null,
+    options: dict.isSchedule as any
+  }),
+  genSearchSchema('sourceSelect', 'serviceSwitch', '開通網診', {
+    placeholder: null,
+    options: dict.serviceSwitch as any
+  }),
+  genSearchSchema('apiSelect', 'bdManager', '城市經理', {
+    placeholder: null,
+    api: async () => {
+      return await getInOptionFormat('/bd/info/listBdManager?isManager=Y', 'id', 'name')
+    }
+  })
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
@@ -278,10 +301,16 @@ const canMakeUp = (orderType) => {
       :schema="allSchemas.searchSchema"
       :is-col="true"
       :inline="false"
+      :layout="'bottom'"
+      :buttom-position="'right'"
       @search="setSearchParams"
       @reset="setSearchParams"
       ref="searchRef"
     />
+
+    <div class="mb-10px ml-10px mt-[-32px]">
+      <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增醫生</ElButton>
+    </div>
 
     <Table
       v-model:pageSize="tableObject.pageSize"
@@ -296,7 +325,25 @@ const canMakeUp = (orderType) => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">處理預約</ElLink>
+        <div class="flex">
+          <div v-if="row.authStatus === 'AP'">
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">編輯</ElLink>
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">審核</ElLink>
+          </div>
+          <div v-else-if="row.authStatus === 'REJ'">
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">編輯</ElLink>
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">審核</ElLink>
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">駁回原因</ElLink>
+          </div>
+          <div v-else-if="row.authStatus === 'REG'">
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">編輯</ElLink>
+          </div>
+
+          <div v-if="row.authStatus === 'REG'">
+            <ElLink type="primary" @click="settlement(row)" class="mr-5px">刪除</ElLink>
+          </div>
+          <ElLink type="primary" @click="settlement(row)" class="mr-5px">回訪</ElLink>
+        </div>
       </template>
     </Table>
   </ContentWrap>

@@ -3,8 +3,8 @@ import type { AddressItemType, ChargeItemType, NotChargedTableData } from './typ
 
 const request = useAxios()
 
-export const getTableListApi = async (params: any): Promise<IResponse> => {
-  params.authStatus = 'PASS'
+export const getTableListApi = async (params: any, pageType = 'certified'): Promise<IResponse> => {
+  if (pageType != 'uncertified') params.authStatus = 'PASS'
   const res = await request.get({ url: '/doctor/listPage', params })
   return res && res.data
 }
