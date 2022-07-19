@@ -1024,16 +1024,16 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '零售價調整記錄'
             }
-          }
+          },
 
-          // {
-          //   path: 'batch_no/index',
-          //   component: () => import('@/views/PharmacyCore/Inventory/Inventory/Index.vue'),
-          //   name: 'PharmacyCoreInventoryInventoryIndex',
-          //   meta: {
-          //     title: '生產批號管理'
-          //   }
-          // },
+          {
+            path: 'batch_no/index',
+            component: () => import('@/views/PharmacyCore/Inventory/BatchNo/Index.vue'),
+            name: 'PharmacyCoreInventoryBatchNoIndex',
+            meta: {
+              title: '生產批號管理'
+            }
+          }
 
           // {
           //   path: 'drug_conversion_proportion/list',
