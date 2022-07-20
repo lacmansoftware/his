@@ -1443,6 +1443,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '部門管理'
         }
+      },
+      {
+        path: 'user/index',
+        component: () => import('@/views/Sys/User/Index.vue'),
+        name: 'SysUserIndex',
+        meta: {
+          title: '員工管理'
+        }
       }
       // {
       //   path: 'user/index',
