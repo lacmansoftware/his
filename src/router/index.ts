@@ -1451,6 +1451,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '員工管理'
         }
+      },
+      {
+        path: 'dict/index',
+        component: () => import('@/views/Sys/Dict/Index.vue'),
+        name: 'SysDictIndex',
+        meta: {
+          title: '字典管理'
+        }
       }
       // {
       //   path: 'user/index',
