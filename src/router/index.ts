@@ -1435,6 +1435,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '診所入駐'
         }
+      },
+      {
+        path: 'department/index',
+        component: () => import('@/views/Sys/Department/Index.vue'),
+        name: 'SysDepartmentIndex',
+        meta: {
+          title: '部門管理'
+        }
       }
       // {
       //   path: 'user/index',
