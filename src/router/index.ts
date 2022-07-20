@@ -1467,6 +1467,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '參數管理'
         }
+      },
+      {
+        path: 'member/level/index',
+        component: () => import('@/views/Sys/Member/Level/Index.vue'),
+        name: 'SysMemberLevelIndex',
+        meta: {
+          title: '客人級別'
+        }
       }
       // {
       //   path: 'user/index',
