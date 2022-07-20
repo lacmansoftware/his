@@ -13,8 +13,8 @@ import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import { plusIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
-import { getTableListApi, delTableListApi, saveTableApi } from '@/api/doctorStudio/myCustomer'
-import { NotChargedTableData } from '@/api/doctorStudio/myCustomer/types'
+import { getTableListApi, delTableListApi, saveTableApi } from '@/api/doctorStudio/myTemplate'
+import { NotChargedTableData } from '@/api/doctorStudio/myTemplate/types'
 import { dateCompare } from '@/utils/date'
 import { genTableSchema, genSearchSchema } from '@/utils/schema'
 import dict from '@/config/dictionary.json'
@@ -58,31 +58,26 @@ const crudSchemas = reactive<CrudSchema[]>([
     field: 'action',
     width: '150px'
   },
-  { label: '檔案號', field: 'archivesNo' },
-  { label: '姓名', field: 'name' },
-  { label: '手機號', field: 'mobile' },
-  { label: '證件號', field: 'identityCode' },
+  { label: '處方名稱', field: 'tempName' },
   {
-    label: '性別',
-    field: 'gender',
+    label: '模板類型',
+    field: 'tempType',
     formatter: function (row) {
-      return inDict(row.gender, 'sex')
+      return inDict(row.tempType, 'recipeType')
     }
   },
-  { label: '年齡', field: 'memberAge' },
-  { label: '首診日期', field: 'szrq' },
-  { label: '末診日期', field: 'mzrq' },
+  { label: '詳情', field: 'detail' },
+  {
+    label: '狀態',
+    field: 'status',
+    formatter: function (row) {
+      return inDict(row.status, 'drug.recipelStatus')
+    }
+  },
+  { label: '創建時間', field: 'createTime' },
 
   // Search Schema
-  genSearchSchema('input', 'memberName', '客人', { placeholder: '姓名/電話/檔案號/身份證號' }),
-  genSearchSchema('sourceSelect', 'memberGender', '性別', {
-    placeholder: '性別',
-    options: dict.sex as any
-  }),
-  genSearchSchema('sourceSelect', 'order', '排序', {
-    placeholder: '排序',
-    options: dict.member.order as any
-  })
+  genSearchSchema('input', 'tempName', '處方名稱', { placeholder: '處方名稱' })
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
@@ -231,7 +226,7 @@ const canMakeUp = (orderType) => {
     />
 
     <div class="mb-10px ml-10px mt-[-32px]">
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增</ElButton>
+      <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增模板</ElButton>
     </div>
 
     <Table
@@ -245,7 +240,16 @@ const canMakeUp = (orderType) => {
       }"
       @register="register"
       :row-class-name="tableRowClassName"
-    />
+    >
+      <template #action="{ row }">
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">編輯</ElLink>
+        <ElLink v-if="row.status === 'Y'" type="primary" @click="settlement(row)" class="mr-5px">
+          停用
+        </ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">啟用</ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">刪除</ElLink>
+      </template>
+    </Table>
   </ContentWrap>
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
