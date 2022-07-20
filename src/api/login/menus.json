@@ -4535,7 +4535,7 @@
       "pageSize": 2147483647,
       "name": "門診回顧",
       "seq": 2,
-      "url": "/doctor_studio/today_clinic/member_review.html",
+      "url": "/doctor_studio/today_clinic/member_review",
       "icon": null,
       "resourceType": "m",
       "parentId": "15",

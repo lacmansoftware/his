@@ -15,8 +15,6 @@ export const getDictOneApi = async (): Promise<IResponse> => {
 }
 
 export const getApi = async (url: string, params: any = {}): Promise<IResponse> => {
-  console.log('in api: ', params)
-
   const res = await request.get({ url: url, params })
   return res && res.data
 }

@@ -1504,6 +1504,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '就診管理'
         }
+      },
+      {
+        path: 'today_clinic/member_review',
+        component: () => import('@/views/DoctorStudio/TodayClinic/MemberReview.vue'),
+        name: 'DoctorStudioTodayClinicMemberReview',
+        meta: {
+          title: '門診回顧'
+        }
       }
     ]
   }
