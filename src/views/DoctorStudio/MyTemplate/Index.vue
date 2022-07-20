@@ -13,8 +13,8 @@ import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import { plusIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
-import { getTableListApi, delTableListApi, saveTableApi } from '@/api/base/hospital/user'
-import { NotChargedTableData } from '@/api/base/hospital/user/types'
+import { getTableListApi, delTableListApi, saveTableApi } from '@/api/doctorStudio/myTemplate'
+import { NotChargedTableData } from '@/api/doctorStudio/myTemplate/types'
 import { dateCompare } from '@/utils/date'
 import { genTableSchema, genSearchSchema } from '@/utils/schema'
 import dict from '@/config/dictionary.json'
@@ -58,30 +58,26 @@ const crudSchemas = reactive<CrudSchema[]>([
     field: 'action',
     width: '150px'
   },
-  { label: '姓名', field: 'name' },
+  { label: '處方名稱', field: 'tempName' },
   {
-    label: '性别',
-    field: 'sex',
+    label: '模板類型',
+    field: 'tempType',
     formatter: function (row) {
-      return inDict(row.sex, 'sex')
+      return inDict(row.tempType, 'recipeType')
     }
   },
-  { label: '手机号', field: 'mobile' },
-  { label: '邮箱', field: 'email' },
+  { label: '詳情', field: 'detail' },
   {
-    label: '状态',
+    label: '狀態',
     field: 'status',
     formatter: function (row) {
-      return inDict(row.status, 'status')
+      return inDict(row.status, 'drug.recipelStatus')
     }
   },
-  { label: '创建日期', field: 'createTime' },
+  { label: '創建時間', field: 'createTime' },
+
   // Search Schema
-  genSearchSchema('input', 'name', '姓名：', { placeholder: '请输入姓名或手机' }),
-  genSearchSchema('checkbox', 'type', '仅显示当前部门', {
-    options: [{ value: '1', label: '仅当前部门' }],
-    value: []
-  })
+  genSearchSchema('input', 'tempName', '處方名稱', { placeholder: '處方名稱' })
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
@@ -229,6 +225,10 @@ const canMakeUp = (orderType) => {
       ref="searchRef"
     />
 
+    <div class="mb-10px ml-10px mt-[-32px]">
+      <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增模板</ElButton>
+    </div>
+
     <Table
       v-model:pageSize="tableObject.pageSize"
       v-model:currentPage="tableObject.currentPage"
@@ -242,9 +242,12 @@ const canMakeUp = (orderType) => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">编辑</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">设置权限</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">删除</ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">編輯</ElLink>
+        <ElLink v-if="row.status === 'Y'" type="primary" @click="settlement(row)" class="mr-5px">
+          停用
+        </ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">啟用</ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">刪除</ElLink>
       </template>
     </Table>
   </ContentWrap>

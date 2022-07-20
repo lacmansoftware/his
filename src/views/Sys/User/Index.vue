@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { reactive, ref, unref, onMounted } from 'vue'
-import { ElButton, ElLink, ElMessage } from 'element-plus'
+import { reactive, ref, unref, onMounted, h } from 'vue'
+import { ElButton, ElLink, ElMessage, ElTag } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
@@ -13,12 +13,11 @@ import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import { plusIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
-import { getTableListApi, delTableListApi, saveTableApi } from '@/api/base/hospital/user'
-import { NotChargedTableData } from '@/api/base/hospital/user/types'
+import { getTableListApi, delTableListApi, saveTableApi } from '@/api/sys/user'
+import { NotChargedTableData } from '@/api/sys/user/types'
 import { dateCompare } from '@/utils/date'
 import { genTableSchema, genSearchSchema } from '@/utils/schema'
 import dict from '@/config/dictionary.json'
-import { getApi } from '@/api/common'
 
 defineOptions({
   name: 'CashNotChargedIndex'
@@ -26,7 +25,6 @@ defineOptions({
 
 const searchRef = ref<ComponentRef<typeof Search>>()
 
-const userInfo = reactive<any>({})
 const store = {
   type: ref<ComponentOptions[]>([])
 }
@@ -37,8 +35,12 @@ const setStore = async (key: string, url: string, valueField: string, labelField
 
 const { push } = useRouter()
 
+const getCustomTableListApi = (params: any) => {
+  return getTableListApi(params, 'uncertified')
+}
+
 const { register, tableObject, methods } = useTable<NotChargedTableData>({
-  getListApi: getTableListApi,
+  getListApi: getCustomTableListApi,
   delListApi: delTableListApi,
   response: {
     list: 'data',
@@ -60,26 +62,27 @@ const crudSchemas = reactive<CrudSchema[]>([
   },
   { label: '姓名', field: 'name' },
   {
-    label: '性别',
+    label: '性別',
     field: 'sex',
     formatter: function (row) {
       return inDict(row.sex, 'sex')
     }
   },
-  { label: '手机号', field: 'mobile' },
-  { label: '邮箱', field: 'email' },
+  { label: '手機號', field: 'mobile' },
+  { label: '郵箱', field: 'email' },
   {
-    label: '状态',
+    label: '狀態',
     field: 'status',
     formatter: function (row) {
       return inDict(row.status, 'status')
     }
   },
-  { label: '创建日期', field: 'createTime' },
+  { label: '創建日期', field: 'createTime' },
+
   // Search Schema
-  genSearchSchema('input', 'name', '姓名：', { placeholder: '请输入姓名或手机' }),
-  genSearchSchema('checkbox', 'type', '仅显示当前部门', {
-    options: [{ value: '1', label: '仅当前部门' }],
+  genSearchSchema('input', 'name', '姓名：', { placeholder: '請輸入姓名或手機' }),
+  genSearchSchema('checkbox', 'type', '僅显示當前部門', {
+    options: [{ value: '1', label: '僅當前部門' }],
     value: []
   })
 ])
@@ -193,9 +196,6 @@ const settlement = (row: NotChargedTableData) => {
 
 onMounted(async () => {
   setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
-  getApi(`index/userinfo`).then((res) => {
-    userInfo.hospitalName = res.data.hospitalName
-  })
   // await setValues({
   //   startTime: getDateInFormat(new Date(), '-')
   // })
@@ -242,9 +242,9 @@ const canMakeUp = (orderType) => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">编辑</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">设置权限</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">删除</ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">編輯</ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">設置權限</ElLink>
+        <ElLink type="primary" @click="settlement(row)" class="mr-5px">刪除</ElLink>
       </template>
     </Table>
   </ContentWrap>

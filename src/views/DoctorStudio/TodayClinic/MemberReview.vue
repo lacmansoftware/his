@@ -13,7 +13,7 @@ import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import { plusIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
-import { getTableListApi, delTableListApi, saveTableApi } from '@/api/base/hospital/user'
+import { saveTableApi } from '@/api/base/hospital/user'
 import { NotChargedTableData } from '@/api/base/hospital/user/types'
 import { dateCompare } from '@/utils/date'
 import { genTableSchema, genSearchSchema } from '@/utils/schema'
@@ -37,9 +37,12 @@ const setStore = async (key: string, url: string, valueField: string, labelField
 
 const { push } = useRouter()
 
+const getTableListApi = (params: any) => {
+  return getApi('doctor/hospital/doctor/work/day/list', params)
+}
+
 const { register, tableObject, methods } = useTable<NotChargedTableData>({
   getListApi: getTableListApi,
-  delListApi: delTableListApi,
   response: {
     list: 'data',
     total: 'total'
@@ -48,40 +51,124 @@ const { register, tableObject, methods } = useTable<NotChargedTableData>({
 
 const { getList, setSearchParams } = methods
 
-getList()
+// getList()
 
 const { t } = useI18n()
 
 const crudSchemas = reactive<CrudSchema[]>([
   {
-    label: '操作',
+    label: '醫生',
+    field: 'doctorName'
+  },
+  {
+    label: '出診日期',
+    field: 'dateView'
+  },
+  {
+    label: '就診數',
+    field: 'registerNum'
+  },
+  {
+    label: '零診費',
+    field: 'registerNum',
+    formatter: function (row) {
+      return row.registerNum - row.clinicNum
+    }
+  },
+  {
+    label: '診費',
+    field: 'consFeeAll',
+    children: [
+      {
+        label: '收款',
+        field: 'consFeeAll'
+      },
+      {
+        label: '掛賬',
+        field: 'consFeeArrears'
+      },
+      {
+        label: '退款',
+        field: 'consFeeBack'
+      }
+    ]
+  },
+  {
+    label: '藥費',
+    field: 'drugFeeAll',
+    children: [
+      {
+        label: '收款',
+        field: 'drugFeeAll'
+      },
+      {
+        label: '掛賬',
+        field: 'drugFeeArrears'
+      },
+      {
+        label: '退款',
+        field: 'drugFeeBack'
+      }
+    ]
+  },
+  {
+    label: '治療費',
     field: 'action',
-    width: '150px'
+    children: [
+      {
+        label: '收款',
+        field: 'treatFeeAll'
+      },
+      {
+        label: '掛賬',
+        field: 'treatFeeArrears'
+      },
+      {
+        label: '退款',
+        field: 'treatFeeBack'
+      }
+    ]
   },
-  { label: '姓名', field: 'name' },
   {
-    label: '性别',
-    field: 'sex',
-    formatter: function (row) {
-      return inDict(row.sex, 'sex')
-    }
+    label: '商品',
+    field: 'action',
+    children: [
+      {
+        label: '收款',
+        field: 'projectFeeAll'
+      },
+      {
+        label: '掛賬',
+        field: 'projectFeeArrears'
+      },
+      {
+        label: '退款',
+        field: 'projectFeeBack'
+      }
+    ]
   },
-  { label: '手机号', field: 'mobile' },
-  { label: '邮箱', field: 'email' },
   {
-    label: '状态',
-    field: 'status',
-    formatter: function (row) {
-      return inDict(row.status, 'status')
-    }
+    label: '其他',
+    field: 'action',
+    children: [
+      {
+        label: '收款',
+        field: 'otherFeeAll'
+      },
+      {
+        label: '掛賬',
+        field: 'otherFeeArrears'
+      },
+      {
+        label: '退款',
+        field: 'otherFeeBack'
+      }
+    ]
   },
-  { label: '创建日期', field: 'createTime' },
+
   // Search Schema
-  genSearchSchema('input', 'name', '姓名：', { placeholder: '请输入姓名或手机' }),
-  genSearchSchema('checkbox', 'type', '仅显示当前部门', {
-    options: [{ value: '1', label: '仅当前部门' }],
-    value: []
-  })
+  genSearchSchema('datePicker', 'startTime', '看診日期', { placeholder: '起始' }),
+  genSearchSchema('datePicker', 'endTime', '到', { placeholder: '結束' })
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
@@ -133,35 +220,9 @@ const search = () => {
   search!.search()
 }
 
-const save = async () => {
-  const write = unref(writeRef)
-  await write?.elFormRef?.validate(async (isValid) => {
-    if (isValid) {
-      loading.value = true
-      const data = (await write?.getFormData()) as any
-      const res = await saveTableApi(
-        actionType.value === 'add'
-          ? data
-          : {
-              id: data.id,
-              label: data.title,
-              type: data.type,
-              content: data.content
-            }
-      )
-        .catch(() => {})
-        .finally(() => {
-          loading.value = false
-        })
-      if (res) {
-        dialogVisible.value = false
-        ElMessage.success(res.msg as string)
-        tableObject.currentPage = 1
-        getList()
-      }
-    }
-  })
-}
+onMounted(() => {
+  search()
+})
 
 const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) => {
   // if (
@@ -240,30 +301,8 @@ const canMakeUp = (orderType) => {
       }"
       @register="register"
       :row-class-name="tableRowClassName"
-    >
-      <template #action="{ row }">
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">编辑</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">设置权限</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">删除</ElLink>
-      </template>
-    </Table>
-  </ContentWrap>
-
-  <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
-    <Write
-      v-if="actionType !== 'detail'"
-      ref="writeRef"
-      :form-schema="allSchemas.formSchema"
-      :current-row="tableObject.currentRow"
     />
-
-    <template #footer>
-      <ElButton v-if="actionType !== 'detail'" type="primary" :loading="loading" @click="save">
-        {{ t('exampleDemo.save') }}
-      </ElButton>
-      <ElButton @click="dialogVisible = false">{{ t('dialogDemo.close') }}</ElButton>
-    </template>
-  </Dialog>
+  </ContentWrap>
 </template>
 
 <style scoped>

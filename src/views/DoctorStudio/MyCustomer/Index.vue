@@ -13,8 +13,8 @@ import { inDict, getInOptionFormat, getDateInFormat } from '@/utils/common'
 import { plusIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
-import { getTableListApi, delTableListApi, saveTableApi } from '@/api/base/hospital/user'
-import { NotChargedTableData } from '@/api/base/hospital/user/types'
+import { getTableListApi, delTableListApi, saveTableApi } from '@/api/doctorStudio/myCustomer'
+import { NotChargedTableData } from '@/api/doctorStudio/myCustomer/types'
 import { dateCompare } from '@/utils/date'
 import { genTableSchema, genSearchSchema } from '@/utils/schema'
 import dict from '@/config/dictionary.json'
@@ -58,29 +58,30 @@ const crudSchemas = reactive<CrudSchema[]>([
     field: 'action',
     width: '150px'
   },
+  { label: '檔案號', field: 'archivesNo' },
   { label: '姓名', field: 'name' },
+  { label: '手機號', field: 'mobile' },
+  { label: '證件號', field: 'identityCode' },
   {
-    label: '性别',
-    field: 'sex',
+    label: '性別',
+    field: 'gender',
     formatter: function (row) {
-      return inDict(row.sex, 'sex')
+      return inDict(row.gender, 'sex')
     }
   },
-  { label: '手机号', field: 'mobile' },
-  { label: '邮箱', field: 'email' },
-  {
-    label: '状态',
-    field: 'status',
-    formatter: function (row) {
-      return inDict(row.status, 'status')
-    }
-  },
-  { label: '创建日期', field: 'createTime' },
+  { label: '年齡', field: 'memberAge' },
+  { label: '首診日期', field: 'szrq' },
+  { label: '末診日期', field: 'mzrq' },
+
   // Search Schema
-  genSearchSchema('input', 'name', '姓名：', { placeholder: '请输入姓名或手机' }),
-  genSearchSchema('checkbox', 'type', '仅显示当前部门', {
-    options: [{ value: '1', label: '仅当前部门' }],
-    value: []
+  genSearchSchema('input', 'memberName', '客人', { placeholder: '姓名/電話/檔案號/身份證號' }),
+  genSearchSchema('sourceSelect', 'memberGender', '性別', {
+    placeholder: '性別',
+    options: dict.sex as any
+  }),
+  genSearchSchema('sourceSelect', 'order', '排序', {
+    placeholder: '排序',
+    options: dict.member.order as any
   })
 ])
 
@@ -229,6 +230,10 @@ const canMakeUp = (orderType) => {
       ref="searchRef"
     />
 
+    <div class="mb-10px ml-10px mt-[-32px]">
+      <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增</ElButton>
+    </div>
+
     <Table
       v-model:pageSize="tableObject.pageSize"
       v-model:currentPage="tableObject.currentPage"
@@ -240,13 +245,7 @@ const canMakeUp = (orderType) => {
       }"
       @register="register"
       :row-class-name="tableRowClassName"
-    >
-      <template #action="{ row }">
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">编辑</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">设置权限</ElLink>
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">删除</ElLink>
-      </template>
-    </Table>
+    />
   </ContentWrap>
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
