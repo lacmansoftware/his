@@ -4246,7 +4246,7 @@
       "pageSize": 2147483647,
       "name": "診所管理",
       "seq": 12,
-      "url": null,
+      "url": "/sys",
       "icon": null,
       "resourceType": "f",
       "parentId": null,

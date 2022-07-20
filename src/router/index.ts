@@ -1383,10 +1383,10 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/base/hospital',
     component: Layout,
-    redirect: '/base/voucher/index',
+    redirect: '/base/dept/index',
     name: 'BaseHospital',
     meta: {
-      title: '基礎信息',
+      title: '診所管理',
       icon: 'ep:management',
       alwaysShow: true
     },
@@ -1415,6 +1415,35 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           title: '人員信息'
         }
       }
+    ]
+  },
+  {
+    path: '/sys',
+    component: Layout,
+    redirect: '/sys/hospital/index',
+    name: 'SysHospital',
+    meta: {
+      title: '基礎信息',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'hospital/index',
+        component: () => import('@/views/Sys/Hospital/Index.vue'),
+        name: 'SysHospitalIndex',
+        meta: {
+          title: '診所入駐'
+        }
+      }
+      // {
+      //   path: 'user/index',
+      //   component: () => import('@/views/Sys/Hospital/User/Index.vue'),
+      //   name: 'SysHospitalUserIndex',
+      //   meta: {
+      //     title: '人員信息'
+      //   }
+      // }
     ]
   }
 ]
