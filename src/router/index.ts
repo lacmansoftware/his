@@ -1512,6 +1512,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '門診回顧'
         }
+      },
+      {
+        path: 'my_customer/index',
+        component: () => import('@/views/DoctorStudio/MyCustomer/Index.vue'),
+        name: 'DoctorStudioMyCustomerIndex',
+        meta: {
+          title: '我的患者'
+        }
       }
     ]
   }
