@@ -18,7 +18,7 @@ import { NotChargedTableData } from '@/api/base/hospital/user/types'
 import { dateCompare } from '@/utils/date'
 import { genTableSchema, genSearchSchema } from '@/utils/schema'
 import dict from '@/config/dictionary.json'
-import { getApi } from '@/api/member'
+import { getApi } from '@/api/common'
 
 defineOptions({
   name: 'CashNotChargedIndex'

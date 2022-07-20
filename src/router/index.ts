@@ -1485,6 +1485,27 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       //   }
       // }
     ]
+  },
+  {
+    path: '/doctor_studio',
+    component: Layout,
+    redirect: '/doctor_studio/today_clinic/index',
+    name: 'DoctorStudio',
+    meta: {
+      title: '醫生工作站',
+      icon: 'ep:management',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'today_clinic/index',
+        component: () => import('@/views/DoctorStudio/TodayClinic/Index.vue'),
+        name: 'DoctorStudioTodayClinicIndex',
+        meta: {
+          title: '就診管理'
+        }
+      }
+    ]
   }
 ]
 
