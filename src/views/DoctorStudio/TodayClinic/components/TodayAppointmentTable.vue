@@ -23,5 +23,9 @@ const crudSchemas = [
 ]
 </script>
 <template>
-  <DataTable url="workstation/todayAppointmentList" :crudSchemas="crudSchemas" />
+  <DataTable
+    url="workstation/todayAppointmentList"
+    :crudSchemas="crudSchemas"
+    title="今日預約：0人(未挂號：0人 已挂號：0人）"
+  />
 </template>

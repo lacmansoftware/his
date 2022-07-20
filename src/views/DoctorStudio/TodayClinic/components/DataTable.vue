@@ -20,7 +20,8 @@ const props = defineProps({
   crudSchemas: {
     type: Array as PropType<Array<CrudSchema>>,
     default: () => []
-  }
+  },
+  title: propTypes.string.def('')
 })
 
 const appStore = useAppStoreWithOut()
@@ -54,7 +55,7 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
 </script>
 
 <template>
-  <ContentWrap>
+  <ContentWrap :title="title">
     <Table
       v-model:pageSize="tableObject.pageSize"
       v-model:currentPage="tableObject.currentPage"

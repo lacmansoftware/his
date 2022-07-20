@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ElRow, ElCol } from 'element-plus'
-import TodayAppointmentTable from './components/WaitVisitList.vue'
 import WaitVisitList from './components/WaitVisitList.vue'
 import DoneVisitList from './components/DoneVisitList.vue'
+import TodayAppointmentTable from './components/TodayAppointmentTable.vue'
 </script>
 <template>
   <ElRow>

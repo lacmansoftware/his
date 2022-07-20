@@ -37,5 +37,5 @@ const crudSchemas = [
 ]
 </script>
 <template>
-  <DataTable url="workstation/waitVisitList" :crudSchemas="crudSchemas" />
+  <DataTable url="workstation/waitVisitList" :crudSchemas="crudSchemas" title="候診：0人" />
 </template>
