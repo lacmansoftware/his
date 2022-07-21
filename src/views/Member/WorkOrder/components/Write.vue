@@ -8,13 +8,13 @@ import { getApi } from '@/api/common'
 import { getInOptionFormat, returnDateString } from '@/utils/common'
 import dict from '@/config/dictionary.json'
 import Comment from './Comment.vue'
-import { CommentType } from '@/api/workorder/workorder/types'
+import { WorkOrderType, CommentType } from '@/api/workorder/workorder/types'
 
 const { required, isMobile } = useValidator()
 
 const props = defineProps({
   currentRow: {
-    type: Object as PropType<Nullable<CommentType>>,
+    type: Object as PropType<Nullable<WorkOrderType>>,
     default: () => null
   },
   isEdit: {
@@ -180,7 +180,10 @@ const schema = reactive<FormSchema[]>([
       style: 'width: 100%',
       placeholder: '工單類型',
       options: store.orderTypes as any,
-      onChange: handleTypeChange
+      onChange: handleTypeChange,
+      disabled:
+        props.isEdit &&
+        (props.currentRow?.status === 'nohand' || props.currentRow?.status === 'handled')
     },
     colProps: { span: 12 },
     formItemProps: {
@@ -270,7 +273,10 @@ const schema = reactive<FormSchema[]>([
       style: 'width: 100%',
       placeholder: '',
       options: transferTypeOptions as any,
-      onChange: handleTransferTypeChange
+      onChange: handleTransferTypeChange,
+      disabled:
+        props.isEdit &&
+        (props.currentRow?.status === 'nohand' || props.currentRow?.status === 'handled')
     },
     colProps: { span: 12 },
     formItemProps: {
@@ -283,7 +289,10 @@ const schema = reactive<FormSchema[]>([
     label: '轉交编号',
     component: 'Select',
     componentProps: {
-      disabled: false,
+      disabled:
+        false ||
+        (props.isEdit &&
+          (props.currentRow?.status === 'nohand' || props.currentRow?.status === 'handled')),
       style: 'width: 100%',
       placeholder: '轉交编号',
       options: store.transferId as any
@@ -332,7 +341,10 @@ const schema = reactive<FormSchema[]>([
     componentProps: {
       style: 'width: 100%',
       placeholder: '是否創建提醒',
-      options: dict.member.workOrderRemind
+      options: dict.member.workOrderRemind,
+      disabled:
+        props.isEdit &&
+        (props.currentRow?.status === 'nohand' || props.currentRow?.status === 'handled')
     },
     colProps: { span: props.isEdit ? 0 : 8 }
   },
@@ -344,7 +356,10 @@ const schema = reactive<FormSchema[]>([
       style: 'width: 100%',
       placeholder: '狀態',
       options: dict.member.workOrderStatus,
-      onChange: handleStatusChange
+      onChange: handleStatusChange,
+      disabled:
+        props.isEdit &&
+        (props.currentRow?.status === 'nohand' || props.currentRow?.status === 'handled')
     },
     colProps: { span: 16 },
     formItemProps: {
@@ -360,7 +375,10 @@ const schema = reactive<FormSchema[]>([
       style: 'width: 100%',
       placeholder: '溝通記錄',
       type: 'textarea',
-      rows: 2
+      rows: 2,
+      disabled:
+        props.isEdit &&
+        (props.currentRow?.status === 'nohand' || props.currentRow?.status === 'handled')
     },
     colProps: { span: 24 },
     formItemProps: {

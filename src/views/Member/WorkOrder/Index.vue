@@ -15,6 +15,7 @@ import dict from '@/config/dictionary.json'
 import { getApi } from '@/api/common'
 
 import { getTableListApi, delTableListApi, updateTableApi } from '@/api/workorder/workorder'
+import { WorkOrderType } from '@/api/workorder/workorder/types'
 
 defineOptions({
   name: 'WorkOrderIndex'
@@ -45,7 +46,7 @@ onMounted(async () => {
   search()
 })
 
-const { register, tableObject, methods } = useTable<any>({
+const { register, tableObject, methods } = useTable<WorkOrderType>({
   getListApi: getTableListApi,
   delListApi: delTableListApi,
   response: {
@@ -278,7 +279,7 @@ const { allSchemas } = useCrudSchemas(crudSchemas)
 
 const delLoading = ref(false)
 
-const delData = async (row: any | null) => {
+const delData = async (row: WorkOrderType | null) => {
   tableObject.currentRow = row
   const { delList } = methods
   // const selections = await getSelections()
@@ -292,7 +293,7 @@ const dialogVisible = ref(false)
 const dialogTitle = ref('')
 const actionType = ref('')
 
-const action = (row: any, type: string) => {
+const action = (row: WorkOrderType, type: string) => {
   dialogTitle.value = t(type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail')
   actionType.value = type
   tableObject.currentRow = row

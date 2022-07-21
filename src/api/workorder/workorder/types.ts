@@ -1,22 +1,52 @@
-export type MemberInfoTableData = {
-  id: string
-  memberName: string
-  mobile: string
-  gender: string
-  birthday: string
-  archivesNo: string
-  profileLocation: string
-  profileLocationName: string
-  identityTypeName: string
-  identityCode: string
-  levelName: string
-  cardStatus: string
-  cardNum: string
-  balance: string
-  cardCreateTime: string
+// export type WorkOrderTableData = {
+//   createTime: string
+//   createUser: string
+//   deptName: string
+//   hospitalId: string
+//   hospitalName: string
+//   id: string
+//   isDeleted: string
+//   modifyTime: string
+//   modifyUser: string
+//   parentId: string
+//   pharmacyId: string
+//   type: string
+//   pageNum: number
+//   pageSize: number
+// }
+
+export type WorkOrderType = {
+  acceptTime: string
+  comment: string
+  contactMobile: string
+  contactName: string
+  contactUserid: string
+  createTime: string
   createUser: string
-  createHospital: string
-  pageviews: number
+  detailId: string
+  handlerId: string
+  handlerName: string
+  hospitalId: string
+  id: string
+  isDeleted: string
+  isRemind: string
+  latestHandleTime: string
+  memberId: string
+  mobile: string
+  modifyTime: string
+  modifyUser: string
+  name: string
+  nextContactTime: string
+  pageNum: number
+  pageSize: number
+  remindId: string
+  serviceMode: string
+  status: string
+  transferId: string
+  transferName: string
+  transferType: string
+  type: string
+  typeName: string
 }
 
 export type CommentType = {
