@@ -13,7 +13,7 @@ import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 // import { useDictStoreWithOut } from '@/store/modules/dict'
 import { getInOptionFormat, formatObject, getWeekSEDate } from '@/utils/common'
 import { getApi } from '@/api/common'
-
+import dict from '@/config/dictionary.json'
 import ColumnView from './ColumnView.vue'
 
 defineOptions({
@@ -254,8 +254,6 @@ const search = () => {
   search!.search()
 }
 
-const weekday = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
-
 const updateTableCol = () => {
   curWeek.value.range.map((item, index) => {
     const { setColumn } = methods
@@ -263,7 +261,7 @@ const updateTableCol = () => {
       {
         field: `col${index}`,
         path: 'label',
-        value: `${weekday[index]}(${item.substring(5)})`
+        value: `${dict.weekday[index]}(${item.substring(5)})`
       }
     ])
   })
