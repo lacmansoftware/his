@@ -20,7 +20,6 @@ defineOptions({
   name: 'WorkOrderIndex'
 })
 
-const my = ref(false)
 const notComplate = ref(false)
 const writeRef = ref<ComponentRef<typeof Write>>()
 
@@ -258,7 +257,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       show: true,
       component: 'Hidden',
       colProps: { span: 0 },
-      value: my as any
+      value: 0
     }
   },
   {
@@ -270,7 +269,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       show: true,
       component: 'Hidden',
       colProps: { span: 0 },
-      value: notComplate as any
+      value: 0
     }
   }
 ])
@@ -313,15 +312,25 @@ const search = () => {
   search!.search()
 }
 
-const myOrder = () => {
-  my.value = !my.value
-  console.log(my.value)
+const myOrder = async () => {
+  const formData = await unref(searchRef)?.getFormData()
+  const { my } = formData
+
+  await setValues({
+    my: !my ? 1 : 0
+  })
 
   search()
 }
 
-const notComplateOrder = () => {
-  notComplate.value = !notComplate.value
+const notComplateOrder = async () => {
+  const formData = await unref(searchRef)?.getFormData()
+  const { notComplate } = formData
+
+  await setValues({
+    notComplate: !notComplate ? 1 : 0
+  })
+
   search()
 }
 
