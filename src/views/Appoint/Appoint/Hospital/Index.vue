@@ -58,6 +58,7 @@ const setStore = async (key: string, url: string, valueField: string, labelField
 onMounted(async () => {
   // setStore('certificate', '/sys/dict/type/MEMBER_Certificate', 'code', 'value')
   setStore('feePayHospitalId', '/sys/hospital', 'id', 'name')
+  updateTableCol()
   getAllSelectData()
   await setValues({
     viewType: 'basicWeek',
@@ -253,8 +254,24 @@ const search = () => {
   search!.search()
 }
 
+const weekday = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+
+const updateTableCol = () => {
+  curWeek.value.range.map((item, index) => {
+    const { setColumn } = methods
+    setColumn([
+      {
+        field: `col${index}`,
+        path: 'label',
+        value: `${weekday[index]}(${item.substring(5)})`
+      }
+    ])
+  })
+}
+
 watch(curWeekDate, async () => {
   curWeek.value = getWeekSEDate(curWeekDate.value)
+  updateTableCol()
   await setValues({
     startDate: curWeek.value.startDate,
     endDate: curWeek.value.endDate
