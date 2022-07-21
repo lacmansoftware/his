@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Form } from '@/components/Form'
 import { useForm } from '@/hooks/web/useForm'
-import { PropType, reactive, watch, ref, onMounted } from 'vue'
+import { PropType, reactive, watch, ref, onMounted, computed } from 'vue'
 // import { useI18n } from '@/hooks/web/useI18n'
 import { useValidator } from '@/hooks/web/useValidator'
 import { getApi } from '@/api/common'
@@ -26,6 +26,7 @@ const props = defineProps({
 // const { t } = useI18n()
 
 const contactUserId = ref('')
+const statusRef = ref('nothand')
 
 const store = {
   orderTypes: ref<ComponentOptions[]>([]),
@@ -61,6 +62,7 @@ onMounted(async () => {
   )
   await setStore('sysUser', `/sys/user`, 'id', 'name')
   setStore('sysDeptList', `/sys/dept/list`, 'id', 'hospitalName+deptName')
+  store.transferId.value = store.sysUser.value
 
   props.isEdit && setComments()
 })
@@ -102,9 +104,35 @@ const handleTypeChange = (item: Recordable) => {
   })
 }
 
-const handleStatusChange = (item: Recordable) => {
-  console.log(item)
+const handleStatusChange = (item: string) => {
+  statusRef.value = item
+  if (!(statusRef.value === 'nothand' || statusRef.value === 'handling')) {
+    methods?.setValues({
+      transferType: 'person'
+    })
+    methods?.setSchema([
+      {
+        field: 'transferId',
+        path: 'componentProps.disabled',
+        value: true
+      }
+    ])
+  } else {
+    methods?.setSchema([
+      {
+        field: 'transferId',
+        path: 'componentProps.disabled',
+        value: false
+      }
+    ])
+  }
 }
+
+const transferTypeOptions = computed(() =>
+  dict.member.workOrderTransferType.filter(
+    (item) => statusRef.value === 'nothand' || statusRef.value === 'handling' || !item.disabled
+  )
+)
 
 const handleTransferTypeChange = (item: string) => {
   store.transferId.value = item === 'person' ? store.sysUser.value : store.sysDeptList.value
@@ -241,7 +269,7 @@ const schema = reactive<FormSchema[]>([
     componentProps: {
       style: 'width: 100%',
       placeholder: '',
-      options: dict.member.workOrderTransferType,
+      options: transferTypeOptions as any,
       onChange: handleTransferTypeChange
     },
     colProps: { span: 12 },
@@ -255,6 +283,7 @@ const schema = reactive<FormSchema[]>([
     label: '轉交编号',
     component: 'Select',
     componentProps: {
+      disabled: false,
       style: 'width: 100%',
       placeholder: '轉交编号',
       options: store.transferId as any
@@ -315,13 +344,13 @@ const schema = reactive<FormSchema[]>([
       style: 'width: 100%',
       placeholder: '狀態',
       options: dict.member.workOrderStatus,
-      change: handleStatusChange
+      onChange: handleStatusChange
     },
     colProps: { span: 16 },
     formItemProps: {
       rules: [required()]
     },
-    value: 'nothand'
+    value: statusRef.value
   },
   {
     field: 'comment',
@@ -387,6 +416,12 @@ defineExpose({
   elFormRef,
   getFormData: methods.getFormData
 })
+
+const test = () => {
+  schema.find((item) => item.field === 'transferType')!.value = 'dept'
+
+  alert('Hello')
+}
 </script>
 
 <template>
