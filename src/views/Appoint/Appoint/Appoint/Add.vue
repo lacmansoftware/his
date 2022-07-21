@@ -12,6 +12,7 @@ import { saveUpdateStatusApi } from '@/api/appoint/appoint/hospital'
 import { UpdateStatusType } from '@/api/appoint/appoint/hospital/types'
 import { getInOptionFormat, returnDateString } from '@/utils/common'
 import { getApi } from '@/api/common'
+import { genFormSchema } from '@/utils/schema'
 
 import dict from '@/config/dictionary.json'
 
@@ -36,20 +37,6 @@ onMounted(async () => {
   setStore('doctorId', '/doctor/getAuthPass', 'id', 'name')
 })
 
-const querySearch = async (queryString: string, cb: Fn) => {
-  const res = await getApi(`/member/info/get4workorder?keyWords=${queryString}`)
-  const result = res?.data.map((item) => ({
-    id: item.id,
-    name: item.name,
-    mobile: item.mobile,
-    gender: item.gender,
-    archivesNo: item.archivesNo,
-    value: item.name,
-    label: item.name
-  }))
-  cb(result)
-}
-
 const handleQuerySelect = (item: Recordable) => {
   const { setValues } = methods
 
@@ -64,191 +51,87 @@ const handleQuerySelect = (item: Recordable) => {
 }
 
 const schema = reactive<FormSchema[]>([
-  {
-    field: 'query',
-    label: '檢索姓名/檔案號/拼音/手機號',
-    component: 'Autocomplete',
-    componentProps: {
-      style: 'width: 100%',
-      triggerOnFocus: false,
-      fetchSuggestions: querySearch,
-      onSelect: handleQuerySelect,
-      slots: {
-        default: true
-      },
-      placeholder: '檢索姓名/檔案號/拼音/手機號'
-    },
-    colProps: { span: 18 }
-  },
-  {
-    field: 'source',
-    label: '預約渠道',
-    component: 'Select',
-    componentProps: {
-      style: 'width: 100%',
-      placeholder: '預約渠道',
-      options: dict.appoint.source
-    },
-    colProps: { span: 6 },
-    formItemProps: {
-      rules: [required()]
-    },
-    value: 'TEL'
-  },
-  {
-    field: 'specialistId',
-    label: '',
-    component: 'Hidden',
-    colProps: { span: 0 }
-  },
-  {
-    field: 'packageId',
-    label: '',
-    component: 'Hidden',
-    colProps: { span: 0 }
-  },
-  {
-    field: 'specialistName',
-    label: '',
-    component: 'Hidden',
-    colProps: { span: 0 }
-  },
-  {
-    field: 'packageName',
-    label: '',
-    component: 'Hidden',
-    colProps: { span: 0 }
-  },
-  {
-    field: 'hospitalId',
-    label: '門店',
-    component: 'Select',
-    componentProps: {
-      options: store.feePayHospitalId as any
-    },
-    colProps: { span: 6 }
-  },
-  {
-    field: 'doctorId',
-    label: '大夫',
-    component: 'Select',
-    componentProps: {
-      filterable: true,
-      options: store.doctorId as any
-    },
-    colProps: { span: 6 },
-    formItemProps: {
-      rules: [required()]
+  genFormSchema('autocomplete', 'query', '檢索姓名/檔案號/拼音/手機號', {
+    url: '/member/info/get4workorder',
+    itemValue: 'name',
+    itemLink: 'id',
+    placeholder: null
+  }),
+  genFormSchema('sourceSelect', 'source', '預約渠道', {
+    placeholder: null,
+    options: dict.appoint.source as any
+  }),
+  genFormSchema('hidden', 'specialistId', '', { placeholder: null }),
+  genFormSchema('hidden', 'packageId', '', { placeholder: null }),
+  genFormSchema('hidden', 'specialistName', '', { placeholder: null }),
+  genFormSchema('hidden', 'packageName', '', { placeholder: null }),
+  genFormSchema('apiSelect', 'hospitalId', '門店', {
+    placeholder: null,
+    api: async () => {
+      return await getInOptionFormat('sys/hospital?special=Y', 'id', 'name')
     }
-  },
-  {
-    field: 'appointmentTimeStart',
-    label: ''
-  },
-  {
-    field: 'appointmentTimeEnd',
-    label: ''
-  },
-  {
-    field: 'visitType',
-    label: ''
-  },
-  {
-    field: 'memberName',
-    label: ''
-  },
-  {
-    field: 'memberId',
-    label: ''
-  },
-  {
-    field: 'memberMobile',
-    label: ''
-  },
-  {
-    field: 'memberLevel',
-    label: ''
-  },
-  {
-    field: 'memberGender',
-    label: ''
-  },
-  {
-    field: 'memberBirthday',
-    label: ''
-  },
-  {
-    field: 'memberAge',
-    label: ''
-  },
-  {
-    field: 'memberSource',
-    label: ''
-  },
-  {
-    field: 'recommender',
-    label: ''
-  },
-  {
-    field: 'importantGuest',
-    label: ''
-  },
-  {
-    field: 'importantGuestComment',
-    label: ''
-  },
-  {
-    field: 'marketActivity',
-    label: ''
-  },
-  {
-    field: 'note',
-    label: ''
-  },
-  {
-    field: 'isUpdateAppointRemark',
-    label: ''
-  },
-  {
-    field: 'conditionRemark',
-    label: ''
-  },
-  {
-    field: 'isUpdateConditionRemark',
-    label: ''
-  },
-  {
-    field: 'hasHighMedicalInsurance',
-    label: ''
-  },
-  {
-    field: 'usePrCard',
-    label: ''
-  },
-  {
-    field: 'cmpe',
-    label: ''
-  },
-  {
-    field: 'consFee',
-    label: ''
-  },
-  {
-    field: 'cmpeRemark',
-    label: ''
-  },
-  {
-    field: 'payType',
-    label: ''
-  },
-  {
-    field: 'pendingFlag',
-    label: ''
-  },
-  {
-    field: 'firstVisitTime',
-    label: ''
-  }
+  }),
+  genFormSchema('apiSelect', 'doctorId', '大夫', {
+    placeholder: '請填寫',
+    api: async () => {
+      return await getInOptionFormat('doctor/getAuthPass', 'id', 'name')
+    }
+  }),
+  genFormSchema('date', 'undefined', '約診時間', { type: 'datetimerange', placeholder: null }),
+  genFormSchema('input', 'appointmentTimeStart', '約診時間', { placeholder: null }),
+  genFormSchema('input', 'appointmentTimeEnd', '約診時間', { placeholder: null }),
+  genFormSchema('sourceSelect', 'visitType', '初複診', {
+    placeholder: null,
+    options: dict.visitType as any
+  }),
+  genFormSchema('input', 'memberName', '姓名', { placeholder: null }),
+  genFormSchema('hidden', 'memberId', '姓名', { placeholder: null }),
+  genFormSchema('input', 'memberMobile', '電話', { placeholder: null }),
+  genFormSchema('apiSelect', 'memberLevel', '會員級別', {
+    placeholder: null,
+    api: async () => {
+      return await getInOptionFormat('sys/member/level', 'id', 'levelName')
+    }
+  }),
+  genFormSchema('sourceSelect', 'memberGender', '性別', {
+    placeholder: null,
+    options: dict.sex as any
+  }),
+  genFormSchema('datePicker', 'memberBirthday', '出生年月', { placeholder: null }),
+  genFormSchema('input', 'memberAge', '年齡', { placeholder: null }),
+  genFormSchema('apiSelect', 'memberSource', '客戶來源', {
+    placeholder: null,
+    api: async () => {
+      return await getInOptionFormat('sys/dict/type/MEMBER_Source', 'code', 'value')
+    }
+  }),
+  genFormSchema('input', 'recommender', '來源詳情', { placeholder: null }),
+  genFormSchema('apiSelect', 'importantGuest', '重要客戶類型', {
+    placeholder: null,
+    api: async () => {
+      return await getInOptionFormat('sys/dict/type/MEMBER_ImportGuest', 'code', 'value')
+    }
+  }),
+  genFormSchema('input', 'importantGuestComment', '重要客戶備註詳情', { placeholder: null }),
+  genFormSchema('apiSelect', 'marketActivity', '市場活動', {
+    placeholder: '請選擇',
+    api: async () => {
+      return await getInOptionFormat('market/activity/list?pageSize=0&type=0', 'id', 'name')
+    }
+  }),
+  genFormSchema('textarea', 'note', '預約備註', { placeholder: null }),
+  genFormSchema('textarea', 'conditionRemark', '病情備註', { placeholder: null }),
+  genFormSchema('radio', 'hasHighMedicalInsurance', '是否有高端醫療險', {
+    options: dict.appoint.hasHighMedicalInsurance,
+    value: ''
+  }),
+  genFormSchema('radio', 'usePrCard', '是否使用公關卡', {
+    options: dict.appoint.usePrCard,
+    value: ''
+  }),
+  genFormSchema('input', 'consFee', '預約支付金額', { placeholder: null }),
+  genFormSchema('textarea', 'cmpeRemark', '中醫體檢備註', { placeholder: null }),
+  genFormSchema('radio', 'payType', '是否支付診費:', { options: dict.appoint.payType, value: '' })
 ])
 
 const { register, methods, elFormRef } = useForm({
