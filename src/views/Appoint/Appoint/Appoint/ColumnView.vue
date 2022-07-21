@@ -24,11 +24,11 @@ const props = defineProps({
   }
 })
 
-const data = ref<AppointDoctorType>(
-  props.row?.children.find((item) => {
+const data = computed<AppointDoctorType>(() => {
+  return props.row?.children.find((item) => {
     if (item.start === props.curWeek.range[props.colId]) return true
   }) as AppointDoctorType
-)
+})
 
 const schema = computed(() => {
   const timeLabels = timelineLabels(
