@@ -2,7 +2,7 @@
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 // import { useI18n } from '@/hooks/web/useI18n'
-import { ElDatePicker } from 'element-plus'
+import { ElDatePicker, ElLink } from 'element-plus'
 import { Table } from '@/components/Table'
 import { useTable } from '@/hooks/web/useTable'
 import { reactive, ref, unref, onMounted, watch, computed } from 'vue'
@@ -15,12 +15,15 @@ import { getTableListApi } from '@/api/appoint/appoint/appoint'
 import { AppointDoctorTableData } from '@/api/appoint/appoint/appoint/types'
 
 import ColumnView from './ColumnView.vue'
+import { CurWeekType } from '@/api/appoint/appoint/hospital/types'
+import { useRoute } from 'vue-router'
 
 defineOptions({
   name: 'AppointManageAppointIndex'
 })
 
-const curWeek = ref(getWeekSEDate())
+const { params } = useRoute()
+const curWeek = ref<CurWeekType>(getWeekSEDate())
 const curWeekDate = ref(curWeek.value.startDate)
 
 const store = {
@@ -58,11 +61,21 @@ onMounted(async () => {
   // setStore('certificate', '/sys/dict/type/MEMBER_Certificate', 'code', 'value')
   setStore('feePayHospitalId', '/sys/hospital', 'id', 'name')
   getAllSelectData()
-  await setValues({
-    viewType: 'basicWeek',
-    startDate: curWeek.value.startDate,
-    endDate: curWeek.value.endDate
-  })
+  if (params.hospitalId && params.doctorId && params.startDate && params.endDate) {
+    await setValues({
+      viewType: 'basicWeek',
+      hospitalId: params.hospitalId,
+      doctorId: params.doctorId,
+      startDate: params.startDate,
+      endDate: params.endDate
+    })
+  } else {
+    await setValues({
+      viewType: 'basicWeek',
+      startDate: curWeek.value.startDate,
+      endDate: curWeek.value.endDate
+    })
+  }
   search()
 })
 
@@ -296,9 +309,9 @@ watch(curWeekDate, async () => {
       @register="register"
     >
       <template #hospital="{ row }">
-        <div class="flex flex-col align-middle">
-          <p>{{ row?.name }}</p>
-          <p>查看醫生信息</p>
+        <div class="flex flex-col align-middle text-center">
+          <p class="text-base text-green-500">{{ row?.name }}</p>
+          <ElLink type="warning">查看醫生信息</ElLink>
         </div>
       </template>
       <template #col0="{ row }">

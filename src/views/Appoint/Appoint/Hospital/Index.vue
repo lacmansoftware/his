@@ -299,7 +299,7 @@ watch(curWeekDate, async () => {
     >
       <template #hospital="{ row }">
         <div class="flex flex-col align-middle">
-          <p>{{ row?.name }}</p>
+          <p class="text-base text-green-500">{{ row?.name }}</p>
           <p>{{ `上限 ${row?.totalLimit} 人` }}</p>
           <p>{{ `已约 ${row?.totalMeet} 人` }}</p>
         </div>

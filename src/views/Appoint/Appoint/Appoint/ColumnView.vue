@@ -55,7 +55,7 @@ onMounted(() => {
 <template>
   <CustomDropdown v-if="typeof data !== 'undefined'" trigger="hover" :schema="schema">
     <div class="flex flex-col gap-2">
-      <p>{{ data.name }}</p>
+      <p class="text-base text-blue-400">{{ data.name }}</p>
       <p>{{ `已约/上限: ${data.addLimit}/${data.limit}` }}</p>
     </div>
   </CustomDropdown>
