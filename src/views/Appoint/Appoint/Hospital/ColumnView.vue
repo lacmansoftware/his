@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, PropType, ref } from 'vue'
+import { computed, onMounted, onUpdated, PropType, ref } from 'vue'
 // import { useI18n } from '@/hooks/web/useI18n'
 import { CustomDropdown } from '@/components/ContextMenu'
 import {
@@ -27,11 +27,11 @@ const props = defineProps({
   }
 })
 
-const data = ref<AppointHospitalType>(
-  props.row?.children.find((item) => {
+const data = computed<AppointHospitalType>(() => {
+  return props.row?.children.find((item) => {
     if (item.start === props.curWeek.range[props.colId]) return true
   }) as AppointHospitalType
-)
+})
 
 const schema = computed(() => {
   return data?.value.children.map((doctor) => ({
