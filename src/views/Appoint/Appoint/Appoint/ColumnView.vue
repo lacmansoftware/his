@@ -37,12 +37,24 @@ const schema = computed(() => {
     data.value.cycle,
     'minute'
   )
-  return timeLabels.map((time) => ({
+  return timeLabels.map((time, index) => ({
     icon: '',
     disabled: !isValidTime(data.value.start, time),
     label: `<div class="flex items-center justify-between gap-4"><p>${time}</p><p>添加預約</p></div>`,
     command: () => {
-      push('/appoint/appoint/appoint/add?id=wegwe')
+      // doctorId: props.row.id
+      // hospitalId: data.value.hospitalId
+      // startTime: data.value.date + " " + time
+      // endTime: data.value.date + " " + timeLabels[index + 1]
+      push({
+        name: 'AppointManageAppointAdd',
+        params: {
+          doctorId: props.row.id,
+          hospitalId: data.value.hospitalId,
+          startTime: data.value.date + ' ' + time,
+          endTime: data.value.date + ' ' + timeLabels[index + 1]
+        }
+      })
     }
   }))
 })

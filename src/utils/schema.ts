@@ -174,16 +174,24 @@ export const genTableSchema = (
 
 export const genFormSchema = (
   schemaType: string,
-  fieldValue: string,
-  labelValue: string,
+  fieldValue = '',
+  labelValue = '',
   optionObj: any = {}
 ) => {
+  if (schemaType === 'divider') {
+    return {
+      field: fieldValue,
+      label: labelValue,
+      component: 'Divider'
+    }
+  }
   if (schemaType === 'input') {
     return {
       field: fieldValue,
       label: labelValue,
       component: 'Input',
       componentProps: {
+        disabled: optionObj?.readonly ?? null,
         placeholder: optionObj.placeholder ?? null
       },
       formItemProps: {
@@ -199,6 +207,7 @@ export const genFormSchema = (
       label: labelValue,
       component: 'Input',
       componentProps: {
+        disabled: optionObj?.readonly ?? null,
         type: 'textarea',
         rows: optionObj.rows ?? 2,
         placeholder: optionObj.placeholder ?? null
@@ -227,7 +236,10 @@ export const genFormSchema = (
       label: labelValue,
       component: 'DatePicker',
       componentProps: {
+        disabled: optionObj?.readonly ?? null,
         type: optionObj.type ?? 'date',
+        format: optionObj.format ?? 'YYYY-MM-DD HH:mm:ss',
+        valueFormat: optionObj.valueFormat ?? 'YYYY-MM-DD HH:mm:ss',
         placeholder: optionObj.placeholder ?? null
       },
       formItemProps: {
@@ -243,6 +255,7 @@ export const genFormSchema = (
       field: fieldValue,
       component: 'Autocomplete',
       componentProps: {
+        disabled: optionObj?.readonly ?? null,
         style: 'width: 100%',
         triggerOnFocus: optionObj?.triggerOnFocus ?? false,
         fetchSuggestions: async (queryString: string, cb: Fn) => {
@@ -255,6 +268,9 @@ export const genFormSchema = (
           cb(result)
         },
         onSelect: optionObj?.onSelect ?? null,
+        // onSelect: (item: Recordable) => {
+        //   console.log('hello ')
+        // },
         slots: {
           default: true
         },
@@ -273,18 +289,22 @@ export const genFormSchema = (
       label: labelValue,
       component: 'Select',
       componentProps: {
+        disabled: optionObj?.readonly ?? null,
         placeholder: optionObj?.placeholder ?? null,
         options: optionObj?.options ?? null
       },
       colProps: { span: optionObj?.span ?? 6 },
-      value: optionObj?.value ?? null
+      value: optionObj?.value ?? null,
+      formItemProps: {
+        labelWidth: optionObj?.labelWidth ?? null,
+        rules: optionObj?.required ? [required()] : []
+      }
     }
   }
   if (schemaType === 'apiSelect') {
     const options = ref([])
     if (optionObj?.api) {
       optionObj?.api().then((res) => {
-        console.log('api loaded: ', res)
         options.value = res
       })
     }
@@ -293,11 +313,16 @@ export const genFormSchema = (
       label: labelValue,
       component: 'Select',
       componentProps: {
+        disabled: optionObj?.readonly ?? null,
         placeholder: optionObj?.placeholder ?? null,
         filterable: optionObj?.filterable ?? false,
         options: options as any
       },
-      colProps: { span: optionObj?.span ?? 6 }
+      colProps: { span: optionObj?.span ?? 6 },
+      formItemProps: {
+        labelWidth: optionObj?.labelWidth ?? null,
+        rules: optionObj?.required ? [required()] : []
+      }
     }
   }
   if (schemaType === 'datePicker') {
@@ -306,11 +331,16 @@ export const genFormSchema = (
       field: fieldValue,
       component: 'DatePicker',
       componentProps: {
+        disabled: optionObj?.readonly ?? null,
         placeholder: optionObj?.placeholder ?? null,
         type: 'date',
         valueFormat: 'YYYY-MM-DD'
       },
-      colProps: { span: optionObj?.span ?? 6 }
+      colProps: { span: optionObj?.span ?? 6 },
+      formItemProps: {
+        labelWidth: optionObj?.labelWidth ?? null,
+        rules: optionObj?.required ? [required()] : []
+      }
     } as any
   }
   if (schemaType === 'checkbox') {
@@ -319,11 +349,13 @@ export const genFormSchema = (
       field: fieldValue,
       component: 'Checkbox',
       componentProps: {
+        disabled: optionObj?.readonly ?? null,
         options: optionObj?.options ?? null
       },
       colProps: { span: optionObj?.span ?? 6 },
       formItemProps: {
-        labelWidth: labelValue === '' && !optionObj?.labelWidth ? '0px' : null
+        labelWidth: labelValue === '' && !optionObj?.labelWidth ? '0px' : null,
+        rules: optionObj?.required ? [required()] : []
       },
       value: optionObj?.value ?? []
     }
@@ -334,12 +366,17 @@ export const genFormSchema = (
       field: fieldValue,
       component: 'Radio',
       componentProps: {
+        disabled: optionObj?.readonly ?? null,
         style: 'width: 100%',
         options: optionObj?.options ?? null,
         onChange: optionObj?.onChange ?? null
       },
       colProps: { span: optionObj?.span ?? 6 },
-      value: optionObj?.value ?? ''
+      value: optionObj?.value ?? '',
+      formItemProps: {
+        labelWidth: optionObj?.labelWidth ?? null,
+        rules: optionObj?.required ? [required()] : []
+      }
     }
   }
   console.log('Gen FormSchema: Not expected type ', schemaType)
