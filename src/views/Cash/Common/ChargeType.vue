@@ -21,6 +21,7 @@ const store = {
 }
 const allMoney = ref(0)
 const chargeTypeRef = ref<any>([])
+const chargeItemRefs = ref([])
 
 onMounted(async () => {})
 
@@ -29,6 +30,7 @@ const handleChargeTypeChange = async (item: string[]) => {
     // yui.get('HYK').reset()
   }
   chargeTypeRef.value = item
+  console.log(chargeItemRefs)
 
   /*
   if (e.value.indexOf('TRDF') === -1) {
@@ -407,8 +409,6 @@ const renderMoney = async (appointPrice = 0) => {
 const rules = []
 
 const isSelected = (ct) => {
-  console.log(chargeTypeRef.value, ct.value)
-
   return chargeTypeRef.value.includes(ct.value)
 }
 </script>
@@ -421,6 +421,7 @@ const isSelected = (ct) => {
         v-for="ct in dict.chargeType.filter((item) => isSelected(item))"
         :chargeType="ct"
         :key="ct.value"
+        ref="chargeItemRefs"
       />
     </template>
   </Form>

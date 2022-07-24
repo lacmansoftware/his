@@ -5,6 +5,10 @@ const props = defineProps({
     default: () => ({})
   }
 })
+
+defineExpose({
+  props
+})
 </script>
 <template>
   <p>{{ chargeType.label }}</p>
