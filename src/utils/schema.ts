@@ -350,7 +350,8 @@ export const genFormSchema = (
       component: 'Checkbox',
       componentProps: {
         disabled: optionObj?.readonly ?? null,
-        options: optionObj?.options ?? null
+        options: optionObj?.options ?? null,
+        onChange: optionObj?.onChange ?? null
       },
       colProps: { span: optionObj?.span ?? 6 },
       formItemProps: {

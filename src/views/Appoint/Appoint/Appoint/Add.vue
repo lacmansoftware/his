@@ -16,6 +16,7 @@ import { genFormSchema } from '@/utils/schema'
 
 import dict from '@/config/dictionary.json'
 import { AppointDoctorType } from '@/api/appoint/appoint/appoint/types'
+import ChargeType from '@/views/Cash/Common/ChargeType.vue'
 
 const { required } = useValidator()
 const { emitter } = useEmitt()
@@ -286,7 +287,14 @@ const schema = reactive<FormSchema[]>([
     value: '0',
     labelWidth: '150px',
     span: 24
-  })
+  }),
+  {
+    field: 'chargeType',
+    label: '',
+    colProps: {
+      span: 24
+    }
+  }
 ])
 
 const { register, methods, elFormRef } = useForm({
@@ -383,6 +391,10 @@ const rules = []
     <Form :rules="rules" @register="register">
       <template #hasHighMedicalInsuranceInfo>
         <span>{{ hasHighMedicalInsuranceInfoRef }}</span>
+      </template>
+
+      <template #chargeType>
+        <ChargeType />
       </template>
     </Form>
 
