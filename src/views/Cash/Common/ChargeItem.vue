@@ -165,7 +165,24 @@ const schema = {
 const { register, methods, elFormRef } = useForm({
   schema: schema[props.chargeType.value]
 })
+
+const setAmount = (amount: string) => {
+  const curSchema = schema[props.chargeType.value]
+  if (curSchema.find((item) => item.field === 'amount')) {
+    methods.setValues({
+      amount
+    })
+  } else {
+  }
+}
 const rules = []
+
+defineExpose({
+  setAmount,
+  elFormRef,
+  props,
+  methods
+})
 </script>
 
 <template>

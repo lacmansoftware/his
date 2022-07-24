@@ -6,9 +6,11 @@ import { useForm } from '@/hooks/web/useForm'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useRouter, useRoute } from 'vue-router'
 import { genFormSchema } from '@/utils/schema'
-import { getInOptionFormat } from '@/utils/common'
+import { diff, getInOptionFormat } from '@/utils/common'
 import dict from '@/config/dictionary.json'
 import ChargeItem from './ChargeItem.vue'
+import ChooseTaRenCard from './ChooseTaRenCard.vue'
+import { Dialog } from '@/components/Dialog'
 
 const { push, go } = useRouter()
 const { params } = useRoute()
@@ -21,122 +23,95 @@ const store = {
 }
 const allMoney = ref(0)
 const chargeTypeRef = ref<any>([])
-const chargeItemRefs = ref([])
+const chargeItemRefs = ref<Array<InstanceType<typeof ChargeItem>>>([])
+const TarenRef = ref<ComponentRef<typeof ChooseTaRenCard>>()
+const dialogVisible = ref(false)
+const dialogTitle = ref<string>()
+const actionType = ref<string>()
 
 onMounted(async () => {})
 
 const handleChargeTypeChange = async (item: string[]) => {
-  if (item.indexOf('HYK') === -1) {
-    // yui.get('HYK').reset()
-  }
+  const lastChangedItem = diff(chargeTypeRef.value, item)
   chargeTypeRef.value = item
   console.log(chargeItemRefs)
 
-  /*
-  if (e.value.indexOf('TRDF') === -1) {
-    yui.get('TRDF').reset()
-  }
-  var node = e.targetNode
-  if (node) {
-    var arr = e.value.split(',')
+  if (lastChangedItem) {
     if (
-      arr[0] &&
-      arr.length === 1 &&
-      arr[0] !== 'ZZBX' &&
-      arr[0] !== 'YHQ' &&
-      arr[0] !== 'WX_COUPON'
+      item[0] &&
+      item.length === 1 &&
+      item[0] !== 'ZZBX' &&
+      item[0] !== 'YHQ' &&
+      item[0] !== 'WX_COUPON'
     ) {
-      var children = yui.get(arr[0]).getAllEditors()
-      for (var i = 0; i < children.length; i++) {
-        if (children[i].name === 'amount') {
-          children[i].setValue(Number(price_amount.getValue()).toFixed(1))
-          break
-        }
-      }
+      unref(chargeItemRefs.value[0])?.setAmount(allMoney.value.toFixed(1))
     }
-    if (arr.length === 2 && arr.indexOf('SENDURL') !== -1) {
+    if (item.length === 2 && item.indexOf('SENDURL') !== -1) {
       //只有預約有推送支付鏈接
-      if (arr.indexOf('YHQ') === -1) {
-        this._changeSelected([e.targetNode])
-        yui.error('推送支付鏈接不能與非優惠券支付方式一起使用！')
+      if (item.indexOf('YHQ') === -1) {
+        resetChargeType()
+        ElMessage.error('推送支付鏈接不能與非優惠券支付方式一起使用！')
         return
       }
     }
-    if (!node._checked && node.id === 'YHQ') {
-      if (arr.join('').indexOf('COUPON') === -1) {
+    if (!lastChangedItem.checked && lastChangedItem.value === 'YHQ') {
+      if (item.join('').indexOf('COUPON') === -1) {
         //不選擇優惠券的時候需要重置優惠券form的信息
-        yui.get('YHQ').reset()
+        setChargeItem('YHQ', 'reset')
       }
-      yui.get('coupon_radio').setValue('0')
+      setChargeItem('YHQ', 'coupon_radio', '0')
     }
-    if (node._checked && arr.length === 2) {
-      var amountArr = []
-      for (var i = 0; i < arr.length; i++) {
-        var children = yui.get(arr[i]).getAllEditors()
-        for (var index = 0; index < children.length; index++) {
-          if (children[index].name === 'amount') {
-            amountArr.push(children[index])
-          }
-        }
-      }
-      commonMethod.caclMoney(amountArr, price_amount)
+    if (lastChangedItem.checked && item.length === 2) {
+      // var amountArr = []
+      // for (var i = 0; i < item.length; i++) {
+      //   var children = yui.get(item[i]).getAllEditors()
+      //   for (var index = 0; index < children.length; index++) {
+      //     if (children[index].name === 'amount') {
+      //       amountitem.push(children[index])
+      //     }
+      //   }
+      // }
+      // commonMethod.caclMoney(amountArr, price_amount)
     }
-    if (arr.length > 2) {
-      yui.warning('最多選擇兩種支付組合方式！')
-      this._changeSelected([node])
-      if (parent.namespace.params.hasCard) {
-        jQuery('.listbox-node:contains("會員卡")')
-          .eq(0)
-          .append('<span style="color: #016cdf;">(該客人有會員卡)</span>')
+
+    if (lastChangedItem.value === 'TRDF') {
+      if (lastChangedItem.checked) {
+        handleDialog('TaRen', true)
       } else {
-        jQuery('.listbox-node:contains("會員卡")')
-          .eq(0)
-          .append('<span style="color: #016cdf;">(該客人無會員卡)</span>')
+        handleDialog('TaRen', false)
       }
-      if (parent.namespace.params.voucherData && parent.namespace.params.voucherData.length > 0) {
-        jQuery('.listbox-node:contains("優惠券")')
-          .eq(0)
-          .append(
-            '<span style="color: #016cdf;">(' +
-              parent.namespace.params.voucherData.length +
-              '張可用)</span>'
-          )
-      }
-      return
+      // var that = this
+      // if (lastChangedItem.checked) {
+      //   yui.showDialog({
+      //     title: '他人會員卡',
+      //     height: '600px',
+      //     width: '800px',
+      //     url: '/html/cash/common/choose_tr_card.html?memberId=' + memberId.getValue(),
+      //     onload: function () {},
+      //     onSuccess: function () {
+      //       var choose_form = this.yui.get('choose_form')
+      //       var data = choose_form.getData()
+      //       if (!data.balance) {
+      //         ElMessage.error('請選擇支付會員卡！')
+      //         return
+      //       }
+      //       yui.get('TRDF_balance').setValue(data.balance)
+      //       yui.get('TRDF_transactionId').setValue(data.transactionId)
+      //       yui.get('TRDF_transactionNo').setValue(data.transactionNo)
+      //       namespace.calcTrdfAfter()
+      //       namespace.queryHykAndInsurPrice()
+      //       this.closeWindow()
+      //     },
+      //     onCancel: function () {
+      //       jQuery('.listbox-node:contains("他人會員卡")').click() //手動點擊觸發change
+      //     }
+      //   })
+      // }
     }
-    if (node.id === 'TRDF') {
-      var that = this
-      if (node._checked) {
-        yui.showDialog({
-          title: '他人會員卡',
-          height: '600px',
-          width: '800px',
-          url: '/html/cash/common/choose_tr_card.html?memberId=' + memberId.getValue(),
-          onload: function () {},
-          onSuccess: function () {
-            var choose_form = this.yui.get('choose_form')
-            var data = choose_form.getData()
-            if (!data.balance) {
-              yui.error('請選擇支付會員卡！')
-              return
-            }
-            yui.get('TRDF_balance').setValue(data.balance)
-            yui.get('TRDF_transactionId').setValue(data.transactionId)
-            yui.get('TRDF_transactionNo').setValue(data.transactionNo)
-            namespace.calcTrdfAfter()
-            namespace.queryHykAndInsurPrice()
-            this.closeWindow()
-          },
-          onCancel: function () {
-            jQuery('.listbox-node:contains("他人會員卡")').click() //手動點擊觸發change
-          }
-        })
-      }
-    }
-    if (node.id === 'HYK') {
-      if (node._checked) {
+    /*if (lastChangedItem.value === 'HYK') {
+      if (lastChangedItem.checked) {
         if (!memberId.getValue()) {
-          yui.error('請先選擇患者！')
+          ElMessage.error('請先選擇患者！')
           return
         }
         yui.ajax({
@@ -152,44 +127,44 @@ const handleChargeTypeChange = async (item: string[]) => {
               namespace.calcHykAfter()
               namespace.queryHykAndInsurPrice()
             } else {
-              yui.error(result.msg)
+              ElMessage.error(result.msg)
               jQuery('.listbox-node:contains("會員卡")').eq(0).click() //手動點擊觸發change
             }
           }
         })
       }
     }
-    if (node.id === 'GIFT_CARD') {
-      if (arr.length > 1) {
+    if (lastChangedItem.value === 'GIFT_CARD') {
+      if (item.length > 1) {
         yui.warning('體檢卡不能和其他支付方式組合！')
         this._changeSelected([node])
         return
       }
     }
-    if (arr[0] && arr.length === 2 && arr[1] === 'GIFT_CARD') {
+    if (item[0] && item.length === 2 && item[1] === 'GIFT_CARD') {
       yui.warning('體檢卡不能和其他支付方式組合！')
       this._changeSelected([node])
       return
     }
-    if (arr[0] && arr.length === 2 && arr[1] === 'USE_PACKAGE') {
+    if (item[0] && item.length === 2 && item[1] === 'USE_PACKAGE') {
       yui.warning('套餐不能和其他支付方式組合！')
       this._changeSelected([node])
       return
     }
-    if (arr[0] && arr.length === 2 && arr[1] === 'USE_SPECIALIST') {
+    if (item[0] && item.length === 2 && item[1] === 'USE_SPECIALIST') {
       yui.warning('專科不能和其他支付方式組合！')
       this._changeSelected([node])
       return
     }
-    if (node.id === 'USE_PACKAGE') {
-      if (node._checked) {
-        if (arr.length > 1) {
+    if (lastChangedItem.value === 'USE_PACKAGE') {
+      if (lastChangedItem.checked) {
+        if (item.length > 1) {
           yui.warning('套餐不能和其他支付方式組合！')
           this._changeSelected([node])
           return
         }
         if (!memberId.getValue()) {
-          yui.error('請先選擇患者！')
+          ElMessage.error('請先選擇患者！')
           this._changeSelected([node])
           return
         }
@@ -225,7 +200,7 @@ const handleChargeTypeChange = async (item: string[]) => {
               yui.getByName('packageName').setValue(dataAll[0].packageName)
               window.parent.appointmentType = 'package'
             } else {
-              yui.error('未選擇任何套餐!')
+              ElMessage.error('未選擇任何套餐!')
             }
             this.closeWindow()
           }
@@ -235,14 +210,14 @@ const handleChargeTypeChange = async (item: string[]) => {
       window.parent.appointmentType = 'normal'
     }
 
-    if (node.id === 'USE_SPECIALIST') {
-      if (node._checked) {
+    if (lastChangedItem.value === 'USE_SPECIALIST') {
+      if (lastChangedItem.checked) {
         if (!memberId.getValue()) {
-          yui.error('請先選擇患者！')
+          ElMessage.error('請先選擇患者！')
           this._changeSelected([node])
           return
         }
-        if (arr.length > 1) {
+        if (item.length > 1) {
           yui.warning('專科不能和其他支付方式組合！')
           this._changeSelected([node])
           return
@@ -279,7 +254,7 @@ const handleChargeTypeChange = async (item: string[]) => {
               yui.getByName('specialistName').setValue(dataAll[0].specialistName)
               window.parent.appointmentType = 'specialist'
             } else {
-              yui.error('未選擇任何專科!')
+              ElMessage.error('未選擇任何專科!')
             }
             this.closeWindow()
           }
@@ -289,8 +264,8 @@ const handleChargeTypeChange = async (item: string[]) => {
       window.parent.appointmentType = 'normal'
     }
     $('.charge-type-item').css('display', 'none')
-    arr[0] &&
-      arr.forEach(function (el) {
+    item[0] &&
+      item.forEach(function (el) {
         $('#' + el).css('display', 'block')
       })
     if (parent.namespace.params && parent.namespace.params.hasCard !== undefined) {
@@ -314,9 +289,8 @@ const handleChargeTypeChange = async (item: string[]) => {
             '張可用)</span>'
         )
     }
-    namespace.queryHykAndInsurPrice(node)
+    namespace.queryHykAndInsurPrice(node) */
   }
-  */
 }
 
 const schema = reactive<FormSchema[]>([
@@ -327,6 +301,7 @@ const schema = reactive<FormSchema[]>([
     options: dict.chargeType,
     value: [],
     span: 24,
+    max: 2,
     onChange: handleChargeTypeChange
   }),
   genFormSchema('divider', '', '收費金額'),
@@ -372,19 +347,19 @@ const renderMoney = async (appointPrice = 0) => {
 
   // find all elements with name of 'amount' in selected charge types
 
-  // if (arr.length && arr[0]) {
-  //   for (var i = 0; i < arr.length; i++) {
-  //     var children = yui.get(arr[i]).getAllEditors()
+  // if (item.length && item[0]) {
+  //   for (var i = 0; i < item.length; i++) {
+  //     var children = yui.get(item[i]).getAllEditors()
   //     for (var index = 0; index < children.length; index++) {
   //       if (children[index].name === 'amount') {
-  //         amountArr.push(children[index])
+  //         amountitem.push(children[index])
   //       }
   //     }
   //   }
-  //   if (amountArr.length === 2) {
+  //   if (amountitem.length === 2) {
   //     var mm = Number(price_amount.getValue())
-  //     var m1 = Number(amountArr[0].getValue())
-  //     var m2 = Number(amountArr[1].getValue())
+  //     var m1 = Number(amountitem[0].getValue())
+  //     var m2 = Number(amountitem[1].getValue())
   //     if (m1 && m1 < mm) {
   //       m2 = utils.number.minus(mm, m1) //錢2
   //     } else {
@@ -392,24 +367,53 @@ const renderMoney = async (appointPrice = 0) => {
   //     }
   //     m2 = m2 < 0 ? 0 : m2
   //     m1 = m1 < 0 ? 0 : m1 //防止控件取負數絕對值
-  //     amountArr[0].id !== 'couponAmount' &&
-  //       amountArr[0].id !== 'gaofangkaAmount' &&
-  //       amountArr[0].setValue(m1)
-  //     amountArr[1].id !== 'couponAmount' &&
-  //       amountArr[1].id !== 'gaofangkaAmount' &&
-  //       amountArr[1].setValue(m2)
+  //     amountitem[0].id !== 'couponAmount' &&
+  //       amountitem[0].id !== 'gaofangkaAmount' &&
+  //       amountitem[0].setValue(m1)
+  //     amountitem[1].id !== 'couponAmount' &&
+  //       amountitem[1].id !== 'gaofangkaAmount' &&
+  //       amountitem[1].setValue(m2)
   //   } else {
-  //     amountArr[0].id !== 'couponAmount' &&
-  //       amountArr[0].id !== 'gaofangkaAmount' &&
-  //       amountArr[0].setValue(price_amount.getValue())
+  //     amountitem[0].id !== 'couponAmount' &&
+  //       amountitem[0].id !== 'gaofangkaAmount' &&
+  //       amountitem[0].setValue(price_amount.getValue())
   //   }
   // }
 }
 
 const rules = []
 
+const resetChargeType = () => {
+  methods.setValues({
+    chargeType: []
+  })
+}
+
+const setChargeItem = (chargeItemValue, fieldName, value = '') => {
+  const curChargeItem = chargeItemRefs.value.find(
+    (item) => unref(item).props.chargeType === chargeItemValue
+  )
+  if (fieldName === 'reset') {
+    unref(curChargeItem)?.elFormRef?.resetFields()
+  } else {
+    unref(curChargeItem)?.methods.setValues({
+      fieldName: value
+    })
+  }
+}
+
 const isSelected = (ct) => {
   return chargeTypeRef.value.includes(ct.value)
+}
+
+const handleDialog = (type, visible) => {
+  console.log(type, visible)
+
+  if (type === 'TaRen') {
+    dialogTitle.value = '他人會員卡'
+  }
+  actionType.value = type
+  dialogVisible.value = visible
 }
 </script>
 
@@ -425,4 +429,15 @@ const isSelected = (ct) => {
       />
     </template>
   </Form>
+
+  <Dialog v-model="dialogVisible" :title="dialogTitle">
+    <ChooseTaRenCard v-if="actionType === 'TaRen'" ref="TaRenRef" />
+
+    <template #footer>
+      <!-- <ElButton type="primary" :loading="loading" @click="save">
+        {{ t('exampleDemo.save') }}
+      </ElButton> -->
+      <ElButton @click="dialogVisible = false">{{ t('dialogDemo.close') }}</ElButton>
+    </template>
+  </Dialog>
 </template>

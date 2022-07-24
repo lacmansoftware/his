@@ -351,7 +351,9 @@ export const genFormSchema = (
       componentProps: {
         disabled: optionObj?.readonly ?? null,
         options: optionObj?.options ?? null,
-        onChange: optionObj?.onChange ?? null
+        onChange: optionObj?.onChange ?? null,
+        min: optionObj?.min ?? null,
+        max: optionObj?.max ?? null
       },
       colProps: { span: optionObj?.span ?? 6 },
       formItemProps: {
