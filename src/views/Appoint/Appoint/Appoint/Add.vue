@@ -25,6 +25,7 @@ const { params } = useRoute()
 const { t } = useI18n()
 
 const hasHighMedicalInsuranceInfoRef = ref('')
+const payTypeRef = ref('0')
 let sendMessage = ''
 let appointmentType = 'normal'
 
@@ -114,9 +115,13 @@ const setDisabled = (fieldName, value) => {
   ])
 }
 
+const handlePayTypeChange = (item: string) => {
+  payTypeRef.value = item
+}
+
 const handleQuerySelect = (item: Recordable) => {
   const { setValues } = methods
-  console.log(item.name)
+  // console.log(item.name)
 
   setValues({
     memberName: item.name,
@@ -286,7 +291,8 @@ const schema = reactive<FormSchema[]>([
     options: dict.appoint.payType,
     value: '0',
     labelWidth: '150px',
-    span: 24
+    span: 24,
+    onChange: handlePayTypeChange
   }),
   {
     field: 'chargeType',
@@ -394,7 +400,7 @@ const rules = []
       </template>
 
       <template #chargeType>
-        <ChargeType />
+        <ChargeType v-if="payTypeRef === '1'" />
       </template>
     </Form>
 
