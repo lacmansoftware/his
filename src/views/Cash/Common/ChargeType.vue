@@ -415,6 +415,14 @@ const handleDialog = (type, visible) => {
   actionType.value = type
   dialogVisible.value = visible
 }
+
+const getPayArray = () => {
+  return {}
+}
+
+defineExpose({
+  getPayArray
+})
 </script>
 
 <template>
