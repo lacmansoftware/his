@@ -688,19 +688,29 @@ const save = async () => {
 const confirm = (id: string) => {
   push(`/appoint/appoint/appoint/confirm?id=${id}`)
 }
+
 const update = (row: AppointListData) => {
-  console.log(row)
-  // push(`/appoint/appoint/appoint/confirm?id=${id}`)
+  push({
+    name: 'AppointManageAppointAdd',
+    params: {
+      actionType: 'edit',
+      currentRow: JSON.stringify(row)
+    }
+  })
 }
+
 const cancel = (id: string) => {
   console.log(id)
 }
+
 const check = (id: string) => {
   console.log(id)
 }
+
 const packagePay = (id: string) => {
   console.log(id)
 }
+
 const log = (id: string) => {
   console.log(id)
 }
