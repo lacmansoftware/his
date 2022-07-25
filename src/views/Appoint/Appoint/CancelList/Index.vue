@@ -18,6 +18,7 @@ import dict from '@/config/dictionary.json'
 import { getTableListApi, delTableListApi, saveGroupMsgApi } from '@/api/appoint/appoint/cancelList'
 import { AppointListData } from '@/api/appoint/appoint/cancelList/types'
 import { getApi, postApi } from '@/api/common'
+import Write from '@/views/Appoint/Appoint/List/components/Write.vue'
 import Cancel from '../Appoint/Cancel.vue'
 
 defineOptions({
@@ -81,6 +82,19 @@ useEmitt({
 })
 
 const { t } = useI18n()
+
+const handleTypeChange = (item: Recordable) => {
+  typeRef.value = item
+}
+
+const handleTempletChange = (item: Recordable) => {
+  const curTemplet = store.templet.value.find((tmp) => tmp.value === item)
+
+  const write = unref(writeRef)
+  write?.setValues({
+    content: curTemplet?.content
+  })
+}
 
 const crudSchemas = reactive<CrudSchema[]>([
   {
@@ -308,6 +322,73 @@ const crudSchemas = reactive<CrudSchema[]>([
       },
       colProps: { span: 6 }
     }
+  },
+
+  // push msge form
+  {
+    field: 'moblist',
+    label: '號碼列表',
+    form: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        type: 'textarea',
+        rows: 2,
+        placeholder: '號碼列表'
+      },
+      colProps: { span: 24 },
+      formItemProps: {
+        rules: [required()]
+      }
+    },
+    table: { show: false }
+  },
+  {
+    field: 'type',
+    label: '短信分類',
+    form: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        placeholder: '短信分類',
+        onChange: handleTypeChange
+      },
+      colProps: { span: 12 },
+      api: async () => {
+        return await getInOptionFormat('/sys/dict/type/sms_tmp_type', 'code', 'value')
+      }
+    },
+    table: { show: false }
+  },
+  {
+    field: 'templet',
+    label: '短信模板',
+    form: {
+      show: true,
+      component: 'Select',
+      componentProps: {
+        placeholder: '短信模板',
+        options: store.templet as any,
+        onChange: handleTempletChange
+      },
+      colProps: { span: 12 }
+    },
+    table: { show: false }
+  },
+  {
+    field: 'content',
+    label: '短信內容',
+    form: {
+      show: true,
+      component: 'Input',
+      componentProps: {
+        placeholder: '短信內容',
+        type: 'textarea',
+        rows: 7
+      },
+      colProps: { span: 24 }
+    },
+    table: { show: false }
   }
 ])
 
@@ -320,6 +401,7 @@ const dialogWidth = ref('')
 
 const actionType = ref('')
 
+const writeRef = ref<ComponentRef<typeof Write>>()
 const searchRef = ref<ComponentRef<typeof Search>>()
 
 const setValues = (value: object) => {
@@ -371,6 +453,36 @@ const save = async () => {
       }
     })
   } else {
+    const write = unref(writeRef)
+    await write?.elFormRef?.validate(async (isValid) => {
+      if (isValid) {
+        loading.value = true
+        const data = (await write?.getFormData()) as any
+        const res = await saveGroupMsgApi(
+          actionType.value === 'add'
+            ? {
+                mobiles: data.moblist,
+                content: data.content
+              }
+            : {
+                id: data.id,
+                label: data.title,
+                type: data.type,
+                content: data.content
+              }
+        )
+          .catch(() => {})
+          .finally(() => {
+            loading.value = false
+          })
+        if (res) {
+          dialogVisible.value = false
+          ElMessage.success(res.msg as string)
+          tableObject.currentPage = 1
+          getList()
+        }
+      }
+    })
   }
 }
 
@@ -392,6 +504,10 @@ const cancel = (row) => {
 }
 
 const groupMsg = () => {
+  if (tableObject.total === 0) {
+    ElMessage.error('沒有待發送的短信')
+    return
+  }
   dialogTitle.value = '發送短信'
   actionType.value = 'add'
   dialogWidth.value = '70%'
@@ -467,10 +583,21 @@ watch(typeRef, () => {
   </ContentWrap>
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
+    <Write
+      v-if="actionType === 'add'"
+      ref="writeRef"
+      :form-schema="allSchemas.formSchema"
+      :current-row="tableObject.currentRow"
+    />
     <Cancel v-if="actionType === 'cancel'" ref="cancelRef" :current-row="tableObject.currentRow" />
 
     <template #footer>
-      <ElButton v-if="actionType === 'cancel'" type="primary" :loading="loading" @click="save">
+      <ElButton
+        v-if="actionType === 'cancel' || actionType === 'add'"
+        type="primary"
+        :loading="loading"
+        @click="save"
+      >
         {{ t('exampleDemo.save') }}
       </ElButton>
       <ElButton @click="dialogVisible = false">{{ t('dialogDemo.close') }}</ElButton>
