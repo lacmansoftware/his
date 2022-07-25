@@ -133,9 +133,9 @@ const crudSchemas = reactive<CrudSchema[]>([
     }
   },
   { label: '代付手機', field: 'payMoblie'},
-  { label: '門店', field: 'hospitalName },
-  { label: '醫生', field: 'doctorName },
-  { label: '約診時間', field: 'appointmentTimeStart },
+  { label: '門店', field: 'hospitalName' },
+  { label: '醫生', field: 'doctorName' },
+  { label: '約診時間', field: 'appointmentTimeStart' },
   {
     label: '性別',
     field: 'memberGender',
@@ -143,8 +143,8 @@ const crudSchemas = reactive<CrudSchema[]>([
       return inDict(row.memberGender, 'sex')
     }
   },
-  { label: '年齡', field: 'age },
-  { label: '預約備註', field: 'note },
+  { label: '年齡', field: 'age' },
+  { label: '預約備註', field: 'note' },
   {
     label: '支付時長',
     field: 'note',
