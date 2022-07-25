@@ -20,6 +20,7 @@ import { AppointListData } from '@/api/appoint/appoint/cancelList/types'
 import { getApi, postApi } from '@/api/common'
 import Write from '@/views/Appoint/Appoint/List/components/Write.vue'
 import Cancel from '../Appoint/Cancel.vue'
+import { genSearchSchema } from '@/utils/schema'
 
 defineOptions({
   name: 'SMSSendIndex'
@@ -103,17 +104,38 @@ const crudSchemas = reactive<CrudSchema[]>([
     width: '150px',
     form: { show: false }
   },
-  { label: '門店', field: 'hospitalName' },
-  { label: '醫生', field: 'doctorName' },
   {
-    label: '操作日期',
-    field: 'createTime',
+    label: '支付倒計時',
+    field: 'countDown',
     formatter: function (row) {
-      return row.createTime.substr(0, 10)
+      if (row.state === 'YYZ') {
+        return new Date(row.createTime)
+        // return new Date(new Date().setMinutes(30) - new Date(new Date() - new Date(row.createTime)))
+        // yui.formatDate('mi:ss')
+      }
+      return 0
     }
   },
-  { label: '約診時間', field: 'appointmentTimeStart' },
-  { label: '客人姓名', field: 'memberName' },
+  { label: '推送時間', field: 'createTime'},
+  {
+    label: '狀態',
+    field: 'state',
+    formatter: function (row) {
+      return inDict(row.state, 'appoint.payState')
+    }
+  },
+  { label: '客人姓名', field: 'memberName'},
+  {
+    label: '接收手機',
+    field: 'memberMobile',
+    formatter: function (row) {
+      return row.memberMobile
+    }
+  },
+  { label: '代付手機', field: 'payMoblie'},
+  { label: '門店', field: 'hospitalName },
+  { label: '醫生', field: 'doctorName },
+  { label: '約診時間', field: 'appointmentTimeStart },
   {
     label: '性別',
     field: 'memberGender',
@@ -121,275 +143,44 @@ const crudSchemas = reactive<CrudSchema[]>([
       return inDict(row.memberGender, 'sex')
     }
   },
+  { label: '年齡', field: 'age },
+  { label: '預約備註', field: 'note },
   {
-    label: '手機',
-    field: 'memberMobile',
+    label: '支付時長',
+    field: 'note',
     formatter: function (row) {
-      return row.memberMobile
-    }
-  },
-  { label: '客人級別', field: 'memberLevelName' },
-  {
-    label: '初複診',
-    field: 'visitType',
-    formatter: function (row) {
-      return inDict(row.visitType, 'visitType')
-    }
-  },
-  {
-    label: '約診類型',
-    field: 'appointmentType',
-    formatter: function (row) {
-      return inDict(row.appointmentType, 'isSpecialist')
-    }
-  },
-  { label: '重要客人', field: 'importantGuestName' },
-  { label: '客人來源', field: 'memberSourceValue' },
-  { label: '備註', field: 'note' },
-  { label: '保險', field: 'insurName' },
-  { label: '短信回復內容', field: 'smsContent' },
-  {
-    label: '狀態',
-    field: 'status',
-    formatter: function (row) {
-      return inDict(row.status, 'appoint.status')
-    }
-  },
-  {
-    label: '操作',
-    formatter: function (row) {
-      var result = '修改 '
-      result += '取消 '
-      return result
-    }
-  },
-  // Search Schema
-  {
-    field: 'hospitalId',
-    label: '門店',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        filterable: true
-      },
-      colProps: { span: 6 },
-      api: async () => {
-        return await getInOptionFormat('/member/appointment/hospitals', 'id', 'name')
+      if (row.state === 'PAYED') {
+        return new Date(row.createTime)
+        // return new Date(new Date(row.paymentTime) - new Date(row.createTime))
+        // yui.formatDate('mi:ss')
       }
-    }
-  },
-  {
-    field: 'doctorId',
-    label: '醫生',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        filterable: true
-      },
-      colProps: { span: 6 },
-      api: async () => {
-        return await getInOptionFormat('/doctor/getAuthPass', 'id', 'name')
-      }
-    }
-  },
-  {
-    field: 'memberName',
-    label: '客人姓名',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Input',
-      componentProps: {},
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'week',
-    label: '星期',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        options: dict.week
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'dateStart',
-    label: '約診時間',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'dateEnd',
-    label: '到',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'DatePicker',
-      componentProps: {
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'memberMobile',
-    label: '手機號碼',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Input',
-      componentProps: {},
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'visitType',
-    label: '初複診',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        options: dict.visitType
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'appointmentType',
-    label: '約診類型',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        options: dict.isSpecialist
-      },
-      colProps: { span: 6 }
-    }
-  },
-  {
-    field: 'specialistId',
-    label: '專科',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Select',
-      componentProps: {},
-      colProps: { span: 6 },
-      api: async () => {
-        return await getInOptionFormat('/market/specialist/list?pageSize=0', 'id', 'specialistName')
-      }
-    }
-  },
-  {
-    field: 'source',
-    label: '預約渠道',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        options: dict.appoint.source
-      },
-      colProps: { span: 6 }
+      return '--'
     }
   },
 
-  // push msge form
-  {
-    field: 'moblist',
-    label: '號碼列表',
-    form: {
-      show: true,
-      component: 'Input',
-      componentProps: {
-        type: 'textarea',
-        rows: 2,
-        placeholder: '號碼列表'
-      },
-      colProps: { span: 24 },
-      formItemProps: {
-        rules: [required()]
-      }
+  // Search Schema
+  genSearchSchema('apiSelect', 'hospitalId', '門店', {
+    placeholder: '請選擇',
+    api: async () => {
+      return await getInOptionFormat('member/appointment/hospitals', 'id', 'name')
+    }
+  }),
+  genSearchSchema('apiSelect', 'doctorId', '醫生', {
+    placeholder: '請填寫',
+    api: async () => {
+      return await getInOptionFormat('doctor/getAuthPass', 'id', 'name')
     },
-    table: { show: false }
-  },
-  {
-    field: 'type',
-    label: '短信分類',
-    form: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        placeholder: '短信分類',
-        onChange: handleTypeChange
-      },
-      colProps: { span: 12 },
-      api: async () => {
-        return await getInOptionFormat('/sys/dict/type/sms_tmp_type', 'code', 'value')
-      }
-    },
-    table: { show: false }
-  },
-  {
-    field: 'templet',
-    label: '短信模板',
-    form: {
-      show: true,
-      component: 'Select',
-      componentProps: {
-        placeholder: '短信模板',
-        options: store.templet as any,
-        onChange: handleTempletChange
-      },
-      colProps: { span: 12 }
-    },
-    table: { show: false }
-  },
-  {
-    field: 'content',
-    label: '短信內容',
-    form: {
-      show: true,
-      component: 'Input',
-      componentProps: {
-        placeholder: '短信內容',
-        type: 'textarea',
-        rows: 7
-      },
-      colProps: { span: 24 }
-    },
-    table: { show: false }
-  }
+    filterable: true
+  }),
+  genSearchSchema('input', 'memberName', '客人姓名', { placeholder: '請填寫' }),
+  genSearchSchema('input', 'memberMobile', '客人手機', { placeholder: '請填寫' }),
+  genSearchSchema('datePicker', 'dateStart', '推送時間', { placeholder: '請選擇' }),
+  genSearchSchema('datePicker', 'dateEnd', '到', { placeholder: '請選擇' }),
+  genSearchSchema('input', 'payMoblie', '代付手機', { placeholder: '請填寫' }),
+  genSearchSchema('sourceSelect', 'state', '狀態', {
+    placeholder: '請選擇',
+    options: dict.appoint.payState as any
+  })
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
@@ -486,29 +277,8 @@ const save = async () => {
   }
 }
 
-const update = (row: AppointListData) => {
-  push({
-    name: 'AppointManageAppointAdd',
-    params: {
-      actionType: 'edit',
-      currentRow: JSON.stringify(row)
-    }
-  })
-}
-
-const cancel = (row) => {
-  actionType.value = 'cancel'
-  dialogTitle.value = '選擇取消預約方式'
-  tableObject.currentRow = row
-  dialogVisible.value = true
-}
-
-const groupMsg = () => {
-  if (tableObject.total === 0) {
-    ElMessage.error('沒有待發送的短信')
-    return
-  }
-  dialogTitle.value = '發送短信'
+const invalid = (row) => {
+  dialogTitle.value = '支付失效設置'
   actionType.value = 'add'
   dialogWidth.value = '70%'
   tableObject.currentRow = null
@@ -541,10 +311,6 @@ watch(typeRef, () => {
       ref="searchRef"
     />
 
-    <div class="mb-10px ml-10px mt-[-32px]">
-      <ElButton type="success" @click="groupMsg" :icon="groupIcon">短信群發</ElButton>
-    </div>
-
     <Table
       v-model:pageSize="tableObject.pageSize"
       v-model:currentPage="tableObject.currentPage"
@@ -558,8 +324,9 @@ watch(typeRef, () => {
     >
       <template #action="{ row }">
         <div class="text-left">
-          <ElLink type="primary" @click="update(row)" class="mr-5px">修改</ElLink>
-          <ElLink type="primary" @click="cancel(row)" class="mr-5px"> 取消 </ElLink>
+          <ElLink v-if="row.state === 'YYZ'" type="primary" @click="invalid(row)" class="mr-5px"
+            >支付失效設置</ElLink
+          >
         </div>
       </template>
       <template #memberMobile="{ row }">
