@@ -588,7 +588,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       componentProps: {
         placeholder: '短信內容',
         type: 'textarea',
-        rows: 2
+        rows: 7
       },
       colProps: { span: 24 }
     },
@@ -692,36 +692,36 @@ const save = async () => {
       }
     })
   } else {
-    // const write = unref(writeRef)
-    // await write?.elFormRef?.validate(async (isValid) => {
-    //   if (isValid) {
-    //     loading.value = true
-    //     const data = (await write?.getFormData()) as any
-    //     const res = await saveGroupMsgApi(
-    //       actionType.value === 'add'
-    //         ? {
-    //             mobiles: data.moblist,
-    //             content: data.content
-    //           }
-    //         : {
-    //             id: data.id,
-    //             label: data.title,
-    //             type: data.type,
-    //             content: data.content
-    //           }
-    //     )
-    //       .catch(() => {})
-    //       .finally(() => {
-    //         loading.value = false
-    //       })
-    //     if (res) {
-    //       dialogVisible.value = false
-    //       ElMessage.success(res.msg as string)
-    //       tableObject.currentPage = 1
-    //       getList()
-    //     }
-    //   }
-    // })
+    const write = unref(writeRef)
+    await write?.elFormRef?.validate(async (isValid) => {
+      if (isValid) {
+        loading.value = true
+        const data = (await write?.getFormData()) as any
+        const res = await saveGroupMsgApi(
+          actionType.value === 'add'
+            ? {
+                mobiles: data.moblist,
+                content: data.content
+              }
+            : {
+                id: data.id,
+                label: data.title,
+                type: data.type,
+                content: data.content
+              }
+        )
+          .catch(() => {})
+          .finally(() => {
+            loading.value = false
+          })
+        if (res) {
+          dialogVisible.value = false
+          ElMessage.success(res.msg as string)
+          tableObject.currentPage = 1
+          getList()
+        }
+      }
+    })
   }
 }
 
@@ -907,6 +907,12 @@ watch(typeRef, () => {
   </ContentWrap>
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
+    <Write
+      v-if="actionType === 'add'"
+      ref="writeRef"
+      :form-schema="allSchemas.formSchema"
+      :current-row="tableObject.currentRow"
+    />
     <Cancel v-if="actionType === 'cancel'" ref="cancelRef" :current-row="tableObject.currentRow" />
     <NormalTable
       v-if="actionType === 'log'"
@@ -920,7 +926,12 @@ watch(typeRef, () => {
     />
 
     <template #footer>
-      <ElButton v-if="actionType === 'cancel'" type="primary" :loading="loading" @click="save">
+      <ElButton
+        v-if="actionType === 'cancel' || actionType === 'add'"
+        type="primary"
+        :loading="loading"
+        @click="save"
+      >
         {{ t('exampleDemo.save') }}
       </ElButton>
       <ElButton @click="dialogVisible = false">{{ t('dialogDemo.close') }}</ElButton>
