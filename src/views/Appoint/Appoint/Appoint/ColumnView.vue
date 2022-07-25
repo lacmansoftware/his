@@ -49,6 +49,7 @@ const schema = computed(() => {
       push({
         name: 'AppointManageAppointAdd',
         params: {
+          actionType: 'add',
           doctorId: props.row.id,
           hospitalId: data.value.hospitalId,
           startTime: data.value.date + ' ' + time,
