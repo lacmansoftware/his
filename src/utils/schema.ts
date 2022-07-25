@@ -289,6 +289,7 @@ export const genFormSchema = (
       label: labelValue,
       component: 'Select',
       componentProps: {
+        style: 'width: 100%',
         disabled: optionObj?.readonly ?? null,
         placeholder: optionObj?.placeholder ?? null,
         options: optionObj?.options ?? null
