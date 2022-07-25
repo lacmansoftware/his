@@ -23,6 +23,7 @@ import { getApi, postApi } from '@/api/common'
 
 import { PATH_URL } from '@/config/axios'
 import Cancel from '../Appoint/Cancel.vue'
+import NormalTable from '../../../common/NormalTable.vue'
 
 defineOptions({
   name: 'SMSSendIndex'
@@ -31,7 +32,8 @@ const { required } = useValidator()
 // const dictStore = useDictStoreWithOut()
 
 const typeRef = ref<any>(null)
-const cancelRef = ref<ComponentRef<typeof Cancel>>(null)
+const cancelRef = ref<ComponentRef<typeof Cancel>>()
+const logUrl = ref<string>('')
 
 const store = {
   type: ref<ComponentOptions[]>([]),
@@ -752,8 +754,12 @@ const packagePay = (id: string) => {
   console.log(id)
 }
 
-const log = (id: string) => {
-  console.log(id)
+const log = (row) => {
+  logUrl.value = `member/appointment/log/${row.id}`
+  actionType.value = 'log'
+  dialogTitle.value = '日誌'
+  tableObject.currentRow = row
+  dialogVisible.value = true
 }
 
 const pushMsg = () => {
@@ -890,7 +896,7 @@ watch(typeRef, () => {
             class="mr-5px"
             >改套餐</ElLink
           >
-          <ElLink type="primary" @click="log(row.id)">日誌</ElLink>
+          <ElLink type="primary" @click="log(row)">日誌</ElLink>
         </div>
       </template>
       <template #memberMobile="{ row }">
@@ -915,9 +921,19 @@ watch(typeRef, () => {
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
     <Cancel v-if="actionType === 'cancel'" ref="cancelRef" :current-row="tableObject.currentRow" />
+    <NormalTable
+      v-if="actionType === 'log'"
+      :current-row="tableObject.currentRow"
+      :url="`member/appointment/log/${tableObject!.currentRow!.id}`"
+      :columns="[
+        { label: '操作人', field: 'createUserName' },
+        { label: '操作時間', field: 'createTime' },
+        { label: '詳情', field: 'note' }
+      ]"
+    />
 
     <template #footer>
-      <ElButton v-if="actionType !== 'detail'" type="primary" :loading="loading" @click="save">
+      <ElButton v-if="actionType === 'cancel'" type="primary" :loading="loading" @click="save">
         {{ t('exampleDemo.save') }}
       </ElButton>
       <ElButton @click="dialogVisible = false">{{ t('dialogDemo.close') }}</ElButton>
