@@ -19,9 +19,10 @@ import dict from '@/config/dictionary.json'
 
 import { getTableListApi, delTableListApi, saveGroupMsgApi } from '@/api/appoint/appoint/list'
 import { AppointListData } from '@/api/appoint/appoint/list/types'
-import { getApi } from '@/api/common'
+import { getApi, postApi } from '@/api/common'
 
 import { PATH_URL } from '@/config/axios'
+import Cancel from '../Appoint/Cancel.vue'
 
 defineOptions({
   name: 'SMSSendIndex'
@@ -30,6 +31,7 @@ const { required } = useValidator()
 // const dictStore = useDictStoreWithOut()
 
 const typeRef = ref<any>(null)
+const cancelRef = ref<ComponentRef<typeof Cancel>>(null)
 
 const store = {
   type: ref<ComponentOptions[]>([]),
@@ -652,37 +654,61 @@ const search = () => {
 const loading = ref(false)
 
 const save = async () => {
-  const write = unref(writeRef)
-  await write?.elFormRef?.validate(async (isValid) => {
-    if (isValid) {
-      loading.value = true
-      const data = (await write?.getFormData()) as any
+  if (actionType.value === 'cancel') {
+    const cancel = unref(cancelRef)
+    await cancel?.elFormRef?.validate(async (isValid) => {
+      if (isValid) {
+        loading.value = true
+        const data = (await cancel?.getFormData()) as any
 
-      const res = await saveGroupMsgApi(
-        actionType.value === 'add'
-          ? {
-              mobiles: data.moblist,
-              content: data.content
-            }
-          : {
-              id: data.id,
-              label: data.title,
-              type: data.type,
-              content: data.content
-            }
-      )
-        .catch(() => {})
-        .finally(() => {
-          loading.value = false
+        const res = await postApi('/member/appointment/cancel', {
+          id: cancel.curId,
+          replyChannel: data.source
         })
-      if (res) {
-        dialogVisible.value = false
-        ElMessage.success(res.msg as string)
-        tableObject.currentPage = 1
-        getList()
+          .catch(() => {})
+          .finally(() => {
+            loading.value = false
+          })
+        if (res) {
+          dialogVisible.value = false
+          ElMessage.success(res.msg as string)
+          tableObject.currentPage = 1
+          getList()
+        }
       }
-    }
-  })
+    })
+  } else {
+    // const write = unref(writeRef)
+    // await write?.elFormRef?.validate(async (isValid) => {
+    //   if (isValid) {
+    //     loading.value = true
+    //     const data = (await write?.getFormData()) as any
+    //     const res = await saveGroupMsgApi(
+    //       actionType.value === 'add'
+    //         ? {
+    //             mobiles: data.moblist,
+    //             content: data.content
+    //           }
+    //         : {
+    //             id: data.id,
+    //             label: data.title,
+    //             type: data.type,
+    //             content: data.content
+    //           }
+    //     )
+    //       .catch(() => {})
+    //       .finally(() => {
+    //         loading.value = false
+    //       })
+    //     if (res) {
+    //       dialogVisible.value = false
+    //       ElMessage.success(res.msg as string)
+    //       tableObject.currentPage = 1
+    //       getList()
+    //     }
+    //   }
+    // })
+  }
 }
 
 const confirm = (id: string) => {
@@ -699,8 +725,11 @@ const update = (row: AppointListData) => {
   })
 }
 
-const cancel = (id: string) => {
-  console.log(id)
+const cancel = (row) => {
+  actionType.value = 'cancel'
+  dialogTitle.value = '選擇取消預約方式'
+  tableObject.currentRow = row
+  dialogVisible.value = true
 }
 
 const check = (id: string) => {
@@ -814,7 +843,7 @@ watch(typeRef, () => {
           <ElLink
             v-if="row.status === 'YYY' || row.status == 'QRJZ'"
             type="primary"
-            @click="cancel(row.id)"
+            @click="cancel(row)"
             class="mr-5px"
           >
             取消
@@ -873,12 +902,7 @@ watch(typeRef, () => {
   </ContentWrap>
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
-    <Write
-      v-if="actionType === 'add' || actionType === 'edit'"
-      ref="writeRef"
-      :form-schema="allSchemas.formSchema"
-      :current-row="tableObject.currentRow"
-    />
+    <Cancel v-if="actionType === 'cancel'" ref="cancelRef" :current-row="tableObject.currentRow" />
 
     <template #footer>
       <ElButton v-if="actionType !== 'detail'" type="primary" :loading="loading" @click="save">
