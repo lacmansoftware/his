@@ -300,6 +300,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '待取消列表'
             }
+          },
+          {
+            path: 'pay_list/index',
+            component: () => import('@/views/Appoint/Appoint/PayList/Index.vue'),
+            name: 'AppointManagePayListIndex',
+            meta: {
+              title: '預約待支付統計'
+            }
           }
         ]
       },
