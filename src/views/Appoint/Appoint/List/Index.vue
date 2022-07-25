@@ -674,6 +674,18 @@ const save = async () => {
           ElMessage.success(res.msg as string)
           tableObject.currentPage = 1
           getList()
+
+          ElMessageBox.confirm('取消成功，是否發送短信/微信?', t('common.reminder'), {
+            confirmButtonText: t('common.ok'),
+            cancelButtonText: t('common.cancel'),
+            type: 'warning'
+          }).then(() => {
+            postApi(`member/appointment/cancelMsg`, {
+              id: cancel.curId
+            }).then((cancleMsgRes) => {
+              ElMessage.success(cancleMsgRes.msg as string)
+            })
+          })
         }
       }
     })
