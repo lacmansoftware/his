@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Form } from '@/components/Form'
 import { ContentDetailWrap } from '@/components/ContentDetailWrap'
-import { onMounted, reactive, ref, unref } from 'vue'
+import { onMounted, reactive, ref, unref, watch } from 'vue'
 import { ElButton, ElMessage, ElMessageBox } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
 import { useForm } from '@/hooks/web/useForm'
@@ -17,6 +17,7 @@ import { genFormSchema } from '@/utils/schema'
 import dict from '@/config/dictionary.json'
 import { AppointDoctorType } from '@/api/appoint/appoint/appoint/types'
 import ChargeType from '@/views/Cash/Common/ChargeType.vue'
+import { AppointListData } from '@/api/appoint/appoint/list/types'
 
 const { required } = useValidator()
 const { emitter } = useEmitt()
@@ -24,8 +25,17 @@ const { push, go } = useRouter()
 const { params } = useRoute()
 const { t } = useI18n()
 
+const props = defineProps({
+  currentRow: {
+    type: Object as PropType<AppointListData>,
+    default: () => {}
+  }
+})
+
+const currentRow = ref<AppointListData>()
 const hasHighMedicalInsuranceInfoRef = ref('')
 const payTypeRef = ref('0')
+const chargeTypeRef = ref<ComponentRef<typeof ChargeType>>()
 let sendMessage = ''
 let appointmentType = 'normal'
 
@@ -36,9 +46,31 @@ const store = {
 }
 
 onMounted(async () => {
-  if (!params.doctorId) {
+  console.log(props.currentRow)
+
+  if (!params.actionType || !(params.actionType === 'add' || params.actionType === 'edit')) {
+    go(-1)
+  }
+  if (params.actionType === 'add' && !params.doctorId) {
     ElMessage.error('需要医生身份证')
     go(-1)
+  }
+  if (params.actionType === 'edit') {
+    if (params.currentRow) {
+      // currentRow.value = JSON.parse(params.currentRow as string) as AppointListData
+      // methods.setValues({
+      //   hospitalId: currentRow.value.hospitalId,
+      //   doctorId: currentRow.value.doctorId,
+      //   timeRange: [currentRow.value.appointmentTimeStart, currentRow.value.appointmentTimeEnd],
+      //   visitType: currentRow.value.visitType,
+      //   memberName: currentRow.value.memberName,
+      //   memberMobile: currentRow.value.memberMobile,
+      //   memberLevel: currentRow.value.memberLevel
+      // })
+    } else {
+      console.error('error: params.currentRow is missing')
+      go(-1)
+    }
   }
   const { setValues } = methods
   setValues({
@@ -153,16 +185,21 @@ const schema = reactive<FormSchema[]>([
     itemLink: 'id',
     placeholder: '檢索姓名/檔案號/拼音/手機號',
     labelWidth: '250px',
-    span: 18,
+    span: params.actionType === 'add' ? 18 : 0,
     onSelect: handleQuerySelect
   }),
   genFormSchema('sourceSelect', 'source', '預約渠道', {
     placeholder: null,
     options: dict.appoint.source as any,
-    required: true,
-    value: 'TEL'
+    required: params.actionType === 'add' ? true : null,
+    value: 'TEL',
+    span: params.actionType === 'add' ? 6 : 0
   }),
-  genFormSchema('divider'),
+  params.actionType === 'add'
+    ? genFormSchema('divider')
+    : {
+        colProps: { span: 0 }
+      },
   genFormSchema('hidden', 'specialistId', '', { placeholder: null }),
   genFormSchema('hidden', 'packageId', '', { placeholder: null }),
   genFormSchema('hidden', 'specialistName', '', { placeholder: null }),
@@ -354,7 +391,8 @@ const save = async () => {
             memberLevelName: await getSelectText('memberLevel'),
             sendMessage: sendMessage,
             hasHighMedicalInsurance: data?.hasHighMedicalInsurance,
-            payMobile: data?.payMobile
+            payMobile: data?.payMobile,
+            payArray: ''
           }
 
           if (appointmentType === 'specialist' || appointmentType === 'package') {
@@ -363,17 +401,20 @@ const save = async () => {
 
           if (subData.payType === '1') {
             if (appointmentType === 'normal') {
-              //套餐或者專科不校驗支付方式
-              // if (!childIframe.contentWindow.namespace.getPayArray()) {
+              const payArr = unref(chargeTypeRef)?.getPayArray()
+              // if (!payArr) {
               //   return
               // }
-              // subData.payArray = JSON.stringify(childIframe.contentWindow.namespace.getPayArray())
+              subData.payArray = JSON.stringify(payArr)
             }
           }
 
-          console.log(subData)
-
-          const res = await postApi('member/appointment/add', subData)
+          const res = await postApi('member/appointment/add', {
+            ...data,
+            ...subData,
+            appointmentTimeStart: data.timeRange[0],
+            appointmentTimeEnd: data.timeRange[1]
+          })
             .catch(() => {})
             .finally(() => {
               loading.value = false
@@ -390,6 +431,19 @@ const save = async () => {
 }
 
 const rules = []
+
+watch(
+  () => props.currentRow,
+  (currentRow) => {
+    if (!currentRow) return
+    const { setValues } = methods
+    setValues(currentRow)
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
 </script>
 
 <template>
@@ -400,7 +454,7 @@ const rules = []
       </template>
 
       <template #chargeType>
-        <ChargeType v-if="payTypeRef === '1'" />
+        <ChargeType ref="chargeTypeRef" v-if="payTypeRef === '1'" />
       </template>
     </Form>
 
