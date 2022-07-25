@@ -116,7 +116,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       return 0
     }
   },
-  { label: '推送時間', field: 'createTime'},
+  { label: '推送時間', field: 'createTime' },
   {
     label: '狀態',
     field: 'state',
@@ -124,7 +124,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       return inDict(row.state, 'appoint.payState')
     }
   },
-  { label: '客人姓名', field: 'memberName'},
+  { label: '客人姓名', field: 'memberName' },
   {
     label: '接收手機',
     field: 'memberMobile',
@@ -132,7 +132,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       return row.memberMobile
     }
   },
-  { label: '代付手機', field: 'payMoblie'},
+  { label: '代付手機', field: 'payMoblie' },
   { label: '門店', field: 'hospitalName' },
   { label: '醫生', field: 'doctorName' },
   { label: '約診時間', field: 'appointmentTimeStart' },
