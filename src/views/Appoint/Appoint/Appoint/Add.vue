@@ -46,9 +46,10 @@ const store = {
 }
 
 onMounted(async () => {
-  console.log(props.currentRow)
-
-  if (!params.actionType || !(params.actionType === 'add' || params.actionType === 'edit')) {
+  if (
+    !params.actionType ||
+    !(params.actionType === 'add' || params.actionType === 'edit' || params.actionType === 'view')
+  ) {
     go(-1)
   }
   if (params.actionType === 'add') {
@@ -63,9 +64,18 @@ onMounted(async () => {
         timeRange: [params?.startTime, params?.endTime]
       })
     }
-  }
-  if (params.actionType === 'edit') {
+  } else if (params.actionType === 'edit') {
     if (params.currentRow) {
+    } else {
+      console.error('error: params.currentRow is missing')
+      go(-1)
+    }
+  } else if (params.actionType === 'view') {
+    if (params.currentRow) {
+      const { setProps } = methods
+      setProps({
+        disabled: true
+      })
     } else {
       console.error('error: params.currentRow is missing')
       go(-1)

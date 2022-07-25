@@ -746,12 +746,18 @@ const cancel = (row) => {
   dialogVisible.value = true
 }
 
-const check = (id: string) => {
-  console.log(id)
+const check = (row) => {
+  push({
+    name: 'AppointManageAppointAdd',
+    params: {
+      actionType: 'view',
+      currentRow: JSON.stringify(row)
+    }
+  })
 }
 
-const packagePay = (id: string) => {
-  console.log(id)
+const packagePay = (row) => {
+  console.log(row)
 }
 
 const log = (row) => {
@@ -867,32 +873,13 @@ watch(typeRef, () => {
             取消
           </ElLink>
           <span v-if="row.status === 'YYZ'" class="text-red mr-5px">【等待支付】</span>
-          <ElLink
-            v-if="row.status === 'YGH'"
-            type="primary"
-            @click="
-              check(
-                row.id
-                // ,
-                // row.hospitalId,
-                // row.doctorId,
-                // row.appointmentTimeStart,
-                // row.appointmentTimeEnd,
-                // row.memberId
-              )
-            "
-            class="mr-5px"
+          <ElLink v-if="row.status === 'YGH'" type="primary" @click="check(row)" class="mr-5px"
             >查看</ElLink
           >
           <ElLink
             v-if="row.paymentStatus === 'UNPAY'"
             type="primary"
-            @click="
-              packagePay(
-                row.id
-                // , row.memberId, row.memberName, row.doctorId
-              )
-            "
+            @click="packagePay(row)"
             class="mr-5px"
             >改套餐</ElLink
           >
