@@ -258,8 +258,26 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             path: 'appoint/add',
             component: () => import('@/views/Appoint/Appoint/Appoint/Add.vue'),
             name: 'AppointManageAppointAdd',
+            props: (route) => ({
+              currentRow: route?.params?.currentRow
+                ? JSON.parse(route?.params?.currentRow as string)
+                : {}
+            }),
             meta: {
               title: '新建預約',
+              noTagsView: false,
+              noCache: true,
+              hidden: true,
+              showMainRoute: true,
+              activeMenu: '/appoint/appoint/appoint/index'
+            }
+          },
+          {
+            path: 'appoint/edit',
+            component: () => import('@/views/Appoint/Appoint/Appoint/Add.vue'),
+            name: 'AppointManageAppointEdit',
+            meta: {
+              title: '修改預約',
               noTagsView: false,
               noCache: true,
               hidden: true,
