@@ -51,33 +51,26 @@ onMounted(async () => {
   if (!params.actionType || !(params.actionType === 'add' || params.actionType === 'edit')) {
     go(-1)
   }
-  if (params.actionType === 'add' && !params.doctorId) {
-    ElMessage.error('需要医生身份证')
-    go(-1)
+  if (params.actionType === 'add') {
+    if (!params.doctorId) {
+      ElMessage.error('需要医生身份证')
+      go(-1)
+    } else {
+      const { setValues } = methods
+      setValues({
+        hospitalId: params?.hospitalId,
+        doctorId: params?.doctorId,
+        timeRange: [params?.startTime, params?.endTime]
+      })
+    }
   }
   if (params.actionType === 'edit') {
     if (params.currentRow) {
-      // currentRow.value = JSON.parse(params.currentRow as string) as AppointListData
-      // methods.setValues({
-      //   hospitalId: currentRow.value.hospitalId,
-      //   doctorId: currentRow.value.doctorId,
-      //   timeRange: [currentRow.value.appointmentTimeStart, currentRow.value.appointmentTimeEnd],
-      //   visitType: currentRow.value.visitType,
-      //   memberName: currentRow.value.memberName,
-      //   memberMobile: currentRow.value.memberMobile,
-      //   memberLevel: currentRow.value.memberLevel
-      // })
     } else {
       console.error('error: params.currentRow is missing')
       go(-1)
     }
   }
-  const { setValues } = methods
-  setValues({
-    hospitalId: params?.hospitalId,
-    doctorId: params?.doctorId,
-    timeRange: [params?.startTime, params?.endTime]
-  })
 })
 
 const queryIntro = () => {}
@@ -437,7 +430,10 @@ watch(
   (currentRow) => {
     if (!currentRow) return
     const { setValues } = methods
-    setValues(currentRow)
+    setValues({
+      ...currentRow,
+      timeRange: [currentRow.appointmentTimeStart, currentRow.appointmentTimeEnd]
+    })
   },
   {
     deep: true,
