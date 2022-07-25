@@ -292,6 +292,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '預約列表'
             }
+          },
+          {
+            path: 'cancel_list/index',
+            component: () => import('@/views/Appoint/Appoint/CancelList/Index.vue'),
+            name: 'AppointManageCancelListIndex',
+            meta: {
+              title: '待取消列表'
+            }
           }
         ]
       },

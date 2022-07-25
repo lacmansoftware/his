@@ -1543,7 +1543,7 @@
       "pageSize": 2147483647,
       "name": "待取消列表",
       "seq": 9,
-      "url": "/appoint/appoint_manage/to_cancel_list/index",
+      "url": "/appoint/appoint/cancel_list/index",
       "icon": null,
       "resourceType": null,
       "parentId": "0301",
