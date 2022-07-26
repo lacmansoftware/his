@@ -334,8 +334,9 @@ export const genFormSchema = (
       componentProps: {
         disabled: optionObj?.readonly ?? null,
         placeholder: optionObj?.placeholder ?? null,
-        type: 'date',
-        valueFormat: 'YYYY-MM-DD'
+        type: optionObj?.type ?? 'date',
+        format: optionObj?.format ?? 'YYYY-MM-DD',
+        valueFormat: optionObj?.valueFormat ?? 'YYYY-MM-DD'
       },
       colProps: { span: optionObj?.span ?? 6 },
       formItemProps: {
