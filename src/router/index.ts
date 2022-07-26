@@ -308,6 +308,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '預約待支付統計'
             }
+          },
+          {
+            path: 'appoint/special',
+            component: () => import('@/views/Appoint/Appoint/Appoint/Special.vue'),
+            name: 'AppointManageAppointSpecial',
+            meta: {
+              title: '新建預約(九江醫館)'
+            }
           }
         ]
       },

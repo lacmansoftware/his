@@ -1679,7 +1679,7 @@
       "pageSize": 2147483647,
       "name": "新建預約(九江醫館)",
       "seq": 12,
-      "url": "/appoint/appoint_manage/appoint/special_index",
+      "url": "/appoint/appoint/appoint/special",
       "icon": null,
       "resourceType": "m",
       "parentId": "0301",
