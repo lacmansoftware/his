@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { Form } from '@/components/Form'
 import { ContentDetailWrap } from '@/components/ContentDetailWrap'
 import { onBeforeMount, onMounted, reactive, ref, unref, watch } from 'vue'
-import { ElRow, ElButton, ElMessage, ElMessageBox } from 'element-plus'
+import { ElRow, ElCol, ElButton, ElMessage, ElMessageBox } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
 import { useForm } from '@/hooks/web/useForm'
 import { useI18n } from '@/hooks/web/useI18n'
@@ -20,6 +20,8 @@ import { AppointDoctorType } from '@/api/appoint/appoint/appoint/types'
 import ChargeType from '@/views/Cash/Common/ChargeType.vue'
 import { AppointListData } from '@/api/appoint/appoint/list/types'
 import TypeOption from './components/TypeOption.vue'
+import InsurForm from './components/InsurForm.vue'
+import UseFormDemo from '@/views/Components/Form/UseFormDemo.vue'
 
 const { required } = useValidator()
 const { emitter } = useEmitt()
@@ -35,10 +37,10 @@ const props = defineProps({
 })
 
 const typeRef = ref<string>('normal')
+const hasInsurRef = ref<string>('N')
 const currentRow = ref<AppointListData>()
 const hasHighMedicalInsuranceInfoRef = ref('')
-const payTypeRef = ref('0')
-const chargeTypeRef = ref<ComponentRef<typeof ChargeType>>()
+const insurFormRef = ref<ComponentRef<typeof ChargeType>>()
 let sendMessage = ''
 let appointmentType = 'normal'
 
@@ -49,11 +51,12 @@ const store = {
 }
 
 onBeforeMount(() => {
-  if (!params.actionType) params.actionType = 'add'
+  params.actionType = 'add'
+  // if (!params.actionType) params.actionType = 'add'
 })
 
 onMounted(async () => {
-  // params.actionType = 'add'
+  params.actionType = 'add'
   // if (
   //   !params.actionType ||
   //   !(params.actionType === 'add' || params.actionType === 'edit' || params.actionType === 'view')
@@ -162,8 +165,52 @@ const setDisabled = (fieldName, value) => {
   ])
 }
 
-const handlePayTypeChange = (item: string) => {
-  payTypeRef.value = item
+const queryMemberInsur = async () => {
+  const { memberId } = (await methods.getFormData()) as any
+  if (memberId) {
+    getApi('/member/insur/list', {
+      memberId: memberId,
+      status: 'Y'
+    }).then((result) => {
+      if (result.success) {
+        methods.setValues({
+          isInsur: 'Y'
+        })
+        // $('#warining').hide()
+        let data = result.data
+        if (data.length > 0) {
+          data = data.map((item) => {
+            item.value = item.insurName
+          })
+          // insurForm.setData(data[0])
+          // methods.setValues({
+          //   memberInsur: data[0].id
+          // })
+          // memberInsur.listBox.setData(data)
+          // showEndInsur(data[0])
+          // for (var i = 0; i < data[0].limitCount; i++) {
+          //   namespace.addSchool(data[0])
+          // }
+          // namespace.hasInsur = 'Y'
+        } else {
+          //當前用戶沒有保險，需要新加保險，所以查詢的是合作保險名
+          methods.setValues({ isInsur: 'Y' })
+          // $('#warining').show()
+          hasInsurRef.value = 'N'
+          getApi('/market/insur', function (result) {
+            if (result.success) {
+              // var data = result.data
+              // for (var i = 0; i < data.length; i++) {
+              //   data[i].value = data[i].productName
+              // }
+              // yui.get('memberInsur').setValue('')
+              // memberInsur.listBox.setData(data)
+            }
+          })
+        }
+      }
+    })
+  }
 }
 
 const handleQuerySelect = (item: Recordable) => {
@@ -177,16 +224,14 @@ const handleQuerySelect = (item: Recordable) => {
     memberGender: item.gender,
     memberLevel: item.memberLevel,
     memberSource: item.memberSource,
-    recommender: item.recommender,
-    importantGuest: item.importantGuest,
-    importantGuestComment: item.importantGuestComment,
-    usePrCard: item.usePrCard,
     memberBirthday: item.birthday,
     memberAge: getAgeByBirthday(item.birthday),
-    note: item.appointRemark,
-    conditionRemark: item.conditionRemark
+    recommender: item.recommender,
+    importantGuest: item.importantGuest,
+    importantGuestComment: item.importantGuestComment
   })
 
+  queryMemberInsur()
   setDisabled('memberLevel', true)
   getVisitType()
   getInsur(item.id)
@@ -230,6 +275,7 @@ const schema = reactive<FormSchema[]>([
     }
   },
   genFormSchema('apiSelect', 'doctorId', '大夫', {
+    required: true,
     placeholder: '請填寫',
     filterable: true,
     api: async () => {
@@ -294,10 +340,13 @@ const schema = reactive<FormSchema[]>([
     options: dict.display,
     value: '',
     required: true,
-    span: 24
+    span: 24,
+    onChange: (item) => {
+      hasInsurRef.value = item
+    }
   }),
   {
-    field: 'chargeType',
+    field: 'insurForm',
     label: '',
     colProps: {
       span: 24
@@ -319,78 +368,23 @@ const getSelectText = async (fieldName) => {
 }
 
 const save = async () => {
-  const { payType } = (await methods.getFormData()) as any
-  if (
-    !schema.find((item) => item.field === 'payType')?.componentProps?.disabled &&
-    payType === ''
-  ) {
-    ElMessage.error('請選擇是否支付診費')
-    return
-  }
   await unref(elFormRef)?.validate(async (isValid) => {
     if (isValid) {
-      ElMessageBox.confirm('是否發送短信?', t('common.reminder'), {
-        confirmButtonText: t('common.ok'),
-        cancelButtonText: t('common.cancel'),
-        type: 'warning'
+      loading.value = true
+      const data = (await unref(methods)?.getFormData()) as any
+      const res = await postApi('member/appointment/registeration/add', {
+        ...data
       })
-        .then(() => {
-          sendMessage = 'Y'
+        .catch(() => {})
+        .finally(() => {
+          loading.value = false
         })
-        .catch(() => {
-          sendMessage = 'N'
-        })
-        .finally(async () => {
-          loading.value = true
-          const data = (await unref(methods)?.getFormData()) as any
-
-          const subData = {
-            memberId: data?.memberId,
-            hospitalId: data?.hospitalId,
-            hospitalName: await getSelectText('hospitalId'),
-            doctorName: await getSelectText('doctorId'),
-            importantGuestName: await getSelectText('importantGuest'),
-            workOrderId: params?.workOrderId,
-            payType: data?.payType,
-            appointmentType: appointmentType,
-            memberLevelName: await getSelectText('memberLevel'),
-            sendMessage: sendMessage,
-            hasHighMedicalInsurance: data?.hasHighMedicalInsurance,
-            payMobile: data?.payMobile,
-            payArray: ''
-          }
-
-          if (appointmentType === 'specialist' || appointmentType === 'package') {
-            subData.payType = ''
-          }
-
-          if (subData.payType === '1') {
-            if (appointmentType === 'normal') {
-              const payArr = unref(chargeTypeRef)?.getPayArray()
-              // if (!payArr) {
-              //   return
-              // }
-              subData.payArray = JSON.stringify(payArr)
-            }
-          }
-
-          const res = await postApi('member/appointment/add', {
-            ...data,
-            ...subData,
-            appointmentTimeStart: data.timeRange[0],
-            appointmentTimeEnd: data.timeRange[1]
-          })
-            .catch(() => {})
-            .finally(() => {
-              loading.value = false
-            })
-          if (res) {
-            ElMessage.success(res.msg as string)
-            // emitter.emit('getList', 'confirm')
-            // push('/appoint/example-page')
-            // go(-1)
-          }
-        })
+      if (res) {
+        ElMessage.success(res.msg as string)
+        // emitter.emit('getList', 'confirm')
+        // push('/appoint/example-page')
+        // go(-1)
+      }
     }
   })
 }
@@ -421,9 +415,7 @@ watch(
         <span>{{ hasHighMedicalInsuranceInfoRef }}</span>
       </template>
 
-      <template #chargeType>
-        <ChargeType ref="chargeTypeRef" v-if="payTypeRef === '1'" />
-      </template>
+      <template #insurForm> </template>
 
       <template #typeOption>
         <TypeOption :type="typeRef" />
@@ -431,6 +423,12 @@ watch(
         <ElRow v-if="typeRef === 'specialist'"> specialist </ElRow> -->
       </template>
     </Form>
+
+    <ElRow>
+      <ElCol :offset="2" :span="22">
+        <InsurForm ref="insurFormRef" v-if="hasInsurRef === 'N'" />
+      </ElCol>
+    </ElRow>
 
     <template #right>
       <ElButton type="primary" :loading="loading" @click="save">
