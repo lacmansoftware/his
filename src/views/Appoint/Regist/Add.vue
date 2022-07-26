@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { Form } from '@/components/Form'
 import { ContentDetailWrap } from '@/components/ContentDetailWrap'
 import { onBeforeMount, onMounted, reactive, ref, unref, watch } from 'vue'
-import { ElButton, ElMessage, ElMessageBox } from 'element-plus'
+import { ElRow, ElButton, ElMessage, ElMessageBox } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
 import { useForm } from '@/hooks/web/useForm'
 import { useI18n } from '@/hooks/web/useI18n'
@@ -19,6 +19,7 @@ import dict from '@/config/dictionary.json'
 import { AppointDoctorType } from '@/api/appoint/appoint/appoint/types'
 import ChargeType from '@/views/Cash/Common/ChargeType.vue'
 import { AppointListData } from '@/api/appoint/appoint/list/types'
+import TypeOption from './components/TypeOption.vue'
 
 const { required } = useValidator()
 const { emitter } = useEmitt()
@@ -33,6 +34,7 @@ const props = defineProps({
   }
 })
 
+const typeRef = ref<string>('normal')
 const currentRow = ref<AppointListData>()
 const hasHighMedicalInsuranceInfoRef = ref('')
 const payTypeRef = ref('0')
@@ -215,10 +217,21 @@ const schema = reactive<FormSchema[]>([
       { value: 'specialist', label: '專科門診' }
     ],
     value: 'normal',
-    span: 12
+    onChange: (item) => {
+      typeRef.value = item
+    },
+    span: 8
   }),
+  {
+    field: 'typeOption',
+    label: '',
+    colProps: {
+      span: 10
+    }
+  },
   genFormSchema('apiSelect', 'doctorId', '大夫', {
     placeholder: '請填寫',
+    filterable: true,
     api: async () => {
       store.doctorId.value = await getInOptionFormat('doctor/getAuthPass', 'id', 'name')
       return store.doctorId.value
@@ -410,6 +423,12 @@ watch(
 
       <template #chargeType>
         <ChargeType ref="chargeTypeRef" v-if="payTypeRef === '1'" />
+      </template>
+
+      <template #typeOption>
+        <TypeOption :type="typeRef" />
+        <!-- <ElRow v-if="typeRef === 'package'">package </ElRow>
+        <ElRow v-if="typeRef === 'specialist'"> specialist </ElRow> -->
       </template>
     </Form>
 

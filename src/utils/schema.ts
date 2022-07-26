@@ -37,7 +37,7 @@ export const genSearchSchema = (
         component: 'Select',
         componentProps: {
           placeholder: optionObj?.placeholder ?? null,
-          filterable: optionObj?.filterable ?? false
+          filterable: optionObj?.filterable ?? null
         },
         colProps: { span: optionObj?.span ?? 6 },
         api: optionObj.api,
@@ -316,7 +316,7 @@ export const genFormSchema = (
       componentProps: {
         disabled: optionObj?.readonly ?? null,
         placeholder: optionObj?.placeholder ?? null,
-        filterable: optionObj?.filterable ?? false,
+        filterable: optionObj?.filterable ?? null,
         options: options as any
       },
       colProps: { span: optionObj?.span ?? 6 },
