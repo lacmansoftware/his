@@ -24,6 +24,7 @@ import { getApi, postApi } from '@/api/common'
 import { PATH_URL } from '@/config/axios'
 import Cancel from '../Appoint/Cancel.vue'
 import NormalTable from '../../../common/NormalTable.vue'
+import PackagePay from '@/views/Appoint/Regist/components/PackagePay.vue'
 
 defineOptions({
   name: 'SMSSendIndex'
@@ -757,7 +758,10 @@ const check = (row) => {
 }
 
 const packagePay = (row) => {
-  console.log(row)
+  actionType.value = 'package_pay'
+  dialogTitle.value = '修改約診類型'
+  tableObject.currentRow = row
+  dialogVisible.value = true
 }
 
 const log = (row) => {
@@ -925,9 +929,11 @@ watch(typeRef, () => {
       ]"
     />
 
+    <PackagePay v-if="actionType === 'package_pay'" :current-row="tableObject!.currentRow" />
+
     <template #footer>
       <ElButton
-        v-if="actionType === 'cancel' || actionType === 'add'"
+        v-if="actionType === 'cancel' || actionType === 'add' || actionType === 'package_pay'"
         type="primary"
         :loading="loading"
         @click="save"
