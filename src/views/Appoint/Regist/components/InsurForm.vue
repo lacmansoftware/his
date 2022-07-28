@@ -7,7 +7,7 @@ import { reactive, unref, ref, onMounted, PropType } from 'vue'
 import { AppointRegisteredTableData } from '@/api/appoint/regist/registered/types'
 import { ElButton } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
-import { genFormSchema } from '@/utils/schema'
+import { genFormSchema, getSchemaOptions } from '@/utils/schema'
 import { getApi } from '@/api/common'
 import { propTypes } from '@/utils/propTypes'
 import { useEmitt } from '@/hooks/web/useEmitt'
@@ -46,7 +46,23 @@ const schema = reactive<FormSchema[]>([
   },
   genFormSchema('sourceSelect', 'memberInsur', '選擇保險產品', {
     placeholder: null,
-    options: undefined as any
+    options: undefined as any,
+    onSelected: async (item) => {
+      if (item) {
+        // if (namespace.hasInsur == 'Y') {
+        // }
+        const data = (await getSchemaOptions(schema, 'memberInsur'))[0]
+        data.memberInsur = item
+        methods.setValues({ ...data, fileUrl: '' })
+        // var c = namespace.schoolIndex
+        // for (var j = 7; j <= c; j++) {
+        //   namespace.removeSchool(j, e)
+        // }
+        // for (var i = 0; i < data.limitCount; i++) {
+        //   namespace.addSchool(data)
+        // }
+      }
+    }
   }),
   genFormSchema('input', 'insuranceCardNumber', '保險卡號', { placeholder: null, required: true }),
   genFormSchema('datePicker', 'registerTime', '登記時間', { placeholder: null, required: true }),
@@ -202,7 +218,7 @@ onMounted(() => {
       (result) => {
         if (result.success) {
           methods.setValues({ isInsur: 'Y' })
-          // $('#warining').hide()
+          emitter.emit('trigWarning', false)
           if (result.data.length > 0) {
             emitter.emit('hasInsur', 'Y')
 
@@ -234,7 +250,7 @@ onMounted(() => {
           } else {
             //當前用戶沒有保險，需要新加保險，所以查詢的是合作保險名
             methods.setValues({ isInsur: 'N' })
-            // $('#warining').show()
+            emitter.emit('trigWarning', true)
             emitter.emit('hasInsur', 'N')
             getApi('/market/insur').then((result) => {
               if (result.success) {

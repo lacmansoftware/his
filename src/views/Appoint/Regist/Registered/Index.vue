@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref, unref, onMounted } from 'vue'
 import {
-  ElRow,
-  ElCol,
   ElFormItem,
   ElRadioGroup,
   ElRadio,
@@ -39,6 +37,7 @@ defineOptions({
 
 const hasInsurRef = ref('N')
 const isInsur = ref('')
+const warning = ref(false)
 const endInsurTime = ref('')
 const currentRow = ref<any>({})
 const insurFormRef = ref<ComponentRef<typeof InsurForm>>()
@@ -570,6 +569,12 @@ useEmitt({
     endInsurTime.value = val
   }
 })
+useEmitt({
+  name: 'trigWarning',
+  callback: (val: string) => {
+    warning.value = val
+  }
+})
 </script>
 
 <template>
@@ -628,6 +633,7 @@ useEmitt({
             <ElRadio label="N">否</ElRadio>
           </ElRadioGroup>
         </ElFormItem>
+        <span v-if="warning" class="text-red-500">客人未登記過保險</span>
         <span v-if="endInsurTime" class="mr-6 text-red-500">{{ endInsurTime }}</span>
       </div>
       <InsurForm
