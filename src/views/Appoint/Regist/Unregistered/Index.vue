@@ -10,12 +10,8 @@ import { useI18n } from '@/hooks/web/useI18n'
 import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { inDict, getInOptionFormat, getDateInFormat, getAgeByBirthday } from '@/utils/common'
-import { plusIcon } from '@/utils/iconList'
-import Write from '@/views/Cash/NotCharged/components/Write.vue'
-
-import { getTableListApi, delTableListApi, saveTableApi } from '@/api/appoint/regist/unregistered'
+import { getTableListApi, delTableListApi } from '@/api/appoint/regist/unregistered'
 import { NotChargedTableData } from '@/api/appoint/regist/unregistered/types'
-import { dateCompare } from '@/utils/date'
 import dict from '@/config/dictionary.json'
 import InsurForm from '../components/InsurForm.vue'
 import { useEmitt } from '@/hooks/web/useEmitt'
@@ -352,26 +348,7 @@ const dialogVisible = ref(false)
 const dialogTitle = ref('')
 const dialogWidth = ref('')
 
-const delLoading = ref(false)
-
-const delData = async (row: NotChargedTableData | null, multiple: boolean) => {
-  tableObject.currentRow = row
-  const { delList, getSelections } = methods
-  const selections = await getSelections()
-  delLoading.value = true
-  await delList(
-    multiple ? selections.map((v) => v.id) : [tableObject.currentRow?.id as string],
-    multiple
-  ).finally(() => {
-    delLoading.value = false
-  })
-}
-
 const actionType = ref('')
-
-const AddAction = () => {
-  // push(`/cash/notcharged/add`)
-}
 
 const loading = ref(false)
 
@@ -491,16 +468,10 @@ useEmitt({
       :schema="allSchemas.searchSchema"
       :is-col="true"
       :inline="false"
-      :layout="'bottom'"
-      :buttom-position="'right'"
       @search="setSearchParams"
       @reset="setSearchParams"
       ref="searchRef"
     />
-
-    <div class="mb-10px ml-10px mt-[-32px]">
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">導出</ElButton>
-    </div>
 
     <Table
       v-model:pageSize="tableObject.pageSize"
