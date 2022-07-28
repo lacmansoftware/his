@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref, unref, onMounted } from 'vue'
-import { ElButton, ElLink, ElMessage } from 'element-plus'
+import { ElFormItem, ElRadioGroup, ElRadio, ElButton, ElLink, ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
@@ -17,11 +17,20 @@ import { getTableListApi, delTableListApi, saveTableApi } from '@/api/appoint/re
 import { NotChargedTableData } from '@/api/appoint/regist/unregistered/types'
 import { dateCompare } from '@/utils/date'
 import dict from '@/config/dictionary.json'
+import InsurForm from '../components/InsurForm.vue'
+import { useEmitt } from '@/hooks/web/useEmitt'
+import { getSchemaOptions, getSelectText, getValue } from '@/utils/schema'
+import { postApi } from '@/api/common'
 
 defineOptions({
   name: 'CashNotChargedIndex'
 })
 
+const hasInsurRef = ref('N')
+const isInsur = ref('')
+const warning = ref(false)
+const endInsurTime = ref('')
+const insurFormRef = ref<ComponentRef<typeof InsurForm>>()
 const searchRef = ref<ComponentRef<typeof Search>>()
 
 const store = {
@@ -385,33 +394,51 @@ const search = () => {
 }
 
 const save = async () => {
-  const write = unref(writeRef)
-  await write?.elFormRef?.validate(async (isValid) => {
-    if (isValid) {
-      loading.value = true
-      const data = (await write?.getFormData()) as any
-      const res = await saveTableApi(
-        actionType.value === 'add'
-          ? data
-          : {
-              id: data.id,
-              label: data.title,
-              type: data.type,
-              content: data.content
-            }
-      )
-        .catch(() => {})
-        .finally(() => {
-          loading.value = false
-        })
-      if (res) {
-        dialogVisible.value = false
-        ElMessage.success(res.msg as string)
-        tableObject.currentPage = 1
-        getList()
-      }
+  if (actionType.value === 'register_insur') {
+    const insur = unref(insurFormRef)
+    let insurId = await getValue(insur?.methods, 'memberInsur')
+    const insurName = await getSelectText(insur?.methods, insur?.schema, 'memberInsur')
+    let memberInsurId = ''
+    if (!isInsur.value) {
+      ElMessage.error('請先選擇是否有保險')
+      return
     }
-  })
+    if (isInsur.value === 'Y') {
+      let isInsurFormValid = false
+      await insur?.elFormRef?.validate(async (isValid) => {
+        isInsurFormValid = isValid
+      })
+      if (!isInsurFormValid) return
+      if (hasInsurRef.value !== 'N') {
+        memberInsurId = insurId
+        insurId = getSchemaOptions(insur?.schema, 'memberInsur')[0]!.insurId
+      }
+    } else {
+      insurId = ''
+      memberInsurId = ''
+    }
+    const data: any = await insur?.methods?.getFormData()
+    data.regId = tableObject.currentRow?.id
+    data.insurName = insurName
+    data.insurId = insurId
+    data.isInsur = isInsur.value
+    data.memberInsurId = memberInsurId
+    data.updateReg = 1
+    loading.value = true
+    postApi('/member/appointment/registeration/reg', data)
+      .then((result) => {
+        if (result?.success) {
+          ElMessage.success(result.msg as string)
+          search()
+          dialogVisible.value = false
+        } else {
+          ElMessage.error(result.msg as string)
+        }
+      })
+      .finally(() => {
+        loading.value = false
+      })
+  }
 }
 
 const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) => {
@@ -455,6 +482,33 @@ const canMakeUp = (orderType) => {
     orderType !== 'specialist'
   )
 }
+
+const registerInsur = (row) => {
+  tableObject.currentRow = row
+  actionType.value = 'register_insur'
+  dialogTitle.value = '選擇保險'
+  dialogVisible.value = true
+  dialogWidth.value = '80%'
+}
+
+useEmitt({
+  name: 'hasInsur',
+  callback: (val: string) => {
+    hasInsurRef.value = val
+  }
+})
+useEmitt({
+  name: 'setEndInsurTime',
+  callback: (val: string) => {
+    endInsurTime.value = val
+  }
+})
+useEmitt({
+  name: 'trigWarning',
+  callback: (val: boolean) => {
+    warning.value = val
+  }
+})
 </script>
 
 <template>
@@ -487,7 +541,7 @@ const canMakeUp = (orderType) => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="settlement(row)" class="mr-5px">挂號</ElLink>
+        <ElLink type="primary" @click="registerInsur(row)" class="mr-5px">挂號</ElLink>
         <ElLink
           v-if="row.paymentStatus === 'UNPAY'"
           type="primary"
@@ -500,12 +554,24 @@ const canMakeUp = (orderType) => {
   </ContentWrap>
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
-    <Write
-      v-if="actionType !== 'detail'"
-      ref="writeRef"
-      :form-schema="allSchemas.formSchema"
-      :current-row="tableObject.currentRow"
-    />
+    <div v-if="actionType === 'register_insur'">
+      <div class="flex items-center justify-between">
+        <ElFormItem label="是否有保險" class="ml-6">
+          <ElRadioGroup v-model="isInsur">
+            <ElRadio label="Y">是</ElRadio>
+            <ElRadio label="N">否</ElRadio>
+          </ElRadioGroup>
+        </ElFormItem>
+        <span v-if="warning" class="text-red-500">客人未登記過保險</span>
+        <span v-if="endInsurTime" class="mr-6 text-red-500">{{ endInsurTime }}</span>
+      </div>
+      <InsurForm
+        v-if="isInsur !== 'N'"
+        ref="insurFormRef"
+        page-type="update_insur"
+        :current-row="(tableObject.currentRow as any)"
+      />
+    </div>
 
     <template #footer>
       <ElButton v-if="actionType !== 'detail'" type="primary" :loading="loading" @click="save">
