@@ -28,6 +28,7 @@ import dict from '@/config/dictionary.json'
 import { PATH_URL } from '@/config/axios'
 import { postApi } from '@/api/common'
 import InsurForm from '../components/InsurForm.vue'
+import PackagePay from '../components/PackagePay.vue'
 import { getSchemaOptions, getSelectText, getValue } from '@/utils/schema'
 import { useEmitt } from '@/hooks/web/useEmitt'
 
@@ -557,6 +558,14 @@ const updateInsur = (row) => {
   dialogWidth.value = '80%'
 }
 
+const packagePay = (row) => {
+  currentRow.value = row
+  actionType.value = 'package_pay'
+  dialogTitle.value = '修改約診類型'
+  dialogVisible.value = true
+  dialogWidth.value = '70%'
+}
+
 useEmitt({
   name: 'hasInsur',
   callback: (val: string) => {
@@ -616,7 +625,7 @@ useEmitt({
         <ElLink
           v-if="row.status !== 'YTH' && row.paymentStatus === 'UNPAY'"
           type="primary"
-          @click="settlement(row)"
+          @click="packagePay(row)"
           class="mr-5px"
           >改套餐</ElLink
         >
@@ -643,6 +652,7 @@ useEmitt({
         :current-row="currentRow"
       />
     </div>
+    <PackagePay v-if="actionType === 'package_pay'" :current-row="currentRow" />
 
     <template #footer>
       <ElButton type="primary" :loading="loading" @click="save">
