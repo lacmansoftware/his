@@ -621,19 +621,15 @@ useEmitt({
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
     <div v-if="actionType === 'update_insur'">
-      <ElRow>
-        <ElCol :span="18">
-          <ElFormItem label="是否有保險" class="ml-6">
-            <ElRadioGroup v-model="isInsur">
-              <ElRadio label="Y">是</ElRadio>
-              <ElRadio label="N">否</ElRadio>
-            </ElRadioGroup>
-          </ElFormItem>
-        </ElCol>
-        <ElCol :span="6" class="text-rght text-red-500">
-          <span v-if="endInsurTime">{{ endInsurTime }}</span>
-        </ElCol>
-      </ElRow>
+      <div class="flex items-center justify-between">
+        <ElFormItem label="是否有保險" class="ml-6">
+          <ElRadioGroup v-model="isInsur">
+            <ElRadio label="Y">是</ElRadio>
+            <ElRadio label="N">否</ElRadio>
+          </ElRadioGroup>
+        </ElFormItem>
+        <span v-if="endInsurTime" class="mr-6 text-red-500">{{ endInsurTime }}</span>
+      </div>
       <InsurForm
         v-if="isInsur !== 'N'"
         ref="insurFormRef"
