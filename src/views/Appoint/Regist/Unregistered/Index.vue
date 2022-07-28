@@ -21,6 +21,7 @@ import InsurForm from '../components/InsurForm.vue'
 import { useEmitt } from '@/hooks/web/useEmitt'
 import { getSchemaOptions, getSelectText, getValue } from '@/utils/schema'
 import { postApi } from '@/api/common'
+import PackagePay from '../components/PackagePay.vue'
 
 defineOptions({
   name: 'CashNotChargedIndex'
@@ -372,15 +373,6 @@ const AddAction = () => {
   // push(`/cash/notcharged/add`)
 }
 
-const writeRef = ref<ComponentRef<typeof Write>>()
-
-const action = (row: NotChargedTableData, type: string) => {
-  dialogTitle.value = type === 'edit' ? '修改短信模板' : 'exampleDemo.detail'
-  actionType.value = type
-  tableObject.currentRow = row
-  dialogVisible.value = true
-}
-
 const loading = ref(false)
 
 const setValues = (value) => {
@@ -448,23 +440,6 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
   // return ''
 }
 
-const settlement = (row: NotChargedTableData) => {
-  // push({
-  //   name: 'CashNotChargedAdd',
-  //   params: {
-  //     id: row.id,
-  //     // wxId: row.wxId,
-  //     memberId: row.memberId,
-  //     memberInsurId: row.memberInsurId,
-  //     isCache: row.isCache,
-  //     ooClass: 'offline',
-  //     // sheet: row.sheet,
-  //     doctorName: row.doctorName,
-  //     doctorId: row.doctorId
-  //   }
-  // })
-}
-
 onMounted(async () => {
   setStore('type', '/sys/dict/type/sms_tmp_type', 'code', 'value')
   await setValues({
@@ -474,13 +449,12 @@ onMounted(async () => {
   search()
 })
 
-const canMakeUp = (orderType) => {
-  return (
-    orderType !== 'buyCard' &&
-    orderType !== 'recharge' &&
-    orderType !== 'package' &&
-    orderType !== 'specialist'
-  )
+const packagePay = (row) => {
+  tableObject.currentRow = row
+  actionType.value = 'package_pay'
+  dialogTitle.value = '修改約診類型'
+  dialogVisible.value = true
+  dialogWidth.value = '70%'
 }
 
 const registerInsur = (row) => {
@@ -545,7 +519,7 @@ useEmitt({
         <ElLink
           v-if="row.paymentStatus === 'UNPAY'"
           type="primary"
-          @click="settlement(row)"
+          @click="packagePay(row)"
           class="mr-5px"
           >改套餐</ElLink
         >
@@ -573,6 +547,8 @@ useEmitt({
       />
     </div>
 
+    <PackagePay v-if="actionType === 'package_pay'" :current-row="tableObject.currentRow" />
+
     <template #footer>
       <ElButton v-if="actionType !== 'detail'" type="primary" :loading="loading" @click="save">
         {{ t('exampleDemo.save') }}
@@ -581,9 +557,3 @@ useEmitt({
     </template>
   </Dialog>
 </template>
-
-<style scoped>
-.success-row {
-  background: red;
-}
-</style>
