@@ -580,7 +580,7 @@ useEmitt({
 })
 useEmitt({
   name: 'trigWarning',
-  callback: (val: string) => {
+  callback: (val: boolean) => {
     warning.value = val
   }
 })
