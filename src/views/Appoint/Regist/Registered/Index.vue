@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { reactive, ref, unref, onMounted } from 'vue'
 import {
+  ElRow,
+  ElCol,
   ElFormItem,
   ElRadioGroup,
   ElRadio,
@@ -37,6 +39,7 @@ defineOptions({
 
 const hasInsurRef = ref('N')
 const isInsur = ref('')
+const endInsurTime = ref('')
 const currentRow = ref<any>({})
 const insurFormRef = ref<ComponentRef<typeof InsurForm>>()
 const searchRef = ref<ComponentRef<typeof Search>>()
@@ -561,6 +564,12 @@ useEmitt({
     hasInsurRef.value = val
   }
 })
+useEmitt({
+  name: 'setEndInsurTime',
+  callback: (val: string) => {
+    endInsurTime.value = val
+  }
+})
 </script>
 
 <template>
@@ -612,12 +621,19 @@ useEmitt({
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
     <div v-if="actionType === 'update_insur'">
-      <ElFormItem label="是否有保險" class="ml-6">
-        <ElRadioGroup v-model="isInsur">
-          <ElRadio label="Y">是</ElRadio>
-          <ElRadio label="N">否</ElRadio>
-        </ElRadioGroup>
-      </ElFormItem>
+      <ElRow>
+        <ElCol :span="18">
+          <ElFormItem label="是否有保險" class="ml-6">
+            <ElRadioGroup v-model="isInsur">
+              <ElRadio label="Y">是</ElRadio>
+              <ElRadio label="N">否</ElRadio>
+            </ElRadioGroup>
+          </ElFormItem>
+        </ElCol>
+        <ElCol :span="6" class="text-rght text-red-500">
+          <span v-if="endInsurTime">{{ endInsurTime }}</span>
+        </ElCol>
+      </ElRow>
       <InsurForm
         v-if="isInsur !== 'N'"
         ref="insurFormRef"

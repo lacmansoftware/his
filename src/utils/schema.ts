@@ -240,7 +240,8 @@ export const genFormSchema = (
         type: optionObj.type ?? 'date',
         format: optionObj.format ?? 'YYYY-MM-DD HH:mm:ss',
         valueFormat: optionObj.valueFormat ?? 'YYYY-MM-DD HH:mm:ss',
-        placeholder: optionObj.placeholder ?? null
+        placeholder: optionObj.placeholder ?? null,
+        onChange: optionObj?.onChange ?? null
       },
       formItemProps: {
         labelWidth: optionObj?.labelWidth ?? null,
@@ -336,7 +337,8 @@ export const genFormSchema = (
         placeholder: optionObj?.placeholder ?? null,
         type: optionObj?.type ?? 'date',
         format: optionObj?.format ?? 'YYYY-MM-DD',
-        valueFormat: optionObj?.valueFormat ?? 'YYYY-MM-DD'
+        valueFormat: optionObj?.valueFormat ?? 'YYYY-MM-DD',
+        onChange: optionObj?.onChange ?? null
       },
       colProps: { span: optionObj?.span ?? 6 },
       formItemProps: {

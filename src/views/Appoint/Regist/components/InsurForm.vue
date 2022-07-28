@@ -11,6 +11,7 @@ import { genFormSchema } from '@/utils/schema'
 import { getApi } from '@/api/common'
 import { propTypes } from '@/utils/propTypes'
 import { useEmitt } from '@/hooks/web/useEmitt'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
   pageType: propTypes.string.def(''),
@@ -21,11 +22,21 @@ const props = defineProps({
 })
 
 const { emitter } = useEmitt()
+const { push } = useRouter()
 const { required } = useValidator()
 const { t } = useI18n()
 
 const arrearageText = ref<string>('')
 const currentOwe = ref<boolean>(false)
+
+const handleDueTimeChange = (item: string) => {
+  const s1 = new Date(item.replace(/-/g, '/'))
+  const s2 = new Date() //當前日期：2017-04-24
+  const days = s1.getTime() - s2.getTime()
+  const time = days / (1000 * 60 * 60 * 24) + 2
+  const endInsurTime = 0 < time ? '(還有 ' + time.toFixed(0) + ' 天過期)' : '(保險已過期)'
+  emitter.emit('setEndInsurTime', endInsurTime)
+}
 
 const schema = reactive<FormSchema[]>([
   {
@@ -39,7 +50,11 @@ const schema = reactive<FormSchema[]>([
   }),
   genFormSchema('input', 'insuranceCardNumber', '保險卡號', { placeholder: null, required: true }),
   genFormSchema('datePicker', 'registerTime', '登記時間', { placeholder: null, required: true }),
-  genFormSchema('datePicker', 'dueTime', '到期時間', { placeholder: null, required: true }),
+  genFormSchema('datePicker', 'dueTime', '到期時間', {
+    placeholder: null,
+    required: true,
+    onChange: handleDueTimeChange
+  }),
   genFormSchema('divider', '', '保險福利確認'),
   genFormSchema('hidden', 'memberInsurLimit[0].code', '保險福利確認', { placeholder: null }),
   genFormSchema('hidden', 'memberInsurLimit[0].id', '保險福利確認', { placeholder: null }),
@@ -195,7 +210,7 @@ onMounted(() => {
               ...result.data[0],
               memberInsur: result.data[0].id
             })
-            // showEndInsur(data[0])
+            handleDueTimeChange(result.data[0]?.dueTime)
             methods?.setSchema([
               {
                 field: 'memberInsur',
@@ -212,8 +227,7 @@ onMounted(() => {
             //   namespace.addSchool(data[0])
             // }
 
-            // insurForm.setData(data[0])
-            // showEndInsur(data[0])
+            handleDueTimeChange(result.data[0]?.dueTime)
             // for (var i = 0; i < data[0].limitCount; i++) {
             //   namespace.addSchool(data[0])
             // }
@@ -270,7 +284,10 @@ defineExpose({
 })
 
 const gotoArre2 = () => {
-  // props?.currentRow?.memberId
+  push({
+    path: 'cash/pending/index',
+    query: { memberId: props?.currentRow?.memberId }
+  })
 }
 </script>
 
