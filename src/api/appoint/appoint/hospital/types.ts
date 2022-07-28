@@ -26,3 +26,9 @@ export type AppointHospitalTableData = {
   name: string
   children: AppointHospitalType[]
 }
+
+export type CurWeekType = {
+  startDate: string
+  endDate: string
+  range: string[]
+}

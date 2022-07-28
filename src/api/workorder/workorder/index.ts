@@ -1,5 +1,5 @@
 import { useAxios } from '@/hooks/web/useAxios'
-import type { MemberInfoTableData } from './types'
+import type { WorkOrderType } from './types'
 
 const request = useAxios()
 
@@ -8,7 +8,7 @@ export const getTableListApi = async (params: any): Promise<IResponse> => {
   return res && res.data
 }
 
-export const saveTableApi = async (data: Partial<MemberInfoTableData>): Promise<IResponse> => {
+export const saveTableApi = async (data: Partial<WorkOrderType>): Promise<IResponse> => {
   const res = await request.post({
     url: '/member/workorder/add',
     headersType: 'application/x-www-form-urlencoded',
@@ -17,7 +17,7 @@ export const saveTableApi = async (data: Partial<MemberInfoTableData>): Promise<
   return res && res.data
 }
 
-export const getTableDetApi = async (id: string): Promise<IResponse<MemberInfoTableData>> => {
+export const getTableDetApi = async (id: string): Promise<IResponse<WorkOrderType>> => {
   const res = await request.get({ url: '/example/detail', params: { id } })
   return res && res.data
 }

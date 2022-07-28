@@ -21,3 +21,12 @@ export const getTableListApi = async (params: any): Promise<IResponse> => {
   //   })
   return res && res.data
 }
+
+export const saveAppointmentApi = async (data: any): Promise<IResponse> => {
+  const res = await request.post({
+    url: '/member/appointment/update/status',
+    headersType: 'application/x-www-form-urlencoded',
+    data
+  })
+  return res && res.data
+}

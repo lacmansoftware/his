@@ -1688,7 +1688,8 @@
       },
       {
         "value": "dept",
-        "label": "部門"
+        "label": "部門",
+        "disabled": true
       }
     ],
     "workOrderStatus": [
@@ -3912,5 +3913,10 @@
   "checked": [
     { "value": "Y", "label": "已檢查" },
     { "value": "N", "label": "未檢查" }
+  ],
+  "weekday": ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+  "coupon_selector": [
+    { "value": "0", "label": "優惠券", "_checked": true },
+    { "value": "1", "label": "輸入卡密" }
   ]
 }

@@ -258,8 +258,26 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             path: 'appoint/add',
             component: () => import('@/views/Appoint/Appoint/Appoint/Add.vue'),
             name: 'AppointManageAppointAdd',
+            props: (route) => ({
+              currentRow: route?.params?.currentRow
+                ? JSON.parse(route?.params?.currentRow as string)
+                : {}
+            }),
             meta: {
               title: '新建預約',
+              noTagsView: false,
+              noCache: true,
+              hidden: true,
+              showMainRoute: true,
+              activeMenu: '/appoint/appoint/appoint/index'
+            }
+          },
+          {
+            path: 'appoint/edit',
+            component: () => import('@/views/Appoint/Appoint/Appoint/Add.vue'),
+            name: 'AppointManageAppointEdit',
+            meta: {
+              title: '修改預約',
               noTagsView: false,
               noCache: true,
               hidden: true,
@@ -274,6 +292,30 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             meta: {
               title: '預約列表'
             }
+          },
+          {
+            path: 'cancel_list/index',
+            component: () => import('@/views/Appoint/Appoint/CancelList/Index.vue'),
+            name: 'AppointManageCancelListIndex',
+            meta: {
+              title: '待取消列表'
+            }
+          },
+          {
+            path: 'pay_list/index',
+            component: () => import('@/views/Appoint/Appoint/PayList/Index.vue'),
+            name: 'AppointManagePayListIndex',
+            meta: {
+              title: '預約待支付統計'
+            }
+          },
+          {
+            path: 'appoint/special',
+            component: () => import('@/views/Appoint/Appoint/Appoint/Special.vue'),
+            name: 'AppointManageAppointSpecial',
+            meta: {
+              title: '新建預約(九江醫館)'
+            }
           }
         ]
       },
@@ -286,14 +328,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           alwaysShow: true
         },
         children: [
-          // {
-          //   path: 'add',
-          //   component: () => import('@/views/Appoint/Regist/Add.vue'),
-          //   name: 'AppointRegistAdd',
-          //   meta: {
-          //     title: '新建掛號'
-          //   }
-          // },
+          {
+            path: 'add',
+            component: () => import('@/views/Appoint/Regist/Add.vue'),
+            name: 'AppointRegistAdd',
+            meta: {
+              title: '新建掛號'
+            }
+          },
           {
             path: 'registered/index',
             component: () => import('@/views/Appoint/Regist/Registered/Index.vue'),

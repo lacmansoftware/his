@@ -43,7 +43,6 @@ const getTemplateOptions = () => {
 }
 
 onMounted(() => {
-  // setStore('certificate', '/sys/dict/type/MEMBER_Certificate', 'code', 'value')
   setStore('level', '/sys/member/level', 'id', 'levelName')
   getTemplateOptions()
 })

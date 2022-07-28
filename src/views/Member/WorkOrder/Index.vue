@@ -15,12 +15,12 @@ import dict from '@/config/dictionary.json'
 import { getApi } from '@/api/common'
 
 import { getTableListApi, delTableListApi, updateTableApi } from '@/api/workorder/workorder'
+import { WorkOrderType } from '@/api/workorder/workorder/types'
 
 defineOptions({
   name: 'WorkOrderIndex'
 })
 
-const my = ref(false)
 const notComplate = ref(false)
 const writeRef = ref<ComponentRef<typeof Write>>()
 
@@ -46,7 +46,7 @@ onMounted(async () => {
   search()
 })
 
-const { register, tableObject, methods } = useTable<any>({
+const { register, tableObject, methods } = useTable<WorkOrderType>({
   getListApi: getTableListApi,
   delListApi: delTableListApi,
   response: {
@@ -258,7 +258,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       show: true,
       component: 'Hidden',
       colProps: { span: 0 },
-      value: my as any
+      value: 0
     }
   },
   {
@@ -270,7 +270,7 @@ const crudSchemas = reactive<CrudSchema[]>([
       show: true,
       component: 'Hidden',
       colProps: { span: 0 },
-      value: notComplate as any
+      value: 0
     }
   }
 ])
@@ -279,7 +279,7 @@ const { allSchemas } = useCrudSchemas(crudSchemas)
 
 const delLoading = ref(false)
 
-const delData = async (row: any | null) => {
+const delData = async (row: WorkOrderType | null) => {
   tableObject.currentRow = row
   const { delList } = methods
   // const selections = await getSelections()
@@ -293,7 +293,7 @@ const dialogVisible = ref(false)
 const dialogTitle = ref('')
 const actionType = ref('')
 
-const action = (row: any, type: string) => {
+const action = (row: WorkOrderType, type: string) => {
   dialogTitle.value = t(type === 'edit' ? 'exampleDemo.edit' : 'exampleDemo.detail')
   actionType.value = type
   tableObject.currentRow = row
@@ -313,15 +313,25 @@ const search = () => {
   search!.search()
 }
 
-const myOrder = () => {
-  my.value = !my.value
-  console.log(my.value)
+const myOrder = async () => {
+  const formData = await unref(searchRef)?.getFormData()
+  const { my } = formData
+
+  await setValues({
+    my: !my ? 1 : 0
+  })
 
   search()
 }
 
-const notComplateOrder = () => {
-  notComplate.value = !notComplate.value
+const notComplateOrder = async () => {
+  const formData = await unref(searchRef)?.getFormData()
+  const { notComplate } = formData
+
+  await setValues({
+    notComplate: !notComplate ? 1 : 0
+  })
+
   search()
 }
 

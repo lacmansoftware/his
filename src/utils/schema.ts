@@ -1,4 +1,8 @@
 import { getApi } from '@/api/common'
+import { useValidator } from '@/hooks/web/useValidator'
+import { ref } from 'vue'
+
+const { required } = useValidator()
 
 export const genSearchSchema = (
   schemaType: string,
@@ -33,7 +37,7 @@ export const genSearchSchema = (
         component: 'Select',
         componentProps: {
           placeholder: optionObj?.placeholder ?? null,
-          filterable: optionObj?.filterable ?? false
+          filterable: optionObj?.filterable ?? null
         },
         colProps: { span: optionObj?.span ?? 6 },
         api: optionObj.api,
@@ -105,7 +109,7 @@ export const genSearchSchema = (
         component: 'Autocomplete',
         componentProps: {
           style: 'width: 100%',
-          triggerOnFocus: false,
+          triggerOnFocus: optionObj?.triggerOnFocus ?? false,
           fetchSuggestions: async (queryString: string, cb: Fn) => {
             const res = await getApi(`${optionObj!.url}?keyWords=${queryString}`)
             const result = res?.data.map((item) => ({
@@ -115,7 +119,7 @@ export const genSearchSchema = (
             }))
             cb(result)
           },
-          onSelect: (item: Recordable) => {},
+          onSelect: optionObj?.onSelect ?? null,
           slots: {
             default: true
           },
@@ -145,6 +149,7 @@ export const genSearchSchema = (
       }
     }
   }
+  console.log('Gen SearchSchema: Not expected type ', schemaType)
 
   return {}
 }
@@ -165,4 +170,245 @@ export const genTableSchema = (
     width: widthValue,
     formatter: formatter
   }
+}
+
+export const genFormSchema = (
+  schemaType: string,
+  fieldValue = '',
+  labelValue = '',
+  optionObj: any = {}
+) => {
+  if (schemaType === 'divider') {
+    return {
+      field: fieldValue,
+      label: labelValue,
+      component: 'Divider'
+    }
+  }
+  if (schemaType === 'input') {
+    return {
+      field: fieldValue,
+      label: labelValue,
+      component: 'Input',
+      componentProps: {
+        disabled: optionObj?.readonly ?? null,
+        placeholder: optionObj.placeholder ?? null
+      },
+      formItemProps: {
+        labelWidth: optionObj?.labelWidth ?? null,
+        rules: optionObj?.required ? [required()] : []
+      },
+      colProps: { span: optionObj?.span ?? 6 }
+    } as any
+  }
+  if (schemaType === 'textarea') {
+    return {
+      field: fieldValue,
+      label: labelValue,
+      component: 'Input',
+      componentProps: {
+        disabled: optionObj?.readonly ?? null,
+        type: 'textarea',
+        rows: optionObj.rows ?? 2,
+        placeholder: optionObj.placeholder ?? null
+      },
+      formItemProps: {
+        labelWidth: optionObj?.labelWidth ?? null,
+        rules: optionObj?.required ? [required()] : []
+      },
+      colProps: { span: optionObj?.span ?? 24 }
+    } as any
+  }
+  if (schemaType === 'hidden') {
+    return {
+      field: fieldValue,
+      label: labelValue,
+      component: 'Hidden',
+      formItemProps: {
+        labelWidth: 0
+      },
+      colProps: { span: 0 }
+    } as any
+  }
+  if (schemaType === 'date') {
+    return {
+      field: fieldValue,
+      label: labelValue,
+      component: 'DatePicker',
+      componentProps: {
+        disabled: optionObj?.readonly ?? null,
+        type: optionObj.type ?? 'date',
+        format: optionObj.format ?? 'YYYY-MM-DD HH:mm:ss',
+        valueFormat: optionObj.valueFormat ?? 'YYYY-MM-DD HH:mm:ss',
+        placeholder: optionObj.placeholder ?? null,
+        onChange: optionObj?.onChange ?? null
+      },
+      formItemProps: {
+        labelWidth: optionObj?.labelWidth ?? null,
+        rules: optionObj?.required ? [required()] : []
+      },
+      colProps: { span: optionObj?.span ?? 6 }
+    } as any
+  }
+  if (schemaType === 'autocomplete') {
+    return {
+      label: labelValue,
+      field: fieldValue,
+      component: 'Autocomplete',
+      componentProps: {
+        disabled: optionObj?.readonly ?? null,
+        style: 'width: 100%',
+        triggerOnFocus: optionObj?.triggerOnFocus ?? false,
+        fetchSuggestions: async (queryString: string, cb: Fn) => {
+          const res = await getApi(`${optionObj!.url}?keyWords=${queryString}`)
+          const result = res?.data.map((item) => ({
+            ...item,
+            value: item[optionObj!.itemValue],
+            link: item[optionObj!.itemLink]
+          }))
+          cb(result)
+        },
+        onSelect: optionObj?.onSelect ?? null,
+        // onSelect: (item: Recordable) => {
+        //   console.log('hello ')
+        // },
+        slots: {
+          default: true
+        },
+        placeholder: optionObj?.placeholder ?? null
+      },
+      formItemProps: {
+        labelWidth: optionObj?.labelWidth ?? null,
+        rules: optionObj?.required ? [required()] : []
+      },
+      colProps: { span: optionObj?.span ?? 6 }
+    }
+  }
+  if (schemaType === 'sourceSelect') {
+    return {
+      field: fieldValue,
+      label: labelValue,
+      component: 'Select',
+      componentProps: {
+        style: 'width: 100%',
+        disabled: optionObj?.readonly ?? null,
+        placeholder: optionObj?.placeholder ?? null,
+        options: optionObj?.options ?? null
+      },
+      colProps: { span: optionObj?.span ?? 6 },
+      value: optionObj?.value ?? null,
+      formItemProps: {
+        labelWidth: optionObj?.labelWidth ?? null,
+        rules: optionObj?.required ? [required()] : []
+      }
+    }
+  }
+  if (schemaType === 'apiSelect') {
+    const options = ref([])
+    if (optionObj?.api) {
+      optionObj?.api().then((res) => {
+        options.value = res
+      })
+    }
+    return {
+      field: fieldValue,
+      label: labelValue,
+      component: 'Select',
+      componentProps: {
+        disabled: optionObj?.readonly ?? null,
+        placeholder: optionObj?.placeholder ?? null,
+        filterable: optionObj?.filterable ?? null,
+        options: options as any
+      },
+      colProps: { span: optionObj?.span ?? 6 },
+      formItemProps: {
+        labelWidth: optionObj?.labelWidth ?? null,
+        rules: optionObj?.required ? [required()] : []
+      }
+    }
+  }
+  if (schemaType === 'datePicker') {
+    return {
+      label: labelValue,
+      field: fieldValue,
+      component: 'DatePicker',
+      componentProps: {
+        disabled: optionObj?.readonly ?? null,
+        placeholder: optionObj?.placeholder ?? null,
+        type: optionObj?.type ?? 'date',
+        format: optionObj?.format ?? 'YYYY-MM-DD',
+        valueFormat: optionObj?.valueFormat ?? 'YYYY-MM-DD',
+        onChange: optionObj?.onChange ?? null
+      },
+      colProps: { span: optionObj?.span ?? 6 },
+      formItemProps: {
+        labelWidth: optionObj?.labelWidth ?? null,
+        rules: optionObj?.required ? [required()] : []
+      }
+    } as any
+  }
+  if (schemaType === 'checkbox') {
+    return {
+      label: labelValue,
+      field: fieldValue,
+      component: 'Checkbox',
+      componentProps: {
+        disabled: optionObj?.readonly ?? null,
+        options: optionObj?.options ?? null,
+        onChange: optionObj?.onChange ?? null,
+        min: optionObj?.min ?? null,
+        max: optionObj?.max ?? null
+      },
+      colProps: { span: optionObj?.span ?? 6 },
+      formItemProps: {
+        labelWidth: labelValue === '' && !optionObj?.labelWidth ? '0px' : null,
+        rules: optionObj?.required ? [required()] : []
+      },
+      value: optionObj?.value ?? []
+    }
+  }
+  if (schemaType === 'radio') {
+    return {
+      label: labelValue,
+      field: fieldValue,
+      component: 'Radio',
+      componentProps: {
+        disabled: optionObj?.readonly ?? null,
+        style: 'width: 100%',
+        options: optionObj?.options ?? null,
+        onChange: optionObj?.onChange ?? null
+      },
+      colProps: { span: optionObj?.span ?? 6 },
+      value: optionObj?.value ?? '',
+      formItemProps: {
+        labelWidth: optionObj?.labelWidth ?? null,
+        rules: optionObj?.required ? [required()] : []
+      }
+    }
+  }
+  console.log('Gen FormSchema: Not expected type ', schemaType)
+
+  return {}
+}
+
+export const getSelectText = async (methods, schema, fieldName) => {
+  const formData = await methods?.getFormData()
+  return (
+    schema
+      ?.find((item) => item.field === fieldName)
+      ?.componentProps?.options?.find((item) => item.value === formData![fieldName])?.label || ''
+  )
+}
+
+export const getValue = async (methods, fieldName) => {
+  const formData = await methods?.getFormData()
+  return formData?.hasOwnProperty(fieldName) ? formData[fieldName] : null
+}
+
+export const getSchemaItem = (schema, fieldName) => {
+  return schema?.find((item) => item.field === fieldName)
+}
+
+export const getSchemaOptions = (schema, fieldName) => {
+  return schema?.find((item) => item.field === fieldName).componentProps.options
 }

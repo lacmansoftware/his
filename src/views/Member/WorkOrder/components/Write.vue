@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { Form } from '@/components/Form'
 import { useForm } from '@/hooks/web/useForm'
-import { PropType, reactive, watch, ref, onMounted } from 'vue'
+import { PropType, reactive, watch, ref, onMounted, computed } from 'vue'
 // import { useI18n } from '@/hooks/web/useI18n'
 import { useValidator } from '@/hooks/web/useValidator'
 import { getApi } from '@/api/common'
 import { getInOptionFormat, returnDateString } from '@/utils/common'
 import dict from '@/config/dictionary.json'
 import Comment from './Comment.vue'
-import { CommentType } from '@/api/workorder/workorder/types'
+import { WorkOrderType, CommentType } from '@/api/workorder/workorder/types'
 
 const { required, isMobile } = useValidator()
 
 const props = defineProps({
   currentRow: {
-    type: Object as PropType<Nullable<CommentType>>,
+    type: Object as PropType<Nullable<WorkOrderType>>,
     default: () => null
   },
   isEdit: {
@@ -26,6 +26,7 @@ const props = defineProps({
 // const { t } = useI18n()
 
 const contactUserId = ref('')
+const statusRef = ref('nothand')
 
 const store = {
   orderTypes: ref<ComponentOptions[]>([]),
@@ -61,6 +62,7 @@ onMounted(async () => {
   )
   await setStore('sysUser', `/sys/user`, 'id', 'name')
   setStore('sysDeptList', `/sys/dept/list`, 'id', 'hospitalName+deptName')
+  store.transferId.value = store.sysUser.value
 
   props.isEdit && setComments()
 })
@@ -102,9 +104,35 @@ const handleTypeChange = (item: Recordable) => {
   })
 }
 
-const handleStatusChange = (item: Recordable) => {
-  console.log(item)
+const handleStatusChange = (item: string) => {
+  statusRef.value = item
+  if (!(statusRef.value === 'nothand' || statusRef.value === 'handling')) {
+    methods?.setValues({
+      transferType: 'person'
+    })
+    methods?.setSchema([
+      {
+        field: 'transferId',
+        path: 'componentProps.disabled',
+        value: true
+      }
+    ])
+  } else {
+    methods?.setSchema([
+      {
+        field: 'transferId',
+        path: 'componentProps.disabled',
+        value: false
+      }
+    ])
+  }
 }
+
+const transferTypeOptions = computed(() =>
+  dict.member.workOrderTransferType.filter(
+    (item) => statusRef.value === 'nothand' || statusRef.value === 'handling' || !item.disabled
+  )
+)
 
 const handleTransferTypeChange = (item: string) => {
   store.transferId.value = item === 'person' ? store.sysUser.value : store.sysDeptList.value
@@ -152,7 +180,10 @@ const schema = reactive<FormSchema[]>([
       style: 'width: 100%',
       placeholder: '工單類型',
       options: store.orderTypes as any,
-      onChange: handleTypeChange
+      onChange: handleTypeChange,
+      disabled:
+        props.isEdit &&
+        (props.currentRow?.status === 'nohand' || props.currentRow?.status === 'handled')
     },
     colProps: { span: 12 },
     formItemProps: {
@@ -241,8 +272,11 @@ const schema = reactive<FormSchema[]>([
     componentProps: {
       style: 'width: 100%',
       placeholder: '',
-      options: dict.member.workOrderTransferType,
-      onChange: handleTransferTypeChange
+      options: transferTypeOptions as any,
+      onChange: handleTransferTypeChange,
+      disabled:
+        props.isEdit &&
+        (props.currentRow?.status === 'nohand' || props.currentRow?.status === 'handled')
     },
     colProps: { span: 12 },
     formItemProps: {
@@ -255,6 +289,10 @@ const schema = reactive<FormSchema[]>([
     label: '轉交编号',
     component: 'Select',
     componentProps: {
+      disabled:
+        false ||
+        (props.isEdit &&
+          (props.currentRow?.status === 'nohand' || props.currentRow?.status === 'handled')),
       style: 'width: 100%',
       placeholder: '轉交编号',
       options: store.transferId as any
@@ -303,7 +341,10 @@ const schema = reactive<FormSchema[]>([
     componentProps: {
       style: 'width: 100%',
       placeholder: '是否創建提醒',
-      options: dict.member.workOrderRemind
+      options: dict.member.workOrderRemind,
+      disabled:
+        props.isEdit &&
+        (props.currentRow?.status === 'nohand' || props.currentRow?.status === 'handled')
     },
     colProps: { span: props.isEdit ? 0 : 8 }
   },
@@ -315,13 +356,16 @@ const schema = reactive<FormSchema[]>([
       style: 'width: 100%',
       placeholder: '狀態',
       options: dict.member.workOrderStatus,
-      change: handleStatusChange
+      onChange: handleStatusChange,
+      disabled:
+        props.isEdit &&
+        (props.currentRow?.status === 'nohand' || props.currentRow?.status === 'handled')
     },
     colProps: { span: 16 },
     formItemProps: {
       rules: [required()]
     },
-    value: 'nothand'
+    value: statusRef.value
   },
   {
     field: 'comment',
@@ -331,7 +375,10 @@ const schema = reactive<FormSchema[]>([
       style: 'width: 100%',
       placeholder: '溝通記錄',
       type: 'textarea',
-      rows: 2
+      rows: 2,
+      disabled:
+        props.isEdit &&
+        (props.currentRow?.status === 'nohand' || props.currentRow?.status === 'handled')
     },
     colProps: { span: 24 },
     formItemProps: {
@@ -387,6 +434,12 @@ defineExpose({
   elFormRef,
   getFormData: methods.getFormData
 })
+
+const test = () => {
+  schema.find((item) => item.field === 'transferType')!.value = 'dept'
+
+  alert('Hello')
+}
 </script>
 
 <template>

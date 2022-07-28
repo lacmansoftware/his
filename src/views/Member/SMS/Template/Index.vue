@@ -10,7 +10,7 @@ import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { useValidator } from '@/hooks/web/useValidator'
 import { getInOptionFormat } from '@/utils/common'
-import { plusIcon, deleteIcon } from '@/utils/iconList'
+import { plusIcon } from '@/utils/iconList'
 import Write from './components/Write.vue'
 
 import { getTableListApi, delTableListApi, saveTableApi } from '@/api/workorder/sms/templet'
@@ -68,6 +68,9 @@ const crudSchemas = reactive<CrudSchema[]>([
     },
     search: {
       component: 'Input',
+      componentProps: {
+        style: 'width: 100%'
+      },
       colProps: { span: 8 },
       show: true
     }
@@ -223,9 +226,6 @@ const save = async () => {
 
     <div class="mb-10px ml-10px mt-[-32px]">
       <ElButton type="primary" @click="AddAction" :icon="plusIcon">新增</ElButton>
-      <ElButton :loading="delLoading" type="danger" @click="delData(null, true)" :icon="deleteIcon"
-        >批量刪除</ElButton
-      >
     </div>
 
     <Table

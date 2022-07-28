@@ -101,12 +101,12 @@ export const useTable = <T = any>(config?: UseTableConfig<T>) => {
     return table
   }
 
-  const delData = async (ids: string[] | number[]) => {
-    // const str = ids.reduce(
-    //   (sum: string, id: string | number) => sum + (sum === '' ? '' : ',') + id,
-    //   ''
-    // )
-    const str = ''
+  const delData = async (ids: Array<number | string>) => {
+    const str = ids.reduce(
+      (sum: string, id: string | number) => sum + (sum === '' ? '' : ',') + id,
+      ''
+    )
+    // const str = ''
     const res = await (config?.delListApi && config?.delListApi(str))
     if (res) {
       ElMessage.success(t('common.delSuccess'))

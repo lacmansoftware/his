@@ -2,6 +2,7 @@ import dict from '@/config/dictionary.json'
 import { pinyin } from 'pinyin-pro'
 import { getApi } from '@/api/common'
 import moment from 'moment'
+import { CurWeekType } from '@/api/appoint/appoint/hospital/types'
 
 export const inDict = (val, data: string) => {
   try {
@@ -100,7 +101,7 @@ export const getDateInFormat = (date: Date, style = '/') => {
   return nDate.toISOString().slice(0, 10).replace(/-/g, style)
 }
 
-export const getWeekSEDate = (curDate = '') => {
+export const getWeekSEDate = (curDate = ''): CurWeekType => {
   const curr = curDate === '' ? new Date() : new Date(curDate)
   const startDate = new Date(curr.setDate(curr.getDate() - curr.getDay()))
   const endDate = new Date(curr.setDate(curr.getDate() - curr.getDay() + 7))
@@ -154,4 +155,21 @@ export const timelineLabels = (desiredStartTime, desiredEndTime, interval, perio
 export const isValidTime = (dateString: string, timeString: string) => {
   if (moment() <= moment(`${dateString} ${timeString}`, 'YYYY-MM-DD HH:mm')) return true
   return false
+}
+
+export const diffArr = (prev: string[], next: string[]) => {
+  return prev.filter((item) => !next.includes(item))
+}
+
+export const diff = (prev: string[], next: string[], checked = false) => {
+  if (prev.length === next.length) return null
+  if (prev.length > next.length) {
+    const temp = diffArr(prev, next)
+    if (temp.length !== 1) return null
+    return {
+      checked: checked,
+      value: temp[0]
+    }
+  }
+  return diff(next, prev, true)
 }

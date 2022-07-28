@@ -1,90 +1,34 @@
 <script setup lang="ts">
-import { Form } from '@/components/Form'
-import { useForm } from '@/hooks/web/useForm'
-import { reactive, onMounted, PropType } from 'vue'
-// import { useI18n } from '@/hooks/web/useI18n'
-import { useValidator } from '@/hooks/web/useValidator'
-import { CommentType } from '@/api/workorder/workorder/types'
+import { PropType, reactive } from 'vue'
+import type { WorkOrderType } from '@/api/workorder/workorder/types'
+import { Descriptions } from '@/components/Descriptions'
 
-const { required } = useValidator()
-
-const props = defineProps({
+defineProps({
   currentRow: {
-    type: Object as PropType<CommentType>,
+    type: Object as PropType<Nullable<WorkOrderType>>,
     default: () => null
   }
 })
 
-// const { t } = useI18n()
-
-onMounted(() => {
-  console.log(props.currentRow)
-})
-
-const schema = reactive<FormSchema[]>([
+const schema = reactive<DescriptionsSchema[]>([
   {
     label: '操作人',
-    field: 'handlerName',
-    component: 'Input',
-    componentProps: {
-      style: 'width: 100%',
-      placeholder: '操作人',
-      disabled: true
-    },
-    colProps: { span: 24 },
-    value: props.currentRow?.handlerName,
-    formItemProps: {
-      rules: [required()]
-    }
+    field: 'handlerName'
   },
   {
     label: '處理時間',
-    field: 'createTime',
-    component: 'Input',
-    componentProps: {
-      style: 'width: 100%',
-      placeholder: '處理時間',
-      disabled: true
-    },
-    colProps: { span: 24 },
-    value: props.currentRow?.createTime,
-    formItemProps: {
-      rules: [required()]
-    }
+    field: 'createTime'
   },
   {
     label: '溝通記錄',
     field: 'comment',
-    component: 'Input',
-    componentProps: {
-      style: 'width: 100%',
-      placeholder: '溝通記錄',
-      disabled: true
-    },
-    colProps: { span: 24 },
-    value: props.currentRow?.comment,
-    formItemProps: {
-      rules: [required()]
-    }
+    span: 24
   }
 ])
-
-const { register, methods, elFormRef } = useForm({
-  schema
-})
-
-defineExpose({
-  elFormRef,
-  getFormData: methods.getFormData
-})
-
-const rules = []
 </script>
 
 <template>
-  <Form
-    :rules="rules"
-    @register="register"
-    class="pt-4 border-t-[1px] border-dashed border-yellow-600"
-  />
+  <Descriptions :schema="schema" :data="currentRow || {}">
+    <template #label> Hello </template>
+  </Descriptions>
 </template>

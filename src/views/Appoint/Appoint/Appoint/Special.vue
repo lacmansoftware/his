@@ -2,26 +2,29 @@
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
 // import { useI18n } from '@/hooks/web/useI18n'
-import { ElDatePicker } from 'element-plus'
+import { ElDatePicker, ElLink } from 'element-plus'
 import { Table } from '@/components/Table'
-import { getTableListApi, getPrintApi } from '@/api/appoint/appoint/hospital'
 import { useTable } from '@/hooks/web/useTable'
-import { AppointHospitalTableData } from '@/api/appoint/appoint/hospital/types'
 import { reactive, ref, unref, onMounted, watch, computed } from 'vue'
 // import { useRouter } from 'vue-router'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-// import { useDictStoreWithOut } from '@/store/modules/dict'
 import { getInOptionFormat, formatObject, getWeekSEDate } from '@/utils/common'
 import { getApi } from '@/api/common'
+import { getTableListApi } from '@/api/appoint/appoint/appoint'
+import { AppointDoctorTableData } from '@/api/appoint/appoint/appoint/types'
 import dict from '@/config/dictionary.json'
+
 import ColumnView from './ColumnView.vue'
+import { CurWeekType } from '@/api/appoint/appoint/hospital/types'
+import { useRoute } from 'vue-router'
+import { genFormSchema, genSearchSchema } from '@/utils/schema'
 
 defineOptions({
-  name: 'AppointManageHospitalIndex'
+  name: 'AppointManageAppointSpecial'
 })
 
-// const dictStore = useDictStoreWithOut()
-const curWeek = ref(getWeekSEDate())
+const { params } = useRoute()
+const curWeek = ref<CurWeekType>(getWeekSEDate())
 const curWeekDate = ref(curWeek.value.startDate)
 
 const store = {
@@ -60,129 +63,69 @@ onMounted(async () => {
   setStore('feePayHospitalId', '/sys/hospital', 'id', 'name')
   updateTableCol()
   getAllSelectData()
-  await setValues({
-    viewType: 'basicWeek',
-    startDate: curWeek.value.startDate,
-    endDate: curWeek.value.endDate
-  })
+  if (params.hospitalId && params.doctorId && params.startDate && params.endDate) {
+    await setValues({
+      viewType: 'basicWeek',
+      hospitalId: params.hospitalId,
+      doctorId: params.doctorId,
+      startDate: params.startDate,
+      endDate: params.endDate
+    })
+  } else {
+    await setValues({
+      viewType: 'basicWeek',
+      startDate: curWeek.value.startDate,
+      endDate: curWeek.value.endDate
+    })
+  }
   search()
 })
 
-// const { push } = useRouter()
+const getSpecialTableListApi = (params: any) => {
+  const newParams = {
+    ...params,
+    viewType: 'basicWeek',
+    hospitalId: 'MD_SPECIAL_jiujiang',
+    diseaseseId: '',
+    id: '',
+    cityId: '',
+    pageSize: 5
+  }
+  return getTableListApi(newParams)
+}
 
-const { register, tableObject, methods } = useTable<AppointHospitalTableData>({
-  getListApi: getTableListApi,
+const { register, tableObject, methods } = useTable<AppointDoctorTableData>({
+  getListApi: getSpecialTableListApi,
   response: {
     list: 'data',
     total: 'total'
   }
 })
 
+// const { getList, setSearchParams } = methods
 const { setSearchParams } = methods
 
 // const { t } = useI18n()
 
 const crudSchemas = reactive<CrudSchema[]>([
-  {
-    field: 'city',
-    label: '城市',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'Select',
-      componentProps: {
-        options: sysCities as any
-      },
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    field: 'hospitalId',
-    label: '門店',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'Select',
-      componentProps: {
-        options: sysHospitals as any
-      },
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    field: 'doctorId',
-    label: '醫生',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'Select',
-      componentProps: {
-        options: doctorInfos as any
-      },
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    field: 'diseaseseId',
-    label: '病情/醫生技能',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      component: 'Select',
-      componentProps: {
-        options: sysDiseases as any
-      },
-      colProps: { span: 6 },
-      show: true
-    }
-  },
-  {
-    field: 'type',
-    label: '',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Hidden',
-      colProps: { span: 0 }
-    }
-  },
-  {
-    field: 'id',
-    label: '',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Hidden',
-      colProps: { span: 0 }
-    }
-  },
-  {
-    field: 'cityId',
-    label: '',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Hidden',
-      colProps: { span: 0 }
-    }
-  },
-  {
-    field: 'viewType',
-    label: '',
-    form: { show: false },
-    table: { show: false },
-    search: {
-      show: true,
-      component: 'Hidden',
-      colProps: { span: 0 }
-    }
-  },
+  // Search Schema
+  genSearchSchema('radio', 'type', '門診類型', {
+    options: [
+      {
+        value: 'normal',
+        label: '普通門診'
+      }
+    ],
+    value: 'normal',
+    span: 6
+  }),
+  genSearchSchema('apiSelect', 'doctorId', '醫生', {
+    api: async () => {
+      return await getInOptionFormat('doctor/third/MD_SPECIAL_jiujiang', 'id', 'name')
+    },
+    filterable: true,
+    span: 18
+  }),
   {
     field: 'startDate',
     label: '',
@@ -313,10 +256,9 @@ watch(curWeekDate, async () => {
       @register="register"
     >
       <template #hospital="{ row }">
-        <div class="flex flex-col align-middle">
+        <div class="flex flex-col align-middle text-center">
           <p class="text-base text-green-500">{{ row?.name }}</p>
-          <p>{{ `上限 ${row?.totalLimit} 人` }}</p>
-          <p>{{ `已约 ${row?.totalMeet} 人` }}</p>
+          <ElLink type="warning">查看醫生信息</ElLink>
         </div>
       </template>
       <template #col0="{ row }">

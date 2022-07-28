@@ -24,11 +24,11 @@ const props = defineProps({
   }
 })
 
-const data = ref<AppointDoctorType>(
-  props.row?.children.find((item) => {
+const data = computed<AppointDoctorType>(() => {
+  return props.row?.children.find((item) => {
     if (item.start === props.curWeek.range[props.colId]) return true
   }) as AppointDoctorType
-)
+})
 
 const schema = computed(() => {
   const timeLabels = timelineLabels(
@@ -37,12 +37,25 @@ const schema = computed(() => {
     data.value.cycle,
     'minute'
   )
-  return timeLabels.map((time) => ({
+  return timeLabels.map((time, index) => ({
     icon: '',
     disabled: !isValidTime(data.value.start, time),
     label: `<div class="flex items-center justify-between gap-4"><p>${time}</p><p>添加預約</p></div>`,
     command: () => {
-      push('/appoint/appoint/appoint/add?id=wegwe')
+      // doctorId: props.row.id
+      // hospitalId: data.value.hospitalId
+      // startTime: data.value.date + " " + time
+      // endTime: data.value.date + " " + timeLabels[index + 1]
+      push({
+        name: 'AppointManageAppointAdd',
+        params: {
+          actionType: 'add',
+          doctorId: props.row.id,
+          hospitalId: data.value.hospitalId,
+          startTime: data.value.date + ' ' + time,
+          endTime: data.value.date + ' ' + timeLabels[index + 1]
+        }
+      })
     }
   }))
 })
@@ -55,7 +68,7 @@ onMounted(() => {
 <template>
   <CustomDropdown v-if="typeof data !== 'undefined'" trigger="hover" :schema="schema">
     <div class="flex flex-col gap-2">
-      <p>{{ data.name }}</p>
+      <p class="text-base text-blue-400">{{ data.name }}</p>
       <p>{{ `已约/上限: ${data.addLimit}/${data.limit}` }}</p>
     </div>
   </CustomDropdown>
