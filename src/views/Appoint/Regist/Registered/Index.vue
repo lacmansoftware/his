@@ -10,13 +10,14 @@ import { useI18n } from '@/hooks/web/useI18n'
 import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { inDict, getInOptionFormat, getDateInFormat, getAgeByBirthday } from '@/utils/common'
-import { plusIcon } from '@/utils/iconList'
+import { downloadIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
 import { getTableListApi, delTableListApi, saveTableApi } from '@/api/appoint/regist/registered'
 import { NotChargedTableData } from '@/api/appoint/regist/registered/types'
 import { dateCompare } from '@/utils/date'
 import dict from '@/config/dictionary.json'
+import { PATH_URL } from '@/config/axios'
 
 defineOptions({
   name: 'CashNotChargedIndex'
@@ -470,6 +471,28 @@ const canMakeUp = (orderType) => {
     orderType !== 'specialist'
   )
 }
+
+const exportExcel = async () => {
+  const search = unref(searchRef)
+  const data = (await search?.getFormData()) as any
+  const queryParams = new URLSearchParams({
+    status: 'YGH',
+    dateStart: data.dateStart || '',
+    dateEnd: data.dateEnd || '',
+    memberName: data.memberName || '',
+    memberMobile: data.memberMobile || '',
+    archivesNo: data.archivesNo || '',
+    doctorId: data.doctorId || '',
+    memberLevel: data.memberLevel || '',
+    visitType: data.visitType || '',
+    appointmentType: data.appointmentType || '',
+    marketActivity: data.marketActivity || '',
+    firstDisease: data.firstDisease || ''
+  })
+
+  const path = `${PATH_URL}/member/appointment/registeration/list/exportRegisteration?${queryParams.toString()}`
+  window.open(path, '_blank')
+}
 </script>
 
 <template>
@@ -486,7 +509,7 @@ const canMakeUp = (orderType) => {
     />
 
     <div class="mb-10px ml-10px mt-[-32px]">
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">導出</ElButton>
+      <ElButton type="warning" @click="exportExcel" :icon="downloadIcon">導出</ElButton>
     </div>
 
     <Table

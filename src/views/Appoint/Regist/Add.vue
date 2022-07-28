@@ -313,13 +313,12 @@ const schema = reactive<FormSchema[]>([
     }
   },
   genFormSchema('apiSelect', 'doctorId', '大夫', {
-    required: true,
     placeholder: '請填寫',
     filterable: true,
     api: async () => {
-      store.doctorId.value = await getInOptionFormat('doctor/getAuthPass', 'id', 'name')
-      return store.doctorId.value
-    }
+      return await getInOptionFormat('doctor/getAuthPass', 'id', 'name')
+    },
+    required: true
   }),
   genFormSchema('input', 'memberName', '姓名', { placeholder: null, required: true }),
   genFormSchema('hidden', 'memberId', '姓名', { placeholder: null }),
