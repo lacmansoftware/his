@@ -8,14 +8,12 @@ import { useForm } from '@/hooks/web/useForm'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useEmitt } from '@/hooks/web/useEmitt'
 import { useRouter, useRoute } from 'vue-router'
-import { saveUpdateStatusApi } from '@/api/appoint/appoint/hospital'
-import { UpdateStatusType } from '@/api/appoint/appoint/hospital/types'
-import { getAgeByBirthday, getInOptionFormat, returnDateString } from '@/utils/common'
+import { getAgeByBirthday, getInOptionFormat } from '@/utils/common'
+import { getSelectText } from '@/utils/schema'
 import { getApi, postApi } from '@/api/common'
 import { genFormSchema } from '@/utils/schema'
 
 import dict from '@/config/dictionary.json'
-import { AppointDoctorType } from '@/api/appoint/appoint/appoint/types'
 import ChargeType from '@/views/Cash/Common/ChargeType.vue'
 import { AppointListData } from '@/api/appoint/appoint/list/types'
 
@@ -349,13 +347,6 @@ const { register, methods, elFormRef } = useForm({
 
 const loading = ref(false)
 
-const getSelectText = async (fieldName) => {
-  const formData = await methods.getFormData()
-  return schema
-    .find((item) => item.field === fieldName)
-    ?.componentProps?.options?.find((item) => item.value === formData![fieldName])?.label
-}
-
 const save = async () => {
   const { payType } = (await methods.getFormData()) as any
   if (
@@ -385,13 +376,13 @@ const save = async () => {
           const subData = {
             memberId: data?.memberId,
             hospitalId: data?.hospitalId,
-            hospitalName: await getSelectText('hospitalId'),
-            doctorName: await getSelectText('doctorId'),
-            importantGuestName: await getSelectText('importantGuest'),
+            hospitalName: await getSelectText(methods, schema, 'hospitalId'),
+            doctorName: await getSelectText(methods, schema, 'doctorId'),
+            importantGuestName: await getSelectText(methods, schema, 'importantGuest'),
             workOrderId: params?.workOrderId,
             payType: data?.payType,
             appointmentType: appointmentType,
-            memberLevelName: await getSelectText('memberLevel'),
+            memberLevelName: await getSelectText(methods, schema, 'memberLevel'),
             sendMessage: sendMessage,
             hasHighMedicalInsurance: data?.hasHighMedicalInsurance,
             payMobile: data?.payMobile,

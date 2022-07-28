@@ -148,6 +148,7 @@ const schema = reactive<FormSchema[]>([
     span: 8
   }),
 
+  genFormSchema('input', 'fileUrl', '上傳證件', { placeholder: null }),
   genFormSchema('textarea', 'remark', '保險備註', { placeholder: null, span: 24 })
 ])
 
@@ -157,7 +158,8 @@ const { register, methods, elFormRef } = useForm({
 
 defineExpose({
   methods,
-  elFormRef
+  elFormRef,
+  schema
 })
 </script>
 

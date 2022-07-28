@@ -2,19 +2,16 @@
 import dayjs from 'dayjs'
 import { Form } from '@/components/Form'
 import { ContentDetailWrap } from '@/components/ContentDetailWrap'
-import { onBeforeMount, onMounted, reactive, ref, unref, watch } from 'vue'
+import { onBeforeMount, onMounted, PropType, reactive, ref, unref, watch } from 'vue'
 import { ElRow, ElCol, ElButton, ElMessage, ElMessageBox } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
 import { useForm } from '@/hooks/web/useForm'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useEmitt } from '@/hooks/web/useEmitt'
 import { useRouter, useRoute } from 'vue-router'
-import { saveUpdateStatusApi } from '@/api/appoint/appoint/hospital'
-import { UpdateStatusType } from '@/api/appoint/appoint/hospital/types'
 import { getAgeByBirthday, getInOptionFormat, returnDateString } from '@/utils/common'
+import { getSelectText, getValue, getSchemaOptions, genFormSchema } from '@/utils/schema'
 import { getApi, postApi } from '@/api/common'
-import { genFormSchema } from '@/utils/schema'
-
 import dict from '@/config/dictionary.json'
 import { AppointDoctorType } from '@/api/appoint/appoint/appoint/types'
 import ChargeType from '@/views/Cash/Common/ChargeType.vue'
@@ -38,9 +35,11 @@ const props = defineProps({
 
 const typeRef = ref<string>('normal')
 const hasInsurRef = ref<string>('N')
+const isInsurRef = ref<string>('N')
 const currentRow = ref<AppointListData>()
 const hasHighMedicalInsuranceInfoRef = ref('')
-const insurFormRef = ref<ComponentRef<typeof ChargeType>>()
+const insurFormRef = ref<ComponentRef<typeof InsurForm>>()
+const typeOptionRef = ref<ComponentRef<typeof TypeOption>>()
 let sendMessage = ''
 let appointmentType = 'normal'
 
@@ -173,41 +172,79 @@ const queryMemberInsur = async () => {
       status: 'Y'
     }).then((result) => {
       if (result.success) {
-        methods.setValues({
-          isInsur: 'Y'
-        })
+        methods.setValues({ isInsur: 'Y' })
         // $('#warining').hide()
-        let data = result.data
-        if (data.length > 0) {
-          data = data.map((item) => {
-            item.value = item.insurName
+        if (result.data.length > 0) {
+          const insur = unref(insurFormRef)
+          insur?.methods?.setValues({
+            ...result.data[0],
+            memberInsur: result.data[0].id
           })
+          insur?.methods?.setSchema([
+            {
+              field: 'memberInsur',
+              path: 'componentProps.options',
+              value: result.data.map((item) => ({
+                ...item,
+                value: item.id,
+                label: item.insurName
+              }))
+            }
+          ])
+          hasInsurRef.value = 'Y'
+
           // insurForm.setData(data[0])
-          // methods.setValues({
-          //   memberInsur: data[0].id
-          // })
-          // memberInsur.listBox.setData(data)
           // showEndInsur(data[0])
           // for (var i = 0; i < data[0].limitCount; i++) {
           //   namespace.addSchool(data[0])
           // }
-          // namespace.hasInsur = 'Y'
         } else {
           //當前用戶沒有保險，需要新加保險，所以查詢的是合作保險名
-          methods.setValues({ isInsur: 'Y' })
+          methods.setValues({ isInsur: 'N' })
           // $('#warining').show()
           hasInsurRef.value = 'N'
-          getApi('/market/insur', function (result) {
+          getApi('/market/insur').then((result) => {
             if (result.success) {
-              // var data = result.data
-              // for (var i = 0; i < data.length; i++) {
-              //   data[i].value = data[i].productName
-              // }
-              // yui.get('memberInsur').setValue('')
-              // memberInsur.listBox.setData(data)
+              const insur = unref(insurFormRef)
+              insur?.methods?.setSchema([
+                {
+                  field: 'memberInsur',
+                  path: 'componentProps.options',
+                  value: result.data.map((item) => ({
+                    ...item,
+                    value: item.id,
+                    label: item.productName
+                  }))
+                }
+              ])
+              insur?.methods?.setValues({ memberInsur: '' })
             }
           })
         }
+      }
+    })
+  } else {
+    hasInsurRef.value = 'N'
+    // $('#warining').show()
+    // var c = namespace.schoolIndex
+    // for (var j = 7; j <= c; j++) {
+    //   namespace.removeSchool(j, [])
+    // }
+    getApi('/market/insur').then((result) => {
+      if (result.success) {
+        const insur = unref(insurFormRef)
+        insur?.methods?.setSchema([
+          {
+            field: 'memberInsur',
+            path: 'componentProps.options',
+            value: result.data.map((item) => ({
+              ...item,
+              value: item.id,
+              label: item.productName
+            }))
+          }
+        ])
+        insur?.methods?.setValues({ memberInsur: '' })
       }
     })
   }
@@ -245,7 +282,8 @@ const schema = reactive<FormSchema[]>([
     itemLink: 'id',
     placeholder: '檢索姓名/檔案號/拼音/手機號',
     labelWidth: '250px',
-    span: params.actionType === 'add' ? 24 : 0,
+    // span: params.actionType === 'add' ? 24 : 0,
+    span: 24,
     onSelect: handleQuerySelect
   }),
   genFormSchema('datePicker', 'registerDate', '挂號時間', {
@@ -333,25 +371,18 @@ const schema = reactive<FormSchema[]>([
   }),
   genFormSchema('checkbox', 'plusType', '加號', {
     options: dict.appointment_plus_type,
-    value: [],
+    value: [''],
     span: 24
   }),
   genFormSchema('radio', 'isInsur', '是否有保險', {
     options: dict.display,
-    value: '',
+    value: 'N',
     required: true,
     span: 24,
     onChange: (item) => {
-      hasInsurRef.value = item
+      isInsurRef.value = item
     }
-  }),
-  {
-    field: 'insurForm',
-    label: '',
-    colProps: {
-      span: 24
-    }
-  }
+  })
 ])
 
 const { register, methods, elFormRef } = useForm({
@@ -360,20 +391,65 @@ const { register, methods, elFormRef } = useForm({
 
 const loading = ref(false)
 
-const getSelectText = async (fieldName) => {
-  const formData = await methods.getFormData()
-  return schema
-    .find((item) => item.field === fieldName)
-    ?.componentProps?.options?.find((item) => item.value === formData![fieldName])?.label
-}
-
 const save = async () => {
+  const insur = unref(insurFormRef)
+  const typeOption = unref(typeOptionRef)
+  console.log(await getSelectText(insur?.methods, insur?.schema, 'memberInsur'))
+  // console.log(await getValue(insur?.methods, 'memberInsur'))
+  // console.log(getSchemaOptions(insur?.schema, 'memberInsur'))
+
+  let insurFormData: any = {}
+  let insurIsValid = false
+  let insurId = ''
+  let memberInsurId = ''
+  hasInsurRef.value &&
+    (await insur?.elFormRef?.validate(async (isValid) => {
+      if (isValid) {
+        insurIsValid = true
+      }
+    }))
+  insurFormData = (await insur?.methods?.getFormData()) as any
+  const typeOptionFormData = (await typeOption?.methods?.getFormData()) as any
+  if (hasInsurRef.value === 'Y' && !insurIsValid) return
+  if (isInsurRef.value === 'Y') {
+    if (hasInsurRef.value === 'N') {
+      insurId = await getValue(insur?.methods, 'memberInsur')
+      memberInsurId = ''
+    } else {
+      memberInsurId = await getValue(insur?.methods, 'memberInsur')
+      insurId = getSchemaOptions(insur?.schema, 'memberInsur')[0]!.insurId
+    }
+  }
+  insurFormData.doctorName = await getSelectText(methods, schema, 'doctorId')
+  insurFormData.insurName = await getSelectText(insur?.methods, insur?.schema, 'memberInsur')
+  insurFormData.insurId = insurId
+  insurFormData.memberInsurId = memberInsurId
+  insurFormData.isInsur = isInsurRef.value
+  insurFormData.memberLevelName = await getSelectText(methods, schema, 'memberLevel')
+  insurFormData.importantGuestName = await getSelectText(methods, schema, 'importGuest')
+  insurFormData.appointmentType = await getValue(methods, 'type')
+  insurFormData.specialistId = await getValue(typeOption?.methods, 'marketingList')
+  insurFormData.specialistName = await getSelectText(
+    typeOption?.methods,
+    typeOption?.schema,
+    'marketingList'
+  )
+  insurFormData.packageId = await getValue(typeOption?.methods, 'marketPackage')
+  insurFormData.packageName = await getSelectText(
+    typeOption?.methods,
+    typeOption?.schema,
+    'marketPackage'
+  )
+
   await unref(elFormRef)?.validate(async (isValid) => {
     if (isValid) {
       loading.value = true
       const data = (await unref(methods)?.getFormData()) as any
       const res = await postApi('member/appointment/registeration/add', {
-        ...data
+        ...data,
+        ...insurFormData,
+        ...typeOptionFormData,
+        plusType: await getValue(methods, 'plusType')[0]
       })
         .catch(() => {})
         .finally(() => {
@@ -415,10 +491,8 @@ watch(
         <span>{{ hasHighMedicalInsuranceInfoRef }}</span>
       </template>
 
-      <template #insurForm> </template>
-
       <template #typeOption>
-        <TypeOption :type="typeRef" />
+        <TypeOption ref="typeOptionRef" :type="typeRef" />
         <!-- <ElRow v-if="typeRef === 'package'">package </ElRow>
         <ElRow v-if="typeRef === 'specialist'"> specialist </ElRow> -->
       </template>
@@ -426,7 +500,7 @@ watch(
 
     <ElRow>
       <ElCol :offset="2" :span="22">
-        <InsurForm ref="insurFormRef" v-if="hasInsurRef === 'N'" />
+        <InsurForm ref="insurFormRef" v-if="hasInsurRef === 'Y'" />
       </ElCol>
     </ElRow>
 

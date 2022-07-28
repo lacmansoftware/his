@@ -63,7 +63,9 @@ const { register, methods, elFormRef } = useForm({
 
 defineExpose({
   elFormRef,
-  getFormData: methods.getFormData
+  getFormData: methods.getFormData,
+  methods,
+  schema
 })
 
 watch(
