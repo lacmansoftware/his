@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { reactive, ref, unref, onMounted } from 'vue'
-import { ElButton, ElLink, ElMessage } from 'element-plus'
+import {
+  ElFormItem,
+  ElRadioGroup,
+  ElRadio,
+  ElButton,
+  ElLink,
+  ElMessage,
+  ElMessageBox
+} from 'element-plus'
 import { useRouter } from 'vue-router'
 import { ContentWrap } from '@/components/ContentWrap'
 import { Search } from '@/components/Search'
@@ -14,15 +22,23 @@ import { downloadIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
 import { getTableListApi, delTableListApi, saveTableApi } from '@/api/appoint/regist/registered'
-import { NotChargedTableData } from '@/api/appoint/regist/registered/types'
+import { AppointRegisteredTableData } from '@/api/appoint/regist/registered/types'
 import { dateCompare } from '@/utils/date'
 import dict from '@/config/dictionary.json'
 import { PATH_URL } from '@/config/axios'
+import { postApi } from '@/api/common'
+import InsurForm from '../components/InsurForm.vue'
+import { getSchemaOptions, getSelectText, getValue } from '@/utils/schema'
+import { useEmitt } from '@/hooks/web/useEmitt'
 
 defineOptions({
   name: 'CashNotChargedIndex'
 })
 
+const hasInsurRef = ref('N')
+const isInsur = ref('')
+const currentRow = ref<any>({})
+const insurFormRef = ref<ComponentRef<typeof InsurForm>>()
 const searchRef = ref<ComponentRef<typeof Search>>()
 
 const store = {
@@ -35,7 +51,7 @@ const setStore = async (key: string, url: string, valueField: string, labelField
 
 const { push } = useRouter()
 
-const { register, tableObject, methods } = useTable<NotChargedTableData>({
+const { register, tableObject, methods } = useTable<AppointRegisteredTableData>({
   getListApi: getTableListApi,
   delListApi: delTableListApi,
   response: {
@@ -360,7 +376,7 @@ const dialogWidth = ref('')
 
 const delLoading = ref(false)
 
-const delData = async (row: NotChargedTableData | null, multiple: boolean) => {
+const delData = async (row: AppointRegisteredTableData | null, multiple: boolean) => {
   tableObject.currentRow = row
   const { delList, getSelections } = methods
   const selections = await getSelections()
@@ -381,7 +397,7 @@ const AddAction = () => {
 
 const writeRef = ref<ComponentRef<typeof Write>>()
 
-const action = (row: NotChargedTableData, type: string) => {
+const action = (row: AppointRegisteredTableData, type: string) => {
   dialogTitle.value = type === 'edit' ? '修改短信模板' : 'exampleDemo.detail'
   actionType.value = type
   tableObject.currentRow = row
@@ -401,33 +417,51 @@ const search = () => {
 }
 
 const save = async () => {
-  const write = unref(writeRef)
-  await write?.elFormRef?.validate(async (isValid) => {
-    if (isValid) {
-      loading.value = true
-      const data = (await write?.getFormData()) as any
-      const res = await saveTableApi(
-        actionType.value === 'add'
-          ? data
-          : {
-              id: data.id,
-              label: data.title,
-              type: data.type,
-              content: data.content
-            }
-      )
-        .catch(() => {})
-        .finally(() => {
-          loading.value = false
-        })
-      if (res) {
-        dialogVisible.value = false
-        ElMessage.success(res.msg as string)
-        tableObject.currentPage = 1
-        getList()
-      }
+  if (actionType.value === 'update_insur') {
+    const insur = unref(insurFormRef)
+    let insurId = await getValue(insur?.methods, 'memberInsur')
+    const insurName = await getSelectText(insur?.methods, insur?.schema, 'memberInsur')
+    let memberInsurId = ''
+    if (!isInsur.value) {
+      ElMessage.error('請先選擇是否有保險')
+      return
     }
-  })
+    if (isInsur.value === 'Y') {
+      let isInsurFormValid = false
+      await insur?.elFormRef?.validate(async (isValid) => {
+        isInsurFormValid = isValid
+      })
+      if (!isInsurFormValid) return
+      if (hasInsurRef.value !== 'N') {
+        memberInsurId = insurId
+        insurId = getSchemaOptions(insur?.schema, 'memberInsur')[0]!.insurId
+      }
+    } else {
+      insurId = ''
+      memberInsurId = ''
+    }
+    const data: any = await insur?.methods?.getFormData()
+    data.regId = currentRow.value?.id
+    data.insurName = insurName
+    data.insurId = insurId
+    data.isInsur = isInsur.value
+    data.memberInsurId = memberInsurId
+    data.updateReg = 1
+    loading.value = true
+    postApi('/member/appointment/registeration/reg', data)
+      .then((result) => {
+        if (result?.success) {
+          ElMessage.success(result.msg as string)
+          search()
+          dialogVisible.value = false
+        } else {
+          ElMessage.error(result.msg as string)
+        }
+      })
+      .finally(() => {
+        loading.value = false
+      })
+  }
 }
 
 const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) => {
@@ -437,7 +471,7 @@ const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) =>
   return ''
 }
 
-const settlement = (row: NotChargedTableData) => {
+const settlement = (row: AppointRegisteredTableData) => {
   // push({
   //   name: 'CashNotChargedAdd',
   //   params: {
@@ -493,6 +527,40 @@ const exportExcel = async () => {
   const path = `${PATH_URL}/member/appointment/registeration/list/exportRegisteration?${queryParams.toString()}`
   window.open(path, '_blank')
 }
+
+const backReg = (row) => {
+  ElMessageBox.confirm('確認要退號嗎?', t('common.reminder'), {
+    confirmButtonText: t('common.ok'),
+    cancelButtonText: t('common.cancel'),
+    type: 'warning'
+  }).then(() => {
+    postApi('/member/appointment/registeration/back', {
+      id: row.id
+    }).then((result) => {
+      if (result.success) {
+        ElMessage.success(result.msg as string)
+        search()
+      } else {
+        ElMessage.error(result.msg as string)
+      }
+    })
+  })
+}
+
+const updateInsur = (row) => {
+  currentRow.value = row
+  actionType.value = 'update_insur'
+  dialogTitle.value = '選擇保險'
+  dialogVisible.value = true
+  dialogWidth.value = '80%'
+}
+
+useEmitt({
+  name: 'hasInsur',
+  callback: (val: string) => {
+    hasInsurRef.value = val
+  }
+})
 </script>
 
 <template>
@@ -525,10 +593,10 @@ const exportExcel = async () => {
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink v-if="row.status !== 'YTH'" type="primary" @click="settlement(row)" class="mr-5px"
+        <ElLink v-if="row.status !== 'YTH'" type="primary" @click="backReg(row)" class="mr-5px"
           >退號</ElLink
         >
-        <ElLink v-if="row.status !== 'YTH'" type="primary" @click="settlement(row)" class="mr-5px"
+        <ElLink v-if="row.status !== 'YTH'" type="primary" @click="updateInsur(row)" class="mr-5px"
           >更新保險</ElLink
         >
         <ElLink
@@ -543,15 +611,23 @@ const exportExcel = async () => {
   </ContentWrap>
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
-    <Write
-      v-if="actionType !== 'detail'"
-      ref="writeRef"
-      :form-schema="allSchemas.formSchema"
-      :current-row="tableObject.currentRow"
-    />
+    <div v-if="actionType === 'update_insur'">
+      <ElFormItem label="是否有保險" class="ml-6">
+        <ElRadioGroup v-model="isInsur">
+          <ElRadio label="Y">是</ElRadio>
+          <ElRadio label="N">否</ElRadio>
+        </ElRadioGroup>
+      </ElFormItem>
+      <InsurForm
+        v-if="isInsur !== 'N'"
+        ref="insurFormRef"
+        page-type="update_insur"
+        :current-row="currentRow"
+      />
+    </div>
 
     <template #footer>
-      <ElButton v-if="actionType !== 'detail'" type="primary" :loading="loading" @click="save">
+      <ElButton type="primary" :loading="loading" @click="save">
         {{ t('exampleDemo.save') }}
       </ElButton>
       <ElButton @click="dialogVisible = false">{{ t('dialogDemo.close') }}</ElButton>

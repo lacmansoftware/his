@@ -390,17 +390,17 @@ export const genFormSchema = (
 }
 
 export const getSelectText = async (methods, schema, fieldName) => {
-  const formData = await methods.getFormData()
+  const formData = await methods?.getFormData()
   return (
     schema
-      .find((item) => item.field === fieldName)
+      ?.find((item) => item.field === fieldName)
       ?.componentProps?.options?.find((item) => item.value === formData![fieldName])?.label || ''
   )
 }
 
 export const getValue = async (methods, fieldName) => {
-  const formData = await methods.getFormData()
-  return formData[fieldName]
+  const formData = await methods?.getFormData()
+  return formData?.hasOwnProperty(fieldName) ? formData[fieldName] : null
 }
 
 export const getSchemaItem = (schema, fieldName) => {

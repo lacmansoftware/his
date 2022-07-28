@@ -3,16 +3,36 @@ import { Form } from '@/components/Form'
 import { ContentWrap } from '@/components/ContentWrap'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useForm } from '@/hooks/web/useForm'
-import { reactive, unref, ref } from 'vue'
+import { reactive, unref, ref, onMounted, PropType } from 'vue'
+import { AppointRegisteredTableData } from '@/api/appoint/regist/registered/types'
 import { ElButton } from 'element-plus'
 import { useValidator } from '@/hooks/web/useValidator'
 import { genFormSchema } from '@/utils/schema'
+import { getApi } from '@/api/common'
+import { propTypes } from '@/utils/propTypes'
+import { useEmitt } from '@/hooks/web/useEmitt'
 
+const props = defineProps({
+  pageType: propTypes.string.def(''),
+  currentRow: {
+    type: Object as PropType<AppointRegisteredTableData>,
+    default: () => {}
+  }
+})
+
+const { emitter } = useEmitt()
 const { required } = useValidator()
-
 const { t } = useI18n()
 
+const arrearageText = ref<string>('')
+const currentOwe = ref<boolean>(false)
+
 const schema = reactive<FormSchema[]>([
+  {
+    field: 'arrearage',
+    label: '',
+    colProps: { span: 0 }
+  },
   genFormSchema('sourceSelect', 'memberInsur', '選擇保險產品', {
     placeholder: null,
     options: undefined as any
@@ -156,13 +176,109 @@ const { register, methods, elFormRef } = useForm({
   schema
 })
 
+onMounted(() => {
+  console.log(props.pageType)
+  if (!props.pageType || props.pageType !== 'update_insur') return
+  getApi('/doctor/checkUseInsur', {
+    visitType: props?.currentRow?.visitType,
+    doctorId: props?.currentRow?.doctorId
+  }).then((result) => {
+    getApi('/member/insur/list', { memberId: props?.currentRow?.memberId, status: 'Y' }).then(
+      (result) => {
+        if (result.success) {
+          methods.setValues({ isInsur: 'Y' })
+          // $('#warining').hide()
+          if (result.data.length > 0) {
+            emitter.emit('hasInsur', 'Y')
+
+            methods?.setValues({
+              ...result.data[0],
+              memberInsur: result.data[0].id
+            })
+            // showEndInsur(data[0])
+            methods?.setSchema([
+              {
+                field: 'memberInsur',
+                path: 'componentProps.options',
+                value: result.data.map((item) => ({
+                  ...item,
+                  value: item.id,
+                  label: item.insurName
+                }))
+              }
+            ])
+
+            // for (var i = 0; i < data[0].limitCount; i++) {
+            //   namespace.addSchool(data[0])
+            // }
+
+            // insurForm.setData(data[0])
+            // showEndInsur(data[0])
+            // for (var i = 0; i < data[0].limitCount; i++) {
+            //   namespace.addSchool(data[0])
+            // }
+          } else {
+            //當前用戶沒有保險，需要新加保險，所以查詢的是合作保險名
+            methods.setValues({ isInsur: 'N' })
+            // $('#warining').show()
+            emitter.emit('hasInsur', 'N')
+            getApi('/market/insur').then((result) => {
+              if (result.success) {
+                methods?.setSchema([
+                  {
+                    field: 'memberInsur',
+                    path: 'componentProps.options',
+                    value: result.data.map((item) => ({
+                      ...item,
+                      value: item.id,
+                      label: item.productName
+                    }))
+                  }
+                ])
+                methods?.setValues({ memberInsur: '' })
+              }
+            })
+          }
+        }
+      }
+    )
+
+    getApi('/order/arrearage/member/' + props?.currentRow?.memberId, function (result2) {
+      if (result2.success) {
+        const data = result2.data
+        if (data.owe && data.owe !== 'null' && data.owe !== 'undefined') {
+          const oweText = data.oweText
+          arrearageText.value = oweText
+          if (data.currentOwe && data.currentOwe !== 'null' && data.currentOwe !== 'undefined') {
+            currentOwe.value = true
+            // $('#arrearage').after(
+            //   '&nbsp;<span onclick="gotoArre2(\'' +
+            //     props?.currentRow?.memberId +
+            //     '\');" style="cursor:pointer;color:#016cdf;">前往處理</span>'
+            // )
+          }
+        }
+      }
+    })
+  })
+})
+
 defineExpose({
   methods,
   elFormRef,
   schema
 })
+
+const gotoArre2 = () => {
+  // props?.currentRow?.memberId
+}
 </script>
 
 <template>
-  <Form @register="register" />
+  <Form @register="register">
+    <template #arrearage>
+      <span>{{ arrearageText }}</span>
+      <ElLink v-if="currentOwe" type="primary" @click="gotoArre2" class="mr-5px">前往處理</ElLink>
+    </template>
+  </Form>
 </template>
