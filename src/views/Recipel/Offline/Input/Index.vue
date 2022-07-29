@@ -400,12 +400,7 @@ const save = async () => {
   </ContentWrap>
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
-    <Write
-      v-if="actionType === 'add'"
-      ref="writeRef"
-      :form-schema="allSchemas.formSchema"
-      :current-row="tableObject.currentRow"
-    />
+    <Write v-if="actionType === 'add'" ref="writeRef" :current-row="tableObject.currentRow" />
 
     <template #footer>
       <ElButton v-if="actionType !== 'detail'" type="primary" :loading="loading" @click="save">
