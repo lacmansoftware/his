@@ -142,7 +142,7 @@ const save = async () => {
     })
     if (!isReturnFeeValid) return
     const formData = await returnFee?.methods.getFormData()
-    if (Number(formData?.refundAmount) > Number(currentRow?.moreReturnFee)) {
+    if (Number(formData!.refundAmount) > Number(currentRow.value?.moreReturnFee)) {
       ElMessage.error('退費金額不能大於可退金額')
       return
     }
