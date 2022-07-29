@@ -183,7 +183,9 @@ export const genFormSchema = (
     label: labelValue,
     componentProps: {
       disabled: optionObj?.readonly ?? null,
-      placeholder: optionObj.placeholder ?? null
+      placeholder: optionObj.placeholder ?? null,
+      onChange: optionObj?.onChange ?? null,
+      onSelect: optionObj?.onSelect ?? null
     },
     formItemProps: {
       labelWidth: optionObj?.labelWidth ?? null,
@@ -333,24 +335,11 @@ export const genFormSchema = (
     }
   }
   if (schemaType === 'datePicker') {
-    return {
-      label: labelValue,
-      field: fieldValue,
-      component: 'DatePicker',
-      componentProps: {
-        disabled: optionObj?.readonly ?? null,
-        placeholder: optionObj?.placeholder ?? null,
-        type: optionObj?.type ?? 'date',
-        format: optionObj?.format ?? 'YYYY-MM-DD',
-        valueFormat: optionObj?.valueFormat ?? 'YYYY-MM-DD',
-        onChange: optionObj?.onChange ?? null
-      },
-      colProps: { span: optionObj?.span ?? 6 },
-      formItemProps: {
-        labelWidth: optionObj?.labelWidth ?? null,
-        rules: optionObj?.required ? [required()] : []
-      }
-    } as any
+    ret.component = 'DatePicker'
+    ret.componentProps.type = optionObj?.type ?? 'date'
+    ret.componentProps.format = optionObj?.format ?? 'YYYY-MM-DD'
+    ret.componentProps.valueFormat = optionObj?.valueFormat ?? 'YYYY-MM-DD'
+    return ret as any
   }
   if (schemaType === 'checkbox') {
     return {
