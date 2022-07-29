@@ -412,3 +412,13 @@ export const getSchemaItem = (schema, fieldName) => {
 export const getSchemaOptions = (schema, fieldName) => {
   return schema?.find((item) => item.field === fieldName).componentProps.options
 }
+
+export const setDisabled = (methods, fieldName, value) => {
+  methods?.setSchema([
+    {
+      field: fieldName,
+      path: 'componentProps.disabled',
+      value: value
+    }
+  ])
+}
