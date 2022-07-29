@@ -303,7 +303,7 @@ const delData = async (row: any | null, multiple: boolean) => {
 
 const actionType = ref('')
 
-const AddAction = (row: any = {}) => {
+const addAction = (row: any = {}) => {
   const recipelMode = row?.type ? inDict(row?.type, 'offlineRecipelType') : '照方抓藥'
   dialogTitle.value = row?.id ? '門診處方編輯' : '門診處方錄入'
   row.recipelAction = row?.id ? 'recipel_edit_action' : 'recipel_add_action' //告訴下個頁面當前開方是編輯還是新增
@@ -374,7 +374,7 @@ const save = async () => {
     />
 
     <div class="mb-10px ml-10px mt-[-32px]">
-      <ElButton type="primary" @click="AddAction" :icon="plusIcon">照方抓藥</ElButton>
+      <ElButton type="primary" @click="addAction" :icon="plusIcon">照方抓藥</ElButton>
     </div>
 
     <Table
@@ -389,7 +389,7 @@ const save = async () => {
       @register="register"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="AddAction(row)" class="mr-5px">
+        <ElLink type="primary" @click="addAction(row)" class="mr-5px">
           {{ row.recipelStatus === 'Y' ? '編輯' : '錄方' }}
         </ElLink>
       </template>
