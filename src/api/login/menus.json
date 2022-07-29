@@ -1798,7 +1798,7 @@
       "pageSize": 2147483647,
       "name": "爽約列表",
       "seq": 4,
-      "url": "/appoint/regist_manage/miss_appointment/index",
+      "url": "/appoint/regist/missed/index",
       "icon": null,
       "resourceType": "m",
       "parentId": "03",

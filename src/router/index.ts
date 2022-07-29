@@ -353,6 +353,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
             }
           }
         ]
+      },
+      {
+        path: 'regist/missed/index',
+        component: () => import('@/views/Appoint/Regist/Missed/Index.vue'),
+        name: 'AppointRegistMissedIndex',
+        meta: {
+          title: '爽約列表'
+        }
       }
     ]
   },
