@@ -242,29 +242,17 @@ const queryMemberInsur = async () => {
   }
 }
 
-const handleQuerySelect = (item: Recordable) => {
-  const { setValues } = methods
-  // console.log(item.name)
-
-  setValues({
-    memberName: item.name,
-    memberMobile: item.mobile,
-    memberId: item.id,
-    memberGender: item.gender,
-    memberLevel: item.memberLevel,
-    memberSource: item.memberSource,
-    memberBirthday: item.birthday,
-    memberAge: getAgeByBirthday(item.birthday),
-    recommender: item.recommender,
-    importantGuest: item.importantGuest,
-    importantGuestComment: item.importantGuestComment
-  })
-
-  queryMemberInsur()
-  setDisabled(methods, 'memberLevel', true)
-  getVisitType()
-  getInsur(item.id)
-  // contactUserId.value = item.id
+const handleMemberSearchSelect = (item: Recordable) => {
+  if (Object.keys(item).length === 0) {
+    widgetControl(false)
+    unref(elFormRef)?.resetFields()
+  } else {
+    widgetControl(true)
+    const { setValues } = methods
+    setValues(item)
+    // doctorHabit.options.memberId = e.value
+    // doctorHabit._loadRecipel(doctorSearch.getValue(), e.value)
+  }
 }
 
 const handleMemberBirthdayChange = (item) => {
@@ -273,22 +261,34 @@ const handleMemberBirthdayChange = (item) => {
   })
 }
 
+const widgetControl = (flag) => {
+  setDisabled(methods, 'memberName', flag)
+  setDisabled(methods, 'memberMobile', flag)
+  setDisabled(methods, 'memberSex', flag)
+  setDisabled(methods, 'memberBirthday', flag)
+}
+
+const renderPlan = (id) => {
+  // renderInputPlan(id || params.id)
+}
+
 const schema = reactive<FormSchema[]>([
   genFormSchema('blank', 'recipelSourcesSpan', '', { span: 24 }),
   genFormSchema('blank', 'recipelModeSpan', '', { span: 3 }),
-  genFormSchema('autocomplete', '', '醫生：', {
+  genFormSchema('autocomplete', 'doctorSearch', '醫生：', {
     url: '/doctor/query',
     itemValue: 'doctorName',
     itemLink: 'doctorId',
     placeholder: '姓名/手機',
     span: 10
   }),
-  genFormSchema('autocomplete', '', '患者：', {
+  genFormSchema('autocomplete', 'memberSearch', '患者：', {
     url: '/member/info/query',
     itemValue: 'memberName',
     itemLink: 'memberId',
     placeholder: '姓名/手機',
-    span: 11
+    span: 11,
+    onSelect: handleMemberSearchSelect
   }),
   genFormSchema('input', 'memberName', '姓名：', { placeholder: null, span: 4 }),
   genFormSchema('hidden', 'memberId', '姓名：', { placeholder: null, span: 4 }),
