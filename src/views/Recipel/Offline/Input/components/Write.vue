@@ -22,9 +22,10 @@ import dict from '@/config/dictionary.json'
 import { AppointDoctorType } from '@/api/appoint/appoint/appoint/types'
 import ChargeType from '@/views/Cash/Common/ChargeType.vue'
 import { AppointListData } from '@/api/appoint/appoint/list/types'
-import TypeOption from './components/TypeOption.vue'
-import InsurForm from './components/InsurForm.vue'
+import TypeOption from '@/views/Appoint/Regist/components/TypeOption.vue'
+import InsurForm from '.@/views/Appoint/Regist/components/InsurForm.vue'
 import UseFormDemo from '@/views/Components/Form/UseFormDemo.vue'
+import SimpleForm from '@/views/common/SimpleForm.vue'
 
 const { required } = useValidator()
 const { emitter } = useEmitt()
@@ -55,13 +56,8 @@ const store = {
   importantGuest: ref<ComponentOptions[]>([])
 }
 
-onBeforeMount(() => {
-  params.actionType = 'add'
-  // if (!params.actionType) params.actionType = 'add'
-})
-
 onMounted(async () => {
-  params.actionType = 'add'
+  console.log(props.currentRow)
   // if (
   //   !params.actionType ||
   //   !(params.actionType === 'add' || params.actionType === 'edit' || params.actionType === 'view')
@@ -271,113 +267,43 @@ const handleQuerySelect = (item: Recordable) => {
   // contactUserId.value = item.id
 }
 
-const schema = reactive<FormSchema[]>([
-  genFormSchema('autocomplete', 'query', '檢索姓名/檔案號/拼音/手機號', {
-    url: '/member/info/get4workorder',
-    itemValue: 'name',
-    itemLink: 'id',
-    placeholder: '檢索姓名/檔案號/拼音/手機號',
-    labelWidth: '250px',
-    // span: params.actionType === 'add' ? 24 : 0,
-    span: 24,
-    onSelect: handleQuerySelect
-  }),
-  genFormSchema('datePicker', 'registerDate', '挂號時間', {
-    placeholder: null,
-    required: true,
-    type: 'datetime',
-    format: 'YYYY-MM-DD HH:mm',
-    valueFormat: 'YYYY-MM-DD HH:mm'
-  }),
-  genFormSchema('radio', 'type', '約診類型', {
-    options: [
-      { value: 'normal', label: '普通門診' },
-      { value: 'package', label: '套餐門診' },
-      { value: 'specialist', label: '專科門診' }
-    ],
-    value: 'normal',
-    onChange: (item) => {
-      typeRef.value = item
-    },
-    span: 8
-  }),
-  {
-    field: 'typeOption',
-    label: '',
-    colProps: {
-      span: 10
-    }
-  },
-  genFormSchema('apiSelect', 'doctorId', '大夫', {
-    placeholder: '請填寫',
-    filterable: true,
-    api: async () => {
-      return await getInOptionFormat('doctor/getAuthPass', 'id', 'name')
-    },
-    required: true
-  }),
-  genFormSchema('input', 'memberName', '姓名', { placeholder: null, required: true }),
-  genFormSchema('hidden', 'memberId', '姓名', { placeholder: null }),
-  genFormSchema('input', 'memberMobile', '電話', { placeholder: null, required: true }),
-  genFormSchema('sourceSelect', 'memberGender', '性別', {
-    placeholder: null,
-    options: dict.sex as any,
-    required: true
-  }),
-  genFormSchema('datePicker', 'memberBirthday', '出生年月', { placeholder: null, required: true }),
-  genFormSchema('input', 'memberAge', '年齡', { placeholder: null, readonly: true }),
-  genFormSchema('apiSelect', 'memberLevel', '會員級別', {
-    placeholder: '請選擇',
-    api: async () => {
-      return await getInOptionFormat('sys/member/level', 'id', 'levelName')
-    },
-    required: true,
-    readonly: true
-  }),
-  genFormSchema('sourceSelect', 'visitType', '初複診', {
-    placeholder: null,
-    options: dict.visitType as any,
-    required: true
-  }),
-  genFormSchema('radio', 'usePrCard', '是否使用公關卡', {
-    options: dict.appoint.usePrCard,
-    value: '',
-    labelWidth: '150px'
-  }),
-  genFormSchema('apiSelect', 'memberSource', '客戶來源', {
-    placeholder: null,
-    api: async () => {
-      return await getInOptionFormat('sys/dict/type/MEMBER_Source', 'code', 'value')
-    }
-  }),
-  genFormSchema('input', 'recommender', '來源詳情', { placeholder: null }),
-  genFormSchema('apiSelect', 'importantGuest', '重要客戶備註', {
-    placeholder: null,
-    api: async () => {
-      return await getInOptionFormat('sys/dict/type/MEMBER_ImportGuest', 'code', 'value')
-    }
-  }),
-  genFormSchema('input', 'importantGuestComment', '備註詳情', { placeholder: null }),
-  genFormSchema('textarea', 'note', '挂號備註', { placeholder: null, span: 24 }),
-  genFormSchema('sourceSelect', 'marketActivity', '市場活動', {
-    placeholder: '請選擇',
-    options: undefined as any,
-    span: 24
-  }),
-  genFormSchema('checkbox', 'plusType', '加號', {
-    options: dict.appointment_plus_type,
-    value: [''],
-    span: 24
-  }),
-  genFormSchema('radio', 'isInsur', '是否有保險', {
-    options: dict.display,
-    value: 'N',
-    required: true,
-    span: 24,
-    onChange: (item) => {
-      isInsurRef.value = item
-    }
+const handleMemberBirthdayChange = (item) => {
+  methods.setValues({
+    memberAge: getAgeByBirthday(item)
   })
+}
+
+const schema = reactive<FormSchema[]>([
+  genFormSchema('blank', 'recipelSourcesSpan', '', { span: 24 }),
+  genFormSchema('blank', 'recipelModeSpan', '', { span: 3 }),
+  genFormSchema('autocomplete', '', '醫生：', {
+    url: '/doctor/query',
+    itemValue: 'doctorName',
+    itemLink: 'doctorId',
+    placeholder: '姓名/手機',
+    span: 10
+  }),
+  genFormSchema('autocomplete', '', '患者：', {
+    url: '/member/info/query',
+    itemValue: 'memberName',
+    itemLink: 'memberId',
+    placeholder: '姓名/手機',
+    span: 11
+  }),
+  genFormSchema('input', 'memberName', '姓名：', { placeholder: null, span: 4 }),
+  genFormSchema('hidden', 'memberId', '姓名：', { placeholder: null, span: 4 }),
+  genFormSchema('sourceSelect', 'memberSex', '姓名：', {
+    placeholder: '選擇',
+    options: dict.sex as any,
+    span: 4
+  }),
+  genFormSchema('input', 'memberMobile', '姓名：', { placeholder: null, span: 4 }),
+  genFormSchema('datePicker', 'memberBirthday', '姓名：', {
+    placeholder: null,
+    span: 4,
+    onChange: handleMemberBirthdayChange
+  }),
+  genFormSchema('input', 'memberAge', '姓名：', { placeholder: null, readonly: true, span: 4 })
 ])
 
 const { register, methods, elFormRef } = useForm({
@@ -477,32 +403,37 @@ watch(
     immediate: true
   }
 )
+
+const syptomSchema = [
+  genFormSchema('textarea', 'slaveSymptom', '診斷', {
+    placeholder: '請輸入內容',
+    span: 24,
+    rows: 5
+  }),
+  genFormSchema('textarea', 'medicalHistory', '主訴及現病史', {
+    placeholder: '請輸入內容',
+    span: 24,
+    rows: 5
+  })
+]
 </script>
 
 <template>
-  <ContentDetailWrap title="選擇確認預約方式" @back="push('/appoint/appoint/list/index')">
-    <Form :rules="rules" @register="register">
-      <template #hasHighMedicalInsuranceInfo>
-        <span>{{ hasHighMedicalInsuranceInfoRef }}</span>
-      </template>
-
-      <template #typeOption>
-        <TypeOption ref="typeOptionRef" :type="typeRef" />
-        <!-- <ElRow v-if="typeRef === 'package'">package </ElRow>
-        <ElRow v-if="typeRef === 'specialist'"> specialist </ElRow> -->
-      </template>
-    </Form>
-
-    <ElRow>
-      <ElCol :offset="2" :span="22">
-        <InsurForm ref="insurFormRef" v-if="hasInsurRef === 'Y'" />
-      </ElCol>
-    </ElRow>
-
-    <template #right>
-      <ElButton type="primary" :loading="loading" @click="save">
-        {{ t('exampleDemo.save') }}
-      </ElButton>
+  <Form :rules="rules" @register="register">
+    <template #recipelSourcesSpan>
+      <span>{{ currentRow?.recipelSources }}</span>
     </template>
-  </ContentDetailWrap>
+    <template #recipelModeSpan>
+      <span>方式： {{ currentRow?.recipelMode }}</span>
+    </template>
+  </Form>
+
+  <ElRow>
+    <ElCol :span="4">
+      <SimpleForm label-position="top" title="書寫病案" :schema="syptomSchema" />
+      <!-- <InsurForm ref="insurFormRef" v-if="hasInsurRef === 'Y'" /> -->
+    </ElCol>
+    <ElCol :span="14">b </ElCol>
+    <ElCol :span="6">c </ElCol>
+  </ElRow>
 </template>

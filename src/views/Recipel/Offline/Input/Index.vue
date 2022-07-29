@@ -304,6 +304,7 @@ const delData = async (row: any | null, multiple: boolean) => {
 const actionType = ref('')
 
 const addAction = (row: any = {}) => {
+  console.log('current row in index: ', row)
   const recipelMode = row?.type ? inDict(row?.type, 'offlineRecipelType') : '照方抓藥'
   dialogTitle.value = row?.id ? '門診處方編輯' : '門診處方錄入'
   row.recipelAction = row?.id ? 'recipel_edit_action' : 'recipel_add_action' //告訴下個頁面當前開方是編輯還是新增
@@ -374,7 +375,7 @@ const save = async () => {
     />
 
     <div class="mb-10px ml-10px mt-[-32px]">
-      <ElButton type="primary" @click="addAction" :icon="plusIcon">照方抓藥</ElButton>
+      <ElButton type="primary" @click="addAction()" :icon="plusIcon">照方抓藥</ElButton>
     </div>
 
     <Table

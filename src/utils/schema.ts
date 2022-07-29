@@ -178,6 +178,23 @@ export const genFormSchema = (
   labelValue = '',
   optionObj: any = {}
 ) => {
+  const ret: any = {
+    field: fieldValue,
+    label: labelValue,
+    componentProps: {
+      disabled: optionObj?.readonly ?? null,
+      placeholder: optionObj.placeholder ?? null
+    },
+    formItemProps: {
+      labelWidth: optionObj?.labelWidth ?? null,
+      rules: optionObj?.required ? [required()] : []
+    },
+    colProps: { span: optionObj?.span ?? 6 }
+  }
+  if (schemaType === 'blank') {
+    ret.formItemProps.labelWidth = '0'
+    return ret
+  }
   if (schemaType === 'divider') {
     return {
       field: fieldValue,
@@ -202,22 +219,10 @@ export const genFormSchema = (
     } as any
   }
   if (schemaType === 'textarea') {
-    return {
-      field: fieldValue,
-      label: labelValue,
-      component: 'Input',
-      componentProps: {
-        disabled: optionObj?.readonly ?? null,
-        type: 'textarea',
-        rows: optionObj.rows ?? 2,
-        placeholder: optionObj.placeholder ?? null
-      },
-      formItemProps: {
-        labelWidth: optionObj?.labelWidth ?? null,
-        rules: optionObj?.required ? [required()] : []
-      },
-      colProps: { span: optionObj?.span ?? 24 }
-    } as any
+    ret.component = 'Input'
+    ret.componentProps.type = 'textarea'
+    ret.componentProps.rows = optionObj.rows ?? 2
+    return ret as any
   }
   if (schemaType === 'hidden') {
     return {
