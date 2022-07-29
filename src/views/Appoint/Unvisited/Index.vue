@@ -29,9 +29,16 @@ import { PATH_URL } from '@/config/axios'
 import { getApi, postApi } from '@/api/common'
 import InsurForm from '../Regist/components/InsurForm.vue'
 import PackagePay from '../Regist/components/PackagePay.vue'
-import { genSearchSchema, getSchemaOptions, getSelectText, getValue } from '@/utils/schema'
+import {
+  genSearchSchema,
+  genFormSchema,
+  getSchemaOptions,
+  getSelectText,
+  getValue
+} from '@/utils/schema'
 import { useEmitt } from '@/hooks/web/useEmitt'
 import AddUncheck from './components/AddUncheck.vue'
+import SimpleCrudTable from '@/views/common/SimpleCrudTable.vue'
 
 defineOptions({
   name: 'CashNotChargedIndex'
@@ -42,6 +49,7 @@ const isInsur = ref('')
 const warning = ref(false)
 const endInsurTime = ref('')
 const currentRow = ref<any>({})
+const deleteUncheckRef = ref<ComponentRef<typeof SimpleCrudTable>>()
 const addUncheckRef = ref<ComponentRef<typeof AddUncheck>>()
 const insurFormRef = ref<ComponentRef<typeof InsurForm>>()
 const searchRef = ref<ComponentRef<typeof Search>>()
@@ -309,6 +317,24 @@ const save = async () => {
       .finally(() => {
         loading.value = false
       })
+  } else if (actionType.value === 'delete_uncheck') {
+    const deleteUncheckComp = unref(deleteUncheckRef)
+    const data = await deleteUncheckComp?.methods?.getSelections()
+    const ids = data?.map((item) => item.id).join(',')
+
+    postApi('/member/visit/record/deleteUncheckMember', { id: ids })
+      .then((result) => {
+        if (result?.success) {
+          ElMessage.success(result.msg as string)
+          search()
+          dialogVisible.value = false
+        } else {
+          ElMessage.error(result.msg as string)
+        }
+      })
+      .finally(() => {
+        loading.value = false
+      })
   }
 }
 
@@ -408,6 +434,14 @@ const addUncheck = (row) => {
   dialogWidth.value = '30%'
 }
 
+const deleteUncheck = (row) => {
+  currentRow.value = row
+  actionType.value = 'delete_uncheck'
+  dialogTitle.value = '解除凍結'
+  dialogVisible.value = true
+  dialogWidth.value = '80%'
+}
+
 useEmitt({
   name: 'hasInsur',
   callback: (val: string) => {
@@ -426,6 +460,33 @@ useEmitt({
     warning.value = val
   }
 })
+
+const deleteUncheckSchema = [
+  { label: '姓名', field: 'name' },
+  { label: '手機', field: 'mobile' },
+  {
+    label: '狀態',
+    field: 'status',
+    formatter: function () {
+      return '已凍結'
+    }
+  },
+  { label: '凍結時間', field: 'createTime' },
+  {
+    label: '重要客人',
+    field: 'importantGuest',
+    formatter: function (row) {
+      return (row.importantGuest || '') + ' ' + (row.importantGuestComment || '')
+    }
+  },
+  { label: '操作人', field: 'createUser' },
+
+  genSearchSchema('input', 'search', '患者姓名/手機', {
+    placeholder: '患者姓名/手機',
+    labelWidth: '150px',
+    span: 12
+  })
+]
 </script>
 
 <template>
@@ -443,7 +504,7 @@ useEmitt({
 
     <div class="mb-10px ml-10px mt-[-32px]">
       <ElButton type="primary" @click="addUncheck" :icon="plusIcon">新增凍結</ElButton>
-      <ElButton type="warning" @click="addUncheck" :icon="minusIcon">解凍客人</ElButton>
+      <ElButton type="warning" @click="deleteUncheck" :icon="minusIcon">解凍客人</ElButton>
     </div>
 
     <Table
@@ -472,6 +533,13 @@ useEmitt({
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
     <AddUncheck v-if="actionType === 'add_uncheck'" ref="addUncheckRef" :current-row="currentRow" />
+    <SimpleCrudTable
+      v-if="actionType === 'delete_uncheck'"
+      ref="deleteUncheckRef"
+      :current-row="currentRow"
+      :url="`member/visit/record/uncheckMember`"
+      :schema="deleteUncheckSchema"
+    />
 
     <template #footer>
       <ElButton type="primary" :loading="loading" @click="save">
@@ -481,9 +549,3 @@ useEmitt({
     </template>
   </Dialog>
 </template>
-
-<style scoped>
-.success-row {
-  background: red;
-}
-</style>
