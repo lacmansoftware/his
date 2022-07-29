@@ -361,6 +361,14 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: '爽約列表'
         }
+      },
+      {
+        path: 'unvisited/index',
+        component: () => import('@/views/Appoint/Unvisited/Index.vue'),
+        name: 'AppointUnvisitedIndex',
+        meta: {
+          title: '未複診列表'
+        }
       }
     ]
   },
