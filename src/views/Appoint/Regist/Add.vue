@@ -10,7 +10,13 @@ import { useI18n } from '@/hooks/web/useI18n'
 import { useEmitt } from '@/hooks/web/useEmitt'
 import { useRouter, useRoute } from 'vue-router'
 import { getAgeByBirthday, getInOptionFormat, returnDateString } from '@/utils/common'
-import { getSelectText, getValue, getSchemaOptions, genFormSchema, setDisabled } from '@/utils/schema'
+import {
+  getSelectText,
+  getValue,
+  getSchemaOptions,
+  genFormSchema,
+  setDisabled
+} from '@/utils/schema'
 import { getApi, postApi } from '@/api/common'
 import dict from '@/config/dictionary.json'
 import { AppointDoctorType } from '@/api/appoint/appoint/appoint/types'
