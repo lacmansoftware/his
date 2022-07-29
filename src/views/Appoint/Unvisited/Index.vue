@@ -18,7 +18,7 @@ import { useI18n } from '@/hooks/web/useI18n'
 import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
 import { inDict, getInOptionFormat, getDateInFormat, getAgeByBirthday } from '@/utils/common'
-import { downloadIcon } from '@/utils/iconList'
+import { plusIcon, minusIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
 import { delTableListApi, saveTableApi } from '@/api/appoint/regist/registered'
@@ -31,6 +31,7 @@ import InsurForm from '../Regist/components/InsurForm.vue'
 import PackagePay from '../Regist/components/PackagePay.vue'
 import { genSearchSchema, getSchemaOptions, getSelectText, getValue } from '@/utils/schema'
 import { useEmitt } from '@/hooks/web/useEmitt'
+import AddUncheck from './components/AddUncheck.vue'
 
 defineOptions({
   name: 'CashNotChargedIndex'
@@ -41,6 +42,7 @@ const isInsur = ref('')
 const warning = ref(false)
 const endInsurTime = ref('')
 const currentRow = ref<any>({})
+const addUncheckRef = ref<ComponentRef<typeof AddUncheck>>()
 const insurFormRef = ref<ComponentRef<typeof InsurForm>>()
 const searchRef = ref<ComponentRef<typeof Search>>()
 
@@ -291,38 +293,10 @@ const search = () => {
 }
 
 const save = async () => {
-  if (actionType.value === 'update_insur') {
-    const insur = unref(insurFormRef)
-    let insurId = await getValue(insur?.methods, 'memberInsur')
-    const insurName = await getSelectText(insur?.methods, insur?.schema, 'memberInsur')
-    let memberInsurId = ''
-    if (!isInsur.value) {
-      ElMessage.error('請先選擇是否有保險')
-      return
-    }
-    if (isInsur.value === 'Y') {
-      let isInsurFormValid = false
-      await insur?.elFormRef?.validate(async (isValid) => {
-        isInsurFormValid = isValid
-      })
-      if (!isInsurFormValid) return
-      if (hasInsurRef.value !== 'N') {
-        memberInsurId = insurId
-        insurId = getSchemaOptions(insur?.schema, 'memberInsur')[0]!.insurId
-      }
-    } else {
-      insurId = ''
-      memberInsurId = ''
-    }
-    const data: any = await insur?.methods?.getFormData()
-    data.regId = currentRow.value?.id
-    data.insurName = insurName
-    data.insurId = insurId
-    data.isInsur = isInsur.value
-    data.memberInsurId = memberInsurId
-    data.updateReg = 1
-    loading.value = true
-    postApi('/member/appointment/registeration/reg', data)
+  if (actionType.value === 'add_uncheck') {
+    const addUncheck = unref(addUncheckRef)
+    const data = await addUncheck.methods.getFormData()
+    postApi('/member/visit/record/addUncheckMember', data)
       .then((result) => {
         if (result?.success) {
           ElMessage.success(result.msg as string)
@@ -339,9 +313,6 @@ const save = async () => {
 }
 
 const tableRowClassName = ({ row, rowIndex }: { row: any; rowIndex: number }) => {
-  if (row.paymentStatus === 'PAYED') {
-    return 'tr-danger-row'
-  }
   return ''
 }
 
@@ -429,12 +400,12 @@ const updateInsur = (row) => {
   dialogWidth.value = '80%'
 }
 
-const packagePay = (row) => {
+const addUncheck = (row) => {
   currentRow.value = row
-  actionType.value = 'package_pay'
-  dialogTitle.value = '修改約診類型'
+  actionType.value = 'add_uncheck'
+  dialogTitle.value = '新增凍結'
   dialogVisible.value = true
-  dialogWidth.value = '70%'
+  dialogWidth.value = '30%'
 }
 
 useEmitt({
@@ -471,7 +442,8 @@ useEmitt({
     />
 
     <div class="mb-10px ml-10px mt-[-32px]">
-      <ElButton type="warning" @click="exportExcel" :icon="downloadIcon">導出</ElButton>
+      <ElButton type="primary" @click="addUncheck" :icon="plusIcon">新增凍結</ElButton>
+      <ElButton type="warning" @click="addUncheck" :icon="minusIcon">解凍客人</ElButton>
     </div>
 
     <Table
@@ -487,43 +459,19 @@ useEmitt({
       :row-class-name="tableRowClassName"
     >
       <template #action="{ row }">
-        <ElLink v-if="row.status !== 'YTH'" type="primary" @click="backReg(row)" class="mr-5px"
-          >退號</ElLink
-        >
-        <ElLink v-if="row.status !== 'YTH'" type="primary" @click="updateInsur(row)" class="mr-5px"
-          >更新保險</ElLink
-        >
         <ElLink
-          v-if="row.status !== 'YTH' && row.paymentStatus === 'UNPAY'"
+          v-if="row.unVisitStatus !== 'Y'"
           type="primary"
-          @click="packagePay(row)"
+          @click="addWorkOrder(row)"
           class="mr-5px"
-          >改套餐</ElLink
+          >回訪</ElLink
         >
       </template>
     </Table>
   </ContentWrap>
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
-    <div v-if="actionType === 'update_insur'">
-      <div class="flex items-center justify-between">
-        <ElFormItem label="是否有保險" class="ml-6">
-          <ElRadioGroup v-model="isInsur">
-            <ElRadio label="Y">是</ElRadio>
-            <ElRadio label="N">否</ElRadio>
-          </ElRadioGroup>
-        </ElFormItem>
-        <span v-if="warning" class="text-red-500">客人未登記過保險</span>
-        <span v-if="endInsurTime" class="mr-6 text-red-500">{{ endInsurTime }}</span>
-      </div>
-      <InsurForm
-        v-if="isInsur !== 'N'"
-        ref="insurFormRef"
-        page-type="update_insur"
-        :current-row="currentRow"
-      />
-    </div>
-    <PackagePay v-if="actionType === 'package_pay'" :current-row="currentRow" />
+    <AddUncheck v-if="actionType === 'add_uncheck'" ref="addUncheckRef" :current-row="currentRow" />
 
     <template #footer>
       <ElButton type="primary" :loading="loading" @click="save">
