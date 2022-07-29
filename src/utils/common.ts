@@ -3,6 +3,7 @@ import { pinyin } from 'pinyin-pro'
 import { getApi } from '@/api/common'
 import moment from 'moment'
 import { CurWeekType } from '@/api/appoint/appoint/hospital/types'
+import { ElMessage } from 'element-plus'
 
 export const inDict = (val, data: string) => {
   try {
@@ -172,4 +173,14 @@ export const diff = (prev: string[], next: string[], checked = false) => {
     }
   }
   return diff(next, prev, true)
+}
+
+export const normalHandleRes = (result, search, dialogVisible) => {
+  if (result?.success) {
+    ElMessage.success(result.msg as string)
+    search()
+    dialogVisible.value = false
+  } else {
+    ElMessage.error(result.msg as string)
+  }
 }

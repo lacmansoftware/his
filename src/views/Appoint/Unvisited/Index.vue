@@ -17,7 +17,13 @@ import { Table } from '@/components/Table'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useTable } from '@/hooks/web/useTable'
 import { CrudSchema, useCrudSchemas } from '@/hooks/web/useCrudSchemas'
-import { inDict, getInOptionFormat, getDateInFormat, getAgeByBirthday } from '@/utils/common'
+import {
+  inDict,
+  getInOptionFormat,
+  getDateInFormat,
+  getAgeByBirthday,
+  normalHandleRes
+} from '@/utils/common'
 import { plusIcon, minusIcon } from '@/utils/iconList'
 import Write from '@/views/Cash/NotCharged/components/Write.vue'
 
@@ -305,15 +311,7 @@ const save = async () => {
     const addUncheck = unref(addUncheckRef)
     const data = await addUncheck.methods.getFormData()
     postApi('/member/visit/record/addUncheckMember', data)
-      .then((result) => {
-        if (result?.success) {
-          ElMessage.success(result.msg as string)
-          search()
-          dialogVisible.value = false
-        } else {
-          ElMessage.error(result.msg as string)
-        }
-      })
+      .then((result) => normalHandleRes(result, search, dialogVisible))
       .finally(() => {
         loading.value = false
       })
@@ -323,15 +321,7 @@ const save = async () => {
     const ids = data?.map((item) => item.id).join(',')
 
     postApi('/member/visit/record/deleteUncheckMember', { id: ids })
-      .then((result) => {
-        if (result?.success) {
-          ElMessage.success(result.msg as string)
-          search()
-          dialogVisible.value = false
-        } else {
-          ElMessage.error(result.msg as string)
-        }
-      })
+      .then((result) => normalHandleRes(result, search, dialogVisible))
       .finally(() => {
         loading.value = false
       })
