@@ -277,286 +277,6 @@ const crudSchemas = reactive<CrudSchema[]>([
       value: []
     }
   }
-
-  // // Form schema
-  // // auto complete
-  // {
-  //   field: 'doctorSearch',
-  //   label: '醫生：',
-  //   form: {
-  //     component: 'Autocomplete',
-  //     componentProps: {
-  //       style: 'width: 100%',
-  //       triggerOnFocus: false,
-  //       fetchSuggestions: async (queryString: string, cb: Fn) => {
-  //         const res = await getApi(`/doctor/query?keyWords=${queryString}`)
-  //         const result = res?.data.map((item) => ({
-  //           ...item,
-  //           value: item.doctorName,
-  //           label: item.doctorMobile
-  //         }))
-  //         cb(result)
-  //       },
-  //       onSelect: (item: Recordable) => {},
-  //       slots: {
-  //         default: true
-  //       },
-  //       placeholder: '姓名/手機'
-  //     },
-  //     colProps: { span: 12 },
-  //     show: true
-  //   }
-  // },
-  // {
-  //   field: 'memberSearch',
-  //   label: '患者：',
-  //   form: {
-  //     component: 'Autocomplete',
-  //     componentProps: {
-  //       style: 'width: 100%',
-  //       triggerOnFocus: false,
-  //       fetchSuggestions: async (queryString: string, cb: Fn) => {
-  //         const res = await getApi(`/member/info/query?keyWords=${queryString}`)
-  //         const result = res?.data.map((item) => ({
-  //           ...item,
-  //           value: item.memberName
-  //         }))
-  //         cb(result)
-  //       },
-  //       onSelect: handleMemberSelected,
-  //       slots: {
-  //         default: true
-  //       },
-  //       placeholder: '姓名/手機'
-  //     },
-  //     colProps: { span: 12 },
-  //     show: true
-  //   }
-  // },
-
-  // // member info
-  // {
-  //   field: 'memberName',
-  //   label: '姓名：',
-  //   table: { show: false },
-  //   form: {
-  //     show: true,
-  //     component: 'Input',
-  //     componentProps: {
-  //       readonly: true
-  //     },
-  //     colProps: { span: 4 }
-  //   }
-  // },
-  // {
-  //   field: 'memberId',
-  //   label: '100px',
-  //   table: { show: false },
-  //   form: {
-  //     show: true,
-  //     component: 'Hidden',
-  //     componentProps: {
-  //       readonly: true
-  //     },
-  //     colProps: { span: 0 }
-  //   }
-  // },
-  // {
-  //   field: 'memberSex',
-  //   label: '性別：',
-  //   table: { show: false },
-  //   form: {
-  //     show: true,
-  //     component: 'Input',
-  //     componentProps: {
-  //       readonly: true
-  //     },
-  //     colProps: { span: 4 }
-  //   }
-  // },
-  // {
-  //   field: 'memberMobile',
-  //   label: '手機：',
-  //   table: { show: false },
-  //   form: {
-  //     show: true,
-  //     component: 'Input',
-  //     componentProps: {
-  //       readonly: true
-  //     },
-  //     colProps: { span: 4 }
-  //   }
-  // },
-  // {
-  //   field: 'memberBirthday',
-  //   label: '生日：',
-  //   table: { show: false },
-  //   form: {
-  //     show: true,
-  //     component: 'Input',
-  //     componentProps: {
-  //       readonly: true
-  //     },
-  //     colProps: { span: 4 }
-  //   }
-  // },
-  // {
-  //   field: 'memberAge',
-  //   label: '年齡：',
-  //   table: { show: false },
-  //   form: {
-  //     show: true,
-  //     component: 'Input',
-  //     componentProps: {
-  //       readonly: true
-  //     },
-  //     colProps: { span: 4 }
-  //   }
-  // },
-  // {
-  //   field: 'recordDivider',
-  //   label: '書寫病案',
-  //   table: { show: false },
-  //   form: {
-  //     show: true,
-  //     component: 'Divider'
-  //   }
-  // },
-  // {
-  //   field: 'slaveSymptom',
-  //   label: '診斷',
-  //   form: {
-  //     show: true,
-  //     component: 'Input',
-  //     componentProps: {
-  //       type: 'textarea',
-  //       rows: 2,
-  //       placeholder: '請輸入內容'
-  //     },
-  //     colProps: { span: 12 },
-  //     formItemProps: {
-  //       rules: [required()]
-  //     }
-  //   },
-  //   table: { show: false }
-  // },
-  // {
-  //   field: 'medicalHistory',
-  //   label: '主訴及現病史',
-  //   form: {
-  //     show: true,
-  //     component: 'Input',
-  //     componentProps: {
-  //       type: 'textarea',
-  //       rows: 2,
-  //       placeholder: '請輸入內容'
-  //     },
-  //     colProps: { span: 12 }
-  //   },
-  //   table: { show: false }
-  // },
-
-  // {
-  //   field: 'prescriptionDivider',
-  //   label: '書寫處方',
-  //   table: { show: false },
-  //   form: {
-  //     show: true,
-  //     component: 'Divider'
-  //   }
-  // },
-  // {
-  //   field: 'pharmacyId',
-  //   label: '',
-  //   form: {
-  //     show: true,
-  //     component: 'Select',
-  //     componentProps: {
-  //       // onChange: handleTypeChange
-  //     },
-  //     colProps: { span: 6 },
-  //     api: async () => {
-  //       return await getInOptionFormat('/recipel/pharmacy', 'pharmacyId', 'pharmacyName')
-  //     }
-  //   },
-  //   table: { show: false }
-  // },
-  // {
-  //   field: 'tempType',
-  //   label: '',
-  //   form: {
-  //     show: true,
-  //     component: 'Select',
-  //     componentProps: {
-  //       options: dict.recipeType
-  //       // onChange: handleTypeChange
-  //     },
-  //     colProps: { span: 6 }
-  //   },
-  //   table: { show: false }
-  // },
-  // {
-  //   field: 'drugSearch',
-  //   label: '醫生：',
-  //   form: {
-  //     component: 'Autocomplete',
-  //     componentProps: {
-  //       style: 'width: 100%',
-  //       triggerOnFocus: false,
-  //       fetchSuggestions: async (queryString: string, cb: Fn) => {
-  //         // formModel.value.
-
-  //         const res = await getApi(
-  //           `recipel/drug?keyWords=${queryString}&pharmacyId=YFgsyf&drugType=ZCY&doctorId=undefined&md5=8568c4b5e086f47d08e8ef6a6a34761c&_=1657384543588`
-  //         )
-  //         const result = res?.data.map((item) => ({
-  //           ...item,
-  //           value: item.doctorName,
-  //           label: item.doctorMobile
-  //         }))
-  //         cb(result)
-  //       },
-  //       onSelect: (item: Recordable) => {},
-  //       slots: {
-  //         default: true
-  //       },
-  //       placeholder: '藥品名稱/拼音'
-  //     },
-  //     colProps: { span: 12 },
-  //     show: true
-  //   }
-  // }
-
-  // // {
-  // //   field: 'templet',
-  // //   label: '短信模板',
-  // //   form: {
-  // //     show: true,
-  // //     component: 'Select',
-  // //     componentProps: {
-  // //       placeholder: '短信模板',
-  // //       options: store.templet,
-  // //       onChange: handleTempletChange
-  // //     },
-  // //     colProps: { span: 12 }
-  // //   },
-  // //   table: { show: false }
-  // // },
-  // // {
-  // //   field: 'content',
-  // //   label: '短信內容',
-  // //   form: {
-  // //     show: true,
-  // //     component: 'Input',
-  // //     componentProps: {
-  // //       placeholder: '短信內容',
-  // //       type: 'textarea',
-  // //       rows: 2
-  // //     },
-  // //     colProps: { span: 24 }
-  // //   },
-  // //   table: { show: false }
-  // // }
 ])
 
 const { allSchemas } = useCrudSchemas(crudSchemas)
@@ -583,11 +303,19 @@ const delData = async (row: any | null, multiple: boolean) => {
 
 const actionType = ref('')
 
-const AddAction = () => {
-  dialogTitle.value = '門診處方錄入'
+const AddAction = (row: any = {}) => {
+  const recipelMode = row?.type ? inDict(row?.type, 'offlineRecipelType') : '照方抓藥'
+  dialogTitle.value = row?.id ? '門診處方編輯' : '門診處方錄入'
+  row.recipelAction = row?.id ? 'recipel_edit_action' : 'recipel_add_action' //告訴下個頁面當前開方是編輯還是新增
+  row.pharmacyUrl = '/recipel/pharmacy' //藥房URL
+  row.url = '/recipel/saveOfflineOther'
+  row.recipelMode = recipelMode
+  if (row?.type === 'normal' || row?.type === 'package' || row?.type === 'special') {
+    row.url = '/recipel/saveClinic'
+  }
   actionType.value = 'add'
   dialogWidth.value = '90%'
-  tableObject.currentRow = null
+  tableObject.currentRow = row
   dialogVisible.value = true
 }
 
@@ -661,9 +389,8 @@ const save = async () => {
       @register="register"
     >
       <template #action="{ row }">
-        <ElLink type="primary" @click="action(row, 'edit')" class="mr-5px">編輯</ElLink>
-        <ElLink type="danger" @click="delData(row, false)">
-          {{ t('exampleDemo.del') }}
+        <ElLink type="primary" @click="AddAction(row)" class="mr-5px">
+          {{ row.recipelStatus === 'Y' ? '編輯' : '錄方' }}
         </ElLink>
       </template>
       <!-- <template #value="{ row }">
@@ -674,13 +401,10 @@ const save = async () => {
 
   <Dialog v-model="dialogVisible" :title="dialogTitle" :width="dialogWidth">
     <Write
-      v-if="actionType !== 'detail'"
+      v-if="actionType === 'add'"
       ref="writeRef"
       :form-schema="allSchemas.formSchema"
       :current-row="tableObject.currentRow"
-      :params="{
-        type: null
-      }"
     />
 
     <template #footer>
