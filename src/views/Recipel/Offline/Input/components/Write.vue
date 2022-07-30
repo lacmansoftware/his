@@ -26,6 +26,7 @@ import TypeOption from '@/views/Appoint/Regist/components/TypeOption.vue'
 import InsurForm from '.@/views/Appoint/Regist/components/InsurForm.vue'
 import UseFormDemo from '@/views/Components/Form/UseFormDemo.vue'
 import SimpleForm from '@/views/common/SimpleForm.vue'
+import CommonRecipel from './CommonRecipel.vue'
 
 const { required } = useValidator()
 const { emitter } = useEmitt()
@@ -428,12 +429,14 @@ const syptomSchema = [
     </template>
   </Form>
 
-  <ElRow>
+  <ElRow :gutter="20">
     <ElCol :span="4">
       <SimpleForm label-position="top" title="書寫病案" :schema="syptomSchema" />
       <!-- <InsurForm ref="insurFormRef" v-if="hasInsurRef === 'Y'" /> -->
     </ElCol>
-    <ElCol :span="14">b </ElCol>
+    <ElCol :span="14">
+      <CommonRecipel />
+    </ElCol>
     <ElCol :span="6">c </ElCol>
   </ElRow>
 </template>
