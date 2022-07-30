@@ -3,6 +3,7 @@ import { useIcon } from '@/hooks/web/useIcon'
 export const callIcon = useIcon({ icon: 'ep:phone' })
 export const msgIcon = useIcon({ icon: 'ep:chat-dot-round' })
 export const plusIcon = useIcon({ icon: 'ep:plus' })
+export const minusIcon = useIcon({ icon: 'ep:minus' })
 export const deleteIcon = useIcon({ icon: 'ep:delete' })
 export const mergeIcon = useIcon({ icon: 'mdi:merge' })
 export const saveIcon = useIcon({ icon: 'ion:save' })

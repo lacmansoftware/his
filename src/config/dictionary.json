@@ -3918,5 +3918,9 @@
   "coupon_selector": [
     { "value": "0", "label": "優惠券", "_checked": true },
     { "value": "1", "label": "輸入卡密" }
+  ],
+  "unCheck": [
+    { "value": "N", "label": "凍結" },
+    { "value": "Y", "label": "非凍結" }
   ]
 }

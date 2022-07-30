@@ -9,7 +9,7 @@ import { useI18n } from '@/hooks/web/useI18n'
 import { useEmitt } from '@/hooks/web/useEmitt'
 import { useRouter, useRoute } from 'vue-router'
 import { getAgeByBirthday, getInOptionFormat } from '@/utils/common'
-import { getSelectText } from '@/utils/schema'
+import { getSelectText, setDisabled } from '@/utils/schema'
 import { getApi, postApi } from '@/api/common'
 import { genFormSchema } from '@/utils/schema'
 
@@ -102,7 +102,7 @@ const getInsur = (id) => {
           hasHighMedicalInsurance: 1,
           payType: '0'
         })
-        setDisabled('payType', false)
+        setDisabled(methods, 'payType', false)
         insurNames = result.data.map((item) => item.insurName + showEndInsur(item))
         insurNameStr = insurNames.join(',')
         hasHighMedicalInsuranceInfoRef.value = insurNameStr
@@ -138,16 +138,6 @@ const getVisitType = async () => {
   queryIntro()
 }
 
-const setDisabled = (fieldName, value) => {
-  methods.setSchema([
-    {
-      field: fieldName,
-      path: 'componentProps.disabled',
-      value: value
-    }
-  ])
-}
-
 const handlePayTypeChange = (item: string) => {
   payTypeRef.value = item
 }
@@ -173,7 +163,7 @@ const handleQuerySelect = (item: Recordable) => {
     conditionRemark: item.conditionRemark
   })
 
-  setDisabled('memberLevel', true)
+  setDisabled(methods, 'memberLevel', true)
   getVisitType()
   getInsur(item.id)
   // contactUserId.value = item.id
